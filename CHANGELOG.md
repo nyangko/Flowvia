@@ -5,6 +5,16 @@ All notable changes to FossFLOW will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3](https://github.com/Abrar74774/FossFLOW/compare/v1.0.2...v1.0.3) (2026-07-21)
+
+### Bug Fixes
+
+* export filename add time ([#11](https://github.com/Abrar74774/FossFLOW/issues/11)) ([a0be350](https://github.com/Abrar74774/FossFLOW/commit/a0be350a8b4d8d23f29a0bca170c79e9e89dc9ca))
+
+### Documentation
+
+* update readme ([#9](https://github.com/Abrar74774/FossFLOW/issues/9)) ([8a95dd0](https://github.com/Abrar74774/FossFLOW/commit/8a95dd0cfa2f7230b5b16d912a19255bd5deeda0))
+
 ## [1.0.2](https://github.com/Abrar74774/FossFLOW/compare/v1.0.1...v1.0.2) (2026-07-12)
 
 ### Bug Fixes
