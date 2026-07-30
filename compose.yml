@@ -1,5 +1,5 @@
 services:
-  fossflow:
+  flowvia:
     image: abrar74774/fossflow:latest
     pull_policy: always
     ports:

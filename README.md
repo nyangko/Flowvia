@@ -1,6 +1,6 @@
 <div align="center">
  
-# FossFLOW
+# Flowvia
 ### Isometric Diagramming Tool
 
 </div>
@@ -12,22 +12,22 @@
 </p>
 
 ## Note:
-This repo is a fork of stan-smith/FossFLOW (which in turn was a fork of [markmanx/isoflow](https://github.com/markmanx/isoflow)) originally made for the purpose of contributing to the original repo through PRs, however the username of the author seems to have been changed to [mug-book-droid](https://github.com/mug-book-droid) and their activity set to private (account suspended maybe?), making the original repo inaccessible.
+This repo (Flowvia) is a derivative of [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW), which is itself a fork of stan-smith/FossFLOW (which in turn was a fork of [markmanx/isoflow](https://github.com/markmanx/isoflow)) originally made for the purpose of contributing to the original repo through PRs, however the username of the author seems to have been changed to [mug-book-droid](https://github.com/mug-book-droid) and their activity set to private (account suspended maybe?), making the original repo inaccessible.
 
-For now, I intend to make this repo a continuation of development to FossFLOW from myself, and any contributions through PRs are welcome as well. 
+For now, I intend to make this repo (now named Flowvia) a continuation of development from FossFLOW, and any contributions through PRs are welcome as well. 
 
 You can check out the last state of the original repo that I fetched on `backup/stan-smith-FossFLOW` branch.
 
 ---
 
-FossFLOW is a powerful, open-source Progressive Web App (PWA) for creating beautiful isometric diagrams. Built with React and the <a href="https://github.com/markmanx/isoflow">Isoflow</a> (Now forked and published to NPM as fossflow) library, it runs entirely in your browser with offline support.
+Flowvia is a powerful, open-source Progressive Web App (PWA) for creating beautiful isometric diagrams. Built with React and the <a href="https://github.com/markmanx/isoflow">Isoflow</a> (forked and published to NPM as fossflow, and as flowvia in this fork) library, it runs entirely in your browser with offline support.
 
 ---
 <p align="center">
-<b>Try it online --> https://abrar74774.github.io/FossFLOW/ <-- </b>
+<b>Try it online --> https://nyangko.github.io/Flowvia/ <-- </b>
 </p>
  
-<img width="100%" alt="FossFLOW-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
+<img width="100%" alt="Flowvia-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
 
 ---------
 
@@ -50,7 +50,7 @@ docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false abrar74774/fossflow:latest
 
 ### HTTP Basic Authentication (Optional)
 
-Protect your FossFLOW instance with HTTP Basic Auth:
+Protect your Flowvia instance with HTTP Basic Auth:
 
 ```bash
 # With Docker Compose
@@ -69,8 +69,8 @@ docker run -p 80:80 \
 
 ```bash
 # Clone the repository
-git clone https://github.com/Abrar74774/FossFLOW
-cd FossFLOW
+git clone https://github.com/nyangko/Flowvia
+cd Flowvia
 
 # Install dependencies
 npm install
@@ -88,8 +88,8 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 This is a monorepo containing two packages:
 
-- `packages/fossflow-lib` - React component library for drawing network diagrams (built with Webpack)
-- `packages/fossflow-app` - Progressive Web App which wraps the lib and presents it (built with RSBuild)
+- `packages/flowvia-lib` - React component library for drawing network diagrams (built with Webpack)
+- `packages/flowvia-app` - Progressive Web App which wraps the lib and presents it (built with RSBuild)
 
 ### Development Commands
 
@@ -156,7 +156,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## Documentation
 
-- [FOSSFLOW_ENCYCLOPEDIA.md](FOSSFLOW_ENCYCLOPEDIA.md) - Comprehensive guide to the codebase
+- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - Comprehensive guide to the codebase
 - [CONTRIBUTING.md](CONTRIBUTING.md) - Contributing guidelines
 
 ## License

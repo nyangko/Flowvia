@@ -70,7 +70,7 @@ jobs:
 
       - name: Start FossFLOW server in background
         run: |
-          cd packages/fossflow-app/build
+          cd packages/flowvia-app/build
           nohup serve -s . -l 3000 > /tmp/server.log 2>&1 &
           echo $! > /tmp/server.pid
           echo "Server PID: $(cat /tmp/server.pid)"

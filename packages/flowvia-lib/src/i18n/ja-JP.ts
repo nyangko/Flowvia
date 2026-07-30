@@ -1,0 +1,201 @@
+import { LocaleProps } from '../types/isoflowProps';
+
+const locale: LocaleProps = {
+  common: {
+    exampleText: "これはサンプルテキストです"
+  },
+  mainMenu: {
+    undo: "元に戻す",
+    redo: "やり直す",
+    open: "開く",
+    exportJson: "JSONとしてエクスポート",
+    exportCompactJson: "圧縮JSONとしてエクスポート",
+    exportImage: "画像としてエクスポート",
+    clearCanvas: "キャンバスを消去",
+    settings: "設定",
+    gitHub: "GitHub"
+  },
+  helpDialog: {
+    title: "キーボードショートカットとヘルプ",
+    close: "閉じる",
+    keyboardShortcuts: "キーボードショートカット",
+    mouseInteractions: "マウス操作",
+    action: "操作",
+    shortcut: "ショートカット",
+    method: "方法",
+    description: "説明",
+    note: "注意:",
+    noteContent: "入力フィールド、テキストエリア、編集可能な要素に入力しているときは、競合を防ぐためキーボードショートカットが無効になります。",
+    // Keyboard shortcuts
+    undoAction: "元に戻す",
+    undoDescription: "直前の操作を取り消します",
+    redoAction: "やり直す",
+    redoDescription: "取り消した操作をやり直します",
+    redoAltAction: "やり直す（代替）",
+    redoAltDescription: "代替のやり直しショートカット",
+    copyAction: 'コピー',
+    copyDescription: '選択した項目をコピーします',
+    pasteAction: '貼り付け',
+    pasteDescription: 'クリップボードから項目を貼り付けます',
+    helpAction: "ヘルプ",
+    helpDescription: "キーボードショートカットのヘルプを開きます",
+    zoomInAction: "拡大",
+    zoomInShortcut: "マウスホイール上",
+    zoomInDescription: "キャンバスを拡大します",
+    zoomOutAction: "縮小",
+    zoomOutShortcut: "マウスホイール下",
+    zoomOutDescription: "キャンバスを縮小します",
+    panCanvasAction: "キャンバスを移動",
+    panCanvasShortcut: "左クリック + ドラッグ",
+    panCanvasDescription: "移動モードでキャンバスを移動します",
+    contextMenuAction: "コンテキストメニュー",
+    contextMenuShortcut: "右クリック",
+    contextMenuDescription: "項目または空白部分のコンテキストメニューを開きます",
+    // Mouse interactions
+    selectToolAction: "選択ツール",
+    selectToolShortcut: "選択ボタンをクリック",
+    selectToolDescription: "選択モードに切り替えます",
+    panToolAction: "移動ツール",
+    panToolShortcut: "移動ボタンをクリック",
+    panToolDescription: "キャンバス移動用の移動モードに切り替えます",
+    addItemAction: "項目を追加",
+    addItemShortcut: "項目追加ボタンをクリック",
+    addItemDescription: "新しい項目を追加するアイコン選択画面を開きます",
+    drawRectangleAction: "四角形を描画",
+    drawRectangleShortcut: "四角形ボタンをクリック",
+    drawRectangleDescription: "四角形描画モードに切り替えます",
+    createConnectorAction: "コネクタを作成",
+    createConnectorShortcut: "コネクタボタンをクリック",
+    createConnectorDescription: "コネクタモードに切り替えます",
+    addTextAction: "テキストを追加",
+    addTextShortcut: "テキストボタンをクリック",
+    addTextDescription: "新しいテキストボックスを作成します"
+  },
+  connectorHintTooltip: {
+    tipCreatingConnectors: "ヒント: コネクタの作成",
+    tipConnectorTools: "ヒント: コネクタツール",
+    clickInstructionStart: "クリック",
+    clickInstructionMiddle: "して最初のノードまたは点を選び、続けて",
+    clickInstructionEnd: "して2番目のノードまたは点を選ぶと接続が作成されます。",
+    nowClickTarget: "対象をクリックして接続を完了してください。",
+    dragStart: "ドラッグ",
+    dragEnd: "して最初のノードから2番目のノードまで接続を作成します。",
+    rerouteStart: "コネクタの経路を変更するには、",
+    rerouteMiddle: "左クリック",
+    rerouteEnd: "でコネクタ線上の任意の点をクリックしてドラッグすると、アンカーポイントを作成・移動できます。"
+  },
+  lassoHintTooltip: {
+    tipLasso: "ヒント: 投げ縄選択",
+    tipFreehandLasso: "ヒント: フリーハンド投げ縄選択",
+    lassoDragStart: "クリックしてドラッグ",
+    lassoDragEnd: "し、選択したい項目の周りに四角形の選択範囲を描きます。",
+    freehandDragStart: "クリックしてドラッグ",
+    freehandDragMiddle: "し、",
+    freehandDragEnd: "自由な形",
+    freehandComplete: "を項目の周りに描きます。放すと形の中のすべての項目が選択されます。",
+    moveStart: "選択後、",
+    moveMiddle: "選択範囲の内側をクリック",
+    moveEnd: "してドラッグすると、選択したすべての項目が一緒に移動します。"
+  },
+  importHintTooltip: {
+    title: "ダイアグラムのインポート",
+    instructionStart: "ダイアグラムをインポートするには、左上の",
+    menuButton: "メニューボタン",
+    instructionMiddle: "（☰）をクリックし、",
+    openButton: "「開く」",
+    instructionEnd: "を選択してダイアグラムファイルを読み込んでください。"
+  },
+  connectorRerouteTooltip: {
+    title: "ヒント: コネクタの経路変更",
+    instructionStart: "コネクタを配置した後、自由に経路を変更できます。",
+    instructionSelect: "まずコネクタを選択し、",
+    instructionMiddle: "続けて",
+    instructionClick: "コネクタの経路をクリック",
+    instructionAnd: "して",
+    instructionDrag: "ドラッグ",
+    instructionEnd: "すると変更されます！"
+  },
+  connectorEmptySpaceTooltip: {
+    message: "このコネクタをノードに接続するには、",
+    instruction: "コネクタの端を左クリックしたまま、目的のノードまでドラッグしてください。"
+  },
+  settings: {
+    zoom: {
+      description: "マウスホイール使用時のズーム動作を設定します。",
+      zoomToCursor: "カーソル位置を基準にズーム",
+      zoomToCursorDesc: "有効にすると、マウスカーソルの位置を中心にズームします。無効にすると、キャンバスの中央を基準にズームします。",
+      trackpadMode: "トラックパッドモード",
+      trackpadModeDesc: "有効時: スクロールでキャンバスを移動し、ピンチ操作でズームします。無効時: スクロールでキャンバスがズームします（デフォルト）。トラックパッド使用時に適しています。"
+    },
+    hotkeys: {
+      title: "ホットキー設定",
+      profile: "ホットキープロファイル",
+      profileQwerty: "QWERTY (Q, W, E, R, T, Y)",
+      profileSmnrct: "SMNRCT (S, M, N, R, C, T)",
+      profileNone: "ホットキーなし",
+      tool: "ツール",
+      hotkey: "ホットキー",
+      toolSelect: "選択",
+      toolLasso: "投げ縄選択",
+      toolFreehandLasso: "フリーハンド投げ縄選択",
+      toolPan: "移動",
+      toolAddItem: "項目を追加",
+      toolRectangle: "四角形",
+      toolConnector: "コネクタ",
+      toolText: "テキスト",
+      note: "注意: ホットキーはテキストフィールドに入力していないときに機能します"
+    },
+    pan: {
+      title: "移動設定",
+      mousePanOptions: "マウス移動オプション",
+      emptyAreaClickPan: "空白部分をクリックしてドラッグ",
+      middleClickPan: "中クリックしてドラッグ",
+      rightClickPan: "右クリックしてドラッグ",
+      ctrlClickPan: "Ctrl + クリックしてドラッグ",
+      altClickPan: "Alt + クリックしてドラッグ",
+      keyboardPanOptions: "キーボード移動オプション",
+      arrowKeys: "矢印キー",
+      wasdKeys: "WASDキー",
+      ijklKeys: "IJKLキー",
+      keyboardPanSpeed: "キーボード移動速度",
+      note: "注意: 移動オプションは専用の移動ツールに加えて機能します"
+    },
+    connector: {
+      title: "コネクタ設定",
+      connectionMode: "接続作成モード",
+      clickMode: "クリックモード（推奨）",
+      clickModeDesc: "最初のノードをクリックし、次に2番目のノードをクリックして接続を作成します",
+      dragMode: "ドラッグモード",
+      dragModeDesc: "最初のノードから2番目のノードまでクリックしたままドラッグします",
+      note: "注意: この設定はいつでも変更できます。選択したモードはコネクタツールが有効なときに使用されます。"
+    },
+    iconPacks: {
+      title: "アイコンパックの管理",
+      lazyLoading: "遅延読み込みを有効にする",
+      lazyLoadingDesc: "必要なときにアイコンパックを読み込み、起動を高速化します",
+      availablePacks: "利用可能なアイコンパック",
+      coreIsoflow: "コアIsoflow（常に読み込み）",
+      alwaysEnabled: "常に有効",
+      awsPack: "AWSアイコン",
+      gcpPack: "Google Cloudアイコン",
+      azurePack: "Azureアイコン",
+      kubernetesPack: "Kubernetesアイコン",
+      loading: "読み込み中...",
+      loaded: "読み込み済み",
+      notLoaded: "未読み込み",
+      iconCount: "アイコン {count}個",
+      lazyLoadingDisabledNote: "遅延読み込みは無効です。すべてのアイコンパックが起動時に読み込まれます。",
+      note: "必要に応じてアイコンパックの有効・無効を切り替えられます。無効にしたパックはメモリ使用量を減らし、パフォーマンスを向上させます。"
+    }
+  },
+  lazyLoadingWelcome: {
+    title: "新機能: 遅延読み込み！",
+    message: "ご要望の多かったアイコンの遅延読み込みを実装しました。「環境設定」セクションで非標準のアイコンパックを有効にできます。",
+    configPath: "左上のハンバーガーアイコンをクリックすると",
+    configPath2: "環境設定にアクセスできます。",
+    canDisable: "この動作は必要に応じて無効にできます。",
+    signature: "-Stan"
+  }
+};
+
+export default locale;

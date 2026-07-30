@@ -1,10 +1,10 @@
-# FossFLOW - আইসোমেট্রিক ডায়াগ্রাম টুল <img width="30" height="30" alt="fossflow" src="https://github.com/user-attachments/assets/56d78887-601c-4336-ab87-76f8ee4cde96" />
+# Flowvia - আইসোমেট্রিক ডায়াগ্রাম টুল <img width="30" height="30" alt="fossflow" src="https://github.com/user-attachments/assets/56d78887-601c-4336-ab87-76f8ee4cde96" />
 
 <p align="center">
  <a href="../README.md">English</a> | <a href="README.cn.md">简体中文</a> | <a href="README.es.md">Español</a> | <a href="README.pt.md">Português</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.bn.md">বাংলা</a> | <a href="README.ru.md">Русский</a> | <a href="README.id.md">Bahasa Indonesia</a> | <a href="README.de.md">Deutsch</a>
 </p>
 
-<b>হ্যালো!</b> আমি Stan, যদি আপনি FossFLOW ব্যবহার করে থাকেন এবং এটি আপনাকে সাহায্য করেছে, <b>আমি সত্যিই প্রশংসা করব যদি আপনি কিছু ছোট দান করতে পারেন :)</b> আমি পূর্ণকালীন কাজ করি, এবং এই প্রকল্পে কাজ করার সময় খুঁজে পাওয়াটা যথেষ্ট চ্যালেঞ্জিং।
+<b>হ্যালো!</b> আমি Stan, যদি আপনি Flowvia ব্যবহার করে থাকেন এবং এটি আপনাকে সাহায্য করেছে, <b>আমি সত্যিই প্রশংসা করব যদি আপনি কিছু ছোট দান করতে পারেন :)</b> আমি পূর্ণকালীন কাজ করি, এবং এই প্রকল্পে কাজ করার সময় খুঁজে পাওয়াটা যথেষ্ট চ্যালেঞ্জিং।
 যদি আমি আপনার জন্য একটি ফিচার বাস্তবায়ন করেছি বা একটি বাগ ঠিক করেছি তবে এটি দুর্দান্ত হবে যদি আপনি পারেন :) যদি না হয়, তাতে কোনো সমস্যা নেই, এই সফটওয়্যারটি সর্বদা বিনামূল্যে থাকবে!
 
 
@@ -21,15 +21,15 @@
 
 ## এটি অনলাইনে চেষ্টা করুন
 
-যান  <b> --> https://abrar74774.github.io/FossFLOW/ <-- </b>
+যান  <b> --> https://abrar74774.github.io/Flowvia/ <-- </b>
 
 
 ------------------------------------------------------------------------------------------------------------------------------
-FossFLOW হল সুন্দর আইসোমেট্রিক ডায়াগ্রাম তৈরি করার জন্য একটি শক্তিশালী, ওপেন-সোর্স প্রগ্রেসিভ ওয়েব অ্যাপ (PWA)। React এবং <a href="https://github.com/markmanx/isoflow">Isoflow</a> লাইব্রেরি দিয়ে তৈরি (এখন ফর্ক করা এবং NPM-এ fossflow হিসেবে প্রকাশিত), এটি অফলাইন সাপোর্ট সহ সম্পূর্ণরূপে আপনার ব্রাউজারে চলে।
+Flowvia হল সুন্দর আইসোমেট্রিক ডায়াগ্রাম তৈরি করার জন্য একটি শক্তিশালী, ওপেন-সোর্স প্রগ্রেসিভ ওয়েব অ্যাপ (PWA)। React এবং <a href="https://github.com/markmanx/isoflow">Isoflow</a> লাইব্রেরি দিয়ে তৈরি (এখন ফর্ক করা এবং NPM-এ fossflow হিসেবে প্রকাশিত), এটি অফলাইন সাপোর্ট সহ সম্পূর্ণরূপে আপনার ব্রাউজারে চলে।
 
 ![Screenshot_20250630_160954](https://github.com/user-attachments/assets/e7f254ad-625f-4b8a-8efc-5293b5be9d55)
 
-- **🤝 [CONTRIBUTORS.md](https://github.com/Abrar74774/FossFLOW/blob/master/CONTRIBUTORS.md)** - প্রকল্পে কীভাবে অবদান রাখবেন।
+- **🤝 [CONTRIBUTORS.md](https://github.com/Abrar74774/Flowvia/blob/master/CONTRIBUTORS.md)** - প্রকল্পে কীভাবে অবদান রাখবেন।
 
 ## সাম্প্রতিক আপডেট (অক্টোবর 2025)
 
@@ -117,8 +117,8 @@ docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false stnsmith/fossflow:latest
 
 ```bash
 # রিপোজিটরি ক্লোন করুন
-git clone https://github.com/Abrar74774/FossFLOW
-cd FossFLOW
+git clone https://github.com/nyangko/Flowvia
+cd Flowvia
 
 # নির্ভরতা ইনস্টল করুন
 npm install
@@ -136,8 +136,8 @@ npm run dev
 
 এটি দুটি প্যাকেজ সম্বলিত একটি monorepo:
 
-- `packages/fossflow-lib` - নেটওয়ার্ক ডায়াগ্রাম আঁকার জন্য React কম্পোনেন্ট লাইব্রেরি (Webpack দিয়ে তৈরি)
-- `packages/fossflow-app` - আইসোমেট্রিক ডায়াগ্রাম তৈরির জন্য Progressive Web App (RSBuild দিয়ে তৈরি)
+- `packages/flowvia-lib` - নেটওয়ার্ক ডায়াগ্রাম আঁকার জন্য React কম্পোনেন্ট লাইব্রেরি (Webpack দিয়ে তৈরি)
+- `packages/flowvia-app` - আইসোমেট্রিক ডায়াগ্রাম তৈরির জন্য Progressive Web App (RSBuild দিয়ে তৈরি)
 
 ### উন্নয়ন কমান্ড
 

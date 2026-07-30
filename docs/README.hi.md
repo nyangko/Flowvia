@@ -1,10 +1,10 @@
-# FossFLOW - आइसोमेट्रिक आरेख उपकरण <img width="30" height="30" alt="fossflow" src="https://github.com/user-attachments/assets/56d78887-601c-4336-ab87-76f8ee4cde96" />
+# Flowvia - आइसोमेट्रिक आरेख उपकरण <img width="30" height="30" alt="fossflow" src="https://github.com/user-attachments/assets/56d78887-601c-4336-ab87-76f8ee4cde96" />
 
 <p align="center">
  <a href="../README.md">English</a> | <a href="README.cn.md">简体中文</a> | <a href="README.es.md">Español</a> | <a href="README.pt.md">Português</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.bn.md">বাংলা</a> | <a href="README.ru.md">Русский</a> | <a href="README.id.md">Bahasa Indonesia</a> | <a href="README.de.md">Deutsch</a>
 </p>
 
-<b>नमस्ते!</b> मैं Stan हूं, यदि आपने FossFLOW का उपयोग किया है और इसने आपकी मदद की है, <b>तो मैं वास्तव में सराहना करूंगा यदि आप कुछ छोटा दान कर सकें :)</b> मैं पूर्णकालिक काम करता हूं, और इस परियोजना पर काम करने के लिए समय निकालना पर्याप्त चुनौतीपूर्ण है।
+<b>नमस्ते!</b> मैं Stan हूं, यदि आपने Flowvia का उपयोग किया है और इसने आपकी मदद की है, <b>तो मैं वास्तव में सराहना करूंगा यदि आप कुछ छोटा दान कर सकें :)</b> मैं पूर्णकालिक काम करता हूं, और इस परियोजना पर काम करने के लिए समय निकालना पर्याप्त चुनौतीपूर्ण है।
 यदि मैंने आपके लिए कोई सुविधा लागू की है या कोई बग ठीक किया है, तो यह बहुत अच्छा होगा यदि आप कर सकें :) यदि नहीं, तो कोई समस्या नहीं है, यह सॉफ्टवेयर हमेशा मुफ्त रहेगा!
 
 
@@ -21,15 +21,15 @@
 
 ## इसे ऑनलाइन आज़माएं
 
-यहां जाएं  <b> --> https://stan-smith.github.io/FossFLOW/ <-- </b>
+यहां जाएं  <b> --> https://stan-smith.github.io/Flowvia/ <-- </b>
 
 
 ------------------------------------------------------------------------------------------------------------------------------
-FossFLOW सुंदर आइसोमेट्रिक आरेख बनाने के लिए एक शक्तिशाली, ओपन-सोर्स प्रोग्रेसिव वेब ऐप (PWA) है। React और <a href="https://github.com/markmanx/isoflow">Isoflow</a> लाइब्रेरी (अब फोर्क किया गया और NPM पर fossflow के रूप में प्रकाशित) के साथ बनाया गया, यह ऑफ़लाइन समर्थन के साथ पूरी तरह से आपके ब्राउज़र में चलता है।
+Flowvia सुंदर आइसोमेट्रिक आरेख बनाने के लिए एक शक्तिशाली, ओपन-सोर्स प्रोग्रेसिव वेब ऐप (PWA) है। React और <a href="https://github.com/markmanx/isoflow">Isoflow</a> लाइब्रेरी (अब फोर्क किया गया और NPM पर fossflow के रूप में प्रकाशित) के साथ बनाया गया, यह ऑफ़लाइन समर्थन के साथ पूरी तरह से आपके ब्राउज़र में चलता है।
 
 ![Screenshot_20250630_160954](https://github.com/user-attachments/assets/e7f254ad-625f-4b8a-8efc-5293b5be9d55)
 
-- **🤝 [CONTRIBUTORS.md](https://github.com/Abrar74774/FossFLOW/blob/master/CONTRIBUTORS.md)** - परियोजना में योगदान कैसे करें।
+- **🤝 [CONTRIBUTORS.md](https://github.com/Abrar74774/Flowvia/blob/master/CONTRIBUTORS.md)** - परियोजना में योगदान कैसे करें।
 
 ## हाल के अपडेट (अक्टूबर 2025)
 
@@ -117,8 +117,8 @@ docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false stnsmith/fossflow:latest
 
 ```bash
 # रिपॉजिटरी क्लोन करें
-git clone https://github.com/Abrar74774/FossFLOW
-cd FossFLOW
+git clone https://github.com/nyangko/Flowvia
+cd Flowvia
 
 # निर्भरताएं इंस्टॉल करें
 npm install
@@ -136,8 +136,8 @@ npm run dev
 
 यह दो पैकेज वाला एक monorepo है:
 
-- `packages/fossflow-lib` - नेटवर्क आरेख बनाने के लिए React घटक लाइब्रेरी (Webpack के साथ निर्मित)
-- `packages/fossflow-app` - आइसोमेट्रिक आरेख बनाने के लिए Progressive Web App (RSBuild के साथ निर्मित)
+- `packages/flowvia-lib` - नेटवर्क आरेख बनाने के लिए React घटक लाइब्रेरी (Webpack के साथ निर्मित)
+- `packages/flowvia-app` - आइसोमेट्रिक आरेख बनाने के लिए Progressive Web App (RSBuild के साथ निर्मित)
 
 ### विकास आदेश
 

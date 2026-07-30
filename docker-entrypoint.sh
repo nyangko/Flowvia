@@ -3,8 +3,8 @@
 
 # Start Node.js backend if server storage is enabled
 if [ "$ENABLE_SERVER_STORAGE" = "true" ]; then
-    echo "Starting FossFLOW backend server..."
-    cd /app/packages/fossflow-backend
+    echo "Starting Flowvia backend server..."
+    cd /app/packages/flowvia-backend
     if [ -n "$PUID" ] && [ -n "$PGID" ]; then
         su-exec $PUID:$PGID node server.js &
         echo "Backend server started as $PUID:$PGID"

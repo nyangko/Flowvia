@@ -1,6 +1,6 @@
-# Contributing to FossFLOW
+# Contributing to Flowvia
 
-Thank you for your interest in contributing to FossFLOW! This guide will help you get started with contributing to the project.
+Thank you for your interest in contributing to Flowvia! This guide will help you get started with contributing to the project.
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ Thank you for your interest in contributing to FossFLOW! This guide will help yo
 
 ## Project Scope
 
-FossFLOW is a **simple, privacy-first, browser-based isometric diagramming tool**. It deliberately avoids enterprise complexity.
+Flowvia is a **simple, privacy-first, browser-based isometric diagramming tool**. It deliberately avoids enterprise complexity.
 
 The following are **out of scope** and PRs implementing them will be closed immediately:
 
@@ -29,9 +29,9 @@ The following are **out of scope** and PRs implementing them will be closed imme
 - User accounts, teams, or multi-tenancy
 - Cloud hosting, SaaS features, or paid tiers
 - Database integrations
-- Anything that fundamentally changes what FossFLOW is
+- Anything that fundamentally changes what Flowvia is
 
-If you're unsure whether your idea fits, open a [Discussion](https://github.com/Abrar74774/FossFLOW/discussions) first.
+If you're unsure whether your idea fits, open a [Discussion](https://github.com/nyangko/Flowvia/discussions) first.
 
 ## Code of Conduct
 
@@ -57,8 +57,8 @@ By participating in this project, you agree to abide by our Code of Conduct:
 1. Fork the repository on GitHub
 2. Clone your fork:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/FossFLOW.git
-   cd FossFLOW
+   git clone https://github.com/YOUR_USERNAME/Flowvia.git
+   cd Flowvia
    ```
 3. Install dependencies:
    ```bash
@@ -107,9 +107,9 @@ Recommended extensions:
 This is a monorepo containing two packages:
 
 ```
-FossFLOW/
+Flowvia/
 ├── packages/
-│   ├── fossflow-lib/     # React component library
+│   ├── flowvia-lib/     # React component library
 │   │   ├── src/
 │   │   │   ├── components/    # React components
 │   │   │   ├── stores/        # State management (Zustand)
@@ -120,7 +120,7 @@ FossFLOW/
 │   │   ├── rslib.config.ts # Library build config
 │   │   └── package.json
 │   │
-│   └── fossflow-app/      # PWA application
+│   └── flowvia-app/      # PWA application
 │       ├── src/
 │       │   ├── App.tsx         # Main app component
 │       │   ├── diagramUtils.ts # Diagram utilities
@@ -136,21 +136,21 @@ FossFLOW/
 ```
 
 ### Key Differences:
-- **fossflow-lib**: The core library, built with RSpack
-- **fossflow-app**: The PWA application, built with RSBuild
+- **flowvia-lib**: The core library, built with RSpack
+- **flowvia-app**: The PWA application, built with RSBuild
 - Both packages are managed as npm workspaces
 
 ## How to Contribute
 
 ### Finding Issues to Work On
 
-1. Check the [Issues](https://github.com/Abrar74774/FossFLOW/issues) page
+1. Check the [Issues](https://github.com/nyangko/Flowvia/issues) page
 2. Look for issues labeled:
    - `good first issue` - Great for newcomers
    - `help wanted` - Community help needed
    - `bug` - Bug fixes
    - `enhancement` - New features
-3. Check [FOSSFLOW_TODO.md](./FOSSFLOW_TODO.md) for prioritized tasks
+3. Check [FLOWVIA_TODO.md](./FLOWVIA_TODO.md) for prioritized tasks
 
 ### Types of Contributions
 
@@ -160,14 +160,14 @@ We welcome all types of contributions:
 - **Features**: Implement new functionality
 - **Documentation**: Improve docs, add examples
 - **Tests**: Increase test coverage
-- **UI/UX improvements**: Make FossFLOW better to use
+- **UI/UX improvements**: Make Flowvia better to use
 - **Performance**: Optimize code for better performance
 
 ## Development Workflow
 
 ### Working with the Monorepo
 
-#### Library Development (fossflow-lib)
+#### Library Development (flowvia-lib)
 
 ```bash
 # Start library in watch mode
@@ -177,10 +177,10 @@ npm run dev:lib
 npm run build:lib
 
 # Run library tests
-cd packages/fossflow-lib && npm test
+cd packages/flowvia-lib && npm test
 ```
 
-#### App Development (fossflow-app)
+#### App Development (flowvia-app)
 
 ```bash
 # Start app dev server
@@ -282,7 +282,7 @@ git commit -m "feat(connector)!: change default connector mode to click"
 
 #### Scopes (optional but recommended)
 
-Common scopes in FossFLOW:
+Common scopes in Flowvia:
 - `connector`: Connector-related changes
 - `ui`: UI components and interactions
 - `storage`: Storage and persistence
@@ -409,7 +409,7 @@ describe('useIsoProjection', () => {
 
 1. **Update your fork**:
    ```bash
-   git remote add upstream https://github.com/Abrar74774/FossFLOW.git
+   git remote add upstream https://github.com/nyangko/Flowvia.git
    git fetch upstream
    git checkout main
    git merge upstream/main
@@ -451,7 +451,7 @@ feat(connector)!: change default connector mode
 
 ```bash
 # Build multi-architecture image
-docker buildx build --platform linux/amd64,linux/arm64 -t fossflow:local .
+docker buildx build --platform linux/amd64,linux/arm64 -t flowvia:local .
 
 # Run with Docker Compose
 docker compose up
@@ -466,8 +466,8 @@ docker run -p 80:80 abrar74774/fossflow:latest
 
 - **GitHub Issues**: For bugs and feature requests (use the templates)
 - **Discussions**: For questions and ideas
-- **Code Encyclopedia**: See [FOSSFLOW_ENCYCLOPEDIA.md](./FOSSFLOW_ENCYCLOPEDIA.md)
-- **TODO List**: See [FOSSFLOW_TODO.md](./FOSSFLOW_TODO.md)
+- **Code Encyclopedia**: See [FLOWVIA_ENCYCLOPEDIA.md](./FLOWVIA_ENCYCLOPEDIA.md)
+- **TODO List**: See [FLOWVIA_TODO.md](./FLOWVIA_TODO.md)
 
 ### Communication Guidelines
 
@@ -485,10 +485,10 @@ Contributors will be recognized in:
 
 ## License
 
-By contributing to FossFLOW, you agree that your contributions will be licensed under the project's license.
+By contributing to Flowvia, you agree that your contributions will be licensed under the project's license.
 
 ---
 
-Thank you for contributing to FossFLOW! Your efforts help make this project better for everyone. If you have any questions, don't hesitate to ask in the issues or discussions.
+Thank you for contributing to Flowvia! Your efforts help make this project better for everyone. If you have any questions, don't hesitate to ask in the issues or discussions.
 
 -S

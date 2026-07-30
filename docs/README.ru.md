@@ -1,10 +1,10 @@
-# FossFLOW - Инструмент для изометрических диаграмм <img width="30" height="30" alt="fossflow" src="https://github.com/user-attachments/assets/56d78887-601c-4336-ab87-76f8ee4cde96" />
+# Flowvia - Инструмент для изометрических диаграмм <img width="30" height="30" alt="fossflow" src="https://github.com/user-attachments/assets/56d78887-601c-4336-ab87-76f8ee4cde96" />
 
 <p align="center">
  <a href="../README.md">English</a> | <a href="README.cn.md">简体中文</a> | <a href="README.es.md">Español</a> | <a href="README.pt.md">Português</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.bn.md">বাংলা</a> | <a href="README.ru.md">Русский</a> | <a href="README.id.md">Bahasa Indonesia</a> | <a href="README.de.md">Deutsch</a>
 </p>
 
-<b>Привет!</b> Я Stan, если вы использовали FossFLOW и это помогло вам, <b>я буду очень признателен, если вы сможете сделать небольшое пожертвование :)</b> Я работаю полный рабочий день, и найти время для работы над этим проектом достаточно сложно.
+<b>Привет!</b> Я Stan, если вы использовали Flowvia и это помогло вам, <b>я буду очень признателен, если вы сможете сделать небольшое пожертвование :)</b> Я работаю полный рабочий день, и найти время для работы над этим проектом достаточно сложно.
 Если я реализовал для вас функцию или исправил ошибку, было бы здорово, если бы вы могли :) если нет, то это не проблема, это программное обеспечение всегда останется бесплатным!
 
 
@@ -21,15 +21,15 @@
 
 ## Попробуйте онлайн
 
-Перейдите на  <b> --> https://stan-smith.github.io/FossFLOW/ <-- </b>
+Перейдите на  <b> --> https://stan-smith.github.io/Flowvia/ <-- </b>
 
 
 ------------------------------------------------------------------------------------------------------------------------------
-FossFLOW - это мощное прогрессивное веб-приложение (PWA) с открытым исходным кодом для создания красивых изометрических диаграмм. Созданное с помощью React и библиотеки <a href="https://github.com/markmanx/isoflow">Isoflow</a> (Теперь форкнуто и опубликовано в NPM как fossflow), оно полностью работает в вашем браузере с поддержкой офлайн-режима.
+Flowvia - это мощное прогрессивное веб-приложение (PWA) с открытым исходным кодом для создания красивых изометрических диаграмм. Созданное с помощью React и библиотеки <a href="https://github.com/markmanx/isoflow">Isoflow</a> (Теперь форкнуто и опубликовано в NPM как fossflow), оно полностью работает в вашем браузере с поддержкой офлайн-режима.
 
 ![Screenshot_20250630_160954](https://github.com/user-attachments/assets/e7f254ad-625f-4b8a-8efc-5293b5be9d55)
 
-- **🤝 [CONTRIBUTORS.md](https://github.com/Abrar74774/FossFLOW/blob/master/CONTRIBUTORS.md)** - Как внести вклад в проект.
+- **🤝 [CONTRIBUTORS.md](https://github.com/Abrar74774/Flowvia/blob/master/CONTRIBUTORS.md)** - Как внести вклад в проект.
 
 ## Недавние обновления (Октябрь 2025)
 
@@ -117,8 +117,8 @@ docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false stnsmith/fossflow:latest
 
 ```bash
 # Клонировать репозиторий
-git clone https://github.com/Abrar74774/FossFLOW
-cd FossFLOW
+git clone https://github.com/nyangko/Flowvia
+cd Flowvia
 
 # Установить зависимости
 npm install
@@ -136,8 +136,8 @@ npm run dev
 
 Это monorepo, содержащий два пакета:
 
-- `packages/fossflow-lib` - Библиотека компонентов React для рисования сетевых диаграмм (собрана с Webpack)
-- `packages/fossflow-app` - Прогрессивное веб-приложение для создания изометрических диаграмм (собрано с RSBuild)
+- `packages/flowvia-lib` - Библиотека компонентов React для рисования сетевых диаграмм (собрана с Webpack)
+- `packages/flowvia-app` - Прогрессивное веб-приложение для создания изометрических диаграмм (собрано с RSBuild)
 
 ### Команды разработки
 

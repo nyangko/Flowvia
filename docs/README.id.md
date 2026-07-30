@@ -1,10 +1,10 @@
-# FossFLOW - Alat Diagram Isometrik <img width="30" height="30" alt="fossflow" src="https://github.com/user-attachments/assets/56d78887-601c-4336-ab87-76f8ee4cde96" />
+# Flowvia - Alat Diagram Isometrik <img width="30" height="30" alt="fossflow" src="https://github.com/user-attachments/assets/56d78887-601c-4336-ab87-76f8ee4cde96" />
 
 <p align="center">
  <a href="../README.md">English</a> | <a href="README.cn.md">简体中文</a> | <a href="README.es.md">Español</a> | <a href="README.pt.md">Português</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.bn.md">বাংলা</a> | <a href="README.ru.md">Русский</a> | <a href="README.id.md">Bahasa Indonesia</a> | <a href="README.de.md">Deutsch</a>
 </p>
 
-<b>Halo!</b> Saya Stan, jika Anda telah menggunakan FossFLOW dan ini membantu Anda, <b>saya akan sangat menghargai jika Anda bisa menyumbang sesuatu yang kecil :)</b> Saya bekerja penuh waktu, dan menemukan waktu untuk mengerjakan proyek ini sudah cukup menantang.
+<b>Halo!</b> Saya Stan, jika Anda telah menggunakan Flowvia dan ini membantu Anda, <b>saya akan sangat menghargai jika Anda bisa menyumbang sesuatu yang kecil :)</b> Saya bekerja penuh waktu, dan menemukan waktu untuk mengerjakan proyek ini sudah cukup menantang.
 Jika saya telah mengimplementasikan fitur untuk Anda atau memperbaiki bug, akan sangat bagus jika Anda bisa menyumbang :) jika tidak, tidak masalah, software ini akan selalu tetap gratis!
 
 
@@ -21,15 +21,15 @@ Terima kasih,
 
 ## Coba Secara Online
 
-Kunjungi  <b> --> https://stan-smith.github.io/FossFLOW/ <-- </b>
+Kunjungi  <b> --> https://stan-smith.github.io/Flowvia/ <-- </b>
 
 
 ------------------------------------------------------------------------------------------------------------------------------
-FossFLOW adalah aplikasi web progresif (PWA) open-source yang powerful untuk membuat diagram isometrik yang indah. Dibangun dengan React dan library <a href="https://github.com/markmanx/isoflow">Isoflow</a> (Sekarang di-fork dan dipublikasikan ke NPM sebagai fossflow), berjalan sepenuhnya di browser Anda dengan dukungan offline.
+Flowvia adalah aplikasi web progresif (PWA) open-source yang powerful untuk membuat diagram isometrik yang indah. Dibangun dengan React dan library <a href="https://github.com/markmanx/isoflow">Isoflow</a> (Sekarang di-fork dan dipublikasikan ke NPM sebagai fossflow), berjalan sepenuhnya di browser Anda dengan dukungan offline.
 
 ![Screenshot_20250630_160954](https://github.com/user-attachments/assets/e7f254ad-625f-4b8a-8efc-5293b5be9d55)
 
-- **🤝 [CONTRIBUTORS.md](https://github.com/Abrar74774/FossFLOW/blob/master/CONTRIBUTORS.md)** - Cara berkontribusi pada proyek.
+- **🤝 [CONTRIBUTORS.md](https://github.com/Abrar74774/Flowvia/blob/master/CONTRIBUTORS.md)** - Cara berkontribusi pada proyek.
 
 ## Pembaruan Terbaru (Oktober 2025)
 
@@ -105,8 +105,8 @@ docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false stnsmith/fossflow:latest
 
 ```bash
 # Clone repositori
-git clone https://github.com/Abrar74774/FossFLOW
-cd FossFLOW
+git clone https://github.com/nyangko/Flowvia
+cd Flowvia
 
 # Install dependensi
 npm install
@@ -124,8 +124,8 @@ Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
 
 Ini adalah monorepo yang berisi dua paket:
 
-- `packages/fossflow-lib` - Library komponen React untuk menggambar diagram jaringan (dibangun dengan Webpack)
-- `packages/fossflow-app` - Progressive Web App untuk membuat diagram isometrik (dibangun dengan RSBuild)
+- `packages/flowvia-lib` - Library komponen React untuk menggambar diagram jaringan (dibangun dengan Webpack)
+- `packages/flowvia-app` - Progressive Web App untuk membuat diagram isometrik (dibangun dengan RSBuild)
 
 ### Perintah Pengembangan
 

@@ -1,0 +1,201 @@
+import { LocaleProps } from '../types/isoflowProps';
+
+const locale: LocaleProps = {
+  common: {
+    exampleText: "예시 텍스트입니다"
+  },
+  mainMenu: {
+    undo: "실행 취소",
+    redo: "다시 실행",
+    open: "열기",
+    exportJson: "JSON으로 내보내기",
+    exportCompactJson: "압축 JSON으로 내보내기",
+    exportImage: "이미지로 내보내기",
+    clearCanvas: "캔버스 지우기",
+    settings: "설정",
+    gitHub: "GitHub"
+  },
+  helpDialog: {
+    title: "키보드 단축키 및 도움말",
+    close: "닫기",
+    keyboardShortcuts: "키보드 단축키",
+    mouseInteractions: "마우스 조작",
+    action: "동작",
+    shortcut: "단축키",
+    method: "방법",
+    description: "설명",
+    note: "참고:",
+    noteContent: "입력 필드, 텍스트 영역 또는 편집 가능한 요소에 입력 중일 때는 충돌을 방지하기 위해 키보드 단축키가 비활성화됩니다.",
+    // Keyboard shortcuts
+    undoAction: "실행 취소",
+    undoDescription: "마지막 동작을 취소합니다",
+    redoAction: "다시 실행",
+    redoDescription: "취소한 마지막 동작을 다시 실행합니다",
+    redoAltAction: "다시 실행 (대체)",
+    redoAltDescription: "대체 다시 실행 단축키",
+    copyAction: '복사',
+    copyDescription: '선택한 항목을 복사합니다',
+    pasteAction: '붙여넣기',
+    pasteDescription: '클립보드의 항목을 붙여넣습니다',
+    helpAction: "도움말",
+    helpDescription: "키보드 단축키 도움말 창을 엽니다",
+    zoomInAction: "확대",
+    zoomInShortcut: "마우스 휠 위로",
+    zoomInDescription: "캔버스를 확대합니다",
+    zoomOutAction: "축소",
+    zoomOutShortcut: "마우스 휠 아래로",
+    zoomOutDescription: "캔버스를 축소합니다",
+    panCanvasAction: "캔버스 이동",
+    panCanvasShortcut: "왼쪽 클릭 + 드래그",
+    panCanvasDescription: "이동 모드에서 캔버스를 이동합니다",
+    contextMenuAction: "컨텍스트 메뉴",
+    contextMenuShortcut: "오른쪽 클릭",
+    contextMenuDescription: "항목 또는 빈 공간에 대한 컨텍스트 메뉴를 엽니다",
+    // Mouse interactions
+    selectToolAction: "선택 도구",
+    selectToolShortcut: "선택 버튼 클릭",
+    selectToolDescription: "선택 모드로 전환합니다",
+    panToolAction: "이동 도구",
+    panToolShortcut: "이동 버튼 클릭",
+    panToolDescription: "캔버스 이동을 위한 이동 모드로 전환합니다",
+    addItemAction: "항목 추가",
+    addItemShortcut: "항목 추가 버튼 클릭",
+    addItemDescription: "새 항목을 추가할 아이콘 선택 창을 엽니다",
+    drawRectangleAction: "사각형 그리기",
+    drawRectangleShortcut: "사각형 버튼 클릭",
+    drawRectangleDescription: "사각형 그리기 모드로 전환합니다",
+    createConnectorAction: "연결선 만들기",
+    createConnectorShortcut: "연결선 버튼 클릭",
+    createConnectorDescription: "연결선 모드로 전환합니다",
+    addTextAction: "텍스트 추가",
+    addTextShortcut: "텍스트 버튼 클릭",
+    addTextDescription: "새 텍스트 상자를 만듭니다"
+  },
+  connectorHintTooltip: {
+    tipCreatingConnectors: "팁: 연결선 만들기",
+    tipConnectorTools: "팁: 연결선 도구",
+    clickInstructionStart: "클릭",
+    clickInstructionMiddle: "으로 첫 번째 노드나 지점을 선택한 다음",
+    clickInstructionEnd: "으로 두 번째 노드나 지점을 선택하면 연결이 생성됩니다.",
+    nowClickTarget: "이제 대상을 클릭하여 연결을 완료하세요.",
+    dragStart: "드래그",
+    dragEnd: "하여 첫 번째 노드에서 두 번째 노드까지 연결을 만듭니다.",
+    rerouteStart: "연결선의 경로를 바꾸려면",
+    rerouteMiddle: "왼쪽 클릭",
+    rerouteEnd: "으로 연결선 위의 임의의 지점을 클릭하고 드래그하여 고정점을 만들거나 이동하세요."
+  },
+  lassoHintTooltip: {
+    tipLasso: "팁: 올가미 선택",
+    tipFreehandLasso: "팁: 자유형 올가미 선택",
+    lassoDragStart: "클릭하고 드래그",
+    lassoDragEnd: "하여 선택하려는 항목 주위에 사각형 선택 영역을 그립니다.",
+    freehandDragStart: "클릭하고 드래그",
+    freehandDragMiddle: "하여",
+    freehandDragEnd: "자유형 모양",
+    freehandComplete: "을 항목 주위에 그립니다. 놓으면 모양 안의 모든 항목이 선택됩니다.",
+    moveStart: "선택한 후",
+    moveMiddle: "선택 영역 안을 클릭",
+    moveEnd: "하고 드래그하면 선택된 모든 항목이 함께 이동합니다."
+  },
+  importHintTooltip: {
+    title: "다이어그램 가져오기",
+    instructionStart: "다이어그램을 가져오려면 왼쪽 상단의",
+    menuButton: "메뉴 버튼",
+    instructionMiddle: "(☰)을 클릭한 다음",
+    openButton: "\"열기\"",
+    instructionEnd: "를 선택하여 다이어그램 파일을 불러오세요."
+  },
+  connectorRerouteTooltip: {
+    title: "팁: 연결선 경로 변경",
+    instructionStart: "연결선을 배치한 후 원하는 대로 경로를 바꿀 수 있습니다.",
+    instructionSelect: "먼저 연결선을 선택한 다음,",
+    instructionMiddle: "다음",
+    instructionClick: "연결선 경로를 클릭",
+    instructionAnd: "하고",
+    instructionDrag: "드래그",
+    instructionEnd: "하면 변경됩니다!"
+  },
+  connectorEmptySpaceTooltip: {
+    message: "이 연결선을 노드에 연결하려면,",
+    instruction: "연결선 끝을 왼쪽 클릭한 채로 원하는 노드까지 드래그하세요."
+  },
+  settings: {
+    zoom: {
+      description: "마우스 휠을 사용할 때의 확대/축소 동작을 설정합니다.",
+      zoomToCursor: "커서 기준 확대/축소",
+      zoomToCursorDesc: "활성화하면 마우스 커서 위치를 중심으로 확대/축소됩니다. 비활성화하면 캔버스 중앙을 기준으로 확대/축소됩니다.",
+      trackpadMode: "트랙패드 모드",
+      trackpadModeDesc: "활성화 시: 스크롤로 캔버스를 이동하고, 손가락으로 확대/축소 제스처를 사용합니다. 비활성화 시: 스크롤로 캔버스가 확대/축소됩니다(기본값). 트랙패드 사용에 적합합니다."
+    },
+    hotkeys: {
+      title: "단축키 설정",
+      profile: "단축키 프로필",
+      profileQwerty: "QWERTY (Q, W, E, R, T, Y)",
+      profileSmnrct: "SMNRCT (S, M, N, R, C, T)",
+      profileNone: "단축키 없음",
+      tool: "도구",
+      hotkey: "단축키",
+      toolSelect: "선택",
+      toolLasso: "올가미 선택",
+      toolFreehandLasso: "자유형 올가미 선택",
+      toolPan: "이동",
+      toolAddItem: "항목 추가",
+      toolRectangle: "사각형",
+      toolConnector: "연결선",
+      toolText: "텍스트",
+      note: "참고: 단축키는 텍스트 필드에 입력 중이 아닐 때 작동합니다"
+    },
+    pan: {
+      title: "이동 설정",
+      mousePanOptions: "마우스 이동 옵션",
+      emptyAreaClickPan: "빈 영역을 클릭하고 드래그",
+      middleClickPan: "가운데 버튼 클릭 후 드래그",
+      rightClickPan: "오른쪽 클릭 후 드래그",
+      ctrlClickPan: "Ctrl + 클릭 후 드래그",
+      altClickPan: "Alt + 클릭 후 드래그",
+      keyboardPanOptions: "키보드 이동 옵션",
+      arrowKeys: "화살표 키",
+      wasdKeys: "WASD 키",
+      ijklKeys: "IJKL 키",
+      keyboardPanSpeed: "키보드 이동 속도",
+      note: "참고: 이동 옵션은 전용 이동 도구와 함께 작동합니다"
+    },
+    connector: {
+      title: "연결선 설정",
+      connectionMode: "연결 생성 모드",
+      clickMode: "클릭 모드 (권장)",
+      clickModeDesc: "첫 번째 노드를 클릭한 다음 두 번째 노드를 클릭하여 연결을 만듭니다",
+      dragMode: "드래그 모드",
+      dragModeDesc: "첫 번째 노드에서 두 번째 노드까지 클릭한 채로 드래그합니다",
+      note: "참고: 이 설정은 언제든지 변경할 수 있습니다. 선택한 모드는 연결선 도구가 활성화되어 있을 때 사용됩니다."
+    },
+    iconPacks: {
+      title: "아이콘 팩 관리",
+      lazyLoading: "지연 로딩 사용",
+      lazyLoadingDesc: "필요할 때만 아이콘 팩을 불러와 시작 속도를 높입니다",
+      availablePacks: "사용 가능한 아이콘 팩",
+      coreIsoflow: "핵심 Isoflow (항상 로드됨)",
+      alwaysEnabled: "항상 사용",
+      awsPack: "AWS 아이콘",
+      gcpPack: "Google Cloud 아이콘",
+      azurePack: "Azure 아이콘",
+      kubernetesPack: "Kubernetes 아이콘",
+      loading: "로딩 중...",
+      loaded: "로드됨",
+      notLoaded: "로드되지 않음",
+      iconCount: "아이콘 {count}개",
+      lazyLoadingDisabledNote: "지연 로딩이 비활성화되어 있습니다. 모든 아이콘 팩이 시작 시 로드됩니다.",
+      note: "필요에 따라 아이콘 팩을 켜거나 끌 수 있습니다. 비활성화된 팩은 메모리 사용량을 줄이고 성능을 향상시킵니다."
+    }
+  },
+  lazyLoadingWelcome: {
+    title: "새 기능: 지연 로딩!",
+    message: "많은 분들이 요청하신 아이콘 지연 로딩 기능이 추가되었습니다. 이제 '환경설정'에서 비표준 아이콘 팩을 활성화할 수 있습니다.",
+    configPath: "왼쪽 상단의 햄버거 아이콘을 클릭하면",
+    configPath2: "환경설정에 접근할 수 있습니다.",
+    canDisable: "원하시면 이 동작을 비활성화할 수 있습니다.",
+    signature: "-Stan"
+  }
+};
+
+export default locale;

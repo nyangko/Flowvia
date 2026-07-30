@@ -6,8 +6,8 @@ WORKDIR /app
 
 # Copy package files for the monorepo
 COPY package*.json ./
-COPY packages/fossflow-lib/package*.json ./packages/fossflow-lib/
-COPY packages/fossflow-app/package*.json ./packages/fossflow-app/
+COPY packages/flowvia-lib/package*.json ./packages/flowvia-lib/
+COPY packages/flowvia-app/package*.json ./packages/flowvia-app/
 
 # Install dependencies for the entire workspace
 RUN npm install
@@ -25,13 +25,13 @@ FROM node:24-alpine
 RUN apk add --no-cache nginx openssl su-exec
 
 # Copy backend code
-COPY --from=build /app/packages/fossflow-backend /app/packages/fossflow-backend
+COPY --from=build /app/packages/flowvia-backend /app/packages/flowvia-backend
 
-WORKDIR /app/packages/fossflow-backend
+WORKDIR /app/packages/flowvia-backend
 RUN npm install --omit=dev
 
 # Copy the built React app to Nginx's web server directory
-COPY --from=build /app/packages/fossflow-app/build /usr/share/nginx/html
+COPY --from=build /app/packages/flowvia-app/build /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/http.d/default.conf
