@@ -5,6 +5,18 @@ All notable changes to Flowvia will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1](https://github.com/nyangko/Flowvia/compare/v1.0.0...v1.0.1) (2026-07-31)
+
+### Bug Fixes
+
+* memoize iconPackManager prop to stop infinite re-render on Isoflow ([c783a8b](https://github.com/nyangko/Flowvia/commit/c783a8b0f49bffbd7eb6d7de6657cb1587189476)), closes [#185](https://github.com/nyangko/Flowvia/issues/185)
+
+### Documentation
+
+* bump demo GIFs to 50 frames, show 3-way connector multiplexing ([e016ff4](https://github.com/nyangko/Flowvia/commit/e016ff4d2421c0277aafa99a4e59bac53bc2627d))
+* refresh demo GIFs to match current toolbar UI ([0026fca](https://github.com/nyangko/Flowvia/commit/0026fcac07ffa67622a8ffe8845316ff6bbd5386))
+* smoother demo GIFs with denser frame capture ([96d5969](https://github.com/nyangko/Flowvia/commit/96d5969823335484356ac30b2d1c13ec4178320b))
+
 ## 1.0.0 (2026-07-31)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "flowvia-backend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Optional backend server for Flowvia persistent storage",
   "main": "server.js",
   "type": "module",
