@@ -243,6 +243,36 @@ def click_redo(driver):
     return False
 
 
+def undo_until(driver, predicate, max_attempts=6):
+    """Click Undo repeatedly until predicate(scene_state) holds.
+
+    Placing a connector in click mode can log more than one history entry
+    (the create, plus an update per mousemove tick while moving toward the
+    second node), so the exact number of undo steps needed isn't fixed —
+    poll instead of assuming a hardcoded count.
+    """
+    state = get_scene_state(driver)
+    for _ in range(max_attempts):
+        if isinstance(state, dict) and predicate(state):
+            return state
+        if not click_undo(driver):
+            break
+        state = get_scene_state(driver)
+    return state
+
+
+def redo_until(driver, predicate, max_attempts=6):
+    """Click Redo repeatedly until predicate(scene_state) holds. See undo_until."""
+    state = get_scene_state(driver)
+    for _ in range(max_attempts):
+        if isinstance(state, dict) and predicate(state):
+            return state
+        if not click_redo(driver):
+            break
+        state = get_scene_state(driver)
+    return state
+
+
 def test_connector_undo_redo(driver):
     """Place 2 nodes, connect them, undo connector, redo connector."""
     base_url = get_base_url()
@@ -328,17 +358,11 @@ def test_connector_undo_redo(driver):
     ActionChains(driver).send_keys('\ue00c').perform()  # Escape
     time.sleep(0.5)
 
-    # --- Undo connector (create + update = 2 history entries) ---
-    print("\n5. Undoing connector (2 steps: update then create)...")
-    click_undo(driver)
-    polylines_mid = count_connector_polylines(driver)
-    state_mid = get_scene_state(driver)
-    print(f"   After undo 1: polylines={polylines_mid}, scene={state_mid}")
-
-    click_undo(driver)
+    # --- Undo connector (however many history entries it took to place it) ---
+    print("\n5. Undoing connector until it's gone...")
+    state_undo = undo_until(driver, lambda s: s.get("connectors", 0) == 0)
     polylines_undo = count_connector_polylines(driver)
-    state_undo = get_scene_state(driver)
-    print(f"   After undo 2: polylines={polylines_undo}, scene={state_undo}")
+    print(f"   After undo: polylines={polylines_undo}, scene={state_undo}")
     save_screenshot(driver, "conn_04_after_undo")
 
     assert polylines_undo < connector_polylines or (
@@ -354,14 +378,12 @@ def test_connector_undo_redo(driver):
     print(f"   Images after undo: {imgs_after_undo} (nodes should still be there)")
     assert imgs_after_undo == 2, f"Expected 2 images after undoing connector, got {imgs_after_undo}"
 
-    # --- Redo connector (2 steps: create then update) ---
-    print("\n6. Redoing connector (2 steps)...")
-    click_redo(driver)
-    click_redo(driver)
+    # --- Redo connector (however many steps it takes to restore it) ---
+    print("\n6. Redoing connector until it's back...")
+    state_redo = redo_until(driver, lambda s: s.get("connectors", 0) > 0)
     time.sleep(0.5)
 
     polylines_redo = count_connector_polylines(driver)
-    state_redo = get_scene_state(driver)
     print(f"   Polylines after redo: {polylines_redo}")
     print(f"   Scene state: {state_redo}")
     save_screenshot(driver, "conn_05_after_redo")
@@ -375,26 +397,20 @@ def test_connector_undo_redo(driver):
     print("   Connector restored by redo.")
 
     # --- Undo/redo cycle again ---
-    print("\n7. Undoing connector again (2 steps)...")
-    click_undo(driver)
-    click_undo(driver)
-    time.sleep(0.5)
-
+    print("\n7. Undoing connector again...")
+    state_undo2 = undo_until(driver, lambda s: s.get("connectors", 0) == 0)
     polylines_undo2 = count_connector_polylines(driver)
-    state_undo2 = get_scene_state(driver)
     print(f"   Polylines: {polylines_undo2}, connectors: {state_undo2.get('connectors', '?')}")
     assert polylines_undo2 < connector_polylines or (
         isinstance(state_undo2, dict) and state_undo2.get("connectors", 0) == 0
     ), "Second undo cycle did not remove connector"
     print("   Connector removed again.")
 
-    print("   Redoing connector again (2 steps)...")
-    click_redo(driver)
-    click_redo(driver)
+    print("   Redoing connector again...")
+    state_redo2 = redo_until(driver, lambda s: s.get("connectors", 0) > 0)
     time.sleep(0.5)
 
     polylines_redo2 = count_connector_polylines(driver)
-    state_redo2 = get_scene_state(driver)
     print(f"   Polylines: {polylines_redo2}, connectors: {state_redo2.get('connectors', '?')}")
     assert polylines_redo2 >= connector_polylines or (
         isinstance(state_redo2, dict) and state_redo2.get("connectors", 0) > 0
