@@ -5,12 +5,15 @@ module.exports = {
   modulePaths: ['node_modules', '<rootDir>'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleNameMapper: {
-    // Force React to resolve from root node_modules to avoid duplicate React instances
-    "^react$": "<rootDir>/../../node_modules/react",
-    "^react-dom$": "<rootDir>/../../node_modules/react-dom",
-    "^react-dom/client$": "<rootDir>/../../node_modules/react-dom/client",
-    "^react/jsx-runtime$": "<rootDir>/../../node_modules/react/jsx-runtime",
-    "^react/jsx-dev-runtime$": "<rootDir>/../../node_modules/react/jsx-dev-runtime"
+    // Force a single resolved React instance. pnpm doesn't hoist react to the
+    // workspace root node_modules (only root-level deps get hoisted there),
+    // so resolve via this package's own node_modules, which pnpm always
+    // symlinks to the single deduped copy in the pnpm store.
+    "^react$": "<rootDir>/node_modules/react",
+    "^react-dom$": "<rootDir>/node_modules/react-dom",
+    "^react-dom/client$": "<rootDir>/node_modules/react-dom/client",
+    "^react/jsx-runtime$": "<rootDir>/node_modules/react/jsx-runtime",
+    "^react/jsx-dev-runtime$": "<rootDir>/node_modules/react/jsx-dev-runtime"
   },
   testPathIgnorePatterns: [
     '/node_modules/',
