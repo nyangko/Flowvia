@@ -73,7 +73,7 @@ export const supportedLanguages = [
     value: 'pl-PL'
   },
   {
-    label: 'Italian',
+    label: 'Italiano',
     value: 'it-IT'
   },
   {

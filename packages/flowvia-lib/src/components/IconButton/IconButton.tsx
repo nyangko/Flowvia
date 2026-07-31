@@ -26,7 +26,7 @@ export const IconButton = ({
     }
 
     if (disabled) {
-      return 'grey.800';
+      return 'grey.300';
     }
 
     return 'grey.500';
@@ -44,6 +44,7 @@ export const IconButton = ({
       <Button
         variant="text"
         onClick={onClick}
+        disabled={disabled}
         sx={{
           borderRadius: 0,
           height: theme.customVars.toolMenu.height,

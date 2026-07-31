@@ -1,62 +1,68 @@
 {
-    "nav": {
-        "newDiagram": "Yeni Diyagram",
-        "saveSessionOnly": "Kaydet (Yalnızca Oturum)",
-        "loadSessionOnly": "Yükle (Yalnızca Oturum)",
-        "importFile": "Dosya İçe Aktar",
-        "exportFile": "Dosya Dışa Aktar",
-        "quickSaveSession": "Hızlı Kaydet (Oturum)",
-        "serverStorage": "Sunucu Depolama"
+  "nav": {
+    "newDiagram": "Yeni Diyagram",
+    "saveSessionOnly": "Kaydet",
+    "loadSessionOnly": "Yükle",
+    "importFile": "Dosya İçe Aktar",
+    "exportFile": "Dosya Dışa Aktar",
+    "quickSaveSession": "Hızlı Kaydet (Oturum)"
+  },
+  "status": {
+    "current": "Mevcut",
+    "untitled": "İsimsiz Diyagram",
+    "modified": "Değiştirildi",
+    "clickToRename": "Yeniden adlandırmak için tıklayın"
+  },
+  "dialog": {
+    "save": {
+      "title": "Diyagramı Kaydet",
+      "warningMessage": "Bu tarayıcıda kaydedildi. Sunucu depolama açıksa cihazlar arasında da senkronize edilir.",
+      "placeholder": "Diyagram adı girin",
+      "btnSave": "Kaydet",
+      "btnCancel": "İptal"
     },
-    "status": {
-        "current": "Mevcut",
-        "untitled": "İsimsiz Diyagram",
-        "modified": "Değiştirildi",
-        "sessionStorageNote": "Yalnızca oturum depolama - kalıcı olarak kaydetmek için dışa aktar"
+    "load": {
+      "title": "Diyagram Yükle",
+      "noteMessage": "Bu diyagramlar yalnızca bu tarayıcıda kaydedilmiştir.",
+      "noSavedDiagrams": "Kaydedilmiş diyagram bulunamadı",
+      "updated": "Güncellendi",
+      "btnLoad": "Yükle",
+      "btnDelete": "Sil",
+      "btnClose": "Kapat",
+      "storageServer": "Sunucuyla senkronize edildi",
+      "storageLocal": "Bu tarayıcıda kaydedildi",
+      "storageServerNote": "Diyagramlar cihazlarınız arasında senkronize edilir.",
+      "btnShare": "Paylaş"
     },
-    "dialog": {
-        "save": {
-            "title": "Diyagramı Kaydet (Yalnızca Mevcut Oturum)",
-            "warningTitle": "Önemli",
-            "warningMessage": "Bu kayıt geçicidir ve tarayıcıyı kapattığınızda kaybolacaktır.",
-            "warningExport": "Çalışmanızı kalıcı olarak kaydetmek için <strong>Dosya Dışa Aktar</strong> kullanın.",
-            "placeholder": "Diyagram adı girin",
-            "btnSave": "Kaydet",
-            "btnCancel": "İptal"
-        },
-        "load": {
-            "title": "Diyagram Yükle (Yalnızca Mevcut Oturum)",
-            "noteTitle": "Not",
-            "noteMessage": "Bu kayıtlar geçicidir. Diyagramlarınızı kalıcı olarak saklamak için dışa aktarın.",
-            "noSavedDiagrams": "Bu oturumda kaydedilmiş diyagram bulunamadı",
-            "updated": "Güncellendi",
-            "btnLoad": "Yükle",
-            "btnDelete": "Sil",
-            "btnClose": "Kapat"
-        },
-        "export": {
-            "title": "Diyagramı Dışa Aktar",
-            "recommendedTitle": "Önerilen",
-            "recommendedMessage": "Bu, çalışmanızı kalıcı olarak kaydetmenin en iyi yoludur.",
-            "noteMessage": "Dışa aktarılan JSON dosyaları daha sonra içe aktarılabilir veya başkalarıyla paylaşılabilir.",
-            "btnDownload": "JSON İndir",
-            "btnCancel": "İptal"
-        },
-        "readOnly": {
-            "mode": "Yalnızca Görüntüleme Modu",
-            "failed": "Diyagram yüklenemedi"
-        }
+    "export": {
+      "title": "Diyagramı Dışa Aktar",
+      "recommendedTitle": "Önerilen",
+      "recommendedMessage": "Bu, çalışmanızı kalıcı olarak kaydetmenin en iyi yoludur.",
+      "noteMessage": "Dışa aktarılan JSON dosyaları daha sonra içe aktarılabilir veya başkalarıyla paylaşılabilir.",
+      "btnDownload": "JSON İndir",
+      "btnCancel": "İptal"
     },
-    "alert": {
-        "enterDiagramName": "Lütfen bir diyagram adı girin",
-        "diagramExists": "\"{{name}}\" adlı bir diyagram bu oturumda zaten mevcut. Bu, üzerine yazacaktır. Devam etmek istediğinizden emin misiniz?",
-        "unsavedChanges": "Kaydedilmemiş değişiklikleriniz var. Yüklemeye devam edilsin mi?",
-        "createNewDiagram": "Yeni bir diyagram oluşturulsun mu?",
-        "unsavedChangesExport": "Kaydedilmemiş değişiklikleriniz var. Önce diyagramınızı kaydetmek için dışa aktarın. Devam edilsin mi?",
-        "confirmDelete": "Bu diyagramı silmek istediğinizden emin misiniz?",
-        "storageFull": "Depolama dolu! Depolama Yöneticisi açılıyor...",
-        "autoSaveFailed": "Depolama dolu! Lütfen alan açmak için Depolama Yöneticisi'ni kullanın.",
-        "beforeUnload": "Kaydedilmemiş değişiklikleriniz var. Ayrılmak istediğinizden emin misiniz?",
-        "quotaExceeded": "Depolama kotası aşıldı. Lütfen önemli diyagramları dışa aktarın ve biraz alan açın."
+    "readOnly": {
+      "mode": "Yalnızca Görüntüleme Modu",
+      "failed": "Diyagram yüklenemedi"
     }
+  },
+  "alert": {
+    "enterDiagramName": "Lütfen bir diyagram adı girin",
+    "diagramExists": "\"{{name}}\" adlı bir diyagram bu oturumda zaten mevcut. Bu, üzerine yazacaktır. Devam etmek istediğinizden emin misiniz?",
+    "unsavedChanges": "Kaydedilmemiş değişiklikleriniz var. Yüklemeye devam edilsin mi?",
+    "createNewDiagram": "Yeni bir diyagram oluşturulsun mu?",
+    "unsavedChangesExport": "Kaydedilmemiş değişiklikleriniz var. Önce diyagramınızı kaydetmek için dışa aktarın. Devam edilsin mi?",
+    "confirmDelete": "Bu diyagramı silmek istediğinizden emin misiniz?",
+    "storageFull": "Depolama dolu! Depolama Yöneticisi açılıyor...",
+    "autoSaveFailed": "Depolama dolu! Lütfen alan açmak için Depolama Yöneticisi'ni kullanın.",
+    "beforeUnload": "Kaydedilmemiş değişiklikleriniz var. Ayrılmak istediğinizden emin misiniz?",
+    "quotaExceeded": "Depolama kotası aşıldı. Lütfen önemli diyagramları dışa aktarın ve biraz alan açın.",
+    "shareLinkCopied": "Paylaşım bağlantısı panoya kopyalandı:\n{{url}}"
+  },
+  "history": {
+    "title": "Geçmiş",
+    "whatsNew": "Yenilikler",
+    "tips": "İpuçları"
+  }
 }

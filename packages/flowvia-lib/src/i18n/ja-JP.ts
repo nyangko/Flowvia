@@ -2,7 +2,14 @@ import { LocaleProps } from '../types/isoflowProps';
 
 const locale: LocaleProps = {
   common: {
-    exampleText: "これはサンプルテキストです"
+    exampleText: "これはサンプルテキストです",
+    delete: "削除"
+  },
+  textBoxControls: {
+    enterText: "テキストを入力",
+    textSize: "テキストサイズ",
+    alignment: "配置",
+    close: "閉じる"
   },
   mainMenu: {
     undo: "元に戻す",
@@ -12,6 +19,7 @@ const locale: LocaleProps = {
     exportCompactJson: "圧縮JSONとしてエクスポート",
     exportImage: "画像としてエクスポート",
     clearCanvas: "キャンバスを消去",
+    clearCanvasConfirm: "キャンバスを消去しますか?元に戻せません。",
     settings: "設定",
     gitHub: "GitHub"
   },
@@ -119,13 +127,46 @@ const locale: LocaleProps = {
     message: "このコネクタをノードに接続するには、",
     instruction: "コネクタの端を左クリックしたまま、目的のノードまでドラッグしてください。"
   },
+  contextMenu: {
+    copySelection: "選択項目をコピー",
+    deleteSelection: "選択項目を削除",
+    copyNode: "ノードをコピー",
+    copyRectangle: "四角形をコピー",
+    copyText: "テキストをコピー",
+    addNode: "ノードを追加",
+    addRectangle: "四角形を追加",
+    addConnector: "コネクタを追加",
+    duplicateNode: "ノードを複製",
+    duplicateRectangle: "四角形を複製",
+    duplicateText: "テキストを複製",
+    editNode: "ノードを編集",
+    deleteNode: "ノードを削除",
+    editRectangle: "四角形を編集",
+    deleteRectangle: "四角形を削除",
+    editText: "テキストを編集",
+    deleteText: "テキストを削除",
+    editConnector: "接続線を編集",
+    deleteConnector: "接続線を削除",
+    editConnectorsHere: "ここの接続線一覧を表示 ({count}件)",
+    deleteConnectorsHere: "ここの接続線をすべて削除 ({count}件)",
+    paste: "貼り付け",
+  },
   settings: {
     zoom: {
+      title: "ズーム",
       description: "マウスホイール使用時のズーム動作を設定します。",
       zoomToCursor: "カーソル位置を基準にズーム",
       zoomToCursorDesc: "有効にすると、マウスカーソルの位置を中心にズームします。無効にすると、キャンバスの中央を基準にズームします。",
       trackpadMode: "トラックパッドモード",
       trackpadModeDesc: "有効時: スクロールでキャンバスを移動し、ピンチ操作でズームします。無効時: スクロールでキャンバスがズームします（デフォルト）。トラックパッド使用時に適しています。"
+    },
+    labels: {
+      title: "ラベル",
+      description: "ラベル表示設定を構成します。",
+      expandButtonPadding: "展開ボタンの余白",
+      expandButtonPaddingDesc: "展開ボタンが表示されている際の下部余白です（テキストの重なりを防止）。",
+      currentPrefix: "現在:",
+      unitsLabel: "テーマ単位"
     },
     hotkeys: {
       title: "ホットキー設定",
@@ -167,6 +208,8 @@ const locale: LocaleProps = {
       clickModeDesc: "最初のノードをクリックし、次に2番目のノードをクリックして接続を作成します",
       dragMode: "ドラッグモード",
       dragModeDesc: "最初のノードから2番目のノードまでクリックしたままドラッグします",
+      animation: "流れのアニメーション",
+      animationDesc: "コネクタに沿って破線が動き、流れの方向を示します。",
       note: "注意: この設定はいつでも変更できます。選択したモードはコネクタツールが有効なときに使用されます。"
     },
     iconPacks: {
@@ -195,6 +238,95 @@ const locale: LocaleProps = {
     configPath2: "環境設定にアクセスできます。",
     canDisable: "この動作は必要に応じて無効にできます。",
     signature: "-Stan"
+  },
+  iconNames: {
+    block: "ブロック",
+    cache: "キャッシュ",
+    cardterminal: "カード端末",
+    cloud: "クラウド",
+    cronjob: "Cronジョブ",
+    cube: "キューブ",
+    desktop: "デスクトップ",
+    diamond: "ダイヤモンド",
+    dns: "DNS",
+    document: "ドキュメント",
+    firewall: "ファイアウォール",
+    "function-module": "関数",
+    image: "画像",
+    laptop: "ノートパソコン",
+    loadbalancer: "ロードバランサー",
+    lock: "ロック",
+    mail: "メール",
+    mailmultiple: "複数メール",
+    mobiledevice: "モバイル端末",
+    office: "オフィス",
+    "package-module": "パッケージ",
+    paymentcard: "決済カード",
+    plane: "飛行機",
+    printer: "プリンター",
+    pyramid: "ピラミッド",
+    queue: "キュー",
+    router: "ルーター",
+    server: "サーバー",
+    speech: "吹き出し",
+    sphere: "球体",
+    storage: "ストレージ",
+    "switch-module": "スイッチ",
+    tower: "タワー",
+    "truck-2": "トラック2",
+    truck: "トラック",
+    user: "ユーザー",
+    vm: "仮想マシン"
+  },
+  itemControls: {
+    close: "閉じる",
+    color: "色",
+    useCustomColor: "カスタムカラーを使用",
+    node: {
+      name: "名前",
+      description: "説明",
+      labelHeight: "ラベルの高さ",
+      iconSize: "アイコンサイズ",
+      updateIcon: "アイコンを変更",
+      backToSettings: "設定",
+      expandDescription: "説明を表示",
+      collapseDescription: "説明を非表示"
+    },
+    connector: {
+      labels: "ラベル",
+      labelsCount: "{count} / {max} ラベル",
+      addLabel: "ラベルを追加",
+      deleteLabel: "ラベルを削除",
+      noLabels: "ラベルがありません。「ラベルを追加」をクリックして作成してください。",
+      labelNumber: "ラベル {number}",
+      labelText: "テキスト",
+      position: "位置 (%)",
+      heightOffset: "高さオフセット",
+      showDottedLine: "点線を表示",
+      width: "太さ",
+      lineStyle: "線のスタイル",
+      showArrow: "矢印を表示",
+      connectorsCount: "接続線 {count}件",
+      connectorFallbackName: "接続線 {number}",
+      styleSolid: "実線",
+      styleDashed: "破線",
+      styleDotted: "点線"
+    },
+    iconSelection: {
+      searchPlaceholder: "アイコンを検索",
+      importIcons: "アイコンをインポート",
+      treatAsIsometric: "アイソメトリック(3D)として扱う",
+      uncheckForFlat: "フラットアイコン(ロゴ、UI要素)はチェックを外してください",
+      dragDropHint: "以下のアイテムをキャンバスにドラッグ&ドロップできます。"
+    },
+    quickIconSelector: {
+      searchPlaceholder: "アイコンを検索(Enterで選択)",
+      recentlyUsed: "最近使用したアイコン",
+      searchResults: "検索結果({count}件)",
+      noResults: "「{term}」に一致するアイコンが見つかりません",
+      helpSearching: "矢印キーで移動 • Enterで選択 • ダブルクリックで選択して閉じる",
+      helpBrowsing: "入力して検索 • カテゴリをクリックして展開 • ダブルクリックで選択して閉じる"
+    }
   }
 };
 

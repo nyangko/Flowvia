@@ -6,7 +6,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { ErrorBoundary } from 'react-error-boundary';
-import ErrorBoundaryFallbackUI from './components/ErrorBoundary';
+import ErrorFallback from './components/ErrorBoundary';
 import {I18nextProvider} from 'react-i18next';
 import i18n from './i18n';
 
@@ -38,7 +38,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <I18nextProvider i18n={i18n}>
-        <ErrorBoundary FallbackComponent={ErrorBoundaryFallbackUI}>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
             <App />
         </ErrorBoundary>
     </I18nextProvider>

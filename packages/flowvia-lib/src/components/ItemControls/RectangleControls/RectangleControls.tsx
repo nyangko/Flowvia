@@ -7,6 +7,7 @@ import { CustomColorInput } from 'src/components/ColorSelector/CustomColorInput'
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useScene } from 'src/hooks/useScene';
 import { Close as CloseIcon } from '@mui/icons-material';
+import { useTranslation } from 'src/stores/localeStore';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Section } from '../components/Section';
 import { DeleteButton } from '../components/DeleteButton';
@@ -22,6 +23,7 @@ export const RectangleControls = ({ id }: Props) => {
   const rectangle = useRectangle(id);
   const { updateRectangle, deleteRectangle } = useScene();
   const [useCustomColor, setUseCustomColor] = useState(!!rectangle?.customColor);
+  const { t } = useTranslation();
 
   // If rectangle doesn't exist, return null
   if (!rectangle) {
@@ -33,7 +35,7 @@ export const RectangleControls = ({ id }: Props) => {
       <Box sx={{ position: 'relative' }}>
         {/* Close button */}
         <MUIIconButton
-          aria-label="Close"
+          aria-label={t('itemControls.close')}
           onClick={() => {
             return uiStateActions.setItemControls(null);
           }}
@@ -47,7 +49,7 @@ export const RectangleControls = ({ id }: Props) => {
         >
           <CloseIcon />
         </MUIIconButton>
-        <Section title="Color">
+        <Section title={t('itemControls.color')}>
           <FormControlLabel
             control={
               <Switch
@@ -60,7 +62,7 @@ export const RectangleControls = ({ id }: Props) => {
                 }}
               />
             }
-            label="Use Custom Color"
+            label={t('itemControls.useCustomColor')}
             sx={{ mb: 2 }}
           />
           {useCustomColor ? (

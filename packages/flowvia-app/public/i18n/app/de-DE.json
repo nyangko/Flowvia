@@ -1,38 +1,38 @@
 {
   "nav": {
     "newDiagram": "Neues Diagramm",
-    "saveSessionOnly": "Speichern (nur Browser)",
-    "loadSessionOnly": "Laden (nur Browser)",
+    "saveSessionOnly": "Speichern",
+    "loadSessionOnly": "Laden",
     "importFile": "Datei importieren",
     "exportFile": "Datei exportieren",
-    "quickSaveSession": "Schnellspeichern (Browser)",
-    "serverStorage": "Server-Speicher"
+    "quickSaveSession": "Schnellspeichern (Browser)"
   },
   "status": {
     "current": "Aktuell",
     "untitled": "Unbenanntes Diagramm",
     "modified": "Geändert",
-    "sessionStorageNote": "Nur Browserspeicher – zum dauerhaften Speichern exportieren"
+    "clickToRename": "Klicken zum Umbenennen"
   },
   "dialog": {
     "save": {
-      "title": "Diagramm speichern (nur aktuelle Browser-Sitzung)",
-      "warningTitle": "Wichtig",
-      "warningMessage": "Dieses Speichern ist temporär und der aktuelle Fortschritt geht verloren, wenn du den Browser schließt.",
-      "warningExport": "Nutze <strong>Datei exportieren</strong>, um deine Arbeit dauerhaft zu speichern.",
+      "title": "Diagramm speichern",
+      "warningMessage": "In diesem Browser gespeichert. Bei aktivem Server-Speicher wird es geräteübergreifend synchronisiert.",
       "placeholder": "Diagram benennen",
       "btnSave": "Speichern",
       "btnCancel": "Abbrechen"
     },
     "load": {
-      "title": "Diagramm laden (nur aktuelle Sitzung)",
-      "noteTitle": "Hinweis",
-      "noteMessage": "Diese Speicherstände sind temporär. Exportiere deine Diagramme, um sie dauerhaft zu behalten.",
-      "noSavedDiagrams": "In dieser Sitzung wurden keine gespeicherten Diagramme gefunden",
+      "title": "Diagramm laden",
+      "noteMessage": "Diese Diagramme sind nur in diesem Browser gespeichert.",
+      "noSavedDiagrams": "Keine gespeicherten Diagramme gefunden",
       "updated": "Aktualisiert",
       "btnLoad": "Laden",
       "btnDelete": "Löschen",
-      "btnClose": "Schließen"
+      "btnClose": "Schließen",
+      "storageServer": "Mit Server synchronisiert",
+      "storageLocal": "In diesem Browser gespeichert",
+      "storageServerNote": "Diagramme werden geräteübergreifend synchronisiert.",
+      "btnShare": "Teilen"
     },
     "export": {
       "title": "Diagramm exportieren",
@@ -57,6 +57,12 @@
     "storageFull": "Speicher voll! Speicherverwaltung wird geöffnet...",
     "autoSaveFailed": "Speicher voll! Bitte nutze die Speicherverwaltung, um Platz freizugeben.",
     "beforeUnload": "Du hast ungespeicherte Änderungen. Möchtest du die Seite wirklich verlassen?",
-    "quotaExceeded": "Speicherlimit überschritten. Bitte exportiere wichtige Diagramme und schaffe etwas Platz."
+    "quotaExceeded": "Speicherlimit überschritten. Bitte exportiere wichtige Diagramme und schaffe etwas Platz.",
+    "shareLinkCopied": "Freigabelink in die Zwischenablage kopiert:\n{{url}}"
+  },
+  "history": {
+    "title": "Verlauf",
+    "whatsNew": "Neuigkeiten",
+    "tips": "Tipps"
   }
 }

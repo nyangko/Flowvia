@@ -13,6 +13,7 @@ import { useIsoProjection } from 'src/hooks/useIsoProjection';
 import { useConnector } from 'src/hooks/useConnector';
 import { useScene } from 'src/hooks/useScene';
 import { useColor } from 'src/hooks/useColor';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 
 interface Props {
   connector: ReturnType<typeof useScene>['connectors'][0];
@@ -74,6 +75,9 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
   const predefinedColor = useColor(_connector.color);
   const { currentView } = useScene();
   const connector = useConnector(_connector.id);
+  const connectorAnimationEnabled = useUiStateStore((state) => {
+    return state.connectorAnimationEnabled;
+  });
 
   if (!connector) {
     return null;
@@ -185,6 +189,29 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
     }
   }, [connector.style, connectorWidthPx]);
 
+  // Flow indicator: a dot that rides along the connector's own path, independent
+  // of its style (SOLID/DASHED/DOTTED stay exactly as drawn — nothing about the
+  // line itself changes when animation is on).
+  const flowPathId = `flowvia-flow-path-${connector.id}`;
+
+  const flowPathD = useMemo(() => {
+    const points = pathString.trim();
+    if (!points) return '';
+    return `M${points.replace(/ /g, ' L ')}`;
+  }, [pathString]);
+
+  const flowDurationSec = useMemo(() => {
+    const FLOW_SPEED_PX_PER_SEC = 220;
+    const tiles = connector.path.tiles;
+    let lengthPx = 0;
+    for (let i = 1; i < tiles.length; i++) {
+      const dx = (tiles[i].x - tiles[i - 1].x) * UNPROJECTED_TILE_SIZE;
+      const dy = (tiles[i].y - tiles[i - 1].y) * UNPROJECTED_TILE_SIZE;
+      lengthPx += Math.sqrt(dx * dx + dy * dy);
+    }
+    return Math.max(0.6, lengthPx / FLOW_SPEED_PX_PER_SEC);
+  }, [connector.path.tiles]);
+
   const lineType = connector.lineType || 'SINGLE';
 
   return (
@@ -264,6 +291,28 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
             />
           </>
         ) : null}
+
+        {/* Flow direction indicator: a dot riding the connector's own path,
+            independent of its line style (solid/dashed/dotted are untouched). */}
+        {connectorAnimationEnabled && flowPathD && (
+          <>
+            <path id={flowPathId} d={flowPathD} fill="none" stroke="none" />
+            <circle
+              r={connectorWidthPx * 1.3}
+              fill={getColorVariant(color.value, 'dark', { grade: 1 })}
+              stroke={theme.palette.common.white}
+              strokeWidth={connectorWidthPx * 0.4}
+            >
+              <animateMotion
+                dur={`${flowDurationSec}s`}
+                repeatCount="indefinite"
+              >
+                {/* eslint-disable-next-line react/no-unknown-property */}
+                <mpath xlinkHref={`#${flowPathId}`} href={`#${flowPathId}`} />
+              </animateMotion>
+            </circle>
+          </>
+        )}
 
         {/* Circle for port-channel representation */}
         {lineType === 'DOUBLE_WITH_CIRCLE' && connector.path.tiles.length >= 2 && (() => {

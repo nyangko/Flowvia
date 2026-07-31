@@ -2,7 +2,14 @@ import { LocaleProps } from '../types/isoflowProps';
 
 const locale: LocaleProps = {
   common: {
-    exampleText: "예시 텍스트입니다"
+    exampleText: "예시 텍스트입니다",
+    delete: "삭제"
+  },
+  textBoxControls: {
+    enterText: "텍스트 입력",
+    textSize: "텍스트 크기",
+    alignment: "정렬",
+    close: "닫기"
   },
   mainMenu: {
     undo: "실행 취소",
@@ -12,6 +19,7 @@ const locale: LocaleProps = {
     exportCompactJson: "압축 JSON으로 내보내기",
     exportImage: "이미지로 내보내기",
     clearCanvas: "캔버스 지우기",
+    clearCanvasConfirm: "캔버스를 지울까요? 되돌릴 수 없습니다.",
     settings: "설정",
     gitHub: "GitHub"
   },
@@ -61,9 +69,9 @@ const locale: LocaleProps = {
     addItemAction: "항목 추가",
     addItemShortcut: "항목 추가 버튼 클릭",
     addItemDescription: "새 항목을 추가할 아이콘 선택 창을 엽니다",
-    drawRectangleAction: "사각형 그리기",
-    drawRectangleShortcut: "사각형 버튼 클릭",
-    drawRectangleDescription: "사각형 그리기 모드로 전환합니다",
+    drawRectangleAction: "영역 그리기",
+    drawRectangleShortcut: "영역 버튼 클릭",
+    drawRectangleDescription: "영역 그리기 모드로 전환합니다",
     createConnectorAction: "연결선 만들기",
     createConnectorShortcut: "연결선 버튼 클릭",
     createConnectorDescription: "연결선 모드로 전환합니다",
@@ -119,13 +127,46 @@ const locale: LocaleProps = {
     message: "이 연결선을 노드에 연결하려면,",
     instruction: "연결선 끝을 왼쪽 클릭한 채로 원하는 노드까지 드래그하세요."
   },
+  contextMenu: {
+    copySelection: "선택 항목 복사",
+    deleteSelection: "선택 항목 삭제",
+    copyNode: "노드 복사",
+    copyRectangle: "영역 복사",
+    copyText: "텍스트 복사",
+    addNode: "노드 추가",
+    addRectangle: "영역 추가",
+    addConnector: "연결선 추가",
+    duplicateNode: "노드 복제",
+    duplicateRectangle: "영역 복제",
+    duplicateText: "텍스트 복제",
+    editNode: "노드 수정",
+    deleteNode: "노드 삭제",
+    editRectangle: "영역 수정",
+    deleteRectangle: "영역 삭제",
+    editText: "텍스트 수정",
+    deleteText: "텍스트 삭제",
+    editConnector: "연결선 수정",
+    deleteConnector: "연결선 삭제",
+    editConnectorsHere: "여기 연결선 목록 보기 ({count}개)",
+    deleteConnectorsHere: "여기 연결선 전체 삭제 ({count}개)",
+    paste: "붙여넣기",
+  },
   settings: {
     zoom: {
+      title: "확대/축소",
       description: "마우스 휠을 사용할 때의 확대/축소 동작을 설정합니다.",
       zoomToCursor: "커서 기준 확대/축소",
       zoomToCursorDesc: "활성화하면 마우스 커서 위치를 중심으로 확대/축소됩니다. 비활성화하면 캔버스 중앙을 기준으로 확대/축소됩니다.",
       trackpadMode: "트랙패드 모드",
       trackpadModeDesc: "활성화 시: 스크롤로 캔버스를 이동하고, 손가락으로 확대/축소 제스처를 사용합니다. 비활성화 시: 스크롤로 캔버스가 확대/축소됩니다(기본값). 트랙패드 사용에 적합합니다."
+    },
+    labels: {
+      title: "라벨",
+      description: "라벨 표시 설정을 구성합니다.",
+      expandButtonPadding: "펼치기 버튼 여백",
+      expandButtonPaddingDesc: "펼치기 버튼이 표시될 때의 하단 여백입니다(텍스트 겹침 방지).",
+      currentPrefix: "현재:",
+      unitsLabel: "테마 단위"
     },
     hotkeys: {
       title: "단축키 설정",
@@ -140,7 +181,7 @@ const locale: LocaleProps = {
       toolFreehandLasso: "자유형 올가미 선택",
       toolPan: "이동",
       toolAddItem: "항목 추가",
-      toolRectangle: "사각형",
+      toolRectangle: "영역",
       toolConnector: "연결선",
       toolText: "텍스트",
       note: "참고: 단축키는 텍스트 필드에 입력 중이 아닐 때 작동합니다"
@@ -167,6 +208,8 @@ const locale: LocaleProps = {
       clickModeDesc: "첫 번째 노드를 클릭한 다음 두 번째 노드를 클릭하여 연결을 만듭니다",
       dragMode: "드래그 모드",
       dragModeDesc: "첫 번째 노드에서 두 번째 노드까지 클릭한 채로 드래그합니다",
+      animation: "흐름 애니메이션",
+      animationDesc: "연결선을 따라 점선이 움직여 흐름 방향을 표시합니다.",
       note: "참고: 이 설정은 언제든지 변경할 수 있습니다. 선택한 모드는 연결선 도구가 활성화되어 있을 때 사용됩니다."
     },
     iconPacks: {
@@ -195,6 +238,95 @@ const locale: LocaleProps = {
     configPath2: "환경설정에 접근할 수 있습니다.",
     canDisable: "원하시면 이 동작을 비활성화할 수 있습니다.",
     signature: "-Stan"
+  },
+  iconNames: {
+    block: "블록",
+    cache: "캐시",
+    cardterminal: "카드 단말기",
+    cloud: "클라우드",
+    cronjob: "크론 작업",
+    cube: "큐브",
+    desktop: "데스크톱",
+    diamond: "다이아몬드",
+    dns: "DNS",
+    document: "문서",
+    firewall: "방화벽",
+    "function-module": "함수",
+    image: "이미지",
+    laptop: "노트북",
+    loadbalancer: "로드 밸런서",
+    lock: "잠금",
+    mail: "메일",
+    mailmultiple: "다중 메일",
+    mobiledevice: "모바일 기기",
+    office: "오피스",
+    "package-module": "패키지",
+    paymentcard: "결제 카드",
+    plane: "비행기",
+    printer: "프린터",
+    pyramid: "피라미드",
+    queue: "큐",
+    router: "라우터",
+    server: "서버",
+    speech: "말풍선",
+    sphere: "구",
+    storage: "스토리지",
+    "switch-module": "스위치",
+    tower: "타워",
+    "truck-2": "트럭 2",
+    truck: "트럭",
+    user: "사용자",
+    vm: "가상 머신"
+  },
+  itemControls: {
+    close: "닫기",
+    color: "색상",
+    useCustomColor: "사용자 지정 색상 사용",
+    node: {
+      name: "이름",
+      description: "설명",
+      labelHeight: "레이블 높이",
+      iconSize: "아이콘 크기",
+      updateIcon: "아이콘 변경",
+      backToSettings: "설정",
+      expandDescription: "설명 보기",
+      collapseDescription: "설명 숨기기"
+    },
+    connector: {
+      labels: "레이블",
+      labelsCount: "{count} / {max}개 레이블",
+      addLabel: "레이블 추가",
+      deleteLabel: "레이블 삭제",
+      noLabels: "레이블이 없습니다. \"레이블 추가\"를 클릭하여 만드세요.",
+      labelNumber: "레이블 {number}",
+      labelText: "텍스트",
+      position: "위치 (%)",
+      heightOffset: "높이 오프셋",
+      showDottedLine: "점선 표시",
+      width: "두께",
+      lineStyle: "선 스타일",
+      showArrow: "화살표 표시",
+      connectorsCount: "연결선 {count}개",
+      connectorFallbackName: "연결선 {number}",
+      styleSolid: "실선",
+      styleDashed: "파선",
+      styleDotted: "점선"
+    },
+    iconSelection: {
+      searchPlaceholder: "아이콘 검색",
+      importIcons: "아이콘 가져오기",
+      treatAsIsometric: "아이소메트릭(3D)으로 처리",
+      uncheckForFlat: "평면 아이콘(로고, UI 요소)은 체크 해제",
+      dragDropHint: "아래 항목을 캔버스로 드래그 앤 드롭할 수 있습니다."
+    },
+    quickIconSelector: {
+      searchPlaceholder: "아이콘 검색 (Enter로 선택)",
+      recentlyUsed: "최근 사용",
+      searchResults: "검색 결과 ({count}개 아이콘)",
+      noResults: "\"{term}\"과(와) 일치하는 아이콘이 없습니다",
+      helpSearching: "방향키로 이동 • Enter로 선택 • 더블클릭으로 선택 후 닫기",
+      helpBrowsing: "입력하여 검색 • 카테고리 클릭으로 펼치기 • 더블클릭으로 선택 후 닫기"
+    }
   }
 };
 

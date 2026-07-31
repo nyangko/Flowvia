@@ -10,6 +10,13 @@ export type InitialData = Model & {
 export interface LocaleProps {
   common: {
     exampleText: string;
+    delete: string;
+  };
+  textBoxControls: {
+    enterText: string;
+    textSize: string;
+    alignment: string;
+    close: string;
   };
   mainMenu: {
     undo: string;
@@ -19,6 +26,7 @@ export interface LocaleProps {
     exportCompactJson: string;
     exportImage: string;
     clearCanvas: string;
+    clearCanvasConfirm: string;
     settings: string;
     gitHub: string;
   };
@@ -126,13 +134,46 @@ export interface LocaleProps {
     message: string;
     instruction: string;
   };
+  contextMenu: {
+    copySelection: string;
+    deleteSelection: string;
+    copyNode: string;
+    copyRectangle: string;
+    copyText: string;
+    addNode: string;
+    addRectangle: string;
+    addConnector: string;
+    duplicateNode: string;
+    duplicateRectangle: string;
+    duplicateText: string;
+    editNode: string;
+    deleteNode: string;
+    editRectangle: string;
+    deleteRectangle: string;
+    editText: string;
+    deleteText: string;
+    editConnector: string;
+    deleteConnector: string;
+    editConnectorsHere: string;
+    deleteConnectorsHere: string;
+    paste: string;
+  };
   settings: {
     zoom: {
+      title: string;
       description: string;
       zoomToCursor: string;
       zoomToCursorDesc: string;
       trackpadMode: string;
       trackpadModeDesc: string;
+    };
+    labels: {
+      title: string;
+      description: string;
+      expandButtonPadding: string;
+      expandButtonPaddingDesc: string;
+      currentPrefix: string;
+      unitsLabel: string;
     };
     hotkeys: {
       title: string;
@@ -174,6 +215,8 @@ export interface LocaleProps {
       clickModeDesc: string;
       dragMode: string;
       dragModeDesc: string;
+      animation: string;
+      animationDesc: string;
       note: string;
     };
     iconPacks: {
@@ -202,6 +245,59 @@ export interface LocaleProps {
     configPath2: string;
     canDisable: string;
     signature: string;
+  };
+  // Display names for the base "isoflow" icon pack (keyed by icon id).
+  // Other packs (AWS/GCP/Azure/Kubernetes) are product/brand names and stay in English.
+  iconNames: Record<string, string>;
+  itemControls: {
+    close: string;
+    color: string;
+    useCustomColor: string;
+    node: {
+      name: string;
+      description: string;
+      labelHeight: string;
+      iconSize: string;
+      updateIcon: string;
+      backToSettings: string;
+      expandDescription: string;
+      collapseDescription: string;
+    };
+    connector: {
+      labels: string;
+      labelsCount: string;
+      addLabel: string;
+      deleteLabel: string;
+      noLabels: string;
+      labelNumber: string;
+      labelText: string;
+      position: string;
+      heightOffset: string;
+      showDottedLine: string;
+      width: string;
+      lineStyle: string;
+      showArrow: string;
+      connectorsCount: string;
+      connectorFallbackName: string;
+      styleSolid: string;
+      styleDashed: string;
+      styleDotted: string;
+    };
+    iconSelection: {
+      searchPlaceholder: string;
+      importIcons: string;
+      treatAsIsometric: string;
+      uncheckForFlat: string;
+      dragDropHint: string;
+    };
+    quickIconSelector: {
+      searchPlaceholder: string;
+      recentlyUsed: string;
+      searchResults: string;
+      noResults: string;
+      helpSearching: string;
+      helpBrowsing: string;
+    };
   };
   // other namespaces can be added here
 }
@@ -236,4 +332,6 @@ export interface IsoflowProps {
   mainMenuPortalTarget?: HTMLElement | null;
   /** Renders the undo/redo buttons into this DOM node instead of the floating tool menu. */
   historyControlsPortalTarget?: HTMLElement | null;
+  /** Renders the help (?) button into this DOM node instead of the zoom controls cluster. */
+  helpButtonPortalTarget?: HTMLElement | null;
 }

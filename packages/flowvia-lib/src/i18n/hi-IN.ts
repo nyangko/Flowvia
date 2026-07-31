@@ -2,7 +2,14 @@ import { LocaleProps } from '../types/isoflowProps';
 
 const locale: LocaleProps = {
   common: {
-    exampleText: "यह एक उदाहरण पाठ है"
+    exampleText: "यह एक उदाहरण पाठ है",
+    delete: "हटाएं"
+  },
+  textBoxControls: {
+    enterText: "टेक्स्ट दर्ज करें",
+    textSize: "टेक्स्ट आकार",
+    alignment: "संरेखण",
+    close: "बंद करें"
   },
   mainMenu: {
     undo: "पूर्ववत करें",
@@ -12,6 +19,7 @@ const locale: LocaleProps = {
     exportCompactJson: "संक्षिप्त JSON के रूप में निर्यात करें",
     exportImage: "छवि के रूप में निर्यात करें",
     clearCanvas: "कैनवास साफ़ करें",
+    clearCanvasConfirm: "कैनवास साफ़ करें? इसे पूर्ववत नहीं किया जा सकता।",
     settings: "सेटिंग्स",
     gitHub: "GitHub"
   },
@@ -119,14 +127,47 @@ const locale: LocaleProps = {
     message: "इस कनेक्टर को एक नोड से कनेक्ट करने के लिए,",
     instruction: "कनेक्टर के अंत पर बाईं-क्लिक करें और इसे वांछित नोड पर खींचें।"
   },
+  contextMenu: {
+    copySelection: "चयन कॉपी करें",
+    deleteSelection: "चयन हटाएं",
+    copyNode: "नोड कॉपी करें",
+    copyRectangle: "आयत कॉपी करें",
+    copyText: "टेक्स्ट कॉपी करें",
+    addNode: "नोड जोड़ें",
+    addRectangle: "आयत जोड़ें",
+    addConnector: "कनेक्टर जोड़ें",
+    duplicateNode: "नोड डुप्लिकेट करें",
+    duplicateRectangle: "आयत डुप्लिकेट करें",
+    duplicateText: "टेक्स्ट डुप्लिकेट करें",
+    editNode: "नोड संपादित करें",
+    deleteNode: "नोड हटाएं",
+    editRectangle: "आयत संपादित करें",
+    deleteRectangle: "आयत हटाएं",
+    editText: "टेक्स्ट संपादित करें",
+    deleteText: "टेक्स्ट हटाएं",
+    editConnector: "कनेक्टर संपादित करें",
+    deleteConnector: "कनेक्टर हटाएं",
+    editConnectorsHere: "यहां के कनेक्टर देखें ({count})",
+    deleteConnectorsHere: "यहां के सभी हटाएं ({count})",
+    paste: "पेस्ट करें",
+  },
   settings: {
     zoom: {
+      title: "ज़ूम",
       description: "माउस व्हील का उपयोग करते समय ज़ूम व्यवहार को कॉन्फ़िगर करें।",
       zoomToCursor: "कर्सर पर ज़ूम करें",
       zoomToCursorDesc: "सक्षम होने पर, माउस कर्सर की स्थिति पर केंद्रित ज़ूम इन/आउट। अक्षम होने पर, ज़ूम कैनवास पर केंद्रित होता है।",
 
       trackpadMode: "ट्रैकपैड मोड",
       trackpadModeDesc: "सक्षम होने पर: दो उंगलियों से स्क्रॉल करने पर कैनवास पैन होता है, पिंच करने पर ब्राउज़र को प्रभावित किए बिना ज़ूम होता है। अक्षम होने पर: माउस व्हील से कैनवास ज़ूम होता है (डिफ़ॉल्ट माउस व्यवहार)।"
+    },
+    labels: {
+      title: "लेबल",
+      description: "लेबल प्रदर्शन सेटिंग्स कॉन्फ़िगर करें।",
+      expandButtonPadding: "विस्तार बटन पैडिंग",
+      expandButtonPaddingDesc: "जब विस्तार बटन दिखाई देता है तो नीचे की पैडिंग (टेक्स्ट ओवरलैप रोकता है)।",
+      currentPrefix: "वर्तमान:",
+      unitsLabel: "थीम इकाइयाँ"
     },
     hotkeys: {
       title: "शॉर्टकट सेटिंग्स",
@@ -168,6 +209,8 @@ const locale: LocaleProps = {
       clickModeDesc: "पहले नोड पर क्लिक करें, फिर कनेक्शन बनाने के लिए दूसरे नोड पर क्लिक करें",
       dragMode: "ड्रैग मोड",
       dragModeDesc: "पहले नोड से दूसरे नोड तक क्लिक करें और ड्रैग करें",
+      animation: "प्रवाह दिशा एनिमेट करें",
+      animationDesc: "प्रवाह की दिशा दिखाने के लिए कनेक्टर के साथ चलती हुई डैश पैटर्न दिखाता है।",
       note: "नोट: आप किसी भी समय इस सेटिंग को बदल सकते हैं। जब कनेक्टर उपकरण सक्रिय होता है तो चयनित मोड का उपयोग किया जाएगा।"
     },
     iconPacks: {
@@ -196,6 +239,95 @@ const locale: LocaleProps = {
     configPath2: "कॉन्फ़िगरेशन तक पहुंचने के लिए ऊपरी बाएं में।",
     canDisable: "यदि आप चाहें तो आप इस व्यवहार को अक्षम कर सकते हैं।",
     signature: "-Stan"
+  },
+  iconNames: {
+    block: "ब्लॉक",
+    cache: "कैश",
+    cardterminal: "कार्ड टर्मिनल",
+    cloud: "क्लाउड",
+    cronjob: "शेड्यूल्ड कार्य",
+    cube: "क्यूब",
+    desktop: "डेस्कटॉप",
+    diamond: "डायमंड",
+    dns: "DNS",
+    document: "दस्तावेज़",
+    firewall: "फ़ायरवॉल",
+    "function-module": "फ़ंक्शन",
+    image: "छवि",
+    laptop: "लैपटॉप",
+    loadbalancer: "लोड बैलेंसर",
+    lock: "लॉक",
+    mail: "मेल",
+    mailmultiple: "एकाधिक मेल",
+    mobiledevice: "मोबाइल डिवाइस",
+    office: "ऑफिस",
+    "package-module": "पैकेज",
+    paymentcard: "भुगतान कार्ड",
+    plane: "विमान",
+    printer: "प्रिंटर",
+    pyramid: "पिरामिड",
+    queue: "कतार",
+    router: "राउटर",
+    server: "सर्वर",
+    speech: "स्पीच बबल",
+    sphere: "गोला",
+    storage: "स्टोरेज",
+    "switch-module": "स्विच",
+    tower: "टावर",
+    "truck-2": "ट्रक 2",
+    truck: "ट्रक",
+    user: "उपयोगकर्ता",
+    vm: "वर्चुअल मशीन"
+  },
+  itemControls: {
+    close: "बंद करें",
+    color: "रंग",
+    useCustomColor: "कस्टम रंग का उपयोग करें",
+    node: {
+      name: "नाम",
+      description: "विवरण",
+      labelHeight: "लेबल ऊंचाई",
+      iconSize: "आइकन आकार",
+      updateIcon: "आइकन बदलें",
+      backToSettings: "सेटिंग्स",
+      expandDescription: "विवरण दिखाएं",
+      collapseDescription: "विवरण छिपाएं"
+    },
+    connector: {
+      labels: "लेबल",
+      labelsCount: "{count} / {max} लेबल",
+      addLabel: "लेबल जोड़ें",
+      deleteLabel: "लेबल हटाएं",
+      noLabels: "कोई लेबल नहीं। बनाने के लिए \"लेबल जोड़ें\" पर क्लिक करें।",
+      labelNumber: "लेबल {number}",
+      labelText: "टेक्स्ट",
+      position: "स्थिति (%)",
+      heightOffset: "ऊंचाई ऑफ़सेट",
+      showDottedLine: "डॉटेड लाइन दिखाएं",
+      width: "मोटाई",
+      lineStyle: "लाइन शैली",
+      showArrow: "तीर दिखाएं",
+      connectorsCount: "{count} कनेक्टर",
+      connectorFallbackName: "कनेक्टर {number}",
+      styleSolid: "ठोस",
+      styleDashed: "डैश्ड",
+      styleDotted: "डॉटेड"
+    },
+    iconSelection: {
+      searchPlaceholder: "आइकन खोजें",
+      importIcons: "आइकन आयात करें",
+      treatAsIsometric: "आइसोमेट्रिक (3D व्यू) के रूप में मानें",
+      uncheckForFlat: "फ्लैट आइकन (लोगो, UI तत्वों) के लिए अनचेक करें",
+      dragDropHint: "आप नीचे दिए गए किसी भी आइटम को कैनवास पर खींच और छोड़ सकते हैं।"
+    },
+    quickIconSelector: {
+      searchPlaceholder: "आइकन खोजें (चुनने के लिए Enter दबाएं)",
+      recentlyUsed: "हाल ही में उपयोग किए गए",
+      searchResults: "खोज परिणाम ({count} आइकन)",
+      noResults: "\"{term}\" से मेल खाता कोई आइकन नहीं मिला",
+      helpSearching: "नेविगेट करने के लिए एरो कीज़ • चुनने के लिए Enter • चुनकर बंद करने के लिए डबल-क्लिक",
+      helpBrowsing: "खोजने के लिए टाइप करें • विस्तार के लिए श्रेणी पर क्लिक करें • चुनकर बंद करने के लिए डबल-क्लिक"
+    }
   }
 };
 

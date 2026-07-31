@@ -2,7 +2,14 @@ import { LocaleProps } from '../types/isoflowProps';
 
 const locale: LocaleProps = {
   common: {
-    exampleText: "Ceci est un texte d'exemple"
+    exampleText: "Ceci est un texte d'exemple",
+    delete: "Supprimer"
+  },
+  textBoxControls: {
+    enterText: "Saisir le texte",
+    textSize: "Taille du texte",
+    alignment: "Alignement",
+    close: "Fermer"
   },
   mainMenu: {
     undo: "Annuler",
@@ -12,6 +19,7 @@ const locale: LocaleProps = {
     exportCompactJson: "Exporter en JSON compact",
     exportImage: "Exporter en image",
     clearCanvas: "Effacer le canevas",
+    clearCanvasConfirm: "Effacer le canevas ? Cette action est irréversible.",
     settings: "Paramètres",
     gitHub: "GitHub"
   },
@@ -119,14 +127,47 @@ const locale: LocaleProps = {
     message: "Pour connecter ce connecteur à un nœud,",
     instruction: "cliquez avec le bouton gauche sur l'extrémité du connecteur et faites-le glisser vers le nœud souhaité."
   },
+  contextMenu: {
+    copySelection: "Copier la sélection",
+    deleteSelection: "Supprimer la sélection",
+    copyNode: "Copier le nœud",
+    copyRectangle: "Copier le rectangle",
+    copyText: "Copier le texte",
+    addNode: "Ajouter un nœud",
+    addRectangle: "Ajouter un rectangle",
+    addConnector: "Ajouter un connecteur",
+    duplicateNode: "Dupliquer le nœud",
+    duplicateRectangle: "Dupliquer le rectangle",
+    duplicateText: "Dupliquer le texte",
+    editNode: "Modifier le nœud",
+    deleteNode: "Supprimer le nœud",
+    editRectangle: "Modifier le rectangle",
+    deleteRectangle: "Supprimer le rectangle",
+    editText: "Modifier le texte",
+    deleteText: "Supprimer le texte",
+    editConnector: "Modifier le connecteur",
+    deleteConnector: "Supprimer le connecteur",
+    editConnectorsHere: "Voir les connecteurs ici ({count})",
+    deleteConnectorsHere: "Tout supprimer ici ({count})",
+    paste: "Coller",
+  },
   settings: {
     zoom: {
+      title: "Zoom",
       description: "Configurer le comportement du zoom lors de l'utilisation de la molette de la souris.",
       zoomToCursor: "Zoom sur le curseur",
       zoomToCursorDesc: "Lorsqu'il est activé, le zoom est centré sur la position du curseur de la souris. Lorsqu'il est désactivé, le zoom est centré sur le canevas.",
 
       trackpadMode: "Mode Trackpad",
       trackpadModeDesc: "Lorsqu'il est activé : le défilement à deux doigts déplace le canevas, le pincement effectue un zoom sans affecter le navigateur. Lorsqu'il est désactivé : la molette effectue un zoom sur le canevas (comportement par défaut de la souris)."
+    },
+    labels: {
+      title: "Étiquettes",
+      description: "Configurer les paramètres d'affichage des étiquettes.",
+      expandButtonPadding: "Marge du bouton d'expansion",
+      expandButtonPaddingDesc: "Marge inférieure lorsque le bouton d'expansion est visible (évite le chevauchement du texte).",
+      currentPrefix: "Actuel :",
+      unitsLabel: "unités de thème"
     },
     hotkeys: {
       title: "Paramètres des raccourcis",
@@ -168,6 +209,8 @@ const locale: LocaleProps = {
       clickModeDesc: "Cliquez sur le premier nœud, puis cliquez sur le deuxième nœud pour créer une connexion",
       dragMode: "Mode glisser",
       dragModeDesc: "Cliquez et glissez du premier nœud au deuxième nœud",
+      animation: "Animer le sens du flux",
+      animationDesc: "Affiche un motif de tirets en mouvement le long des connecteurs pour indiquer le sens du flux.",
       note: "Remarque : Vous pouvez modifier ce paramètre à tout moment. Le mode sélectionné sera utilisé lorsque l'outil de connecteur est actif."
     },
     iconPacks: {
@@ -196,6 +239,95 @@ const locale: LocaleProps = {
     configPath2: "en haut à gauche pour accéder à la Configuration.",
     canDisable: "Vous pouvez désactiver ce comportement si vous le souhaitez.",
     signature: "-Stan"
+  },
+  iconNames: {
+    block: "Bloc",
+    cache: "Cache",
+    cardterminal: "Terminal de carte",
+    cloud: "Nuage",
+    cronjob: "Tâche planifiée",
+    cube: "Cube",
+    desktop: "Ordinateur de bureau",
+    diamond: "Losange",
+    dns: "DNS",
+    document: "Document",
+    firewall: "Pare-feu",
+    "function-module": "Fonction",
+    image: "Image",
+    laptop: "Ordinateur portable",
+    loadbalancer: "Répartiteur de charge",
+    lock: "Verrou",
+    mail: "Courrier",
+    mailmultiple: "Courrier multiple",
+    mobiledevice: "Appareil mobile",
+    office: "Bureau",
+    "package-module": "Paquet",
+    paymentcard: "Carte de paiement",
+    plane: "Avion",
+    printer: "Imprimante",
+    pyramid: "Pyramide",
+    queue: "File d'attente",
+    router: "Routeur",
+    server: "Serveur",
+    speech: "Bulle de dialogue",
+    sphere: "Sphère",
+    storage: "Stockage",
+    "switch-module": "Commutateur",
+    tower: "Tour",
+    "truck-2": "Camion 2",
+    truck: "Camion",
+    user: "Utilisateur",
+    vm: "Machine virtuelle"
+  },
+  itemControls: {
+    close: "Fermer",
+    color: "Couleur",
+    useCustomColor: "Utiliser une couleur personnalisée",
+    node: {
+      name: "Nom",
+      description: "Description",
+      labelHeight: "Hauteur de l'étiquette",
+      iconSize: "Taille de l'icône",
+      updateIcon: "Changer l'icône",
+      backToSettings: "Paramètres",
+      expandDescription: "Afficher la description",
+      collapseDescription: "Masquer la description"
+    },
+    connector: {
+      labels: "Étiquettes",
+      labelsCount: "{count} / {max} étiquettes",
+      addLabel: "Ajouter une étiquette",
+      deleteLabel: "Supprimer l'étiquette",
+      noLabels: "Aucune étiquette. Cliquez sur « Ajouter une étiquette » pour en créer une.",
+      labelNumber: "Étiquette {number}",
+      labelText: "Texte",
+      position: "Position (%)",
+      heightOffset: "Décalage de hauteur",
+      showDottedLine: "Afficher la ligne pointillée",
+      width: "Épaisseur",
+      lineStyle: "Style de ligne",
+      showArrow: "Afficher la flèche",
+      connectorsCount: "{count} connecteurs",
+      connectorFallbackName: "Connecteur {number}",
+      styleSolid: "Continu",
+      styleDashed: "Tirets",
+      styleDotted: "Pointillés"
+    },
+    iconSelection: {
+      searchPlaceholder: "Rechercher des icônes",
+      importIcons: "Importer des icônes",
+      treatAsIsometric: "Traiter comme isométrique (vue 3D)",
+      uncheckForFlat: "Décocher pour les icônes plates (logos, éléments d'interface)",
+      dragDropHint: "Vous pouvez glisser-déposer n'importe quel élément ci-dessous sur le canevas."
+    },
+    quickIconSelector: {
+      searchPlaceholder: "Rechercher des icônes (Entrée pour sélectionner)",
+      recentlyUsed: "UTILISÉES RÉCEMMENT",
+      searchResults: "RÉSULTATS DE RECHERCHE ({count} icônes)",
+      noResults: "Aucune icône ne correspond à « {term} »",
+      helpSearching: "Flèches pour naviguer • Entrée pour sélectionner • Double-clic pour sélectionner et fermer",
+      helpBrowsing: "Tapez pour rechercher • Cliquez sur une catégorie pour développer • Double-clic pour sélectionner et fermer"
+    }
   }
 };
 

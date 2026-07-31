@@ -165,6 +165,10 @@ export interface ContextMenu {
   type: 'ITEM' | 'EMPTY' | 'SELECTION';
   item?: ItemReference;
   tile: Coords;
+  // Populated when right-clicking a tile where multiple connectors overlap —
+  // lets the context menu offer group actions instead of only acting on
+  // whichever single connector getItemAtTile happened to pick.
+  groupIds?: string[];
 }
 
 
@@ -190,11 +194,13 @@ export interface UiState {
   zoomSettings: ZoomSettings;
   labelSettings: LabelSettings;
   connectorInteractionMode: ConnectorInteractionMode;
+  connectorAnimationEnabled: boolean;
   expandLabels: boolean;
   iconPackManager: IconPackManagerProps | null;
   isAnythingCopied: boolean;
   mainMenuPortalTarget: HTMLElement | null;
   historyControlsPortalTarget: HTMLElement | null;
+  helpButtonPortalTarget: HTMLElement | null;
 }
 
 export interface UiStateActions {
@@ -217,11 +223,13 @@ export interface UiStateActions {
   setEnableDebugTools: (enabled: boolean) => void;
   setMainMenuPortalTarget: (el: HTMLElement | null) => void;
   setHistoryControlsPortalTarget: (el: HTMLElement | null) => void;
+  setHelpButtonPortalTarget: (el: HTMLElement | null) => void;
   setHotkeyProfile: (profile: HotkeyProfile) => void;
   setPanSettings: (settings: PanSettings) => void;
   setZoomSettings: (settings: ZoomSettings) => void;
   setLabelSettings: (settings: LabelSettings) => void;
   setConnectorInteractionMode: (mode: ConnectorInteractionMode) => void;
+  setConnectorAnimationEnabled: (enabled: boolean) => void;
   setExpandLabels: (expand: boolean) => void;
   setIconPackManager: (iconPackManager: IconPackManagerProps | null) => void;
   setIsAnythingCopied: (isAnythingCopied: boolean) => void;

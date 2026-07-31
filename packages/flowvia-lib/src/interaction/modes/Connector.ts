@@ -126,7 +126,29 @@ export const Connector: ModeActions = {
             });
             return;
           }
-          
+
+          // Clicking back on the exact start point would create a zero-length
+          // connector that clutters the diagram without connecting anything new —
+          // cancel it instead of finalizing.
+          const startRef = connector.anchors[0]?.ref;
+          const isSameAsStart = itemAtTile?.type === 'ITEM'
+            ? startRef?.item === itemAtTile.id
+            : Boolean(startRef?.tile) &&
+              startRef!.tile!.x === uiState.mouse.position.tile.x &&
+              startRef!.tile!.y === uiState.mouse.position.tile.y;
+
+          if (isSameAsStart) {
+            scene.deleteConnector(currentMode.id);
+            uiState.actions.setMode({
+              type: 'CONNECTOR',
+              showCursor: true,
+              id: null,
+              startAnchor: undefined,
+              isConnecting: false
+            });
+            return;
+          }
+
           // Update the second anchor to the click position
           const newConnector = produce(connector, (draft) => {
             if (itemAtTile?.type === 'ITEM') {
@@ -186,10 +208,33 @@ export const Connector: ModeActions = {
   mouseup: ({ uiState, scene }) => {
     if (uiState.mode.type !== 'CONNECTOR' || !uiState.mode.id) return;
 
+    const connectorId = uiState.mode.id;
+
     // Only handle mouseup for drag mode
     if (uiState.connectorInteractionMode === 'drag') {
       // Don't delete connectors to empty space - they're valid
       // Validation is handled in the reducer layer
+
+      // A click-without-drag never moves anchors[1] away from anchors[0] (set
+      // equal at mousedown) — delete that zero-length connector instead of
+      // leaving a duplicate stub behind.
+      const connector = (scene.currentView.connectors ?? []).find(
+        c => c.id === connectorId
+      );
+
+      if (connector) {
+        const [start, end] = connector.anchors;
+        const isDegenerate = Boolean(start && end && (
+          (start.ref.item && start.ref.item === end.ref.item) ||
+          (start.ref.tile && end.ref.tile &&
+            start.ref.tile.x === end.ref.tile.x &&
+            start.ref.tile.y === end.ref.tile.y)
+        ));
+
+        if (isDegenerate) {
+          scene.deleteConnector(connectorId);
+        }
+      }
 
       uiState.actions.setMode({
         type: 'CONNECTOR',

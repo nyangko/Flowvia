@@ -2,7 +2,14 @@ import { LocaleProps } from '../types/isoflowProps';
 
 const locale: LocaleProps = {
   common: {
-    exampleText: "This is an example text"
+    exampleText: "This is an example text",
+    delete: "Delete"
+  },
+  textBoxControls: {
+    enterText: "Enter text",
+    textSize: "Text size",
+    alignment: "Alignment",
+    close: "Close"
   },
   mainMenu: {
     undo: "Undo",
@@ -12,6 +19,7 @@ const locale: LocaleProps = {
     exportCompactJson: "Export as Compact JSON",
     exportImage: "Export as image",
     clearCanvas: "Clear the canvas",
+    clearCanvasConfirm: "Clear the canvas? This can't be undone.",
     settings: "Settings",
     gitHub: "GitHub"
   },
@@ -119,13 +127,46 @@ const locale: LocaleProps = {
     message: "To connect this connector to a node,",
     instruction: "left-click on the end of the connector and drag it to the desired node."
   },
+  contextMenu: {
+    copySelection: "Copy Selection",
+    deleteSelection: "Delete Selection",
+    copyNode: "Copy Node",
+    copyRectangle: "Copy Rectangle",
+    copyText: "Copy Text",
+    addNode: "Add Node",
+    addRectangle: "Add Rectangle",
+    addConnector: "Add Connector",
+    duplicateNode: "Duplicate Node",
+    duplicateRectangle: "Duplicate Rectangle",
+    duplicateText: "Duplicate Text",
+    editNode: "Edit Node",
+    deleteNode: "Delete Node",
+    editRectangle: "Edit Rectangle",
+    deleteRectangle: "Delete Rectangle",
+    editText: "Edit Text",
+    deleteText: "Delete Text",
+    editConnector: "Edit Connector",
+    deleteConnector: "Delete Connector",
+    editConnectorsHere: "Edit Connectors Here ({count})",
+    deleteConnectorsHere: "Delete All Here ({count})",
+    paste: "Paste",
+  },
   settings: {
     zoom: {
+      title: "Zoom",
       description: "Configure zoom behavior when using the mouse wheel.",
       zoomToCursor: "Zoom to Cursor",
       zoomToCursorDesc: "When enabled, zoom in/out centered on the mouse cursor position. When disabled, zoom is centered on the canvas.",
       trackpadMode: "Trackpad Mode",
       trackpadModeDesc: "When enabled: scrolling pans the canvas and pinch-to-zoom controls canvas zoom. When disabled: scrolling zooms the canvas (default). Best used with a trackpad."
+    },
+    labels: {
+      title: "Labels",
+      description: "Configure label display settings.",
+      expandButtonPadding: "Expand Button Padding",
+      expandButtonPaddingDesc: "Bottom padding when expand button is visible (prevents text overlap).",
+      currentPrefix: "Current:",
+      unitsLabel: "theme units"
     },
     hotkeys: {
       title: "Hotkey Settings",
@@ -167,6 +208,8 @@ const locale: LocaleProps = {
       clickModeDesc: "Click the first node, then click the second node to create a connection",
       dragMode: "Drag Mode",
       dragModeDesc: "Click and drag from the first node to the second node",
+      animation: "Animate flow direction",
+      animationDesc: "Shows a moving dash pattern along connectors to indicate flow direction.",
       note: "Note: You can change this setting at any time. The selected mode will be used when the Connector tool is active."
     },
     iconPacks: {
@@ -195,6 +238,95 @@ const locale: LocaleProps = {
     configPath2: "in the top left to access Configuration.",
     canDisable: "You can disable this behaviour if you wish.",
     signature: "-Stan"
+  },
+  iconNames: {
+    block: "Block",
+    cache: "Cache",
+    cardterminal: "Card Terminal",
+    cloud: "Cloud",
+    cronjob: "Cron Job",
+    cube: "Cube",
+    desktop: "Desktop",
+    diamond: "Diamond",
+    dns: "DNS",
+    document: "Document",
+    firewall: "Firewall",
+    "function-module": "Function",
+    image: "Image",
+    laptop: "Laptop",
+    loadbalancer: "Load Balancer",
+    lock: "Lock",
+    mail: "Mail",
+    mailmultiple: "Multiple Mail",
+    mobiledevice: "Mobile Device",
+    office: "Office",
+    "package-module": "Package",
+    paymentcard: "Payment Card",
+    plane: "Plane",
+    printer: "Printer",
+    pyramid: "Pyramid",
+    queue: "Queue",
+    router: "Router",
+    server: "Server",
+    speech: "Speech Bubble",
+    sphere: "Sphere",
+    storage: "Storage",
+    "switch-module": "Switch",
+    tower: "Tower",
+    "truck-2": "Truck (Alt)",
+    truck: "Truck",
+    user: "User",
+    vm: "Virtual Machine"
+  },
+  itemControls: {
+    close: "Close",
+    color: "Color",
+    useCustomColor: "Use Custom Color",
+    node: {
+      name: "Name",
+      description: "Description",
+      labelHeight: "Label height",
+      iconSize: "Icon size",
+      updateIcon: "Update icon",
+      backToSettings: "Settings",
+      expandDescription: "Show description",
+      collapseDescription: "Hide description"
+    },
+    connector: {
+      labels: "Labels",
+      labelsCount: "{count} / {max} labels",
+      addLabel: "Add Label",
+      deleteLabel: "Delete Label",
+      noLabels: "No labels. Click \"Add Label\" to create one.",
+      labelNumber: "Label {number}",
+      labelText: "Text",
+      position: "Position (%)",
+      heightOffset: "Height Offset",
+      showDottedLine: "Show Dotted Line",
+      width: "Width",
+      lineStyle: "Line Style",
+      showArrow: "Show Arrow",
+      connectorsCount: "{count} Connectors",
+      connectorFallbackName: "Connector {number}",
+      styleSolid: "Solid",
+      styleDashed: "Dashed",
+      styleDotted: "Dotted"
+    },
+    iconSelection: {
+      searchPlaceholder: "Search icons",
+      importIcons: "Import Icons",
+      treatAsIsometric: "Treat as isometric (3D view)",
+      uncheckForFlat: "Uncheck for flat icons (logos, UI elements)",
+      dragDropHint: "You can drag and drop any item below onto the canvas."
+    },
+    quickIconSelector: {
+      searchPlaceholder: "Search icons (press Enter to select)",
+      recentlyUsed: "RECENTLY USED",
+      searchResults: "SEARCH RESULTS ({count} icons)",
+      noResults: "No icons found matching \"{term}\"",
+      helpSearching: "Use arrow keys to navigate • Enter to select • Double-click to select and close",
+      helpBrowsing: "Type to search • Click category to expand • Double-click to select and close"
+    }
   }
 };
 

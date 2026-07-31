@@ -6,8 +6,7 @@ import {
   AddOutlined as AddIcon,
   EastOutlined as ConnectorIcon,
   CropSquareOutlined as CropSquareIcon,
-  Title as TitleIcon,
-  Help as HelpIcon,
+  TitleOutlined as TitleIcon,
   HighlightAltOutlined as LassoIcon,
   GestureOutlined as FreehandLassoIcon
 } from '@mui/icons-material';

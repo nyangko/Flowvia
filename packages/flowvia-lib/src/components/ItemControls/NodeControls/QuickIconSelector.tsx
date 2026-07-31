@@ -4,6 +4,7 @@ import { Search as SearchIcon } from '@mui/icons-material';
 import { Icon } from 'src/types';
 import { useModelStore } from 'src/stores/modelStore';
 import { useIconCategories } from 'src/hooks/useIconCategories';
+import { useTranslation } from 'src/stores/localeStore';
 import { IconGrid } from '../IconSelectionControls/IconGrid';
 import { Icons } from '../IconSelectionControls/Icons';
 import { Section } from '../components/Section';
@@ -47,6 +48,7 @@ export const QuickIconSelector = ({ onIconSelected, onClose, currentIconId }: Pr
   
   const icons = useModelStore((state) => state.icons);
   const { iconCategories } = useIconCategories();
+  const { t } = useTranslation();
 
   // Get recently used icons
   const recentIconIds = useMemo(() => getRecentIcons(), []);
@@ -146,7 +148,7 @@ export const QuickIconSelector = ({ onIconSelected, onClose, currentIconId }: Pr
           <TextField
             ref={searchInputRef}
             fullWidth
-            placeholder="Search icons (press Enter to select)"
+            placeholder={t('itemControls.quickIconSelector.searchPlaceholder')}
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
@@ -167,7 +169,7 @@ export const QuickIconSelector = ({ onIconSelected, onClose, currentIconId }: Pr
           {!searchTerm && recentIcons.length > 0 && (
             <>
               <Typography variant="caption" color="text.secondary">
-                RECENTLY USED
+                {t('itemControls.quickIconSelector.recentlyUsed')}
               </Typography>
               <IconGrid
                 icons={recentIcons}
@@ -185,7 +187,10 @@ export const QuickIconSelector = ({ onIconSelected, onClose, currentIconId }: Pr
         <>
           <Section sx={{ py: 1 }}>
             <Typography variant="caption" color="text.secondary">
-              SEARCH RESULTS ({filteredIcons.length} icons)
+              {t('itemControls.quickIconSelector.searchResults').replace(
+                '{count}',
+                String(filteredIcons.length)
+              )}
             </Typography>
           </Section>
           <Divider />
@@ -202,7 +207,12 @@ export const QuickIconSelector = ({ onIconSelected, onClose, currentIconId }: Pr
               </Section>
             ) : (
               <Section>
-                <Alert severity="info">No icons found matching "{searchTerm}"</Alert>
+                <Alert severity="info">
+                  {t('itemControls.quickIconSelector.noResults').replace(
+                    '{term}',
+                    searchTerm
+                  )}
+                </Alert>
               </Section>
             )}
           </Box>
@@ -223,9 +233,9 @@ export const QuickIconSelector = ({ onIconSelected, onClose, currentIconId }: Pr
       {/* Help Text */}
       <Section sx={{ py: 1 }}>
         <Typography variant="caption" color="text.secondary">
-          {searchTerm 
-            ? 'Use arrow keys to navigate • Enter to select • Double-click to select and close'
-            : 'Type to search • Click category to expand • Double-click to select and close'
+          {searchTerm
+            ? t('itemControls.quickIconSelector.helpSearching')
+            : t('itemControls.quickIconSelector.helpBrowsing')
           }
         </Typography>
       </Section>

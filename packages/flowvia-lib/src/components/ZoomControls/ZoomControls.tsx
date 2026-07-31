@@ -1,9 +1,10 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 import {
   Add as ZoomInIcon,
   Remove as ZoomOutIcon,
   CropFreeOutlined as FitToScreenIcon,
-  Help as HelpIcon
+  HelpOutline as HelpIcon
 } from '@mui/icons-material';
 import { Stack, Box, Typography, Divider } from '@mui/material';
 import { toPx } from 'src/utils';
@@ -21,7 +22,22 @@ export const ZoomControls = () => {
   const zoom = useUiStateStore((state) => {
     return state.zoom;
   });
+  const helpButtonPortalTarget = useUiStateStore((state) => {
+    return state.helpButtonPortalTarget;
+  });
   const { fitToView } = useDiagramUtils();
+
+  const helpButton = (
+    <UiElement>
+      <IconButton
+        name="Help (F1)"
+        Icon={<HelpIcon />}
+        onClick={() => {
+          return uiStateStoreActions.setDialog(DialogTypeEnum.HELP);
+        }}
+      />
+    </UiElement>
+  );
 
   return (
     <Stack direction="row" spacing={1} alignItems="center">
@@ -31,7 +47,7 @@ export const ZoomControls = () => {
             name="Zoom out"
             Icon={<ZoomOutIcon />}
             onClick={uiStateStoreActions.decrementZoom}
-            disabled={zoom >= MAX_ZOOM}
+            disabled={zoom <= MIN_ZOOM}
           />
           <Divider orientation="vertical" flexItem />
           <Box
@@ -51,7 +67,7 @@ export const ZoomControls = () => {
             name="Zoom in"
             Icon={<ZoomInIcon />}
             onClick={uiStateStoreActions.incrementZoom}
-            disabled={zoom <= MIN_ZOOM}
+            disabled={zoom >= MAX_ZOOM}
           />
         </Stack>
       </UiElement>
@@ -62,15 +78,8 @@ export const ZoomControls = () => {
           onClick={fitToView}
         />
       </UiElement>
-      <UiElement>
-        <IconButton
-          name="Help (F1)"
-          Icon={<HelpIcon />}
-          onClick={() => {
-            return uiStateStoreActions.setDialog(DialogTypeEnum.HELP);
-          }}
-        />
-      </UiElement>
+      {!helpButtonPortalTarget && helpButton}
+      {helpButtonPortalTarget && createPortal(helpButton, helpButtonPortalTarget)}
     </Stack>
   );
 };

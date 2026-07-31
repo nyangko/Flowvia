@@ -1,24 +1,23 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Isoflow } from 'flowvia';
 import { flattenCollections } from '@isoflow/isopacks/dist/utils';
 import isoflowIsopack from '@isoflow/isopacks/dist/isoflow';
 import { useTranslation } from 'react-i18next';
-import {
-  DiagramData,
-  mergeDiagramData,
-  extractSavableData
-} from './diagramUtils';
+import { DiagramData } from './diagramUtils';
 import { StorageManager } from './StorageManager';
-import { DiagramManager } from './components/DiagramManager';
-import { storageManager } from './services/storageService';
+import { storageManager, DiagramInfo } from './services/storageService';
 import ChangeLanguage from './components/ChangeLanguage';
 import {
   NewFileIcon,
   SaveIcon,
   FolderIcon,
   DownloadIcon,
-  CloudIcon
+  CloudIcon,
+  UploadIcon,
+  TrashIcon,
+  HistoryIcon
 } from './components/ToolbarIcons';
+import { HistoryPanel } from './components/HistoryPanel';
 import { allLocales } from 'flowvia';
 import { useIconPackManager, IconPackName } from './services/iconPackManager';
 import './App.css';
@@ -27,13 +26,38 @@ import { BrowserRouter, Route, Routes, useParams } from 'react-router-dom';
 // Load core isoflow icons (always loaded)
 const coreIcons = flattenCollections([isoflowIsopack]);
 
-interface SavedDiagram {
+// The diagram currently loaded in the editor. Its full data lives in
+// currentModel/diagramData — this only tracks which saved diagram (if any)
+// it corresponds to, for save-in-place vs. save-as-new and the title bar.
+interface CurrentDiagramRef {
   id: string;
   name: string;
-  data: any;
-  createdAt: string;
-  updatedAt: string;
 }
+
+// Bump this whenever the History panel's changelog content changes so returning
+// users see the "unread" dot again even if they already dismissed the tutorial hints.
+const HISTORY_VERSION = 'v1.1.0';
+const TUTORIAL_HINT_KEYS = [
+  'flowvia_import_hint_dismissed',
+  'flowvia_connector_hint_dismissed',
+  'flowvia-lazy-loading-welcome-dismissed'
+];
+
+const hasUnreadHistory = () => {
+  if (localStorage.getItem('flowvia-history-seen-version') !== HISTORY_VERSION) {
+    return true;
+  }
+  return TUTORIAL_HINT_KEYS.some((key) => {
+    return localStorage.getItem(key) !== 'true';
+  });
+};
+
+const markHistoryAsRead = () => {
+  localStorage.setItem('flowvia-history-seen-version', HISTORY_VERSION);
+  TUTORIAL_HINT_KEYS.forEach((key) => {
+    localStorage.setItem(key, 'true');
+  });
+};
 
 function App() {
   // Get base path from PUBLIC_URL, ensure no trailing slash for React Router
@@ -56,9 +80,8 @@ function EditorPage() {
   const iconPackManager = useIconPackManager(coreIcons);
   const { readonlyDiagramId } = useParams<{ readonlyDiagramId: string }>();
 
-  const [diagrams, setDiagrams] = useState<SavedDiagram[]>([]);
-  const [isDiagramsInitialized, setIsDiagramsInitialized] = useState<boolean>(false);
-  const [currentDiagram, setCurrentDiagram] = useState<SavedDiagram | null>(
+  const [diagrams, setDiagrams] = useState<DiagramInfo[]>([]);
+  const [currentDiagram, setCurrentDiagram] = useState<CurrentDiagramRef | null>(
     null
   );
   const [diagramName, setDiagramName] = useState('');
@@ -70,13 +93,20 @@ function EditorPage() {
   );
   const [historyControlsSlot, setHistoryControlsSlot] =
     useState<HTMLDivElement | null>(null);
+  const [helpButtonSlot, setHelpButtonSlot] =
+    useState<HTMLDivElement | null>(null);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [showLoadMenu, setShowLoadMenu] = useState(false);
+  const [showHistoryPanel, setShowHistoryPanel] = useState(false);
+  const [isHistoryUnread, setIsHistoryUnread] = useState(hasUnreadHistory);
   const [flowviaKey, setFlowviaKey] = useState(0); // Key to force re-render of Flowvia
   const [currentModel, setCurrentModel] = useState<DiagramData | null>(null); // Store current model state
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
+  // Isoflow echoes the freshly-loaded model back through onModelUpdated right
+  // after (re)mounting; that echo isn't a user edit and shouldn't mark the
+  // diagram dirty, so skip the first onModelUpdated call after each (re)load.
+  const skipNextModelUpdateRef = useRef(true);
   const [showStorageManager, setShowStorageManager] = useState(false);
-  const [showDiagramManager, setShowDiagramManager] = useState(false);
   const [serverStorageAvailable, setServerStorageAvailable] = useState(false);
   const isReadonlyUrl =
     window.location.pathname.startsWith('/display/') && readonlyDiagramId;
@@ -84,13 +114,13 @@ function EditorPage() {
   // Initialize with empty diagram data
   // Create default colors for connectors
   const defaultColors = [
-    { id: 'blue', value: '#0066cc' },
-    { id: 'green', value: '#00aa00' },
-    { id: 'red', value: '#cc0000' },
-    { id: 'orange', value: '#ff9900' },
-    { id: 'purple', value: '#9900cc' },
-    { id: 'black', value: '#000000' },
-    { id: 'gray', value: '#666666' }
+    { id: 'blue', value: '#A7C7E7' },
+    { id: 'green', value: '#B5EAD7' },
+    { id: 'red', value: '#FFB3BA' },
+    { id: 'orange', value: '#FFDAC1' },
+    { id: 'purple', value: '#C7B8EA' },
+    { id: 'black', value: '#6B7280' },
+    { id: 'gray', value: '#C9CCD1' }
   ];
 
   const [diagramData, setDiagramData] = useState<DiagramData>(() => {
@@ -125,46 +155,40 @@ function EditorPage() {
     };
   });
 
-  // Check for server storage availability
+  // Initialize storage (server sync availability + the saved-diagrams list)
   useEffect(() => {
-    storageManager
-      .initialize()
-      .then(() => {
-        setServerStorageAvailable(storageManager.isServerStorage());
-      })
-      .catch(console.error);
+    (async () => {
+      await storageManager.initialize();
+      setServerStorageAvailable(storageManager.isServerStorage());
+
+      const list = await storageManager.getStorage().listDiagrams();
+      setDiagrams(list);
+
+      // The last-opened diagram's content is already loaded via the
+      // diagramData state initializer (from the 'flowvia-last-opened-data'
+      // cache); this just re-attaches its id/name if it's one of ours.
+      const lastOpenedId = localStorage.getItem('flowvia-last-opened');
+      if (lastOpenedId) {
+        const lastDiagram = list.find((d) => {
+          return d.id === lastOpenedId;
+        });
+        if (lastDiagram) {
+          setCurrentDiagram({ id: lastDiagram.id, name: lastDiagram.name });
+          setDiagramName(lastDiagram.name);
+          setCurrentModel(diagramData);
+        }
+      }
+    })().catch(console.error);
   }, []);
 
   // Check if readonlyDiagramId exists - if exists, load diagram in view-only mode
   useEffect(() => {
     if (!isReadonlyUrl || !serverStorageAvailable) return;
-    const loadReadonlyDiagram = async () => {
-      try {
-        const storage = storageManager.getStorage();
-        // Get diagram metadata
-        const diagramList = await storage.listDiagrams();
-        const diagramInfo = diagramList.find((d) => {
-          return d.id === readonlyDiagramId;
-        });
-        // Load the diagram data from server storage
-        const data = await storage.loadDiagram(readonlyDiagramId);
-        // Convert to SavedDiagram interface format
-        const readonlyDiagram: SavedDiagram = {
-          id: readonlyDiagramId,
-          name: diagramInfo?.name || data.title || 'Readonly Diagram',
-          data: data,
-          createdAt: new Date().toISOString(),
-          updatedAt:
-            diagramInfo?.lastModified.toISOString() || new Date().toISOString()
-        };
-        await loadDiagram(readonlyDiagram, true);
-      } catch (error) {
-        // Alert if unable to load readonly diagram and redirect to new diagram
-        alert(t('dialog.readOnly.failed'));
-        window.location.href = '/';
-      }
-    };
-    loadReadonlyDiagram();
+    loadDiagram(readonlyDiagramId, true).catch(() => {
+      // Alert if unable to load readonly diagram and redirect to new diagram
+      alert(t('dialog.readOnly.failed'));
+      window.location.href = '/';
+    });
   }, [readonlyDiagramId, serverStorageAvailable]);
 
   // Update diagramData when loaded icons change
@@ -182,63 +206,7 @@ function EditorPage() {
     });
   }, [iconPackManager.loadedIcons]);
 
-  // Load diagrams from localStorage on component mount
-  useEffect(() => {
-    const savedDiagrams = localStorage.getItem('flowvia-diagrams');
-    if (savedDiagrams) {
-      setDiagrams(JSON.parse(savedDiagrams));
-      setIsDiagramsInitialized(true);
-    }
-
-    // Load last opened diagram metadata (data is already loaded in state initialization)
-    const lastOpenedId = localStorage.getItem('flowvia-last-opened');
-
-    if (lastOpenedId && savedDiagrams) {
-      try {
-        const allDiagrams = JSON.parse(savedDiagrams);
-        const lastDiagram = allDiagrams.find((d: SavedDiagram) => {
-          return d.id === lastOpenedId;
-        });
-        if (lastDiagram) {
-          setCurrentDiagram(lastDiagram);
-          setDiagramName(lastDiagram.name);
-          // Also set currentModel to match diagramData
-          setCurrentModel(diagramData);
-        }
-      } catch (e) {
-        console.error('Failed to restore last diagram metadata:', e);
-      }
-    }
-  }, []);
-
-  // Save diagrams to localStorage whenever they change
-  useEffect(() => {
-    if (!isDiagramsInitialized) return;
-
-    try {
-      // Store diagrams without the full icon data
-      const diagramsToStore = diagrams.map((d) => {
-        return {
-          ...d,
-          data: {
-            ...d.data,
-            icons: [] // Don't store icons with each diagram
-          }
-        };
-      });
-      localStorage.setItem(
-        'flowvia-diagrams',
-        JSON.stringify(diagramsToStore)
-      );
-    } catch (e) {
-      console.error('Failed to save diagrams:', e);
-      if (e instanceof DOMException && e.name === 'QuotaExceededError') {
-        alert(t('alert.quotaExceeded'));
-      }
-    }
-  }, [diagrams]);
-
-  const saveDiagram = () => {
+  const saveDiagram = async () => {
     if (!diagramName.trim()) {
       alert(t('alert.enterDiagramName'));
       return;
@@ -269,6 +237,7 @@ function EditorPage() {
 
     const savedData = {
       title: diagramName,
+      name: diagramName,
       icons: importedIcons, // Save only imported icons with diagram
       colors: currentModel?.colors || diagramData.colors || [],
       items: currentModel?.items || diagramData.items || [],
@@ -276,51 +245,41 @@ function EditorPage() {
       fitToScreen: true
     };
 
-    const newDiagram: SavedDiagram = {
-      id: currentDiagram?.id || Date.now().toString(),
-      name: diagramName,
-      data: savedData,
-      createdAt: currentDiagram?.createdAt || new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
+    const targetId = currentDiagram?.id || existingDiagram?.id;
+    const storage = storageManager.getStorage();
 
-    if (currentDiagram) {
-      // Update existing diagram
-      setDiagrams(
-        diagrams.map((d) => {
-          return d.id === currentDiagram.id ? newDiagram : d;
-        })
-      );
-    } else if (existingDiagram) {
-      // Replace existing diagram with same name
-      setDiagrams(
-        diagrams.map((d) => {
-          return d.id === existingDiagram.id
-            ? {
-                ...newDiagram,
-                id: existingDiagram.id,
-                createdAt: existingDiagram.createdAt
-              }
-            : d;
-        })
-      );
-      newDiagram.id = existingDiagram.id;
-      newDiagram.createdAt = existingDiagram.createdAt;
-    } else {
-      // Add new diagram
-      setDiagrams([...diagrams, newDiagram]);
+    try {
+      if (targetId) {
+        await storage.saveDiagram(targetId, savedData);
+      }
+    } catch (e) {
+      console.error('Failed to save diagram:', e);
+      alert(t('alert.storageFull'));
+      return;
     }
 
-    setCurrentDiagram(newDiagram);
+    let savedId = targetId;
+    if (!savedId) {
+      try {
+        savedId = await storage.createDiagram(savedData);
+      } catch (e) {
+        console.error('Failed to save diagram:', e);
+        alert(t('alert.storageFull'));
+        return;
+      }
+    }
+
+    setCurrentDiagram({ id: savedId, name: diagramName });
     setShowSaveDialog(false);
     setHasUnsavedChanges(false);
+    setDiagrams(await storage.listDiagrams());
 
     // Save as last opened
     try {
-      localStorage.setItem('flowvia-last-opened', newDiagram.id);
+      localStorage.setItem('flowvia-last-opened', savedId);
       localStorage.setItem(
         'flowvia-last-opened-data',
-        JSON.stringify(newDiagram.data)
+        JSON.stringify(savedData)
       );
     } catch (e) {
       console.error('Failed to save diagram:', e);
@@ -331,10 +290,7 @@ function EditorPage() {
     }
   };
 
-  const loadDiagram = async (
-    diagram: SavedDiagram,
-    skipUnsavedCheck = false
-  ) => {
+  const loadDiagram = async (id: string, skipUnsavedCheck = false) => {
     if (
       !skipUnsavedCheck &&
       hasUnsavedChanges &&
@@ -343,21 +299,27 @@ function EditorPage() {
       return;
     }
 
+    const data: any = await storageManager.getStorage().loadDiagram(id);
+    const cached = diagrams.find((d) => {
+      return d.id === id;
+    });
+    const name = cached?.name || data.name || data.title || 'Untitled Diagram';
+
     // Auto-detect and load required icon packs
-    await iconPackManager.loadPacksForDiagram(diagram.data.items || []);
+    await iconPackManager.loadPacksForDiagram(data.items || []);
 
     // Merge imported icons with loaded icon set
-    const importedIcons = (diagram.data.icons || []).filter((icon: any) => {
+    const importedIcons = (data.icons || []).filter((icon: any) => {
       return icon.collection === 'imported';
     });
     const mergedIcons = [...iconPackManager.loadedIcons, ...importedIcons];
     const dataWithIcons = {
-      ...diagram.data,
+      ...data,
       icons: mergedIcons
     };
 
-    setCurrentDiagram(diagram);
-    setDiagramName(diagram.name);
+    setCurrentDiagram({ id, name });
+    setDiagramName(name);
     setDiagramData(dataWithIcons);
     setCurrentModel(dataWithIcons);
     setFlowviaKey((prev) => {
@@ -368,10 +330,10 @@ function EditorPage() {
 
     // Save as last opened (without icons)
     try {
-      localStorage.setItem('flowvia-last-opened', diagram.id);
+      localStorage.setItem('flowvia-last-opened', id);
       localStorage.setItem(
         'flowvia-last-opened-data',
-        JSON.stringify(diagram.data)
+        JSON.stringify(dataWithIcons)
       );
     } catch (e) {
       console.error('Failed to save last opened:', e);
@@ -388,17 +350,15 @@ function EditorPage() {
     }
 
     if (currentDiagram && currentDiagram.name !== trimmed) {
-      const renamed = {
-        ...currentDiagram,
-        name: trimmed,
-        updatedAt: new Date().toISOString()
-      };
       setDiagrams((prev) => {
         return prev.map((d) => {
-          return d.id === currentDiagram.id ? renamed : d;
+          return d.id === currentDiagram.id
+            ? { ...d, name: trimmed, lastModified: new Date() }
+            : d;
         });
       });
-      setCurrentDiagram(renamed);
+      setCurrentDiagram({ id: currentDiagram.id, name: trimmed });
+      // The new title is persisted by the next save/auto-save.
       setHasUnsavedChanges(true);
     } else {
       setDiagramName(trimmed);
@@ -460,8 +420,13 @@ function EditorPage() {
     fileInput.click();
   };
 
-  const deleteDiagram = (id: string) => {
+  const deleteDiagram = async (id: string) => {
     if (window.confirm(t('alert.confirmDelete'))) {
+      try {
+        await storageManager.getStorage().deleteDiagram(id);
+      } catch (e) {
+        console.error('Failed to delete diagram:', e);
+      }
       setDiagrams(
         diagrams.filter((d) => {
           return d.id !== id;
@@ -520,7 +485,11 @@ function EditorPage() {
     setCurrentModel(updatedModel);
     setDiagramData(updatedModel);
 
-    if (!isReadonlyUrl) {
+    if (skipNextModelUpdateRef.current) {
+      // This call is Isoflow echoing back the data it was just given to
+      // load, not something the user changed.
+      skipNextModelUpdateRef.current = false;
+    } else if (!isReadonlyUrl) {
       setHasUnsavedChanges(true);
     }
   }, [isReadonlyUrl]);
@@ -580,102 +549,28 @@ function EditorPage() {
     setHasUnsavedChanges(false); // Mark as saved after export
   };
 
-  const handleDiagramManagerLoad = async (id: string, data: any) => {
-    console.log(`App: handleDiagramManagerLoad called for diagram ${id}`);
-
-    /**
-     * Icon Persistence Strategy:
-     *
-     * NEW BEHAVIOR (after this fix):
-     * - Server storage saves ALL icons (default collections + imported custom icons)
-     * - When loading, if we detect default collection icons, use ALL icons from server
-     * - This preserves imported custom icons without data loss
-     *
-     * BACKWARD COMPATIBILITY (for old saves):
-     * - Old format only saved imported icons (collection='imported')
-     * - If no default icons detected, merge imported icons with current defaults
-     * - This ensures old diagrams still load correctly
-     *
-     * DETECTION:
-     * - Check if loaded icons contain any default collection (isoflow, aws, gcp, etc.)
-     * - If yes: New format, use all icons from server
-     * - If no: Old format, merge imported with defaults
-     */
-    const loadedIcons = data.icons || [];
-    console.log(`App: Server sent ${loadedIcons.length} icons`);
-
-    // Auto-detect and load required icon packs
-    await iconPackManager.loadPacksForDiagram(data.items || []);
-
-    // Strategy: Check if server has ALL icons (both default and imported)
-    // Server storage now saves ALL icons, so we should use them directly
-    // For backward compatibility with old saves, we detect and merge
-
-    let finalIcons;
-    const hasDefaultIcons = loadedIcons.some((icon: any) => {
-      return (
-        icon.collection === 'isoflow' ||
-        icon.collection === 'aws' ||
-        icon.collection === 'gcp'
-      );
-    });
-
-    if (hasDefaultIcons) {
-      // New format: Server saved ALL icons (default + imported)
-      // Use them directly to preserve any custom icon modifications
-      console.log(
-        `App: Using all ${loadedIcons.length} icons from server (includes defaults + imported)`
-      );
-      finalIcons = loadedIcons;
-    } else {
-      // Old format: Server only saved imported icons
-      // Merge imported icons with currently loaded icon packs
-      const importedIcons = loadedIcons.filter((icon: any) => {
-        return icon.collection === 'imported';
+  const handleCopyShareLink = (id: string) => {
+    const shareUrl = `${window.location.origin}/display/${id}`;
+    navigator.clipboard
+      .writeText(shareUrl)
+      .then(() => {
+        alert(t('alert.shareLinkCopied', { url: shareUrl }));
+      })
+      .catch(() => {
+        const textArea = document.createElement('textarea');
+        textArea.value = shareUrl;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        try {
+          if (textArea.parentNode === document.body) {
+            document.body.removeChild(textArea);
+          }
+        } catch (err) {
+          console.warn('Failed to remove temporary textarea:', err);
+        }
+        alert(t('alert.shareLinkCopied', { url: shareUrl }));
       });
-      finalIcons = [...iconPackManager.loadedIcons, ...importedIcons];
-      console.log(
-        `App: Old format detected. Merged ${importedIcons.length} imported icons with ${iconPackManager.loadedIcons.length} defaults = ${finalIcons.length} total`
-      );
-    }
-
-    const mergedData: DiagramData = {
-      ...data,
-      title: data.title || data.name || 'Loaded Diagram',
-      icons: finalIcons,
-      colors: data.colors?.length ? data.colors : defaultColors,
-      fitToScreen: data.fitToScreen !== false
-    };
-
-    const newDiagram = {
-      id,
-      name: data.name || 'Loaded Diagram',
-      data: mergedData,
-      createdAt: data.created || new Date().toISOString(),
-      updatedAt: data.lastModified || new Date().toISOString()
-    };
-
-    console.log(`App: Setting all state for diagram ${id}`);
-
-    // Use a single batch of state updates to minimize re-render issues
-    // Update diagram data and increment key in the same render cycle
-    setDiagramName(newDiagram.name);
-    setCurrentDiagram(newDiagram);
-    setCurrentModel(mergedData);
-    setHasUnsavedChanges(false);
-
-    // Update diagramData and key together
-    // This ensures Isoflow gets the correct data with the new key
-    setDiagramData(mergedData);
-    setFlowviaKey((prev) => {
-      const newKey = prev + 1;
-      console.log(`App: Updated flowviaKey from ${prev} to ${newKey}`);
-      return newKey;
-    });
-
-    console.log(
-      `App: Finished loading diagram ${id}, final icon count: ${finalIcons.length}`
-    );
   };
 
   // i18n
@@ -684,11 +579,17 @@ function EditorPage() {
   // Get locale with fallback to en-US if not found
   const currentLocale = allLocales[i18n.language as keyof typeof allLocales] || allLocales['en-US'];
 
+  // Isoflow is remounted (via its `key`) whenever flowviaKey or the language
+  // changes, so the next onModelUpdated call will be a fresh load echo again.
+  useEffect(() => {
+    skipNextModelUpdateRef.current = true;
+  }, [flowviaKey, i18n.language]);
+
   // Auto-save functionality
   useEffect(() => {
     if (!currentModel || !hasUnsavedChanges || !currentDiagram) return;
 
-    const autoSaveTimer = setTimeout(() => {
+    const autoSaveTimer = setTimeout(async () => {
       // Include imported icons in auto-save
       const importedIcons = (
         currentModel?.icons ||
@@ -700,6 +601,7 @@ function EditorPage() {
 
       const savedData = {
         title: diagramName || currentDiagram.name,
+        name: diagramName || currentDiagram.name,
         icons: importedIcons, // Save imported icons in auto-save
         colors: currentModel.colors || [],
         items: currentModel.items || [],
@@ -707,32 +609,31 @@ function EditorPage() {
         fitToScreen: true
       };
 
-      const updatedDiagram: SavedDiagram = {
-        ...currentDiagram,
-        data: savedData,
-        updatedAt: new Date().toISOString()
-      };
-
-      setDiagrams((prevDiagrams) => {
-        return prevDiagrams.map((d) => {
-          return d.id === currentDiagram.id ? updatedDiagram : d;
+      try {
+        await storageManager.getStorage().saveDiagram(currentDiagram.id, savedData);
+        setDiagrams((prevDiagrams) => {
+          return prevDiagrams.map((d) => {
+            return d.id === currentDiagram.id
+              ? { ...d, name: savedData.name, lastModified: new Date() }
+              : d;
+          });
         });
-      });
+      } catch (e) {
+        console.error('Auto-save failed:', e);
+        alert(t('alert.autoSaveFailed'));
+        return;
+      }
 
-      // Update last opened data
+      // Keep the cold-start restore cache in sync too.
       try {
         localStorage.setItem(
           'flowvia-last-opened-data',
           JSON.stringify(savedData)
         );
-        setHasUnsavedChanges(false);
       } catch (e) {
-        console.error('Auto-save failed:', e);
-        if (e instanceof DOMException && e.name === 'QuotaExceededError') {
-          alert(t('alert.autoSaveFailed'));
-          setShowStorageManager(true);
-        }
+        console.error('Failed to update last-opened cache:', e);
       }
+      setHasUnsavedChanges(false);
     }, 5000); // Auto-save after 5 seconds of changes
 
     return () => {
@@ -785,6 +686,17 @@ function EditorPage() {
     };
   }, [currentDiagram, hasUnsavedChanges]);
 
+  // While any app-level dialog/popup is open, the canvas underneath shouldn't
+  // still respond to drags/clicks — flip the renderer fully non-interactive
+  // rather than patching pointer checks into every interaction mode.
+  const isAnyDialogOpen =
+    showSaveDialog ||
+    showLoadDialog ||
+    showExportDialog ||
+    showLoadMenu ||
+    showHistoryPanel ||
+    showStorageManager;
+
   return (
     <div className="App">
       <div className="icon-toolbar">
@@ -815,7 +727,7 @@ function EditorPage() {
             ) : (
               <span
                 className="diagram-badge"
-                title={`${t('status.sessionStorageNote')}`}
+                title={`${t('status.clickToRename')}`}
                 onClick={() => {
                   if (!currentDiagram && !diagramName) {
                     setDiagramName(t('status.untitled'));
@@ -879,9 +791,11 @@ function EditorPage() {
                         setShowLoadDialog(true);
                       }}
                     >
+                      <FolderIcon />
                       {t('nav.loadSessionOnly')}
                     </button>
                     <button onClick={loadFromFile}>
+                      <UploadIcon />
                       {t('nav.importFile')}
                     </button>
                   </div>
@@ -897,17 +811,6 @@ function EditorPage() {
             >
               <DownloadIcon />
             </button>
-            {serverStorageAvailable && (
-              <button
-                className="icon-btn"
-                onClick={() => {
-                  return setShowDiagramManager(true);
-                }}
-                title={t('nav.serverStorage')}
-              >
-                <CloudIcon />
-              </button>
-            )}
           </>
         ) : (
           <span className="diagram-badge" title={t('dialog.readOnly.mode')}>
@@ -915,6 +818,21 @@ function EditorPage() {
           </span>
         )}
         <ChangeLanguage />
+        <div className="history-btn-wrapper">
+          <button
+            className="icon-btn"
+            onClick={() => {
+              setShowHistoryPanel(true);
+              markHistoryAsRead();
+              setIsHistoryUnread(false);
+            }}
+            title={t('history.title')}
+          >
+            <HistoryIcon />
+          </button>
+          {isHistoryUnread && <span className="history-unread-dot" />}
+        </div>
+        <div className="help-button-slot" ref={setHelpButtonSlot} />
       </div>
 
       <div className="flowvia-container">
@@ -922,10 +840,17 @@ function EditorPage() {
           key={`${flowviaKey}-${i18n.language}`}
           initialData={diagramData}
           onModelUpdated={handleModelUpdated}
-          editorMode={isReadonlyUrl ? 'EXPLORABLE_READONLY' : 'EDITABLE'}
+          editorMode={
+            isAnyDialogOpen
+              ? 'NON_INTERACTIVE'
+              : isReadonlyUrl
+                ? 'EXPLORABLE_READONLY'
+                : 'EDITABLE'
+          }
           locale={currentLocale}
           mainMenuPortalTarget={mainMenuSlot}
           historyControlsPortalTarget={historyControlsSlot}
+          helpButtonPortalTarget={helpButtonSlot}
           iconPackManager={{
             lazyLoadingEnabled: iconPackManager.lazyLoadingEnabled,
             onToggleLazyLoading: iconPackManager.toggleLazyLoading,
@@ -943,17 +868,22 @@ function EditorPage() {
         <div className="dialog-overlay">
           <div className="dialog">
             <h2>{t('dialog.save.title')}</h2>
-            <div className="dialog-note dialog-note--warning">
+            <div
+              className={`dialog-note ${serverStorageAvailable ? 'dialog-note--success' : 'dialog-note--warning'}`}
+            >
               <strong className="dialog-note-title">
-                <span className="dialog-note-icon">⚠️</span>
-                {t('dialog.save.warningTitle')}
+                <span className="dialog-note-icon">
+                  {serverStorageAvailable ? <CloudIcon /> : '💾'}
+                </span>
+                {serverStorageAvailable
+                  ? t('dialog.load.storageServer')
+                  : t('dialog.load.storageLocal')}
               </strong>
-              <p>{t('dialog.save.warningMessage')}</p>
-              <p
-                dangerouslySetInnerHTML={{
-                  __html: t('dialog.save.warningExport')
-                }}
-              />
+              <p>
+                {serverStorageAvailable
+                  ? t('dialog.load.storageServerNote')
+                  : t('dialog.save.warningMessage')}
+              </p>
             </div>
             <input
               type="text"
@@ -986,12 +916,22 @@ function EditorPage() {
         <div className="dialog-overlay">
           <div className="dialog">
             <h2>{t('dialog.load.title')}</h2>
-            <div className="dialog-note dialog-note--warning">
+            <div
+              className={`dialog-note ${serverStorageAvailable ? 'dialog-note--success' : 'dialog-note--warning'}`}
+            >
               <strong className="dialog-note-title">
-                <span className="dialog-note-icon">⚠️</span>
-                {t('dialog.load.noteTitle')}
+                <span className="dialog-note-icon">
+                  {serverStorageAvailable ? <CloudIcon /> : '💾'}
+                </span>
+                {serverStorageAvailable
+                  ? t('dialog.load.storageServer')
+                  : t('dialog.load.storageLocal')}
               </strong>
-              <p>{t('dialog.load.noteMessage')}</p>
+              <p>
+                {serverStorageAvailable
+                  ? t('dialog.load.storageServerNote')
+                  : t('dialog.load.noteMessage')}
+              </p>
             </div>
             <div className="diagram-list">
               {diagrams.length === 0 ? (
@@ -1000,27 +940,43 @@ function EditorPage() {
                 diagrams.map((diagram) => {
                   return (
                     <div key={diagram.id} className="diagram-item">
-                      <div>
-                        <strong>{diagram.name}</strong>
-                        <br />
-                        <small>
-                          {t('dialog.load.updated')}:{' '}
-                          {new Date(diagram.updatedAt).toLocaleString()}
-                        </small>
+                      <div className="diagram-item-info">
+                        <NewFileIcon />
+                        <div>
+                          <strong>{diagram.name}</strong>
+                          <br />
+                          <small>
+                            {t('dialog.load.updated')}:{' '}
+                            {diagram.lastModified.toLocaleString()}
+                          </small>
+                        </div>
                       </div>
                       <div className="diagram-actions">
                         <button
                           onClick={() => {
-                            return loadDiagram(diagram, false);
+                            return loadDiagram(diagram.id, false);
                           }}
                         >
+                          <FolderIcon />
                           {t('dialog.load.btnLoad')}
                         </button>
+                        {serverStorageAvailable && (
+                          <button
+                            className="share"
+                            onClick={() => {
+                              return handleCopyShareLink(diagram.id);
+                            }}
+                            title={t('dialog.load.btnShare')}
+                          >
+                            {t('dialog.load.btnShare')}
+                          </button>
+                        )}
                         <button
                           onClick={() => {
                             return deleteDiagram(diagram.id);
                           }}
                         >
+                          <TrashIcon />
                           {t('dialog.load.btnDelete')}
                         </button>
                       </div>
@@ -1080,14 +1036,12 @@ function EditorPage() {
         />
       )}
 
-      {/* Diagram Manager */}
-      {showDiagramManager && (
-        <DiagramManager
-          onLoadDiagram={handleDiagramManagerLoad}
-          currentDiagramId={currentDiagram?.id}
-          currentDiagramData={currentModel || diagramData}
+      {/* History Panel */}
+      {showHistoryPanel && (
+        <HistoryPanel
+          locale={currentLocale}
           onClose={() => {
-            return setShowDiagramManager(false);
+            return setShowHistoryPanel(false);
           }}
         />
       )}

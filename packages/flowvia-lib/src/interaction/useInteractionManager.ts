@@ -3,7 +3,7 @@ import { useModelStoreApi } from 'src/stores/modelStore';
 import { useUiStateStore, useUiStateStoreApi } from 'src/stores/uiStateStore';
 import { ModeActions, State, SlimMouseEvent, Mouse } from 'src/types';
 import { DialogTypeEnum } from 'src/types/ui';
-import { getMouse, getItemAtTile, generateId, incrementZoom, decrementZoom, isPointInPolygon, isWithinBounds } from 'src/utils';
+import { getMouse, getItemAtTile, getConnectorsAtTile, generateId, incrementZoom, decrementZoom, isPointInPolygon, isWithinBounds } from 'src/utils';
 import { useResizeObserver } from 'src/hooks/useResizeObserver';
 import { useScene } from 'src/hooks/useScene';
 import { useHistory } from 'src/hooks/useHistory';
@@ -189,6 +189,16 @@ export const useInteractionManager = () => {
         return;
       }
 
+      if (
+        (e.key === 'Delete' || e.key === 'Backspace') &&
+        (uiState.mode.type === 'LASSO' || uiState.mode.type === 'FREEHAND_LASSO') &&
+        uiState.mode.selection
+      ) {
+        e.preventDefault();
+        scene.deleteObjects(uiState);
+        return;
+      }
+
       // Help dialog shortcut
       if (e.key === 'F1') {
         e.preventDefault();
@@ -350,9 +360,13 @@ export const useInteractionManager = () => {
         });
       } else {
         flushUpdate();
-        processMouseUpdate(nextMouse, e, 
+        processMouseUpdate(nextMouse, e,
           (e.type === 'mousedown' && handlePanMouseDown(e)) ||
-          (e.type === 'mouseup' && handlePanMouseUp(e))
+          (e.type === 'mouseup' && handlePanMouseUp(e)) ||
+          // A right/middle-button down or up should never drive left-click mode
+          // logic (e.g. a right-click completing an in-progress connector) —
+          // only the contextmenu handler should react to the right button.
+          e.button !== 0
         );
       }
     },
@@ -364,6 +378,30 @@ export const useInteractionManager = () => {
       e.preventDefault();
 
       const uiState = uiStateApi.getState();
+
+      if (uiState.mode.type === 'CONNECTOR') {
+        const connectorMode = uiState.mode;
+
+        const isConnectionInProgress =
+          (uiState.connectorInteractionMode === 'click' && connectorMode.isConnecting) ||
+          (uiState.connectorInteractionMode === 'drag' && connectorMode.id !== null);
+
+        if (isConnectionInProgress && connectorMode.id) {
+          // Right-click cancels an in-progress connector instead of opening the
+          // usual context menu — a quick way to back out without leaving a stub.
+          scene.deleteConnector(connectorMode.id);
+
+          uiState.actions.setMode({
+            type: 'CONNECTOR',
+            showCursor: true,
+            id: null,
+            startAnchor: undefined,
+            isConnecting: false
+          });
+
+          return;
+        }
+      }
 
       if (uiState.panSettings.rightClickPan) {
         return;
@@ -394,10 +432,16 @@ export const useInteractionManager = () => {
       }
 
       if (itemAtTile) {
+        const groupIds =
+          itemAtTile.type === 'CONNECTOR'
+            ? getConnectorsAtTile({ tile: mouseTile, scene })
+            : undefined;
+
         uiState.actions.setContextMenu({
           type: 'ITEM',
           item: itemAtTile,
-          tile: mouseTile
+          tile: mouseTile,
+          groupIds: groupIds && groupIds.length > 1 ? groupIds : undefined
         });
       } else {
         uiState.actions.setContextMenu({

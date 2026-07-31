@@ -4,6 +4,7 @@ import { ModelItem, ViewItem } from 'src/types';
 import { RichTextEditor } from 'src/components/RichTextEditor/RichTextEditor';
 import { useModelItem } from 'src/hooks/useModelItem';
 import { useModelStore } from 'src/stores/modelStore';
+import { useTranslation } from 'src/stores/localeStore';
 import { DeleteButton } from '../../components/DeleteButton';
 import { Section } from '../../components/Section';
 
@@ -28,6 +29,7 @@ export const NodeSettings = ({
   const modelItem = useModelItem(node.id);
   const modelActions = useModelStore((state) => state.actions);
   const icons = useModelStore((state) => state.icons);
+  const { t } = useTranslation();
   
   // Local state for smooth slider interaction
   const currentIcon = icons.find(icon => icon.id === modelItem?.icon);
@@ -77,7 +79,7 @@ export const NodeSettings = ({
 
   return (
     <>
-      <Section title="Name">
+      <Section title={t('itemControls.node.name')}>
         <TextField
           value={modelItem.name}
           onChange={(e) => {
@@ -86,7 +88,7 @@ export const NodeSettings = ({
           }}
         />
       </Section>
-      <Section title="Description">
+      <Section title={t('itemControls.node.description')}>
         <RichTextEditor
           value={modelItem.description}
           onChange={(text) => {
@@ -96,7 +98,7 @@ export const NodeSettings = ({
         />
       </Section>
       {modelItem.name && (
-        <Section title="Label height">
+        <Section title={t('itemControls.node.labelHeight')}>
           <Slider
             marks
             step={20}
@@ -111,7 +113,7 @@ export const NodeSettings = ({
         </Section>
       )}
 
-      <Section title="Icon size">
+      <Section title={t('itemControls.node.iconSize')}>
         <Slider
           marks
           step={0.1}

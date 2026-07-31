@@ -2,7 +2,14 @@ import { LocaleProps } from '../types/isoflowProps';
 
 const locale: LocaleProps = {
   common: {
-    exampleText: "Este é um texto de exemplo"
+    exampleText: "Este é um texto de exemplo",
+    delete: "Excluir"
+  },
+  textBoxControls: {
+    enterText: "Digite o texto",
+    textSize: "Tamanho do texto",
+    alignment: "Alinhamento",
+    close: "Fechar"
   },
   mainMenu: {
     undo: "Desfazer",
@@ -12,6 +19,7 @@ const locale: LocaleProps = {
     exportCompactJson: "Exportar como JSON compacto",
     exportImage: "Exportar como imagem",
     clearCanvas: "Limpar a tela",
+    clearCanvasConfirm: "Limpar a tela? Esta ação não pode ser desfeita.",
     settings: "Configurações",
     gitHub: "GitHub"
   },
@@ -119,14 +127,47 @@ const locale: LocaleProps = {
     message: "Para conectar este conector a um nó,",
     instruction: "clique com o botão esquerdo na extremidade do conector e arraste-o para o nó desejado."
   },
+  contextMenu: {
+    copySelection: "Copiar seleção",
+    deleteSelection: "Excluir seleção",
+    copyNode: "Copiar nó",
+    copyRectangle: "Copiar retângulo",
+    copyText: "Copiar texto",
+    addNode: "Adicionar nó",
+    addRectangle: "Adicionar retângulo",
+    addConnector: "Adicionar conector",
+    duplicateNode: "Duplicar nó",
+    duplicateRectangle: "Duplicar retângulo",
+    duplicateText: "Duplicar texto",
+    editNode: "Editar nó",
+    deleteNode: "Excluir nó",
+    editRectangle: "Editar retângulo",
+    deleteRectangle: "Excluir retângulo",
+    editText: "Editar texto",
+    deleteText: "Excluir texto",
+    editConnector: "Editar conector",
+    deleteConnector: "Excluir conector",
+    editConnectorsHere: "Ver conectores aqui ({count})",
+    deleteConnectorsHere: "Excluir todos aqui ({count})",
+    paste: "Colar",
+  },
   settings: {
     zoom: {
+      title: "Zoom",
       description: "Configurar o comportamento do zoom ao usar a roda do mouse.",
       zoomToCursor: "Zoom no cursor",
       zoomToCursorDesc: "Quando habilitado, o zoom é centralizado na posição do cursor do mouse. Quando desabilitado, o zoom é centralizado na tela.",
 
       trackpadMode: "Modo Trackpad",
       trackpadModeDesc: "Quando ativado: rolagem com dois dedos move a tela, pinça com zoom sem afetar o navegador. Quando desativado: a roda do mouse amplia a tela (comportamento padrão do mouse)."
+    },
+    labels: {
+      title: "Rótulos",
+      description: "Configurar as definições de exibição de rótulos.",
+      expandButtonPadding: "Preenchimento do botão de expandir",
+      expandButtonPaddingDesc: "Preenchimento inferior quando o botão de expandir está visível (evita sobreposição de texto).",
+      currentPrefix: "Atual:",
+      unitsLabel: "unidades de tema"
     },
     hotkeys: {
       title: "Configurações de atalhos",
@@ -168,6 +209,8 @@ const locale: LocaleProps = {
       clickModeDesc: "Clique no primeiro nó, depois clique no segundo nó para criar uma conexão",
       dragMode: "Modo arrastar",
       dragModeDesc: "Clique e arraste do primeiro nó ao segundo nó",
+      animation: "Animar direção do fluxo",
+      animationDesc: "Mostra um padrão de traços em movimento ao longo dos conectores para indicar a direção do fluxo.",
       note: "Nota: Você pode alterar esta configuração a qualquer momento. O modo selecionado será usado quando a ferramenta de conector estiver ativa."
     },
     iconPacks: {
@@ -196,6 +239,95 @@ const locale: LocaleProps = {
     configPath2: "no canto superior esquerdo para acessar a Configuração.",
     canDisable: "Você pode desativar esse comportamento se desejar.",
     signature: "-Stan"
+  },
+  iconNames: {
+    block: "Bloco",
+    cache: "Cache",
+    cardterminal: "Terminal de cartão",
+    cloud: "Nuvem",
+    cronjob: "Tarefa agendada",
+    cube: "Cubo",
+    desktop: "Desktop",
+    diamond: "Losango",
+    dns: "DNS",
+    document: "Documento",
+    firewall: "Firewall",
+    "function-module": "Função",
+    image: "Imagem",
+    laptop: "Notebook",
+    loadbalancer: "Balanceador de carga",
+    lock: "Cadeado",
+    mail: "Correio",
+    mailmultiple: "Correio múltiplo",
+    mobiledevice: "Dispositivo móvel",
+    office: "Escritório",
+    "package-module": "Pacote",
+    paymentcard: "Cartão de pagamento",
+    plane: "Avião",
+    printer: "Impressora",
+    pyramid: "Pirâmide",
+    queue: "Fila",
+    router: "Roteador",
+    server: "Servidor",
+    speech: "Balão de fala",
+    sphere: "Esfera",
+    storage: "Armazenamento",
+    "switch-module": "Switch",
+    tower: "Torre",
+    "truck-2": "Caminhão 2",
+    truck: "Caminhão",
+    user: "Usuário",
+    vm: "Máquina virtual"
+  },
+  itemControls: {
+    close: "Fechar",
+    color: "Cor",
+    useCustomColor: "Usar cor personalizada",
+    node: {
+      name: "Nome",
+      description: "Descrição",
+      labelHeight: "Altura do rótulo",
+      iconSize: "Tamanho do ícone",
+      updateIcon: "Alterar ícone",
+      backToSettings: "Configurações",
+      expandDescription: "Mostrar descrição",
+      collapseDescription: "Ocultar descrição"
+    },
+    connector: {
+      labels: "Rótulos",
+      labelsCount: "{count} / {max} rótulos",
+      addLabel: "Adicionar Rótulo",
+      deleteLabel: "Excluir Rótulo",
+      noLabels: "Nenhum rótulo. Clique em \"Adicionar Rótulo\" para criar um.",
+      labelNumber: "Rótulo {number}",
+      labelText: "Texto",
+      position: "Posição (%)",
+      heightOffset: "Deslocamento de altura",
+      showDottedLine: "Mostrar linha pontilhada",
+      width: "Espessura",
+      lineStyle: "Estilo de linha",
+      showArrow: "Mostrar seta",
+      connectorsCount: "{count} conectores",
+      connectorFallbackName: "Conector {number}",
+      styleSolid: "Sólido",
+      styleDashed: "Tracejado",
+      styleDotted: "Pontilhado"
+    },
+    iconSelection: {
+      searchPlaceholder: "Buscar ícones",
+      importIcons: "Importar Ícones",
+      treatAsIsometric: "Tratar como isométrico (visualização 3D)",
+      uncheckForFlat: "Desmarque para ícones planos (logotipos, elementos de UI)",
+      dragDropHint: "Você pode arrastar e soltar qualquer item abaixo no canvas."
+    },
+    quickIconSelector: {
+      searchPlaceholder: "Buscar ícones (pressione Enter para selecionar)",
+      recentlyUsed: "USADOS RECENTEMENTE",
+      searchResults: "RESULTADOS DA BUSCA ({count} ícones)",
+      noResults: "Nenhum ícone encontrado correspondente a \"{term}\"",
+      helpSearching: "Use as setas para navegar • Enter para selecionar • Clique duplo para selecionar e fechar",
+      helpBrowsing: "Digite para buscar • Clique na categoria para expandir • Clique duplo para selecionar e fechar"
+    }
   }
 };
 

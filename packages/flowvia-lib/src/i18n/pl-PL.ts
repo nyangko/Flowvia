@@ -2,7 +2,14 @@ import { LocaleProps } from '../types/isoflowProps';
 
 const locale: LocaleProps = {
   common: {
-    exampleText: "To jest przykładowy tekst"
+    exampleText: "To jest przykładowy tekst",
+    delete: "Usuń"
+  },
+  textBoxControls: {
+    enterText: "Wprowadź tekst",
+    textSize: "Rozmiar tekstu",
+    alignment: "Wyrównanie",
+    close: "Zamknij"
   },
   mainMenu: {
     undo: "Cofnij",
@@ -12,6 +19,7 @@ const locale: LocaleProps = {
     exportCompactJson: "Eksportuj jako kompaktowy JSON",
     exportImage: "Eksportuj do obrazu",
     clearCanvas: "Wyczyść obszar roboczy",
+    clearCanvasConfirm: "Wyczyścić obszar roboczy? Tej czynności nie można cofnąć.",
     settings: "Ustawienia",
     gitHub: "GitHub"
   },
@@ -119,14 +127,47 @@ const locale: LocaleProps = {
     message: "Aby połączyć to połączenie z węzłem,",
     instruction: "kliknij lewym przyciskiem myszy koniec połączenia i przeciągnij go do żądanego węzła."
   },
+  contextMenu: {
+    copySelection: "Kopiuj zaznaczenie",
+    deleteSelection: "Usuń zaznaczenie",
+    copyNode: "Kopiuj węzeł",
+    copyRectangle: "Kopiuj prostokąt",
+    copyText: "Kopiuj tekst",
+    addNode: "Dodaj węzeł",
+    addRectangle: "Dodaj prostokąt",
+    addConnector: "Dodaj łącznik",
+    duplicateNode: "Duplikuj węzeł",
+    duplicateRectangle: "Duplikuj prostokąt",
+    duplicateText: "Duplikuj tekst",
+    editNode: "Edytuj węzeł",
+    deleteNode: "Usuń węzeł",
+    editRectangle: "Edytuj prostokąt",
+    deleteRectangle: "Usuń prostokąt",
+    editText: "Edytuj tekst",
+    deleteText: "Usuń tekst",
+    editConnector: "Edytuj połączenie",
+    deleteConnector: "Usuń połączenie",
+    editConnectorsHere: "Pokaż połączenia tutaj ({count})",
+    deleteConnectorsHere: "Usuń wszystkie tutaj ({count})",
+    paste: "Wklej",
+  },
   settings: {
     zoom: {
+      title: "Powiększenie",
       description: "Skonfiguruj zachowanie powiększania podczas korzystania z kółka myszy.",
       zoomToCursor: "Powiększ do kursora",
       zoomToCursorDesc: "Po włączeniu funkcji powiększanie/pomniejszanie odbywa się w oparciu o położenie kursora myszy. Po wyłączeniu funkcji <strong>Powiększ do kursora</strong> odbywa się w oparciu o położenie obszaru roboczego.",
 
       trackpadMode: "Tryb Trackpada",
       trackpadModeDesc: "Po włączeniu: przewijanie dwoma palcami przesuwa płótno, uszczypnięcie powiększa bez wpływu na przeglądarkę. Po wyłączeniu: kółko myszy powiększa płótno (domyślne zachowanie myszy)."
+    },
+    labels: {
+      title: "Etykiety",
+      description: "Skonfiguruj ustawienia wyświetlania etykiet.",
+      expandButtonPadding: "Wypełnienie przycisku rozwijania",
+      expandButtonPaddingDesc: "Dolny margines, gdy przycisk rozwijania jest widoczny (zapobiega nakładaniu się tekstu).",
+      currentPrefix: "Aktualnie:",
+      unitsLabel: "jednostki motywu"
     },
     hotkeys: {
       title: "Ustawienia skrótów klawiszowych",
@@ -168,6 +209,8 @@ const locale: LocaleProps = {
       clickModeDesc: "Kliknij pierwszy węzeł, a następnie kliknij drugi węzeł, aby utworzyć połączenie.",
       dragMode: "Tryb przeciągania",
       dragModeDesc: "Kliknij i przeciągnij od pierwszego węzła do drugiego węzła.",
+      animation: "Animuj kierunek przepływu",
+      animationDesc: "Pokazuje ruchomy wzór kresek wzdłuż łączników, wskazujący kierunek przepływu.",
       note: "Uwaga: To ustawienie można zmienić w dowolnym momencie. Wybrany tryb będzie używany, gdy narzędzie Połączeń jest aktywne.."
     },
     iconPacks: {
@@ -196,6 +239,95 @@ const locale: LocaleProps = {
     configPath2: "w lewym górnym rogu, aby uzyskać dostęp do ustawień.",
     canDisable: "Jeśli chcesz, możesz wyłączyć tę funkcję..",
     signature: "-Stan"
+  },
+  iconNames: {
+    block: "Blok",
+    cache: "Pamięć podręczna",
+    cardterminal: "Terminal kart",
+    cloud: "Chmura",
+    cronjob: "Zadanie cykliczne",
+    cube: "Sześcian",
+    desktop: "Komputer stacjonarny",
+    diamond: "Romb",
+    dns: "DNS",
+    document: "Dokument",
+    firewall: "Zapora sieciowa",
+    "function-module": "Funkcja",
+    image: "Obraz",
+    laptop: "Laptop",
+    loadbalancer: "Balanser obciążenia",
+    lock: "Kłódka",
+    mail: "Poczta",
+    mailmultiple: "Wiele wiadomości",
+    mobiledevice: "Urządzenie mobilne",
+    office: "Biuro",
+    "package-module": "Pakiet",
+    paymentcard: "Karta płatnicza",
+    plane: "Samolot",
+    printer: "Drukarka",
+    pyramid: "Piramida",
+    queue: "Kolejka",
+    router: "Router",
+    server: "Serwer",
+    speech: "Dymek",
+    sphere: "Kula",
+    storage: "Magazyn danych",
+    "switch-module": "Przełącznik",
+    tower: "Wieża",
+    "truck-2": "Ciężarówka 2",
+    truck: "Ciężarówka",
+    user: "Użytkownik",
+    vm: "Maszyna wirtualna"
+  },
+  itemControls: {
+    close: "Zamknij",
+    color: "Kolor",
+    useCustomColor: "Użyj niestandardowego koloru",
+    node: {
+      name: "Nazwa",
+      description: "Opis",
+      labelHeight: "Wysokość etykiety",
+      iconSize: "Rozmiar ikony",
+      updateIcon: "Zmień ikonę",
+      backToSettings: "Ustawienia",
+      expandDescription: "Pokaż opis",
+      collapseDescription: "Ukryj opis"
+    },
+    connector: {
+      labels: "Etykiety",
+      labelsCount: "{count} / {max} etykiet",
+      addLabel: "Dodaj etykietę",
+      deleteLabel: "Usuń etykietę",
+      noLabels: "Brak etykiet. Kliknij „Dodaj etykietę”, aby utworzyć.",
+      labelNumber: "Etykieta {number}",
+      labelText: "Tekst",
+      position: "Pozycja (%)",
+      heightOffset: "Przesunięcie wysokości",
+      showDottedLine: "Pokaż linię kropkowaną",
+      width: "Grubość",
+      lineStyle: "Styl linii",
+      showArrow: "Pokaż strzałkę",
+      connectorsCount: "Połączenia: {count}",
+      connectorFallbackName: "Połączenie {number}",
+      styleSolid: "Ciągła",
+      styleDashed: "Kreskowana",
+      styleDotted: "Kropkowana"
+    },
+    iconSelection: {
+      searchPlaceholder: "Szukaj ikon",
+      importIcons: "Importuj ikony",
+      treatAsIsometric: "Traktuj jako izometryczną (widok 3D)",
+      uncheckForFlat: "Odznacz dla płaskich ikon (logo, elementy UI)",
+      dragDropHint: "Możesz przeciągnąć dowolny element poniżej na płótno."
+    },
+    quickIconSelector: {
+      searchPlaceholder: "Szukaj ikon (Enter, aby wybrać)",
+      recentlyUsed: "OSTATNIO UŻYWANE",
+      searchResults: "WYNIKI WYSZUKIWANIA ({count} ikon)",
+      noResults: "Nie znaleziono ikon pasujących do „{term}”",
+      helpSearching: "Strzałki do nawigacji • Enter, aby wybrać • Podwójne kliknięcie, aby wybrać i zamknąć",
+      helpBrowsing: "Wpisz, aby wyszukać • Kliknij kategorię, aby rozwinąć • Podwójne kliknięcie, aby wybrać i zamknąć"
+    }
   }
 };
 

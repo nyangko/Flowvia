@@ -2,7 +2,14 @@ import { LocaleProps } from '../types/isoflowProps';
 
 const locale: LocaleProps = {
   common: {
-    exampleText: "Ini adalah contoh teks"
+    exampleText: "Ini adalah contoh teks",
+    delete: "Hapus"
+  },
+  textBoxControls: {
+    enterText: "Masukkan teks",
+    textSize: "Ukuran teks",
+    alignment: "Perataan",
+    close: "Tutup"
   },
   mainMenu: {
     undo: "Batalkan",
@@ -12,6 +19,7 @@ const locale: LocaleProps = {
     exportCompactJson: "Ekspor sebagai JSON Ringkas",
     exportImage: "Ekspor sebagai gambar",
     clearCanvas: "Bersihkan kanvas",
+    clearCanvasConfirm: "Bersihkan kanvas? Tindakan ini tidak dapat dibatalkan.",
     settings: "Pengaturan",
     gitHub: "GitHub"
   },
@@ -119,14 +127,47 @@ const locale: LocaleProps = {
     message: "Untuk menghubungkan konektor ini ke node,",
     instruction: "klik kiri pada ujung konektor dan seret ke node yang diinginkan."
   },
+  contextMenu: {
+    copySelection: "Salin Pilihan",
+    deleteSelection: "Hapus Pilihan",
+    copyNode: "Salin Node",
+    copyRectangle: "Salin Persegi Panjang",
+    copyText: "Salin Teks",
+    addNode: "Tambah Node",
+    addRectangle: "Tambah Persegi Panjang",
+    addConnector: "Tambah Konektor",
+    duplicateNode: "Duplikat Node",
+    duplicateRectangle: "Duplikat Persegi Panjang",
+    duplicateText: "Duplikat Teks",
+    editNode: "Edit Node",
+    deleteNode: "Hapus Node",
+    editRectangle: "Edit Persegi Panjang",
+    deleteRectangle: "Hapus Persegi Panjang",
+    editText: "Edit Teks",
+    deleteText: "Hapus Teks",
+    editConnector: "Edit Konektor",
+    deleteConnector: "Hapus Konektor",
+    editConnectorsHere: "Lihat Konektor di Sini ({count})",
+    deleteConnectorsHere: "Hapus Semua di Sini ({count})",
+    paste: "Tempel",
+  },
   settings: {
     zoom: {
+      title: "Zoom",
       description: "Konfigurasi perilaku zoom saat menggunakan roda mouse.",
       zoomToCursor: "Zoom ke Kursor",
       zoomToCursorDesc: "Saat diaktifkan, zoom masuk/keluar terpusat pada posisi kursor mouse. Saat dinonaktifkan, zoom terpusat pada kanvas.",
 
       trackpadMode: "Mode Trackpad",
       trackpadModeDesc: "Saat diaktifkan: gulir dua jari menggeser kanvas, cubit untuk memperbesar tanpa mempengaruhi browser. Saat dinonaktifkan: roda gulir memperbesar kanvas (perilaku mouse default)."
+    },
+    labels: {
+      title: "Label",
+      description: "Konfigurasi pengaturan tampilan label.",
+      expandButtonPadding: "Padding Tombol Perluas",
+      expandButtonPaddingDesc: "Padding bawah saat tombol perluas terlihat (mencegah tumpang tindih teks).",
+      currentPrefix: "Saat ini:",
+      unitsLabel: "unit tema"
     },
     hotkeys: {
       title: "Pengaturan Pintasan",
@@ -168,6 +209,8 @@ const locale: LocaleProps = {
       clickModeDesc: "Klik node pertama, lalu klik node kedua untuk membuat koneksi",
       dragMode: "Mode Seret",
       dragModeDesc: "Klik dan seret dari node pertama ke node kedua",
+      animation: "Animasikan Arah Aliran",
+      animationDesc: "Menampilkan pola garis putus-putus yang bergerak di sepanjang konektor untuk menunjukkan arah aliran.",
       note: "Catatan: Anda dapat mengubah pengaturan ini kapan saja. Mode yang dipilih akan digunakan saat alat Konektor aktif."
     },
     iconPacks: {
@@ -196,6 +239,95 @@ const locale: LocaleProps = {
     configPath2: "di kiri atas untuk mengakses Konfigurasi.",
     canDisable: "Anda dapat menonaktifkan perilaku ini jika diinginkan.",
     signature: "-Stan"
+  },
+  iconNames: {
+    block: "Blok",
+    cache: "Cache",
+    cardterminal: "Terminal kartu",
+    cloud: "Awan",
+    cronjob: "Tugas terjadwal",
+    cube: "Kubus",
+    desktop: "Desktop",
+    diamond: "Berlian",
+    dns: "DNS",
+    document: "Dokumen",
+    firewall: "Firewall",
+    "function-module": "Fungsi",
+    image: "Gambar",
+    laptop: "Laptop",
+    loadbalancer: "Penyeimbang beban",
+    lock: "Kunci",
+    mail: "Surat",
+    mailmultiple: "Surat ganda",
+    mobiledevice: "Perangkat seluler",
+    office: "Kantor",
+    "package-module": "Paket",
+    paymentcard: "Kartu pembayaran",
+    plane: "Pesawat",
+    printer: "Printer",
+    pyramid: "Piramida",
+    queue: "Antrean",
+    router: "Router",
+    server: "Server",
+    speech: "Balon percakapan",
+    sphere: "Bola",
+    storage: "Penyimpanan",
+    "switch-module": "Switch",
+    tower: "Menara",
+    "truck-2": "Truk 2",
+    truck: "Truk",
+    user: "Pengguna",
+    vm: "Mesin virtual"
+  },
+  itemControls: {
+    close: "Tutup",
+    color: "Warna",
+    useCustomColor: "Gunakan Warna Kustom",
+    node: {
+      name: "Nama",
+      description: "Deskripsi",
+      labelHeight: "Tinggi label",
+      iconSize: "Ukuran ikon",
+      updateIcon: "Ubah ikon",
+      backToSettings: "Pengaturan",
+      expandDescription: "Tampilkan deskripsi",
+      collapseDescription: "Sembunyikan deskripsi"
+    },
+    connector: {
+      labels: "Label",
+      labelsCount: "{count} / {max} label",
+      addLabel: "Tambah Label",
+      deleteLabel: "Hapus Label",
+      noLabels: "Tidak ada label. Klik \"Tambah Label\" untuk membuat.",
+      labelNumber: "Label {number}",
+      labelText: "Teks",
+      position: "Posisi (%)",
+      heightOffset: "Offset Tinggi",
+      showDottedLine: "Tampilkan Garis Putus-putus",
+      width: "Ketebalan",
+      lineStyle: "Gaya Garis",
+      showArrow: "Tampilkan Panah",
+      connectorsCount: "{count} Konektor",
+      connectorFallbackName: "Konektor {number}",
+      styleSolid: "Solid",
+      styleDashed: "Putus-putus",
+      styleDotted: "Titik-titik"
+    },
+    iconSelection: {
+      searchPlaceholder: "Cari ikon",
+      importIcons: "Impor Ikon",
+      treatAsIsometric: "Perlakukan sebagai isometrik (tampilan 3D)",
+      uncheckForFlat: "Hapus centang untuk ikon datar (logo, elemen UI)",
+      dragDropHint: "Anda dapat menyeret dan melepas item apa pun di bawah ini ke kanvas."
+    },
+    quickIconSelector: {
+      searchPlaceholder: "Cari ikon (tekan Enter untuk memilih)",
+      recentlyUsed: "BARU DIGUNAKAN",
+      searchResults: "HASIL PENCARIAN ({count} ikon)",
+      noResults: "Tidak ada ikon yang cocok dengan \"{term}\"",
+      helpSearching: "Tombol panah untuk navigasi • Enter untuk memilih • Klik dua kali untuk memilih dan menutup",
+      helpBrowsing: "Ketik untuk mencari • Klik kategori untuk memperluas • Klik dua kali untuk memilih dan menutup"
+    }
   }
 };
 

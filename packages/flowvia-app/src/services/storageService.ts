@@ -144,61 +144,95 @@ class ServerStorage implements StorageService {
   }
 }
 
-// Session Storage Implementation (existing functionality)
-class SessionStorage implements StorageService {
-  private readonly KEY_PREFIX = 'flowvia_diagram_';
-  private readonly LIST_KEY = 'flowvia_diagrams';
+// IndexedDB record shape: metadata kept alongside the full diagram payload so
+// listDiagrams() doesn't need a separately-maintained index.
+interface DiagramRecord {
+  id: string;
+  name: string;
+  lastModified: string; // ISO string (IndexedDB structured clone handles Date fine too, but ISO keeps it consistent with ServerStorage's wire format)
+  size: number;
+  data: Model;
+}
 
+const DB_NAME = 'flowvia';
+const DB_VERSION = 1;
+const STORE_NAME = 'diagrams';
+
+function openDb(): Promise<IDBDatabase> {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+      }
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+function runTransaction<T>(
+  mode: IDBTransactionMode,
+  action: (store: IDBObjectStore) => IDBRequest<T>
+): Promise<T> {
+  return openDb().then((db) => {
+    return new Promise<T>((resolve, reject) => {
+      const tx = db.transaction(STORE_NAME, mode);
+      const request = action(tx.objectStore(STORE_NAME));
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+      tx.oncomplete = () => db.close();
+    });
+  });
+}
+
+// Local Storage Implementation — IndexedDB-backed, persists across browser
+// restarts (unlike sessionStorage) with a much higher quota than localStorage.
+class IndexedDBStorage implements StorageService {
   async isAvailable(): Promise<boolean> {
-    return true; // Session storage is always available
+    if (typeof indexedDB === 'undefined') return false;
+    try {
+      await openDb();
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   async listDiagrams(): Promise<DiagramInfo[]> {
-    const listStr = sessionStorage.getItem(this.LIST_KEY);
-    if (!listStr) return [];
-    
-    const list = JSON.parse(listStr);
-    return list.map((item: any) => ({
-      ...item,
-      lastModified: new Date(item.lastModified)
+    const records = await runTransaction<DiagramRecord[]>('readonly', (store) => {
+      return store.getAll();
+    });
+    return records.map((r) => ({
+      id: r.id,
+      name: r.name,
+      lastModified: new Date(r.lastModified),
+      size: r.size
     }));
   }
 
   async loadDiagram(id: string): Promise<Model> {
-    const data = sessionStorage.getItem(`${this.KEY_PREFIX}${id}`);
-    if (!data) throw new Error('Diagram not found');
-    return JSON.parse(data);
+    const record = await runTransaction<DiagramRecord | undefined>('readonly', (store) => {
+      return store.get(id);
+    });
+    if (!record) throw new Error('Diagram not found');
+    return record.data;
   }
 
   async saveDiagram(id: string, data: Model): Promise<void> {
-    sessionStorage.setItem(`${this.KEY_PREFIX}${id}`, JSON.stringify(data));
-    
-    // Update list
-    const list = await this.listDiagrams();
-    const existing = list.findIndex(d => d.id === id);
-    const info: DiagramInfo = {
+    const record: DiagramRecord = {
       id,
-      name: (data as any).name || 'Untitled Diagram',
-      lastModified: new Date(),
-      size: JSON.stringify(data).length
+      name: (data as any).name || (data as any).title || 'Untitled Diagram',
+      lastModified: new Date().toISOString(),
+      size: JSON.stringify(data).length,
+      data
     };
-    
-    if (existing >= 0) {
-      list[existing] = info;
-    } else {
-      list.push(info);
-    }
-    
-    sessionStorage.setItem(this.LIST_KEY, JSON.stringify(list));
+    await runTransaction('readwrite', (store) => store.put(record));
   }
 
   async deleteDiagram(id: string): Promise<void> {
-    sessionStorage.removeItem(`${this.KEY_PREFIX}${id}`);
-    
-    // Update list
-    const list = await this.listDiagrams();
-    const filtered = list.filter(d => d.id !== id);
-    sessionStorage.setItem(this.LIST_KEY, JSON.stringify(filtered));
+    await runTransaction('readwrite', (store) => store.delete(id));
   }
 
   async createDiagram(data: Model): Promise<string> {
@@ -208,38 +242,99 @@ class SessionStorage implements StorageService {
   }
 }
 
-// Storage Manager - decides which storage to use
-class StorageManager {
+// Storage Manager — IndexedDB is always the local source of truth (every
+// write lands there first and must succeed); the server, when reachable, is
+// treated as a best-effort sync target on write and preferred on read. This
+// keeps the app fully functional offline or with the optional backend off,
+// while transparently syncing across devices when it's on.
+class StorageManager implements StorageService {
   private serverStorage: ServerStorage;
-  private sessionStorage: SessionStorage;
-  private activeStorage: StorageService | null = null;
+  private localStorage: IndexedDBStorage;
+  private serverAvailable = false;
 
   constructor() {
     this.serverStorage = new ServerStorage();
-    this.sessionStorage = new SessionStorage();
+    this.localStorage = new IndexedDBStorage();
   }
 
   async initialize(): Promise<StorageService> {
-    // Try server storage first
-    if (await this.serverStorage.isAvailable()) {
-      console.log('Using server storage');
-      this.activeStorage = this.serverStorage;
-    } else {
-      console.log('Using session storage');
-      this.activeStorage = this.sessionStorage;
-    }
-    return this.activeStorage;
+    this.serverAvailable = await this.serverStorage.isAvailable();
+    console.log(`StorageManager: server sync ${this.serverAvailable ? 'enabled' : 'disabled'}, local storage is IndexedDB`);
+    return this;
   }
 
   getStorage(): StorageService {
-    if (!this.activeStorage) {
-      throw new Error('Storage not initialized. Call initialize() first.');
-    }
-    return this.activeStorage;
+    return this;
   }
 
   isServerStorage(): boolean {
-    return this.activeStorage === this.serverStorage;
+    return this.serverAvailable;
+  }
+
+  async isAvailable(): Promise<boolean> {
+    return true; // IndexedDB backs every install; the manager is always usable
+  }
+
+  async listDiagrams(): Promise<DiagramInfo[]> {
+    if (this.serverAvailable) {
+      try {
+        return await this.serverStorage.listDiagrams();
+      } catch (err) {
+        console.warn('StorageManager: server list failed, falling back to local', err);
+        this.serverAvailable = false;
+      }
+    }
+    return this.localStorage.listDiagrams();
+  }
+
+  async loadDiagram(id: string): Promise<Model> {
+    if (this.serverAvailable) {
+      try {
+        const data = await this.serverStorage.loadDiagram(id);
+        // Refresh the local cache so this diagram stays available offline.
+        this.localStorage.saveDiagram(id, data).catch((err) => {
+          console.warn('StorageManager: failed to refresh local cache', err);
+        });
+        return data;
+      } catch (err) {
+        console.warn('StorageManager: server load failed, falling back to local', err);
+      }
+    }
+    return this.localStorage.loadDiagram(id);
+  }
+
+  async saveDiagram(id: string, data: Model): Promise<void> {
+    await this.localStorage.saveDiagram(id, data);
+    if (this.serverAvailable) {
+      this.serverStorage.saveDiagram(id, data).catch((err) => {
+        console.warn('StorageManager: server sync failed, kept locally for next save', err);
+      });
+    }
+  }
+
+  async deleteDiagram(id: string): Promise<void> {
+    await this.localStorage.deleteDiagram(id);
+    if (this.serverAvailable) {
+      this.serverStorage.deleteDiagram(id).catch((err) => {
+        console.warn('StorageManager: server delete sync failed', err);
+      });
+    }
+  }
+
+  async createDiagram(data: Model): Promise<string> {
+    if (this.serverAvailable) {
+      try {
+        const id = await this.serverStorage.createDiagram(data);
+        this.localStorage.saveDiagram(id, data).catch((err) => {
+          console.warn('StorageManager: failed to cache new diagram locally', err);
+        });
+        return id;
+      } catch (err) {
+        console.warn('StorageManager: server create failed, creating locally', err);
+        this.serverAvailable = false;
+      }
+    }
+    return this.localStorage.createDiagram(data);
   }
 }
 

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import ReactQuill from 'react-quill-new';
 import { Box } from '@mui/material';
-import RichTextEditorErrorBoundary from './RichTextEditorErrorBoundary';
+import { DOMErrorBoundary } from 'src/components/DOMErrorBoundary';
 
 interface Props {
   value?: string;
@@ -55,7 +55,21 @@ export const RichTextEditor = ({
   }, [readOnly]);
 
   return (
-    <RichTextEditorErrorBoundary>
+    <DOMErrorBoundary
+      fallback={
+        <div
+          style={{
+            padding: '10px',
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            backgroundColor: '#f9f9f9',
+            color: '#666'
+          }}
+        >
+          Rich text editor temporarily unavailable
+        </div>
+      }
+    >
       <Box
         sx={{
           '.ql-toolbar.ql-snow': {
@@ -78,8 +92,7 @@ export const RichTextEditor = ({
           },
           '.ql-editor': {
             whiteSpace: 'pre-wrap', // Preserve multiple spaces and tabs
-            ...(readOnly ? { p: 0 } : {}),
-            padding: '12px 15px' // Add consistent padding to prevent text overlap with tooltips
+            padding: readOnly ? 0 : '12px 15px' // Read-only views (e.g. node labels) shouldn't reserve toolbar/tooltip clearance
           },
           '.ql-tooltip': {
             zIndex: 1000 // Ensure tooltips appear above content but don't obscure text
@@ -95,6 +108,6 @@ export const RichTextEditor = ({
           modules={modules}
         />
       </Box>
-    </RichTextEditorErrorBoundary>
+    </DOMErrorBoundary>
   );
 };

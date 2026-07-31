@@ -6,7 +6,7 @@ import {
   DataObject as ExportJsonIcon,
   ImageOutlined as ExportImageIcon,
   FolderOpen as FolderOpenIcon,
-  DeleteOutline as DeleteOutlineIcon,
+  DeleteOutlined as DeleteOutlineIcon,
   Undo as UndoIcon,
   Redo as RedoIcon,
   Settings as SettingsIcon,
@@ -114,10 +114,12 @@ export const MainMenu = () => {
   const { clear } = initialDataManager;
 
   const onClearCanvas = useCallback(() => {
+    uiStateActions.setIsMainMenuOpen(false);
+    if (!window.confirm(t('clearCanvasConfirm'))) return;
+
     clear();
     clearHistory(); // Clear history when clearing canvas
-    uiStateActions.setIsMainMenuOpen(false);
-  }, [uiStateActions, clear, clearHistory]);
+  }, [uiStateActions, clear, clearHistory, t]);
 
   const handleUndo = useCallback(() => {
     undo();
@@ -187,16 +189,18 @@ export const MainMenu = () => {
           {/* Undo/Redo Section */}
           <MenuItem
             onClick={handleUndo}
-            Icon={<UndoIcon />}
+            Icon={<UndoIcon fontSize="small" />}
             disabled={!canUndo}
+            shortcut="Ctrl+Z"
           >
             {t('undo')}
           </MenuItem>
 
           <MenuItem
             onClick={handleRedo}
-            Icon={<RedoIcon />}
+            Icon={<RedoIcon fontSize="small" />}
             disabled={!canRedo}
+            shortcut="Ctrl+Y"
           >
             {t('redo')}
           </MenuItem>
@@ -206,38 +210,38 @@ export const MainMenu = () => {
 
           {/* File Actions */}
           {mainMenuOptions.includes('ACTION.OPEN') && (
-            <MenuItem onClick={onOpenModel} Icon={<FolderOpenIcon />}>
+            <MenuItem onClick={onOpenModel} Icon={<FolderOpenIcon fontSize="small" />}>
               {t('open')}
             </MenuItem>
           )}
 
           {mainMenuOptions.includes('EXPORT.JSON') && (
-            <MenuItem onClick={onExportAsJSON} Icon={<ExportJsonIcon />}>
+            <MenuItem onClick={onExportAsJSON} Icon={<ExportJsonIcon fontSize="small" />}>
               {t('exportJson')}
             </MenuItem>
           )}
 
           {mainMenuOptions.includes('EXPORT.JSON') && (
-            <MenuItem onClick={onExportAsCompactJSON} Icon={<ExportJsonIcon />}>
+            <MenuItem onClick={onExportAsCompactJSON} Icon={<ExportJsonIcon fontSize="small" />}>
               {t('exportCompactJson')}
             </MenuItem>
           )}
 
           {mainMenuOptions.includes('EXPORT.PNG') && (
-            <MenuItem onClick={onExportAsImage} Icon={<ExportImageIcon />}>
+            <MenuItem onClick={onExportAsImage} Icon={<ExportImageIcon fontSize="small" />}>
               {t('exportImage')}
             </MenuItem>
           )}
 
           {mainMenuOptions.includes('ACTION.CLEAR_CANVAS') && (
-            <MenuItem onClick={onClearCanvas} Icon={<DeleteOutlineIcon />}>
+            <MenuItem onClick={onClearCanvas} Icon={<DeleteOutlineIcon fontSize="small" />}>
               {t('clearCanvas')}
             </MenuItem>
           )}
 
           <Divider />
 
-          <MenuItem onClick={onOpenSettings} Icon={<SettingsIcon />}>
+          <MenuItem onClick={onOpenSettings} Icon={<SettingsIcon fontSize="small" />}>
             {t('settings')}
           </MenuItem>
 
@@ -250,7 +254,7 @@ export const MainMenu = () => {
                   onClick={() => {
                     return gotoUrl(`${REPOSITORY_URL}`);
                   }}
-                  Icon={<GitHubIcon />}
+                  Icon={<GitHubIcon fontSize="small" />}
                 >
                   {t('gitHub')}
                 </MenuItem>

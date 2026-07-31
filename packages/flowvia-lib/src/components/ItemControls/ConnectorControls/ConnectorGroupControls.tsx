@@ -13,6 +13,7 @@ import { Close as CloseIcon } from '@mui/icons-material';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useConnector } from 'src/hooks/useConnector';
 import { useColor } from 'src/hooks/useColor';
+import { useTranslation } from 'src/stores/localeStore';
 import { getConnectorLabels } from 'src/utils';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { ConnectorControls } from './ConnectorControls';
@@ -34,15 +35,21 @@ const ConnectorPickerRow = memo(function ConnectorPickerRow({
   const connector = useConnector(connectorId);
   const colorData = useColor(connector?.color);
   const labels = connector ? getConnectorLabels(connector) : [];
+  const { t } = useTranslation();
 
   const displayColor = connector?.customColor || colorData?.value || '#9e9e9e';
-  const primaryText = labels[0]?.text || `Connector ${index + 1}`;
+  const primaryText =
+    labels[0]?.text ||
+    t('itemControls.connector.connectorFallbackName').replace(
+      '{number}',
+      String(index + 1)
+    );
   const styleLabel =
     connector?.style === 'DASHED'
-      ? 'Dashed'
+      ? t('itemControls.connector.styleDashed')
       : connector?.style === 'DOTTED'
-        ? 'Dotted'
-        : 'Solid';
+        ? t('itemControls.connector.styleDotted')
+        : t('itemControls.connector.styleSolid');
 
   const handleClick = useCallback(() => {
     onToggleFocus(connectorId);
@@ -94,6 +101,7 @@ export const ConnectorGroupControls = memo(function ConnectorGroupControls({
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const { t } = useTranslation();
 
   const handleClose = useCallback(() => {
     uiStateActions.setItemControls(null);
@@ -124,9 +132,16 @@ export const ConnectorGroupControls = memo(function ConnectorGroupControls({
         }}
       >
         <Typography variant="subtitle2" color="text.primary">
-          {controls.ids.length} Connectors
+          {t('itemControls.connector.connectorsCount').replace(
+            '{count}',
+            String(controls.ids.length)
+          )}
         </Typography>
-        <MUIIconButton size="small" onClick={handleClose}>
+        <MUIIconButton
+          size="small"
+          aria-label={t('itemControls.close')}
+          onClick={handleClose}
+        >
           <CloseIcon fontSize="small" />
         </MUIIconButton>
       </Box>

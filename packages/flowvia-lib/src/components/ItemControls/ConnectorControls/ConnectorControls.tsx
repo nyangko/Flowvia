@@ -26,9 +26,10 @@ import { useScene } from 'src/hooks/useScene';
 import {
   Close as CloseIcon,
   Add as AddIcon,
-  Delete as DeleteIcon
+  DeleteOutlined as DeleteIcon
 } from '@mui/icons-material';
 import { getConnectorLabels, generateId } from 'src/utils';
+import { useTranslation } from 'src/stores/localeStore';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Section } from '../components/Section';
 import { DeleteButton } from '../components/DeleteButton';
@@ -47,6 +48,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
   const [useCustomColor, setUseCustomColor] = useState(
     !!connector?.customColor
   );
+  const { t } = useTranslation();
 
   // Get all labels (including migrated legacy labels)
   const labels = useMemo(() => {
@@ -122,7 +124,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
 
   const sections = (
     <>
-      <Section title="Labels">
+      <Section title={t('itemControls.connector.labels')}>
           <Box sx={{ mb: 2 }}>
             <Box
               sx={{
@@ -133,7 +135,9 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
               }}
             >
               <Typography variant="body2" color="text.secondary">
-                {labels.length} / 256 labels
+                {t('itemControls.connector.labelsCount')
+                  .replace('{count}', String(labels.length))
+                  .replace('{max}', '256')}
               </Typography>
               <Button
                 startIcon={<AddIcon />}
@@ -142,7 +146,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                 size="small"
                 variant="outlined"
               >
-                Add Label
+                {t('itemControls.connector.addLabel')}
               </Button>
             </Box>
 
@@ -152,7 +156,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                 color="text.secondary"
                 sx={{ textAlign: 'center', py: 2 }}
               >
-                No labels. Click &quot;Add Label&quot; to create one.
+                {t('itemControls.connector.noLabels')}
               </Typography>
             )}
 
@@ -168,10 +172,14 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                     }}
                   >
                     <Typography variant="caption" color="text.secondary">
-                      Label {index + 1}
+                      {t('itemControls.connector.labelNumber').replace(
+                        '{number}',
+                        String(index + 1)
+                      )}
                     </Typography>
                     <MUIIconButton
                       size="small"
+                      aria-label={t('itemControls.connector.deleteLabel')}
                       onClick={() => {
                         return handleDeleteLabel(label.id);
                       }}
@@ -182,7 +190,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                   </Box>
 
                   <TextField
-                    label="Text"
+                    label={t('itemControls.connector.labelText')}
                     value={label.text}
                     onChange={(e) => {
                       return handleUpdateLabel(label.id, {
@@ -195,7 +203,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
 
                   <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
                     <TextField
-                      label="Position (%)"
+                      label={t('itemControls.connector.position')}
                       type="number"
                       value={label.position}
                       onChange={(e) => {
@@ -228,7 +236,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
 
                   <Box>
                     <Typography variant="caption" color="text.secondary">
-                      Height Offset
+                      {t('itemControls.connector.heightOffset')}
                     </Typography>
                     <Slider
                       marks
@@ -256,7 +264,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                           }}
                         />
                       }
-                      label="Show Dotted Line"
+                      label={t('itemControls.connector.showDottedLine')}
                     />
                   </Box>
                 </Paper>
@@ -264,7 +272,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
             })}
           </Box>
         </Section>
-        <Section title="Color">
+        <Section title={t('itemControls.color')}>
           <FormControlLabel
             control={
               <Switch
@@ -277,7 +285,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                 }}
               />
             }
-            label="Use Custom Color"
+            label={t('itemControls.useCustomColor')}
             sx={{ mb: 2 }}
           />
           {useCustomColor ? (
@@ -299,7 +307,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
             />
           )}
         </Section>
-        <Section title="Width">
+        <Section title={t('itemControls.connector.width')}>
           <Slider
             marks
             step={10}
@@ -311,7 +319,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
             }}
           />
         </Section>
-        <Section title="Line Style">
+        <Section title={t('itemControls.connector.lineStyle')}>
           <Select
             value={connector.style || 'SOLID'}
             onChange={(e) => {
@@ -343,7 +351,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                 }}
               />
             }
-            label="Show Arrow"
+            label={t('itemControls.connector.showArrow')}
           />
         </Section>
       <Section>
@@ -369,7 +377,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
         sx={{ position: 'relative', paddingTop: '24px', paddingBottom: '24px' }}
       >
         <MUIIconButton
-          aria-label="Close"
+          aria-label={t('itemControls.close')}
           onClick={() => {
             return uiStateActions.setItemControls(null);
           }}

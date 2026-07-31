@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { Button, Typography } from '@mui/material';
 import { Icon as IconI } from 'src/types';
+import { useTranslation } from 'src/stores/localeStore';
 
 const SIZE = 50;
 
@@ -14,6 +15,12 @@ interface Props {
 }
 
 export const Icon = ({ icon, onClick, onMouseDown, onDoubleClick }: Props) => {
+  const { t } = useTranslation('iconNames');
+  // Only the base "isoflow" pack gets translated names; other packs (AWS/GCP/
+  // Azure/Kubernetes) are product/brand names and stay in English everywhere.
+  const displayName =
+    icon.collection === 'isoflow' ? t(icon.id) : icon.name;
+
   return (
     <Button
       variant="text"
@@ -33,7 +40,7 @@ export const Icon = ({ icon, onClick, onMouseDown, onDoubleClick }: Props) => {
             component="img"
             draggable={false}
             src={icon.url}
-            alt={`Icon ${icon.name}`}
+            alt={`Icon ${displayName}`}
             sx={{ width: SIZE, height: SIZE }}
           />
           {icon.isIsometric === false && (
@@ -59,7 +66,7 @@ export const Icon = ({ icon, onClick, onMouseDown, onDoubleClick }: Props) => {
           color="text.secondary"
           textOverflow="ellipsis"
         >
-          {icon.name}
+          {displayName}
         </Typography>
       </Stack>
     </Button>

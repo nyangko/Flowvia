@@ -6,6 +6,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Switch,
   Typography,
   Paper
 } from '@mui/material';
@@ -15,6 +16,8 @@ import { useTranslation } from 'src/stores/localeStore';
 export const ConnectorSettings = () => {
   const connectorInteractionMode = useUiStateStore((state) => state.connectorInteractionMode);
   const setConnectorInteractionMode = useUiStateStore((state) => state.actions.setConnectorInteractionMode);
+  const connectorAnimationEnabled = useUiStateStore((state) => state.connectorAnimationEnabled);
+  const setConnectorAnimationEnabled = useUiStateStore((state) => state.actions.setConnectorAnimationEnabled);
   const { t } = useTranslation();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,6 +65,27 @@ export const ConnectorSettings = () => {
             />
           </RadioGroup>
         </FormControl>
+      </Paper>
+
+      <Paper variant="outlined" sx={{ p: 2, mt: 2 }}>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={connectorAnimationEnabled}
+              onChange={(event) => {
+                return setConnectorAnimationEnabled(event.target.checked);
+              }}
+            />
+          }
+          label={
+            <Box>
+              <Typography variant="body1">{t('settings.connector.animation')}</Typography>
+              <Typography variant="body2" color="text.secondary">
+                {t('settings.connector.animationDesc')}
+              </Typography>
+            </Box>
+          }
+        />
       </Paper>
 
       <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>

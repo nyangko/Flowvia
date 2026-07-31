@@ -63,9 +63,9 @@ export const SettingsDialog = ({ iconPackManager }: SettingsDialogProps) => {
       {...clickStopperProps}
     >
       <DialogTitle>
-        Settings
+        {t('mainMenu.settings')}
         <IconButton
-          aria-label="close"
+          aria-label={t('helpDialog.close')}
           onClick={handleClose}
           sx={{
             position: 'absolute',
@@ -88,8 +88,8 @@ export const SettingsDialog = ({ iconPackManager }: SettingsDialogProps) => {
         >
           <Tab label={t('settings.hotkeys.title')} />
           <Tab label={t('settings.pan.title')} />
-          <Tab label="Zoom" />
-          <Tab label="Labels" />
+          <Tab label={t('settings.zoom.title')} />
+          <Tab label={t('settings.labels.title')} />
           <Tab label={t('settings.connector.title')} />
           {iconPackManager && <Tab label={t('settings.iconPacks.title')} />}
         </Tabs>
@@ -112,7 +112,7 @@ export const SettingsDialog = ({ iconPackManager }: SettingsDialogProps) => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Close</Button>
+        <Button onClick={handleClose}>{t('helpDialog.close')}</Button>
       </DialogActions>
     </Dialog>
   );

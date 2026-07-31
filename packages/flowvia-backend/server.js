@@ -3,10 +3,13 @@ import cors from 'cors';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import dotenv from 'dotenv';
 import rateLimit from 'express-rate-limit';
 
-dotenv.config();
+try {
+  process.loadEnvFile();
+} catch {
+  // No .env file present — fine, env vars may come from the environment directly.
+}
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -43,7 +46,15 @@ app.get('/api/storage/status', (req, res) => {
   });
 });
 
-// Only enable storage endpoints if storage is enabled
+// Reject all diagram storage requests up front when storage is disabled,
+// instead of duplicating every route below for the disabled case.
+app.use('/api/diagrams', (req, res, next) => {
+  if (!STORAGE_ENABLED) {
+    return res.status(503).json({ error: 'Server storage is disabled' });
+  }
+  next();
+});
+
 if (STORAGE_ENABLED) {
   // Ensure storage directory exists
   async function ensureStorageDir() {
@@ -68,167 +79,145 @@ if (STORAGE_ENABLED) {
   ensureStorageDir().catch((err) => {
     console.error('Failed to initialize storage:', err);
   });
+}
 
-  app.get('/api/diagrams', readLimiter, async (req, res) => {
+app.get('/api/diagrams', readLimiter, async (req, res) => {
+  try {
     try {
-      try {
-        await fs.access(STORAGE_PATH);
-      } catch {
-        return res.json([]);
-      }
+      await fs.access(STORAGE_PATH);
+    } catch {
+      return res.json([]);
+    }
 
-      const files = await fs.readdir(STORAGE_PATH);
-      const diagrams = [];
+    const files = await fs.readdir(STORAGE_PATH);
+    const diagrams = [];
 
-      for (const file of files) {
-        if (file.endsWith('.json') && file !== 'metadata.json') {
-          const diagramId = file.replace('.json', '');
-          const filePath = safeDiagramPath(diagramId);
-          if (!filePath) continue;
-          try {
-            const stats = await fs.stat(filePath);
-            const content = await fs.readFile(filePath, 'utf-8');
-            const data = JSON.parse(content);
-            const name = data.name || data.title || 'Untitled Diagram';
-            diagrams.push({
-              id: diagramId,
-              name: name,
-              lastModified: stats.mtime,
-              size: stats.size
-            });
-          } catch {
-            continue;
-          }
+    for (const file of files) {
+      if (file.endsWith('.json') && file !== 'metadata.json') {
+        const diagramId = file.replace('.json', '');
+        const filePath = safeDiagramPath(diagramId);
+        if (!filePath) continue;
+        try {
+          const stats = await fs.stat(filePath);
+          const content = await fs.readFile(filePath, 'utf-8');
+          const data = JSON.parse(content);
+          const name = data.name || data.title || 'Untitled Diagram';
+          diagrams.push({
+            id: diagramId,
+            name: name,
+            lastModified: stats.mtime,
+            size: stats.size
+          });
+        } catch {
+          continue;
         }
       }
-
-      res.json(diagrams);
-    } catch (error) {
-      console.error('Error listing diagrams:', error);
-      res.status(500).json({ error: 'Failed to list diagrams' });
     }
-  });
 
-  app.get('/api/diagrams/:id', readLimiter, async (req, res) => {
-    const diagramId = req.params.id;
-    const filePath = safeDiagramPath(diagramId);
+    res.json(diagrams);
+  } catch (error) {
+    console.error('Error listing diagrams:', error);
+    res.status(500).json({ error: 'Failed to list diagrams' });
+  }
+});
+
+app.get('/api/diagrams/:id', readLimiter, async (req, res) => {
+  const diagramId = req.params.id;
+  const filePath = safeDiagramPath(diagramId);
+  if (!filePath) {
+    return res.status(400).json({ error: 'Invalid diagram ID' });
+  }
+
+  try {
+    const content = await fs.readFile(filePath, 'utf-8');
+    const data = JSON.parse(content);
+    res.json(data);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      res.status(404).json({ error: 'Diagram not found' });
+    } else {
+      console.error('Error reading diagram: %s', error.message);
+      res.status(500).json({ error: 'Failed to read diagram' });
+    }
+  }
+});
+
+app.put('/api/diagrams/:id', writeLimiter, async (req, res) => {
+  const diagramId = req.params.id;
+  const filePath = safeDiagramPath(diagramId);
+  if (!filePath) {
+    return res.status(400).json({ error: 'Invalid diagram ID' });
+  }
+
+  try {
+    const data = {
+      ...req.body,
+      id: diagramId,
+      lastModified: new Date().toISOString()
+    };
+
+    await fs.writeFile(filePath, JSON.stringify(data, null, 2));
+
+    if (ENABLE_GIT_BACKUP) {
+      console.log('[PUT] Git backup not yet implemented');
+    }
+
+    res.json({ success: true, id: diagramId });
+  } catch (error) {
+    console.error('Error saving diagram: %s', error.message);
+    res.status(500).json({ error: 'Failed to save diagram' });
+  }
+});
+
+app.delete('/api/diagrams/:id', writeLimiter, async (req, res) => {
+  const filePath = safeDiagramPath(req.params.id);
+  if (!filePath) {
+    return res.status(400).json({ error: 'Invalid diagram ID' });
+  }
+
+  try {
+    await fs.unlink(filePath);
+    res.json({ success: true });
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      res.status(404).json({ error: 'Diagram not found' });
+    } else {
+      console.error('Error deleting diagram: %s', error.message);
+      res.status(500).json({ error: 'Failed to delete diagram' });
+    }
+  }
+});
+
+app.post('/api/diagrams', writeLimiter, async (req, res) => {
+  try {
+    const rawId = req.body.id || `diagram_${Date.now()}`;
+    const filePath = safeDiagramPath(rawId);
     if (!filePath) {
       return res.status(400).json({ error: 'Invalid diagram ID' });
     }
+    const id = rawId;
 
     try {
-      const content = await fs.readFile(filePath, 'utf-8');
-      const data = JSON.parse(content);
-      res.json(data);
-    } catch (error) {
-      if (error.code === 'ENOENT') {
-        res.status(404).json({ error: 'Diagram not found' });
-      } else {
-        console.error('Error reading diagram: %s', error.message);
-        res.status(500).json({ error: 'Failed to read diagram' });
-      }
-    }
-  });
-
-  app.put('/api/diagrams/:id', writeLimiter, async (req, res) => {
-    const diagramId = req.params.id;
-    const filePath = safeDiagramPath(diagramId);
-    if (!filePath) {
-      return res.status(400).json({ error: 'Invalid diagram ID' });
+      await fs.access(filePath);
+      return res.status(409).json({ error: 'Diagram already exists' });
+    } catch {
+      // File doesn't exist, proceed
     }
 
-    try {
-      const data = {
-        ...req.body,
-        id: diagramId,
-        lastModified: new Date().toISOString()
-      };
+    const data = {
+      ...req.body,
+      id,
+      created: new Date().toISOString(),
+      lastModified: new Date().toISOString()
+    };
 
-      await fs.writeFile(filePath, JSON.stringify(data, null, 2));
-
-      if (ENABLE_GIT_BACKUP) {
-        console.log('[PUT] Git backup not yet implemented');
-      }
-
-      res.json({ success: true, id: diagramId });
-    } catch (error) {
-      console.error('Error saving diagram: %s', error.message);
-      res.status(500).json({ error: 'Failed to save diagram' });
-    }
-  });
-
-  app.delete('/api/diagrams/:id', writeLimiter, async (req, res) => {
-    const filePath = safeDiagramPath(req.params.id);
-    if (!filePath) {
-      return res.status(400).json({ error: 'Invalid diagram ID' });
-    }
-
-    try {
-      await fs.unlink(filePath);
-      res.json({ success: true });
-    } catch (error) {
-      if (error.code === 'ENOENT') {
-        res.status(404).json({ error: 'Diagram not found' });
-      } else {
-        console.error('Error deleting diagram: %s', error.message);
-        res.status(500).json({ error: 'Failed to delete diagram' });
-      }
-    }
-  });
-
-  app.post('/api/diagrams', writeLimiter, async (req, res) => {
-    try {
-      const rawId = req.body.id || `diagram_${Date.now()}`;
-      const filePath = safeDiagramPath(rawId);
-      if (!filePath) {
-        return res.status(400).json({ error: 'Invalid diagram ID' });
-      }
-      const id = rawId;
-
-      try {
-        await fs.access(filePath);
-        return res.status(409).json({ error: 'Diagram already exists' });
-      } catch {
-        // File doesn't exist, proceed
-      }
-
-      const data = {
-        ...req.body,
-        id,
-        created: new Date().toISOString(),
-        lastModified: new Date().toISOString()
-      };
-
-      await fs.writeFile(filePath, JSON.stringify(data, null, 2));
-      res.status(201).json({ success: true, id });
-    } catch (error) {
-      console.error('Error creating diagram: %s', error.message);
-      res.status(500).json({ error: 'Failed to create diagram' });
-    }
-  });
-
-} else {
-  // Storage disabled - return appropriate responses
-  app.get('/api/diagrams', (req, res) => {
-    res.status(503).json({ error: 'Server storage is disabled' });
-  });
-  
-  app.get('/api/diagrams/:id', (req, res) => {
-    res.status(503).json({ error: 'Server storage is disabled' });
-  });
-  
-  app.put('/api/diagrams/:id', (req, res) => {
-    res.status(503).json({ error: 'Server storage is disabled' });
-  });
-  
-  app.delete('/api/diagrams/:id', (req, res) => {
-    res.status(503).json({ error: 'Server storage is disabled' });
-  });
-  
-  app.post('/api/diagrams', (req, res) => {
-    res.status(503).json({ error: 'Server storage is disabled' });
-  });
-}
+    await fs.writeFile(filePath, JSON.stringify(data, null, 2));
+    res.status(201).json({ success: true, id });
+  } catch (error) {
+    console.error('Error creating diagram: %s', error.message);
+    res.status(500).json({ error: 'Failed to create diagram' });
+  }
+});
 
 // Start server
 app.listen(PORT, HOST, () => {

@@ -39,11 +39,13 @@ const initialState = () => {
       zoomSettings: DEFAULT_ZOOM_SETTINGS,
       labelSettings: DEFAULT_LABEL_SETTINGS,
       connectorInteractionMode: 'click', // Default to click mode
+      connectorAnimationEnabled: true, // Default to animated flow direction
       expandLabels: false, // Default to collapsed labels
       iconPackManager: null, // Will be set by Isoflow if provided
       isAnythingCopied: false,
       mainMenuPortalTarget: null,
       historyControlsPortalTarget: null,
+      helpButtonPortalTarget: null,
 
       actions: {
         setView: (view) => {
@@ -110,6 +112,9 @@ const initialState = () => {
         setHistoryControlsPortalTarget: (historyControlsPortalTarget) => {
           set({ historyControlsPortalTarget });
         },
+        setHelpButtonPortalTarget: (helpButtonPortalTarget) => {
+          set({ helpButtonPortalTarget });
+        },
         setRendererEl: (el: HTMLDivElement) => {
           set({ rendererEl: el });
         },
@@ -127,6 +132,9 @@ const initialState = () => {
         },
         setConnectorInteractionMode: (connectorInteractionMode) => {
           set({ connectorInteractionMode });
+        },
+        setConnectorAnimationEnabled: (connectorAnimationEnabled) => {
+          set({ connectorAnimationEnabled });
         },
         setExpandLabels: (expandLabels) => {
           set({ expandLabels });

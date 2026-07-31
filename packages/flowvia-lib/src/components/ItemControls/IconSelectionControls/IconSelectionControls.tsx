@@ -9,6 +9,7 @@ import { Searchbox } from 'src/components/ItemControls/IconSelectionControls/Sea
 import { useIconFiltering } from 'src/hooks/useIconFiltering';
 import { useIconCategories } from 'src/hooks/useIconCategories';
 import { Close as CloseIcon, FileUpload as FileUploadIcon } from '@mui/icons-material';
+import { useTranslation } from 'src/stores/localeStore';
 import { Icons } from './Icons';
 import { IconGrid } from './IconGrid';
 import { generateId } from 'src/utils';
@@ -32,6 +33,7 @@ export const IconSelectionControls = () => {
     // Check localStorage to see if user has dismissed the alert
     return localStorage.getItem('flowvia-show-drag-hint') !== 'false';
   });
+  const { t } = useTranslation();
 
 
   const onMouseDown = useCallback(
@@ -188,7 +190,7 @@ export const IconSelectionControls = () => {
         >
           {/* Close button */}
           <MUIIconButton
-            aria-label="Close"
+            aria-label={t('itemControls.close')}
             onClick={() => {
               return uiStateActions.setItemControls(null);
             }}
@@ -234,7 +236,7 @@ export const IconSelectionControls = () => {
             onClick={handleImportClick}
             fullWidth
           >
-            Import Icons
+            {t('itemControls.iconSelection.importIcons')}
           </Button>
           <FormControlLabel
             control={
@@ -246,13 +248,13 @@ export const IconSelectionControls = () => {
             }
             label={
               <Typography variant="body2">
-                Treat as isometric (3D view)
+                {t('itemControls.iconSelection.treatAsIsometric')}
               </Typography>
             }
             sx={{ mt: 1, ml: 0 }}
           />
           <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 0.5 }}>
-            Uncheck for flat icons (logos, UI elements)
+            {t('itemControls.iconSelection.uncheckForFlat')}
           </Typography>
         </Box>
         
@@ -271,7 +273,7 @@ export const IconSelectionControls = () => {
             onClose={dismissAlert}
             sx={{ cursor: 'pointer', mt: 1 }}
           >
-            You can drag and drop any item below onto the canvas.
+            {t('itemControls.iconSelection.dragDropHint')}
           </Alert>
         )}
       </Section>

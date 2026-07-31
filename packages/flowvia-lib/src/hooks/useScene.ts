@@ -14,7 +14,7 @@ import { useModelStore, useModelStoreApi } from 'src/stores/modelStore';
 import { useSceneStore, useSceneStoreApi } from 'src/stores/sceneStore';
 import * as reducers from 'src/stores/reducers';
 import type { State } from 'src/stores/reducers/types';
-import { copyObject, generateId, getItemById, getItemByIdOrThrow, getPastedObject, getTargetTileFunction, isPastedValid } from 'src/utils';
+import { copyObject, findNearestUnoccupiedTile, generateId, getItemById, getItemByIdOrThrow, getPastedObject, getTargetTileFunction, isPastedValid } from 'src/utils';
 import {
   CONNECTOR_DEFAULTS,
   RECTANGLE_DEFAULTS,
@@ -516,6 +516,78 @@ export const useScene = () => {
     }
   }
 
+  const deleteObjects = (uiState: UiStateStore) => {
+    const selectedObjects =
+      (uiState.mode.type === 'LASSO' || uiState.mode.type === 'FREEHAND_LASSO') &&
+      uiState.mode.selection
+        ? uiState.mode.selection.items
+        : [];
+
+    if (selectedObjects.length === 0) return;
+
+    transaction(() => {
+      selectedObjects.forEach((item) => {
+        switch (item.type) {
+          case 'ITEM':
+            deleteViewItem(item.id);
+            break;
+          case 'RECTANGLE':
+            deleteRectangle(item.id);
+            break;
+          case 'TEXTBOX':
+            deleteTextBox(item.id);
+            break;
+        }
+      });
+    });
+
+    uiState.actions.setMode({ type: 'CURSOR', mousedownItem: null, showCursor: true });
+  }
+
+  const duplicateItem: (itemRef: ItemReference, activeScene: ReturnType<typeof useScene>) => void = (itemRef, activeScene) => {
+    const model = modelStoreApi.getState();
+    const newId = generateId();
+    const offset = { x: 1, y: 1 };
+
+    transaction(() => {
+      if (itemRef.type === 'ITEM') {
+        const modelItem = getItemById(model.items, itemRef.id)?.value;
+        const viewItem = getItemById(currentView.items, itemRef.id)?.value;
+        if (!modelItem || !viewItem) return;
+
+        const targetTile = findNearestUnoccupiedTile(
+          { x: viewItem.tile.x + offset.x, y: viewItem.tile.y + offset.y },
+          activeScene
+        ) || viewItem.tile;
+
+        createModelItem({ ...modelItem, id: newId });
+        createViewItem({ ...viewItem, id: newId, tile: targetTile });
+      } else if (itemRef.type === 'RECTANGLE') {
+        if (!currentView.rectangles) return;
+        const rectangle = getItemById(currentView.rectangles, itemRef.id)?.value;
+        if (!rectangle) return;
+
+        createRectangle({
+          ...rectangle,
+          id: newId,
+          from: { x: rectangle.from.x + offset.x, y: rectangle.from.y + offset.y },
+          to: { x: rectangle.to.x + offset.x, y: rectangle.to.y + offset.y }
+        });
+      } else if (itemRef.type === 'TEXTBOX') {
+        if (!currentView.textBoxes) return;
+        const textBox = getItemById(currentView.textBoxes, itemRef.id)?.value;
+        if (!textBox) return;
+
+        const targetTile = findNearestUnoccupiedTile(
+          { x: textBox.tile.x + offset.x, y: textBox.tile.y + offset.y },
+          activeScene
+        ) || textBox.tile;
+
+        createTextBox({ ...textBox, id: newId, tile: targetTile });
+      }
+    });
+  }
+
   return {
     items: itemsList,
     connectors: connectorsList,
@@ -542,5 +614,7 @@ export const useScene = () => {
     placeIcon,
     copyObjectsToClipboard,
     pasteObjectsFromClipboard,
+    deleteObjects,
+    duplicateItem,
   };
 };

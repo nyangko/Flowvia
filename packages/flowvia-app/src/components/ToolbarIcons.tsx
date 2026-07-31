@@ -44,3 +44,29 @@ export const CloudIcon = () => (
     <path d="M7 18a4 4 0 0 1-.5-7.97 5 5 0 0 1 9.79-1.5A3.5 3.5 0 0 1 16.5 18z" />
   </svg>
 );
+
+export const UploadIcon = () => (
+  <svg {...base}>
+    <path d="M12 15V4" />
+    <path d="M7.5 8.5 12 4l4.5 4.5" />
+    <path d="M4 19h16" />
+  </svg>
+);
+
+export const TrashIcon = () => (
+  <svg {...base}>
+    <path d="M4 7h16" />
+    <path d="M9 7V4h6v3" />
+    <path d="M6 7l1 13h10l1-13" />
+    <path d="M10 11v6" />
+    <path d="M14 11v6" />
+  </svg>
+);
+
+export const HistoryIcon = () => (
+  <svg {...base}>
+    <path d="M12 8v4l3 2" />
+    <path d="M3.5 12a8.5 8.5 0 1 0 2.5-6" />
+    <path d="M3.5 5v4h4" />
+  </svg>
+);

@@ -28,6 +28,7 @@ const App = ({
   iconPackManager,
   mainMenuPortalTarget,
   historyControlsPortalTarget,
+  helpButtonPortalTarget,
 }: IsoflowProps) => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
@@ -69,6 +70,10 @@ const App = ({
   useEffect(() => {
     uiStateActions.setHistoryControlsPortalTarget(historyControlsPortalTarget ?? null);
   }, [historyControlsPortalTarget, uiStateActions]);
+
+  useEffect(() => {
+    uiStateActions.setHelpButtonPortalTarget(helpButtonPortalTarget ?? null);
+  }, [helpButtonPortalTarget, uiStateActions]);
 
   useEffect(() => {
     if (renderer?.expandLabels !== undefined) {

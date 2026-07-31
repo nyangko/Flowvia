@@ -2,7 +2,14 @@ import { LocaleProps } from '../types/isoflowProps';
 
 const locale: LocaleProps = {
   common: {
-    exampleText: "এটি একটি উদাহরণ পাঠ্য"
+    exampleText: "এটি একটি উদাহরণ পাঠ্য",
+    delete: "মুছুন"
+  },
+  textBoxControls: {
+    enterText: "টেক্সট লিখুন",
+    textSize: "টেক্সট আকার",
+    alignment: "প্রান্তিককরণ",
+    close: "বন্ধ করুন"
   },
   mainMenu: {
     undo: "পূর্বাবস্থায় ফেরান",
@@ -12,6 +19,7 @@ const locale: LocaleProps = {
     exportCompactJson: "কমপ্যাক্ট JSON হিসাবে রপ্তানি করুন",
     exportImage: "ছবি হিসাবে রপ্তানি করুন",
     clearCanvas: "ক্যানভাস পরিষ্কার করুন",
+    clearCanvasConfirm: "ক্যানভাস পরিষ্কার করবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।",
     settings: "সেটিংস",
     gitHub: "GitHub"
   },
@@ -119,14 +127,47 @@ const locale: LocaleProps = {
     message: "এই সংযোগকারীটিকে একটি নোডের সাথে সংযোগ করতে,",
     instruction: "সংযোগকারীর শেষে বাম-ক্লিক করুন এবং এটিকে পছন্দসই নোডে টানুন।"
   },
+  contextMenu: {
+    copySelection: "নির্বাচন কপি করুন",
+    deleteSelection: "নির্বাচন মুছুন",
+    copyNode: "নোড কপি করুন",
+    copyRectangle: "আয়তক্ষেত্র কপি করুন",
+    copyText: "পাঠ্য কপি করুন",
+    addNode: "নোড যোগ করুন",
+    addRectangle: "আয়তক্ষেত্র যোগ করুন",
+    addConnector: "সংযোগকারী যোগ করুন",
+    duplicateNode: "নোড ডুপ্লিকেট করুন",
+    duplicateRectangle: "আয়তক্ষেত্র ডুপ্লিকেট করুন",
+    duplicateText: "পাঠ্য ডুপ্লিকেট করুন",
+    editNode: "নোড সম্পাদনা করুন",
+    deleteNode: "নোড মুছুন",
+    editRectangle: "আয়তক্ষেত্র সম্পাদনা করুন",
+    deleteRectangle: "আয়তক্ষেত্র মুছুন",
+    editText: "পাঠ্য সম্পাদনা করুন",
+    deleteText: "পাঠ্য মুছুন",
+    editConnector: "সংযোগকারী সম্পাদনা করুন",
+    deleteConnector: "সংযোগকারী মুছুন",
+    editConnectorsHere: "এখানকার সংযোগকারী দেখুন ({count})",
+    deleteConnectorsHere: "এখানকার সব মুছুন ({count})",
+    paste: "পেস্ট",
+  },
   settings: {
     zoom: {
+      title: "জুম",
       description: "মাউস হুইল ব্যবহার করার সময় জুম আচরণ কনফিগার করুন।",
       zoomToCursor: "কার্সারে জুম করুন",
       zoomToCursorDesc: "সক্রিয় থাকলে, মাউস কার্সার অবস্থানে কেন্দ্রীভূত জুম ইন/আউট। নিষ্ক্রিয় থাকলে, জুম ক্যানভাসে কেন্দ্রীভূত।",
 
       trackpadMode: "ট্র্যাকপ্যাড মোড",
       trackpadModeDesc: "সক্ষম থাকলে: দুই আঙুলের স্ক্রল ক্যানভাস প্যান করে, পিঞ্চ ব্রাউজারকে প্রভাবিত না করে জুম করে। নিষ্ক্রিয় থাকলে: স্ক্রল হুইল ক্যানভাস জুম করে (ডিফল্ট মাউস আচরণ)।"
+    },
+    labels: {
+      title: "লেবেল",
+      description: "লেবেল প্রদর্শন সেটিংস কনফিগার করুন।",
+      expandButtonPadding: "সম্প্রসারণ বোতাম প্যাডিং",
+      expandButtonPaddingDesc: "সম্প্রসারণ বোতাম দৃশ্যমান থাকলে নিচের প্যাডিং (টেক্সট ওভারল্যাপ প্রতিরোধ করে)।",
+      currentPrefix: "বর্তমান:",
+      unitsLabel: "থিম ইউনিট"
     },
     hotkeys: {
       title: "শর্টকাট সেটিংস",
@@ -168,6 +209,8 @@ const locale: LocaleProps = {
       clickModeDesc: "প্রথম নোডে ক্লিক করুন, তারপর একটি সংযোগ তৈরি করতে দ্বিতীয় নোডে ক্লিক করুন",
       dragMode: "টেনে আনার মোড",
       dragModeDesc: "প্রথম নোড থেকে দ্বিতীয় নোডে ক্লিক করুন এবং টেনে আনুন",
+      animation: "প্রবাহ দিক অ্যানিমেট করুন",
+      animationDesc: "প্রবাহের দিক নির্দেশ করতে সংযোগকারী বরাবর একটি চলমান ড্যাশ প্যাটার্ন দেখায়।",
       note: "নোট: আপনি যেকোনো সময় এই সেটিং পরিবর্তন করতে পারেন। সংযোগকারী টুল সক্রিয় থাকলে নির্বাচিত মোড ব্যবহার করা হবে।"
     },
     iconPacks: {
@@ -196,6 +239,95 @@ const locale: LocaleProps = {
     configPath2: "কনফিগারেশন অ্যাক্সেস করতে উপরের বাম দিকে।",
     canDisable: "আপনি চাইলে এই আচরণ নিষ্ক্রিয় করতে পারেন।",
     signature: "-Stan"
+  },
+  iconNames: {
+    block: "ব্লক",
+    cache: "ক্যাশ",
+    cardterminal: "কার্ড টার্মিনাল",
+    cloud: "ক্লাউড",
+    cronjob: "নির্ধারিত কাজ",
+    cube: "কিউব",
+    desktop: "ডেস্কটপ",
+    diamond: "হীরা",
+    dns: "DNS",
+    document: "নথি",
+    firewall: "ফায়ারওয়াল",
+    "function-module": "ফাংশন",
+    image: "ছবি",
+    laptop: "ল্যাপটপ",
+    loadbalancer: "লোড ব্যালেন্সার",
+    lock: "লক",
+    mail: "মেইল",
+    mailmultiple: "একাধিক মেইল",
+    mobiledevice: "মোবাইল ডিভাইস",
+    office: "অফিস",
+    "package-module": "প্যাকেজ",
+    paymentcard: "পেমেন্ট কার্ড",
+    plane: "বিমান",
+    printer: "প্রিন্টার",
+    pyramid: "পিরামিড",
+    queue: "সারি",
+    router: "রাউটার",
+    server: "সার্ভার",
+    speech: "স্পিচ বাবল",
+    sphere: "গোলক",
+    storage: "স্টোরেজ",
+    "switch-module": "সুইচ",
+    tower: "টাওয়ার",
+    "truck-2": "ট্রাক ২",
+    truck: "ট্রাক",
+    user: "ব্যবহারকারী",
+    vm: "ভার্চুয়াল মেশিন"
+  },
+  itemControls: {
+    close: "বন্ধ করুন",
+    color: "রঙ",
+    useCustomColor: "কাস্টম রঙ ব্যবহার করুন",
+    node: {
+      name: "নাম",
+      description: "বিবরণ",
+      labelHeight: "লেবেলের উচ্চতা",
+      iconSize: "আইকনের আকার",
+      updateIcon: "আইকন পরিবর্তন করুন",
+      backToSettings: "সেটিংস",
+      expandDescription: "বিবরণ দেখান",
+      collapseDescription: "বিবরণ লুকান"
+    },
+    connector: {
+      labels: "লেবেল",
+      labelsCount: "{count} / {max} লেবেল",
+      addLabel: "লেবেল যোগ করুন",
+      deleteLabel: "লেবেল মুছুন",
+      noLabels: "কোনো লেবেল নেই। তৈরি করতে \"লেবেল যোগ করুন\" ক্লিক করুন।",
+      labelNumber: "লেবেল {number}",
+      labelText: "টেক্সট",
+      position: "অবস্থান (%)",
+      heightOffset: "উচ্চতা অফসেট",
+      showDottedLine: "ডটেড লাইন দেখান",
+      width: "প্রস্থ",
+      lineStyle: "লাইন স্টাইল",
+      showArrow: "তীর দেখান",
+      connectorsCount: "{count}টি সংযোগকারী",
+      connectorFallbackName: "সংযোগকারী {number}",
+      styleSolid: "সলিড",
+      styleDashed: "ড্যাশড",
+      styleDotted: "ডটেড"
+    },
+    iconSelection: {
+      searchPlaceholder: "আইকন খুঁজুন",
+      importIcons: "আইকন আমদানি করুন",
+      treatAsIsometric: "আইসোমেট্রিক (3D ভিউ) হিসেবে গণ্য করুন",
+      uncheckForFlat: "ফ্ল্যাট আইকনের (লোগো, UI উপাদান) জন্য আনচেক করুন",
+      dragDropHint: "আপনি নিচের যেকোনো আইটেম ক্যানভাসে টেনে এনে ছাড়তে পারেন।"
+    },
+    quickIconSelector: {
+      searchPlaceholder: "আইকন খুঁজুন (নির্বাচন করতে Enter চাপুন)",
+      recentlyUsed: "সম্প্রতি ব্যবহৃত",
+      searchResults: "অনুসন্ধান ফলাফল ({count}টি আইকন)",
+      noResults: "\"{term}\" এর সাথে মিলে এমন কোনো আইকন পাওয়া যায়নি",
+      helpSearching: "নেভিগেট করতে অ্যারো কী • নির্বাচন করতে Enter • নির্বাচন করে বন্ধ করতে ডাবল-ক্লিক",
+      helpBrowsing: "খুঁজতে টাইপ করুন • প্রসারিত করতে বিভাগে ক্লিক করুন • নির্বাচন করে বন্ধ করতে ডাবল-ক্লিক"
+    }
   }
 };
 

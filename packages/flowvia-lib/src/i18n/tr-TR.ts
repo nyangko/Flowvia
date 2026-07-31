@@ -2,7 +2,14 @@ import { LocaleProps } from '../types/isoflowProps';
 
 const locale: LocaleProps = {
   common: {
-    exampleText: "Bu bir örnek metindir"
+    exampleText: "Bu bir örnek metindir",
+    delete: "Sil"
+  },
+  textBoxControls: {
+    enterText: "Metin girin",
+    textSize: "Metin boyutu",
+    alignment: "Hizalama",
+    close: "Kapat"
   },
   mainMenu: {
     undo: "Geri Al",
@@ -12,6 +19,7 @@ const locale: LocaleProps = {
     exportCompactJson: "Kompakt JSON olarak dışa aktar",
     exportImage: "Görüntü olarak dışa aktar",
     clearCanvas: "Tuvali temizle",
+    clearCanvasConfirm: "Tuval temizlensin mi? Bu işlem geri alınamaz.",
     settings: "Ayarlar",
     gitHub: "GitHub"
   },
@@ -119,14 +127,47 @@ const locale: LocaleProps = {
     message: "Bu bağlayıcıyı bir düğüme bağlamak için,",
     instruction: "bağlayıcının ucuna sol tıklayın ve istediğiniz düğüme sürükleyin."
   },
+  contextMenu: {
+    copySelection: "Seçimi Kopyala",
+    deleteSelection: "Seçimi Sil",
+    copyNode: "Düğümü Kopyala",
+    copyRectangle: "Dikdörtgeni Kopyala",
+    copyText: "Metni Kopyala",
+    addNode: "Düğüm Ekle",
+    addRectangle: "Dikdörtgen Ekle",
+    addConnector: "Bağlayıcı Ekle",
+    duplicateNode: "Düğümü Çoğalt",
+    duplicateRectangle: "Dikdörtgeni Çoğalt",
+    duplicateText: "Metni Çoğalt",
+    editNode: "Düğümü Düzenle",
+    deleteNode: "Düğümü Sil",
+    editRectangle: "Dikdörtgeni Düzenle",
+    deleteRectangle: "Dikdörtgeni Sil",
+    editText: "Metni Düzenle",
+    deleteText: "Metni Sil",
+    editConnector: "Bağlayıcıyı Düzenle",
+    deleteConnector: "Bağlayıcıyı Sil",
+    editConnectorsHere: "Buradaki Bağlayıcıları Gör ({count})",
+    deleteConnectorsHere: "Buradakilerin Tümünü Sil ({count})",
+    paste: "Yapıştır",
+  },
   settings: {
     zoom: {
+      title: "Yakınlaştırma",
       description: "Fare tekerleği kullanılırken yakınlaştırma davranışını yapılandırın.",
       zoomToCursor: "İmlece Yakınlaştır",
       zoomToCursorDesc: "Etkinleştirildiğinde, fare imleci konumunda merkezlenmiş olarak yakınlaştırır/uzaklaştırır. Devre dışı bırakıldığında, yakınlaştırma tuvalde merkezlenir.",
 
       trackpadMode: "Trackpad Modu",
       trackpadModeDesc: "Etkinleştirildiğinde: iki parmakla kaydırma tuvali hareket ettirir, kıstırma tarayıcıyı etkilemeden yakınlaştırır. Devre dışı bırakıldığında: fare tekerleği tuvali yakınlaştırır (varsayılan fare davranışı)."
+    },
+    labels: {
+      title: "Etiketler",
+      description: "Etiket görüntüleme ayarlarını yapılandırın.",
+      expandButtonPadding: "Genişlet Düğmesi Boşluğu",
+      expandButtonPaddingDesc: "Genişlet düğmesi görünür olduğunda alt boşluk (metin çakışmasını önler).",
+      currentPrefix: "Mevcut:",
+      unitsLabel: "tema birimi"
     },
     hotkeys: {
       title: "Kısayol Tuşu Ayarları",
@@ -168,6 +209,8 @@ const locale: LocaleProps = {
       clickModeDesc: "Bir bağlantı oluşturmak için ilk düğüme tıklayın, ardından ikinci düğüme tıklayın",
       dragMode: "Sürükleme Modu",
       dragModeDesc: "İlk düğümden ikinci düğüme tıklayın ve sürükleyin",
+      animation: "Akış Yönünü Canlandır",
+      animationDesc: "Akış yönünü belirtmek için bağlayıcılar boyunca hareket eden bir kesik çizgi deseni gösterir.",
       note: "Not: Bu ayarı istediğiniz zaman değiştirebilirsiniz. Seçilen mod, Bağlayıcı aracı etkin olduğunda kullanılacaktır."
     },
     iconPacks: {
@@ -196,6 +239,95 @@ const locale: LocaleProps = {
     configPath2: "sol üstteki Hamburger simgesine tıklayın.",
     canDisable: "İsterseniz bu davranışı devre dışı bırakabilirsiniz.",
     signature: "-Stan"
+  },
+  iconNames: {
+    block: "Blok",
+    cache: "Önbellek",
+    cardterminal: "Kart terminali",
+    cloud: "Bulut",
+    cronjob: "Zamanlanmış görev",
+    cube: "Küp",
+    desktop: "Masaüstü",
+    diamond: "Elmas",
+    dns: "DNS",
+    document: "Belge",
+    firewall: "Güvenlik duvarı",
+    "function-module": "İşlev",
+    image: "Görsel",
+    laptop: "Dizüstü bilgisayar",
+    loadbalancer: "Yük dengeleyici",
+    lock: "Kilit",
+    mail: "Posta",
+    mailmultiple: "Çoklu posta",
+    mobiledevice: "Mobil cihaz",
+    office: "Ofis",
+    "package-module": "Paket",
+    paymentcard: "Ödeme kartı",
+    plane: "Uçak",
+    printer: "Yazıcı",
+    pyramid: "Piramit",
+    queue: "Kuyruk",
+    router: "Yönlendirici",
+    server: "Sunucu",
+    speech: "Konuşma balonu",
+    sphere: "Küre",
+    storage: "Depolama",
+    "switch-module": "Anahtar",
+    tower: "Kule",
+    "truck-2": "Kamyon 2",
+    truck: "Kamyon",
+    user: "Kullanıcı",
+    vm: "Sanal makine"
+  },
+  itemControls: {
+    close: "Kapat",
+    color: "Renk",
+    useCustomColor: "Özel Renk Kullan",
+    node: {
+      name: "Ad",
+      description: "Açıklama",
+      labelHeight: "Etiket yüksekliği",
+      iconSize: "Simge boyutu",
+      updateIcon: "Simgeyi değiştir",
+      backToSettings: "Ayarlar",
+      expandDescription: "Açıklamayı göster",
+      collapseDescription: "Açıklamayı gizle"
+    },
+    connector: {
+      labels: "Etiketler",
+      labelsCount: "{count} / {max} etiket",
+      addLabel: "Etiket Ekle",
+      deleteLabel: "Etiketi Sil",
+      noLabels: "Etiket yok. Oluşturmak için \"Etiket Ekle\"ye tıklayın.",
+      labelNumber: "Etiket {number}",
+      labelText: "Metin",
+      position: "Konum (%)",
+      heightOffset: "Yükseklik Kayması",
+      showDottedLine: "Noktalı Çizgiyi Göster",
+      width: "Kalınlık",
+      lineStyle: "Çizgi Stili",
+      showArrow: "Oku Göster",
+      connectorsCount: "{count} Bağlayıcı",
+      connectorFallbackName: "Bağlayıcı {number}",
+      styleSolid: "Düz",
+      styleDashed: "Kesikli",
+      styleDotted: "Noktalı"
+    },
+    iconSelection: {
+      searchPlaceholder: "Simge ara",
+      importIcons: "Simgeleri İçe Aktar",
+      treatAsIsometric: "İzometrik (3B görünüm) olarak kabul et",
+      uncheckForFlat: "Düz simgeler (logolar, arayüz öğeleri) için işareti kaldırın",
+      dragDropHint: "Aşağıdaki herhangi bir öğeyi tuvale sürükleyip bırakabilirsiniz."
+    },
+    quickIconSelector: {
+      searchPlaceholder: "Simge ara (seçmek için Enter)",
+      recentlyUsed: "SON KULLANILANLAR",
+      searchResults: "ARAMA SONUÇLARI ({count} simge)",
+      noResults: "\"{term}\" ile eşleşen simge bulunamadı",
+      helpSearching: "Gezinmek için ok tuşları • Seçmek için Enter • Seçip kapatmak için çift tıklama",
+      helpBrowsing: "Aramak için yazın • Genişletmek için kategoriye tıklayın • Seçip kapatmak için çift tıklama"
+    }
   }
 };
 

@@ -46,7 +46,7 @@ export const VIEW_ITEM_DEFAULTS: Required<Omit<ViewItem, 'id' | 'tile'>> = {
 };
 
 export const CONNECTOR_DEFAULTS: Required<Omit<Connector, 'id' | 'color'>> = {
-  width: 10,
+  width: 7,
   description: '',
   startLabel: '',
   endLabel: '',

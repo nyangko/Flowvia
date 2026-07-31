@@ -1,17 +1,17 @@
 import './ErrorBoundary.css';
 
-interface ErrorBoundaryFallbackUIProps {
+interface ErrorFallbackProps {
   error: Error;
 }
 
-export default function ErrorBoundaryFallbackUI({
+export default function ErrorFallback({
   error
-}: ErrorBoundaryFallbackUIProps) {
-  const onRefreshButtonPressed = () => {
+}: ErrorFallbackProps) {
+  const onRefresh = () => {
     window.location.reload();
   };
 
-  const onReportButtonPressed = () => {
+  const onReport = () => {
     const errorDetails = {
       message: error.message,
       stack: error.stack,
@@ -100,12 +100,12 @@ export default function ErrorBoundaryFallbackUI({
         </div>
 
         <div className="error-footer">
-          <button className="error-button" onClick={onReportButtonPressed}>
+          <button className="error-button" onClick={onReport}>
             📋 Report Issue
           </button>
           <button
             className="error-button refresh-button"
-            onClick={onRefreshButtonPressed}
+            onClick={onRefresh}
           >
             🔄 Refresh Page
           </button>

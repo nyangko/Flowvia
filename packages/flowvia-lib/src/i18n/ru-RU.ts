@@ -2,7 +2,14 @@ import { LocaleProps } from '../types/isoflowProps';
 
 const locale: LocaleProps = {
   common: {
-    exampleText: "Это пример текста"
+    exampleText: "Это пример текста",
+    delete: "Удалить"
+  },
+  textBoxControls: {
+    enterText: "Введите текст",
+    textSize: "Размер текста",
+    alignment: "Выравнивание",
+    close: "Закрыть"
   },
   mainMenu: {
     undo: "Отменить",
@@ -12,6 +19,7 @@ const locale: LocaleProps = {
     exportCompactJson: "Экспортировать как компактный JSON",
     exportImage: "Экспортировать как изображение",
     clearCanvas: "Очистить холст",
+    clearCanvasConfirm: "Очистить холст? Это действие нельзя отменить.",
     settings: "Настройки",
     gitHub: "GitHub"
   },
@@ -119,14 +127,47 @@ const locale: LocaleProps = {
     message: "Чтобы подключить этот соединитель к узлу,",
     instruction: "щелкните левой кнопкой мыши на конце соединителя и перетащите его к нужному узлу."
   },
+  contextMenu: {
+    copySelection: "Копировать выделение",
+    deleteSelection: "Удалить выделение",
+    copyNode: "Копировать узел",
+    copyRectangle: "Копировать прямоугольник",
+    copyText: "Копировать текст",
+    addNode: "Добавить узел",
+    addRectangle: "Добавить прямоугольник",
+    addConnector: "Добавить соединитель",
+    duplicateNode: "Дублировать узел",
+    duplicateRectangle: "Дублировать прямоугольник",
+    duplicateText: "Дублировать текст",
+    editNode: "Изменить узел",
+    deleteNode: "Удалить узел",
+    editRectangle: "Изменить прямоугольник",
+    deleteRectangle: "Удалить прямоугольник",
+    editText: "Изменить текст",
+    deleteText: "Удалить текст",
+    editConnector: "Изменить соединитель",
+    deleteConnector: "Удалить соединитель",
+    editConnectorsHere: "Показать соединители здесь ({count})",
+    deleteConnectorsHere: "Удалить все здесь ({count})",
+    paste: "Вставить",
+  },
   settings: {
     zoom: {
+      title: "Масштаб",
       description: "Настройте поведение масштабирования при использовании колесика мыши.",
       zoomToCursor: "Масштабировать к курсору",
       zoomToCursorDesc: "При включении масштабирование центрируется на позиции курсора мыши. При выключении масштабирование центрируется на холсте.",
 
       trackpadMode: "Режим трекпада",
       trackpadModeDesc: "При включении: прокрутка двумя пальцами перемещает холст, сжатие масштабирует без влияния на браузер. При выключении: колесико мыши масштабирует холст (стандартное поведение мыши)."
+    },
+    labels: {
+      title: "Метки",
+      description: "Настройте параметры отображения меток.",
+      expandButtonPadding: "Отступ кнопки развёртывания",
+      expandButtonPaddingDesc: "Нижний отступ, когда кнопка развёртывания видима (предотвращает наложение текста).",
+      currentPrefix: "Текущее:",
+      unitsLabel: "единицы темы"
     },
     hotkeys: {
       title: "Настройки горячих клавиш",
@@ -168,6 +209,8 @@ const locale: LocaleProps = {
       clickModeDesc: "Нажмите на первый узел, затем нажмите на второй узел, чтобы создать соединение",
       dragMode: "Режим перетаскивания",
       dragModeDesc: "Нажмите и перетащите от первого узла ко второму узлу",
+      animation: "Анимация направления потока",
+      animationDesc: "Показывает движущийся пунктир вдоль соединителей для обозначения направления потока.",
       note: "Примечание: Вы можете изменить эту настройку в любое время. Выбранный режим будет использоваться, когда инструмент соединителя активен."
     },
     iconPacks: {
@@ -196,6 +239,95 @@ const locale: LocaleProps = {
     configPath2: "в верхнем левом углу, чтобы получить доступ к Конфигурации.",
     canDisable: "Вы можете отключить это поведение, если хотите.",
     signature: "-Stan"
+  },
+  iconNames: {
+    block: "Блок",
+    cache: "Кэш",
+    cardterminal: "Карточный терминал",
+    cloud: "Облако",
+    cronjob: "Задача по расписанию",
+    cube: "Куб",
+    desktop: "Настольный ПК",
+    diamond: "Ромб",
+    dns: "DNS",
+    document: "Документ",
+    firewall: "Брандмауэр",
+    "function-module": "Функция",
+    image: "Изображение",
+    laptop: "Ноутбук",
+    loadbalancer: "Балансировщик нагрузки",
+    lock: "Замок",
+    mail: "Почта",
+    mailmultiple: "Несколько писем",
+    mobiledevice: "Мобильное устройство",
+    office: "Офис",
+    "package-module": "Пакет",
+    paymentcard: "Платёжная карта",
+    plane: "Самолёт",
+    printer: "Принтер",
+    pyramid: "Пирамида",
+    queue: "Очередь",
+    router: "Маршрутизатор",
+    server: "Сервер",
+    speech: "Речевое облако",
+    sphere: "Сфера",
+    storage: "Хранилище",
+    "switch-module": "Коммутатор",
+    tower: "Башня",
+    "truck-2": "Грузовик 2",
+    truck: "Грузовик",
+    user: "Пользователь",
+    vm: "Виртуальная машина"
+  },
+  itemControls: {
+    close: "Закрыть",
+    color: "Цвет",
+    useCustomColor: "Использовать свой цвет",
+    node: {
+      name: "Имя",
+      description: "Описание",
+      labelHeight: "Высота метки",
+      iconSize: "Размер значка",
+      updateIcon: "Изменить значок",
+      backToSettings: "Настройки",
+      expandDescription: "Показать описание",
+      collapseDescription: "Скрыть описание"
+    },
+    connector: {
+      labels: "Метки",
+      labelsCount: "{count} / {max} меток",
+      addLabel: "Добавить метку",
+      deleteLabel: "Удалить метку",
+      noLabels: "Нет меток. Нажмите «Добавить метку», чтобы создать.",
+      labelNumber: "Метка {number}",
+      labelText: "Текст",
+      position: "Позиция (%)",
+      heightOffset: "Смещение по высоте",
+      showDottedLine: "Показать пунктирную линию",
+      width: "Толщина",
+      lineStyle: "Стиль линии",
+      showArrow: "Показать стрелку",
+      connectorsCount: "Соединителей: {count}",
+      connectorFallbackName: "Соединитель {number}",
+      styleSolid: "Сплошная",
+      styleDashed: "Пунктирная",
+      styleDotted: "Точечная"
+    },
+    iconSelection: {
+      searchPlaceholder: "Поиск значков",
+      importIcons: "Импортировать значки",
+      treatAsIsometric: "Считать изометрическим (3D)",
+      uncheckForFlat: "Снимите отметку для плоских значков (логотипы, элементы интерфейса)",
+      dragDropHint: "Вы можете перетащить любой элемент ниже на холст."
+    },
+    quickIconSelector: {
+      searchPlaceholder: "Поиск значков (Enter для выбора)",
+      recentlyUsed: "НЕДАВНО ИСПОЛЬЗОВАННЫЕ",
+      searchResults: "РЕЗУЛЬТАТЫ ПОИСКА ({count} значков)",
+      noResults: "Значков, соответствующих «{term}», не найдено",
+      helpSearching: "Стрелки для навигации • Enter для выбора • Двойной клик для выбора и закрытия",
+      helpBrowsing: "Введите текст для поиска • Нажмите на категорию, чтобы развернуть • Двойной клик для выбора и закрытия"
+    }
   }
 };
 

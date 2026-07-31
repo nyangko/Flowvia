@@ -11,6 +11,7 @@ import { useScene } from 'src/hooks/useScene';
 import { useViewItem } from 'src/hooks/useViewItem';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useModelItem } from 'src/hooks/useModelItem';
+import { useTranslation } from 'src/stores/localeStore';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Icons } from '../IconSelectionControls/Icons';
 import { NodeSettings } from './NodeSettings/NodeSettings';
@@ -38,6 +39,7 @@ export const NodeControls = ({ id }: Props) => {
   const modelItem = useModelItem(id);
   const { iconCategories } = useIconCategories();
   const { icon } = useIcon(modelItem?.icon || '');
+  const { t } = useTranslation();
 
   const onSwitchMode = useCallback((newMode: Mode) => {
     setMode(newMode);
@@ -72,7 +74,7 @@ export const NodeControls = ({ id }: Props) => {
       >
         {/* Close button */}
         <MUIIconButton
-          aria-label="Close"
+          aria-label={t('itemControls.close')}
           onClick={() => {
             return uiStateActions.setItemControls(null);
           }}
@@ -106,7 +108,7 @@ export const NodeControls = ({ id }: Props) => {
                 }}
                 variant="text"
               >
-                Update icon
+                {t('itemControls.node.updateIcon')}
               </Button>
             )}
             {mode === 'CHANGE_ICON' && (
@@ -117,7 +119,7 @@ export const NodeControls = ({ id }: Props) => {
                 }}
                 variant="text"
               >
-                Settings
+                {t('itemControls.node.backToSettings')}
               </Button>
             )}
           </Stack>

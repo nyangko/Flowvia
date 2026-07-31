@@ -14,11 +14,11 @@ export const getRandom = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min) + min);
 };
 
-export const roundToOneDecimalPlace = (num: number) => {
+export const roundTo1Decimal = (num: number) => {
   return Math.round(num * 10) / 10;
 };
 
-export const roundToTwoDecimalPlaces = (num: number) => {
+export const roundTo2Decimals = (num: number) => {
   return Math.round(num * 100) / 100;
 };
 

@@ -48,6 +48,20 @@
   border: none;
 }
 
+/* Isoflow's help (?) button portals into this slot (see helpButtonPortalTarget)
+   so it sits next to the language switcher instead of the zoom controls cluster. */
+.help-button-slot {
+  flex-shrink: 0;
+  display: flex;
+  margin-left: 4px;
+}
+
+.help-button-slot .MuiCard-root {
+  background: transparent;
+  box-shadow: none;
+  border: none;
+}
+
 .icon-toolbar .language-selector {
   margin-left: auto;
 }
@@ -147,6 +161,9 @@
 }
 
 .load-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   padding: 8px 10px;
   border: none;
   background: transparent;
@@ -157,6 +174,13 @@
   cursor: pointer;
   color: #333;
   transition: background-color 0.15s;
+}
+
+.load-menu button svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: #888;
 }
 
 .load-menu button:hover {
@@ -191,7 +215,7 @@
 
 .dialog {
   background-color: #fff;
-  padding: 24px;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0px 24px 48px -16px rgba(0, 0, 0, 0.28),
     0px 0px 0px 1px rgba(0, 0, 0, 0.04);
@@ -202,10 +226,19 @@
 }
 
 .dialog h2 {
-  margin: 0 0 16px;
+  margin: 0 0 14px;
   font-size: 17px;
   font-weight: 600;
   color: #1a1a1a;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.history-version {
+  font-size: 12px;
+  font-weight: 500;
+  color: #888;
 }
 
 /* Accent-bordered note cards, styled after flowvia-lib's hint tooltips
@@ -214,8 +247,8 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 12px 14px;
-  margin-bottom: 20px;
+  padding: 10px 12px;
+  margin-bottom: 14px;
   border-radius: 8px;
   border-left: 3px solid;
   font-size: 13px;
@@ -261,7 +294,7 @@
   font-size: 14px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   box-sizing: border-box;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
@@ -279,7 +312,7 @@
 }
 
 .dialog-buttons button {
-  padding: 9px 18px;
+  padding: 8px 16px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -311,12 +344,12 @@
 }
 
 .diagram-list {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   max-height: 400px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .diagram-list p {
@@ -329,7 +362,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 14px;
+  padding: 10px 12px;
   border: 1px solid #eee;
   border-radius: 10px;
   transition: border-color 0.15s, box-shadow 0.15s;
@@ -338,6 +371,19 @@
 .diagram-item:hover {
   border-color: #ddd;
   box-shadow: 0px 4px 12px -6px rgba(0, 0, 0, 0.15);
+}
+
+.diagram-item-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.diagram-item-info svg {
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  color: #999;
 }
 
 .diagram-item strong {
@@ -357,13 +403,21 @@
 }
 
 .diagram-actions button {
-  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
   font-size: 12px;
   font-weight: 500;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   transition: background-color 0.15s;
+}
+
+.diagram-actions button svg {
+  width: 13px;
+  height: 13px;
 }
 
 .diagram-actions button:first-child {
@@ -382,4 +436,88 @@
 
 .diagram-actions button:last-child:hover {
   background-color: #fadbd9;
+}
+
+.diagram-actions button.share {
+  background-color: #e3f2fd;
+  color: #0d6ab5;
+}
+
+.diagram-actions button.share:hover {
+  background-color: #d0e8fb;
+}
+
+.history-section-title {
+  margin: 18px 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #444;
+}
+
+.history-version-group + .history-version-group {
+  margin-top: 14px;
+}
+
+.history-version-heading {
+  font-size: 12px;
+  font-weight: 600;
+  color: #999;
+  margin-bottom: 6px;
+}
+
+.history-list {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  color: #333;
+  line-height: 1.5;
+}
+
+.history-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-tip {
+  padding: 10px 12px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+
+.history-tip strong {
+  display: block;
+  font-size: 13px;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.history-tip p {
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.history-btn-wrapper {
+  position: relative;
+  display: flex;
+}
+
+.history-unread-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #ff9800;
+}
+
+.history-dialog-buttons {
+  justify-content: center;
+  margin-top: 16px;
 }

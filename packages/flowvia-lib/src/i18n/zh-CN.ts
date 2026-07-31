@@ -2,7 +2,14 @@ import { LocaleProps } from '../types/isoflowProps';
 
 const locale: LocaleProps = {
   common: {
-    exampleText: "这是一段示例文本"
+    exampleText: "这是一段示例文本",
+    delete: "删除"
+  },
+  textBoxControls: {
+    enterText: "输入文字",
+    textSize: "文字大小",
+    alignment: "对齐",
+    close: "关闭"
   },
   mainMenu: {
     undo: "撤销",
@@ -12,6 +19,7 @@ const locale: LocaleProps = {
     exportCompactJson: "导出为紧凑 JSON",
     exportImage: "导出为图片",
     clearCanvas: "清空画布",
+    clearCanvasConfirm: "确定要清空画布吗？此操作无法撤销。",
     settings: "设置",
     gitHub: "GitHub"
   },
@@ -119,14 +127,47 @@ const locale: LocaleProps = {
     message: "要将此连接器连接到节点，",
     instruction: "左键单击连接器末端并将其拖动到所需节点。"
   },
+  contextMenu: {
+    copySelection: "复制所选内容",
+    deleteSelection: "删除所选内容",
+    copyNode: "复制节点",
+    copyRectangle: "复制矩形",
+    copyText: "复制文本",
+    addNode: "添加节点",
+    addRectangle: "添加矩形",
+    addConnector: "添加连接器",
+    duplicateNode: "创建节点副本",
+    duplicateRectangle: "创建矩形副本",
+    duplicateText: "创建文本副本",
+    editNode: "编辑节点",
+    deleteNode: "删除节点",
+    editRectangle: "编辑矩形",
+    deleteRectangle: "删除矩形",
+    editText: "编辑文本",
+    deleteText: "删除文本",
+    editConnector: "编辑连接线",
+    deleteConnector: "删除连接线",
+    editConnectorsHere: "查看此处连接线 ({count} 条)",
+    deleteConnectorsHere: "删除此处全部连接线 ({count} 条)",
+    paste: "粘贴",
+  },
   settings: {
     zoom: {
+      title: "缩放",
       description: "配置使用鼠标滚轮时的缩放行为。",
       zoomToCursor: "光标缩放",
       zoomToCursorDesc: "启用时，以鼠标光标位置为中心进行缩放。禁用时，以画布中心进行缩放。",
 
       trackpadMode: "触控板模式",
       trackpadModeDesc: "启用时：双指滚动可平移画布，双指捏合可缩放且不影响浏览器。禁用时：鼠标滚轮缩放画布（默认鼠标行为）。"
+    },
+    labels: {
+      title: "标签",
+      description: "配置标签显示设置。",
+      expandButtonPadding: "展开按钮内边距",
+      expandButtonPaddingDesc: "展开按钮可见时的底部内边距（防止文字重叠）。",
+      currentPrefix: "当前：",
+      unitsLabel: "主题单位"
     },
     hotkeys: {
       title: "快捷键设置",
@@ -168,6 +209,8 @@ const locale: LocaleProps = {
       clickModeDesc: "先点击第一个节点，然后点击第二个节点来创建连接",
       dragMode: "拖拽模式",
       dragModeDesc: "从第一个节点点击并拖拽到第二个节点",
+      animation: "流动动画",
+      animationDesc: "沿连接线显示移动的虚线，指示流动方向。",
       note: "注意：您可以随时更改此设置。所选模式将在连接器工具激活时使用。"
     },
     iconPacks: {
@@ -196,6 +239,95 @@ const locale: LocaleProps = {
     configPath2: "以访问配置。",
     canDisable: "如果您愿意，可以禁用此行为。",
     signature: "-Stan"
+  },
+  iconNames: {
+    block: "方块",
+    cache: "缓存",
+    cardterminal: "读卡终端",
+    cloud: "云",
+    cronjob: "定时任务",
+    cube: "立方体",
+    desktop: "台式机",
+    diamond: "菱形",
+    dns: "DNS",
+    document: "文档",
+    firewall: "防火墙",
+    "function-module": "函数",
+    image: "图片",
+    laptop: "笔记本电脑",
+    loadbalancer: "负载均衡器",
+    lock: "锁",
+    mail: "邮件",
+    mailmultiple: "多封邮件",
+    mobiledevice: "移动设备",
+    office: "办公",
+    "package-module": "软件包",
+    paymentcard: "支付卡",
+    plane: "飞机",
+    printer: "打印机",
+    pyramid: "金字塔",
+    queue: "队列",
+    router: "路由器",
+    server: "服务器",
+    speech: "对话气泡",
+    sphere: "球体",
+    storage: "存储",
+    "switch-module": "交换机",
+    tower: "塔",
+    "truck-2": "卡车2",
+    truck: "卡车",
+    user: "用户",
+    vm: "虚拟机"
+  },
+  itemControls: {
+    close: "关闭",
+    color: "颜色",
+    useCustomColor: "使用自定义颜色",
+    node: {
+      name: "名称",
+      description: "描述",
+      labelHeight: "标签高度",
+      iconSize: "图标大小",
+      updateIcon: "更改图标",
+      backToSettings: "设置",
+      expandDescription: "显示描述",
+      collapseDescription: "隐藏描述"
+    },
+    connector: {
+      labels: "标签",
+      labelsCount: "{count} / {max} 个标签",
+      addLabel: "添加标签",
+      deleteLabel: "删除标签",
+      noLabels: "暂无标签。点击「添加标签」以创建。",
+      labelNumber: "标签 {number}",
+      labelText: "文本",
+      position: "位置 (%)",
+      heightOffset: "高度偏移",
+      showDottedLine: "显示虚线",
+      width: "宽度",
+      lineStyle: "线条样式",
+      showArrow: "显示箭头",
+      connectorsCount: "{count} 条连接线",
+      connectorFallbackName: "连接线 {number}",
+      styleSolid: "实线",
+      styleDashed: "虚线",
+      styleDotted: "点线"
+    },
+    iconSelection: {
+      searchPlaceholder: "搜索图标",
+      importIcons: "导入图标",
+      treatAsIsometric: "视为等距(3D)图标",
+      uncheckForFlat: "平面图标(徽标、UI 元素)请取消勾选",
+      dragDropHint: "您可以将下方任意项目拖放到画布上。"
+    },
+    quickIconSelector: {
+      searchPlaceholder: "搜索图标(按 Enter 选择)",
+      recentlyUsed: "最近使用",
+      searchResults: "搜索结果({count} 个图标)",
+      noResults: "未找到匹配「{term}」的图标",
+      helpSearching: "方向键导航 • Enter 选择 • 双击选择并关闭",
+      helpBrowsing: "输入以搜索 • 点击分类展开 • 双击选择并关闭"
+    }
   }
 };
 

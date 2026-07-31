@@ -651,7 +651,6 @@ Flowvia supports multiple languages using react-i18next with automatic language 
 ### Backend **[NEW]**
 - **Express** (^4.18.2): Web server
 - **CORS** (^2.8.5): Cross-origin support
-- **dotenv** (^16.0.3): Environment configuration
 - **UUID** (^9.0.0): ID generation
 
 ## Build System
