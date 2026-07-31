@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { Isoflow } from 'flowvia';
 import { flattenCollections } from '@isoflow/isopacks/dist/utils';
 import isoflowIsopack from '@isoflow/isopacks/dist/isoflow';
@@ -697,6 +697,27 @@ function EditorPage() {
     showHistoryPanel ||
     showStorageManager;
 
+  // Isoflow's iconPackManager prop feeds a useLayoutEffect keyed on reference
+  // identity — an inline object literal here would be a new reference every
+  // render and re-fire that effect (and the resulting store update) forever.
+  const isoflowIconPackManager = useMemo(() => {
+    return {
+      lazyLoadingEnabled: iconPackManager.lazyLoadingEnabled,
+      onToggleLazyLoading: iconPackManager.toggleLazyLoading,
+      packInfo: Object.values(iconPackManager.packInfo),
+      enabledPacks: iconPackManager.enabledPacks,
+      onTogglePack: (packName: string, enabled: boolean) => {
+        iconPackManager.togglePack(packName as IconPackName, enabled);
+      }
+    };
+  }, [
+    iconPackManager.lazyLoadingEnabled,
+    iconPackManager.toggleLazyLoading,
+    iconPackManager.packInfo,
+    iconPackManager.enabledPacks,
+    iconPackManager.togglePack
+  ]);
+
   return (
     <div className="App">
       <div className="icon-toolbar">
@@ -851,15 +872,7 @@ function EditorPage() {
           mainMenuPortalTarget={mainMenuSlot}
           historyControlsPortalTarget={historyControlsSlot}
           helpButtonPortalTarget={helpButtonSlot}
-          iconPackManager={{
-            lazyLoadingEnabled: iconPackManager.lazyLoadingEnabled,
-            onToggleLazyLoading: iconPackManager.toggleLazyLoading,
-            packInfo: Object.values(iconPackManager.packInfo),
-            enabledPacks: iconPackManager.enabledPacks,
-            onTogglePack: (packName: string, enabled: boolean) => {
-              iconPackManager.togglePack(packName as any, enabled);
-            }
-          }}
+          iconPackManager={isoflowIconPackManager}
         />
       </div>
 
