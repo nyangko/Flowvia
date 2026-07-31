@@ -16,7 +16,6 @@ coverage/
 .eslintcache
 *.tsbuildinfo
 /e2e-tests/target
-*.snap
 parts/
 prime/
 stage/
