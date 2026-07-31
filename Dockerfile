@@ -5,18 +5,19 @@ FROM node:24 AS build
 WORKDIR /app
 
 # Copy package files for the monorepo
-COPY package*.json ./
-COPY packages/flowvia-lib/package*.json ./packages/flowvia-lib/
-COPY packages/flowvia-app/package*.json ./packages/flowvia-app/
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY packages/flowvia-lib/package.json ./packages/flowvia-lib/
+COPY packages/flowvia-app/package.json ./packages/flowvia-app/
+COPY packages/flowvia-backend/package.json ./packages/flowvia-backend/
 
 # Install dependencies for the entire workspace
-RUN npm install
+RUN corepack enable && corepack prepare pnpm@10 --activate && pnpm install --frozen-lockfile
 
 # Copy the entire monorepo code
 COPY . .
 
 # Build the library first, then the app
-RUN npm run build:lib && npm run build:app
+RUN pnpm run build:lib && pnpm run build:app
 
 # Use Node with nginx for production
 FROM node:24-alpine

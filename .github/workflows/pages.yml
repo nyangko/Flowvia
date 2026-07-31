@@ -37,7 +37,7 @@ jobs:
       - name: Build
         uses: docker://node:24-alpine
         with:
-          args: sh -c "npm install && npm run build:lib && npm run build:app"
+          args: sh -c "corepack enable && corepack prepare pnpm@10 --activate && pnpm install --frozen-lockfile && pnpm run build:lib && pnpm run build:app"
         env:
           # do not report warnings as errors
           CI: false

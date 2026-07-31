@@ -22,11 +22,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
       - name: Setup Node.js
         uses: actions/setup-node@v6
         with:
           node-version: '24.x'
-          cache: 'npm'
+          cache: 'pnpm'
 
       - name: Setup Python
         uses: actions/setup-python@v6
@@ -36,18 +41,18 @@ jobs:
           cache-dependency-path: 'e2e-tests/requirements.txt'
 
       - name: Install Node dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Install Python dependencies
         run: |
           cd e2e-tests
           pip install -r requirements.txt
 
-      - name: Build FossFLOW library
-        run: npm run build:lib
+      - name: Build Flowvia library
+        run: pnpm run build:lib
 
-      - name: Build FossFLOW app
-        run: npm run build:app
+      - name: Build Flowvia app
+        run: pnpm run build:app
 
       - name: Install serve globally
         run: npm install -g serve
@@ -69,7 +74,7 @@ jobs:
           echo "Selenium is ready"
           curl -s http://localhost:4444/status | jq '.' || true
 
-      - name: Start FossFLOW server in background
+      - name: Start Flowvia server in background
         run: |
           cd packages/flowvia-app/build
           nohup serve -s . -l 3000 > /tmp/server.log 2>&1 &
@@ -100,10 +105,10 @@ jobs:
           cd e2e-tests
           pytest -v --tb=short
         env:
-          FOSSFLOW_TEST_URL: http://localhost:3000
+          FLOWVIA_TEST_URL: http://localhost:3000
           WEBDRIVER_URL: http://localhost:4444
 
-      - name: Stop Selenium and FossFLOW server
+      - name: Stop Selenium and Flowvia server
         if: always()
         run: |
           echo "Stopping Selenium container..."
