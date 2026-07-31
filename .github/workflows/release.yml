@@ -1,8 +1,12 @@
 name: Release
 
 on:
-  # Manual only — run from the Actions tab (or `gh workflow run Release`)
-  # whenever you actually want to cut a release, instead of on every push.
+  # Runs after Pages deployment completes successfully
+  workflow_run:
+    workflows: ["Deploy static content to Pages"]
+    types:
+      - completed
+    branches: ["main", "master"]
   workflow_dispatch:
 
 permissions:
@@ -14,6 +18,7 @@ jobs:
   release:
     name: Semantic Release
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Checkout code
