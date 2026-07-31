@@ -5,16 +5,18 @@ import path from 'path';
 const publicUrl = process.env.PUBLIC_URL || '';
 const assetPrefix = publicUrl ? (publicUrl.endsWith('/') ? publicUrl : publicUrl + '/') : '/';
 
-// Resolve React from root node_modules to avoid duplicate instances
-const rootNodeModules = path.resolve(__dirname, '../../node_modules');
+// Force a single resolved React instance. pnpm doesn't hoist react to the
+// workspace root node_modules (only root package.json's own direct deps get
+// hoisted there), so resolve via this package's own node_modules, which pnpm
+// always symlinks to the single deduped copy in its store.
+const localNodeModules = path.resolve(__dirname, 'node_modules');
 
 export default defineConfig({
     plugins: [pluginReact()],
     resolve: {
         alias: {
-            // Force React to resolve from root node_modules
-            'react': path.join(rootNodeModules, 'react'),
-            'react-dom': path.join(rootNodeModules, 'react-dom'),
+            'react': path.join(localNodeModules, 'react'),
+            'react-dom': path.join(localNodeModules, 'react-dom'),
         },
     },
     html: {
