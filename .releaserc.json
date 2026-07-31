@@ -53,7 +53,7 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "npm run update-version ${nextRelease.version} && npm run build"
+        "prepareCmd": "pnpm run update-version ${nextRelease.version} && pnpm run build"
       }
     ],
     "@semantic-release/github",
@@ -63,7 +63,7 @@
         "assets": [
           "CHANGELOG.md",
           "package.json",
-          "package-lock.json",
+          "pnpm-lock.yaml",
           "packages/*/package.json"
         ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
