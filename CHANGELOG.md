@@ -5,6 +5,12 @@ All notable changes to Flowvia will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1](https://github.com/nyangko/Flowvia/compare/v1.1.0...v1.1.1) (2026-07-31)
+
+### Bug Fixes
+
+* drop GHA build cache from Docker workflow, it can't write anyway ([bc29649](https://github.com/nyangko/Flowvia/commit/bc296498db10bb9ae9076e6086f3caad9cbe2c57))
+
 ## [1.0.1](https://github.com/nyangko/Flowvia/compare/v1.0.0...v1.0.1) (2026-07-31)
 
 ### Bug Fixes
