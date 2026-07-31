@@ -13,6 +13,7 @@
     "react-dom": "^19.2.5",
     "react-error-boundary": "^6.1.1",
     "react-i18next": "^17.0.4",
+    "react-quill-new": "^3.8.3",
     "react-router-dom": "^7.14.2",
     "web-vitals": "^5.2.0"
   },
