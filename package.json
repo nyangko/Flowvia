@@ -1,6 +1,6 @@
 {
   "name": "flowvia-monorepo",
-  "version": "1.0.3",
+  "version": "1.0.0",
   "private": true,
   "description": "Monorepo for Flowvia diagram editor and library",
   "workspaces": [
