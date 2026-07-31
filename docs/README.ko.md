@@ -1,7 +1,6 @@
 <div align="center">
 
-# Flowvia
-### 아이소메트릭 다이어그램 도구
+<img src="../assets/banner.png" alt="Flowvia - 오픈소스 아이소메트릭 다이어그램 도구" width="100%" />
 
 </div>
 

@@ -1,7 +1,6 @@
 <div align="center">
- 
-# Flowvia
-### Isometric Diagramming Tool
+
+<img src="assets/banner.png" alt="Flowvia - Open-source isometric diagram tool" width="100%" />
 
 </div>
 

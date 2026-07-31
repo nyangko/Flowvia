@@ -1,7 +1,6 @@
 <div align="center">
 
-# Flowvia
-### アイソメトリック図作成ツール
+<img src="../assets/banner.png" alt="Flowvia - オープンソースのアイソメトリック図作成ツール" width="100%" />
 
 </div>
 
