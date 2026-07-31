@@ -216,10 +216,14 @@ def test_import_via_app_button(driver):
     print("   File sent to input.")
     time.sleep(3)
 
-    # Restore original click
+    # Restore original click and remove the injected file input so it
+    # doesn't linger on top of the page and intercept later clicks
     driver.execute_script("""
         if (window.__origHTMLInputClick) {
             HTMLInputElement.prototype.click = window.__origHTMLInputClick;
+        }
+        if (window.__capturedFileInput && window.__capturedFileInput.parentNode) {
+            window.__capturedFileInput.parentNode.removeChild(window.__capturedFileInput);
         }
     """)
 

@@ -155,7 +155,7 @@ def get_scene_state(driver):
 
 def place_node_at(driver, x_offset, y_offset):
     """Select icon and place at a specific canvas offset."""
-    add_btn = driver.find_element(By.CSS_SELECTOR, "button[aria-label*='Add item']")
+    add_btn = driver.find_element(By.CSS_SELECTOR, "button[aria-label*='Add Item']")
     add_btn.click()
     time.sleep(0.8)
 

@@ -132,8 +132,8 @@ def place_node(driver, screenshot_prefix=""):
     """
     pfx = f"{screenshot_prefix}_" if screenshot_prefix else ""
 
-    # Click "Add item (N)" button
-    add_btn = driver.find_element(By.CSS_SELECTOR, "button[aria-label*='Add item']")
+    # Click "Add Item (N)" button
+    add_btn = driver.find_element(By.CSS_SELECTOR, "button[aria-label*='Add Item']")
     add_btn.click()
     time.sleep(1)
 

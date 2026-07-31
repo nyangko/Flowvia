@@ -72,8 +72,8 @@ def count_dom_nodes(d):
 
 def place_node(d):
     """Place a node using the same approach as the working e2e test."""
-    # Click "Add item (N)" button
-    add_btn = d.find_element(By.CSS_SELECTOR, "button[aria-label*='Add item']")
+    # Click "Add Item (N)" button
+    add_btn = d.find_element(By.CSS_SELECTOR, "button[aria-label*='Add Item']")
     add_btn.click()
     time.sleep(1)
 
