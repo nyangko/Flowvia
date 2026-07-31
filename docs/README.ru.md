@@ -25,7 +25,7 @@
 
 ## Попробуйте онлайн
 
-Перейдите на  <b> --> https://stan-smith.github.io/Flowvia/ <-- </b>
+Перейдите на  <b> --> https://nyangko.github.io/Flowvia/ <-- </b>
 
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ Flowvia - это мощное прогрессивное веб-приложен
 ### Улучшения Docker и CI/CD
 - **Автоматизированные сборки Docker** - Рабочий процесс GitHub Actions для автоматического развертывания Docker Hub при коммитах
 - **Поддержка мультиархитектуры** - Образы Docker для `linux/amd64` и `linux/arm64`
-- **Предварительно собранные образы** - Доступны на `stnsmith/fossflow:latest`
+- **Предварительно собранные образы** - Доступны на `nyangko/flowvia:latest`
 
 ### Архитектура Monorepo
 - **Единый репозиторий** для библиотеки и приложения
@@ -107,14 +107,14 @@ Flowvia - это мощное прогрессивное веб-приложен
 docker compose up
 
 # Или запустите напрямую из Docker Hub с постоянным хранилищем
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams stnsmith/fossflow:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
 ```
 
 Хранилище сервера включено по умолчанию в Docker. Ваши диаграммы будут сохранены в `./diagrams` на хосте.
 
 Чтобы отключить хранилище сервера, установите `ENABLE_SERVER_STORAGE=false`:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false stnsmith/fossflow:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
 ```
 
 ## Быстрый старт (Локальная разработка)

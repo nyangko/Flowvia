@@ -37,14 +37,14 @@ Flowvia は、美しいアイソメトリック図を作成できる強力なオ
 docker compose up
 
 # または Docker Hub から直接実行(永続ストレージ付き)
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams abrar74774/fossflow:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
 ```
 
 Docker ではサーバーストレージがデフォルトで有効になっています。ダイアグラムはホスト側の `./diagrams` に(デフォルトでは root 権限で)保存されます。保存に使うユーザー/グループ ID を変更するには `PUID`、`PGID` 環境変数を設定してください。
 
 サーバーストレージを無効化するには `ENABLE_SERVER_STORAGE=false` を設定してください:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false abrar74774/fossflow:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
 ```
 
 ### HTTP Basic 認証(任意)
@@ -59,7 +59,7 @@ HTTP_AUTH_USER=admin HTTP_AUTH_PASSWORD=secret docker compose up
 docker run -p 80:80 \
   -e HTTP_AUTH_USER=admin \
   -e HTTP_AUTH_PASSWORD=secret \
-  abrar74774/fossflow:latest
+  nyangko/flowvia:latest
 ```
 
 > **注意**: 認証を有効にするには両方の変数を設定する必要があります。どちらか一方でも空の場合、ログインなしでアクセスできてしまいます。

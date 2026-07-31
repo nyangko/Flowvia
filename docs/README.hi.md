@@ -25,7 +25,7 @@
 
 ## इसे ऑनलाइन आज़माएं
 
-यहां जाएं  <b> --> https://stan-smith.github.io/Flowvia/ <-- </b>
+यहां जाएं  <b> --> https://nyangko.github.io/Flowvia/ <-- </b>
 
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ Flowvia सुंदर आइसोमेट्रिक आरेख बना
 ### Docker और CI/CD सुधार
 - **स्वचालित Docker बिल्ड** - कमिट्स पर स्वचालित Docker Hub डिप्लॉयमेंट के लिए GitHub Actions वर्कफ़्लो
 - **बहु-आर्किटेक्चर समर्थन** - `linux/amd64` और `linux/arm64` दोनों के लिए Docker छवियां
-- **पूर्व-निर्मित छवियां** - `stnsmith/fossflow:latest` पर उपलब्ध
+- **पूर्व-निर्मित छवियां** - `nyangko/flowvia:latest` पर उपलब्ध
 
 ### Monorepo आर्किटेक्चर
 - लाइब्रेरी और एप्लिकेशन दोनों के लिए **एकल रिपॉजिटरी**
@@ -107,14 +107,14 @@ Flowvia सुंदर आइसोमेट्रिक आरेख बना
 docker compose up
 
 # या स्थायी भंडारण के साथ Docker Hub से सीधे चलाएं
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams stnsmith/fossflow:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
 ```
 
 Docker में सर्वर स्टोरेज डिफ़ॉल्ट रूप से सक्षम है। आपके आरेख होस्ट पर `./diagrams` में सहेजे जाएंगे।
 
 सर्वर स्टोरेज अक्षम करने के लिए, `ENABLE_SERVER_STORAGE=false` सेट करें:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false stnsmith/fossflow:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
 ```
 
 ## त्वरित प्रारंभ (स्थानीय विकास)

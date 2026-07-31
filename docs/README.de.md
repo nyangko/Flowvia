@@ -23,7 +23,7 @@ Danke,
 
 ## Online ausprobieren
 
-Gehe zu <b> --> https://stan-smith.github.io/Flowvia/ <-- </b>
+Gehe zu <b> --> https://nyangko.github.io/Flowvia/ <-- </b>
 
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -40,14 +40,14 @@ Flowvia ist eine leistungsstarke, quelloffene Progressive Web App (PWA) zum Erst
 docker compose up
 
 # Oder direkt von Docker Hub mit persistentem Speicher ausführen
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams stnsmith/fossflow:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
 ```
 
 Server-Speicher ist in Docker standardmäßig aktiviert. Deine Diagramme werden in `./diagrams` auf dem Host gespeichert.
 
 Um den Server-Speicher zu deaktivieren, setze `ENABLE_SERVER_STORAGE=false`:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false stnsmith/fossflow:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
 ```
 
 ## Schnellstart (Lokale Entwicklung)

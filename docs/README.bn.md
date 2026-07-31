@@ -25,7 +25,7 @@
 
 ## এটি অনলাইনে চেষ্টা করুন
 
-যান  <b> --> https://abrar74774.github.io/Flowvia/ <-- </b>
+যান  <b> --> https://nyangko.github.io/Flowvia/ <-- </b>
 
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ Flowvia হল সুন্দর আইসোমেট্রিক ডায়
 ### Docker এবং CI/CD উন্নতি
 - **স্বয়ংক্রিয় Docker বিল্ড** - কমিটে স্বয়ংক্রিয় Docker Hub ডিপ্লয়মেন্টের জন্য GitHub Actions ওয়ার্কফ্লো
 - **মাল্টি-আর্কিটেকচার সমর্থন** - `linux/amd64` এবং `linux/arm64` উভয়ের জন্য Docker ইমেজ
-- **প্রি-বিল্ট ইমেজ** - `stnsmith/fossflow:latest`-এ উপলব্ধ
+- **প্রি-বিল্ট ইমেজ** - `nyangko/flowvia:latest`-এ উপলব্ধ
 
 ### Monorepo আর্কিটেকচার
 - লাইব্রেরি এবং অ্যাপ্লিকেশন উভয়ের জন্য **একক রিপোজিটরি**
@@ -107,14 +107,14 @@ Flowvia হল সুন্দর আইসোমেট্রিক ডায়
 docker compose up
 
 # অথবা স্থায়ী স্টোরেজ সহ Docker Hub থেকে সরাসরি চালান
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams stnsmith/fossflow:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
 ```
 
 Docker-এ সার্ভার স্টোরেজ ডিফল্টভাবে সক্রিয়। আপনার ডায়াগ্রামগুলি হোস্টে `./diagrams`-এ সংরক্ষিত হবে।
 
 সার্ভার স্টোরেজ নিষ্ক্রিয় করতে, `ENABLE_SERVER_STORAGE=false` সেট করুন:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false stnsmith/fossflow:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
 ```
 
 ## দ্রুত শুরু (স্থানীয় উন্নয়ন)

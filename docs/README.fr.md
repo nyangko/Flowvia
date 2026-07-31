@@ -25,7 +25,7 @@ Merci,
 
 ## Essayez-le en ligne
 
-Allez sur  <b> --> https://stan-smith.github.io/Flowvia/ <-- </b>
+Allez sur  <b> --> https://nyangko.github.io/Flowvia/ <-- </b>
 
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ Flowvia est une puissante Progressive Web App (PWA) open-source pour créer de b
 ### Améliorations Docker et CI/CD
 - **Builds Docker Automatisées** - Workflow GitHub Actions pour le déploiement automatique sur Docker Hub lors des commits
 - **Support Multi-architecture** - Images Docker pour `linux/amd64` et `linux/arm64`
-- **Images Pré-construites** - Disponibles sur `stnsmith/fossflow:latest`
+- **Images Pré-construites** - Disponibles sur `nyangko/flowvia:latest`
 
 ### Architecture Monorepo
 - **Référentiel unique** pour la bibliothèque et l'application
@@ -107,14 +107,14 @@ Flowvia est une puissante Progressive Web App (PWA) open-source pour créer de b
 docker compose up
 
 # Ou exécuter directement depuis Docker Hub avec stockage persistant
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams stnsmith/fossflow:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
 ```
 
 Le stockage serveur est activé par défaut dans Docker. Vos diagrammes seront enregistrés dans `./diagrams` sur l'hôte.
 
 Pour désactiver le stockage serveur, définissez `ENABLE_SERVER_STORAGE=false` :
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false stnsmith/fossflow:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
 ```
 
 ## Démarrage Rapide (Développement Local)

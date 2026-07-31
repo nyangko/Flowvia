@@ -1,6 +1,6 @@
 services:
   flowvia:
-    image: abrar74774/fossflow:latest
+    image: nyangko/flowvia:latest
     pull_policy: always
     ports:
       - 80:80

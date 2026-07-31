@@ -25,7 +25,7 @@ Terima kasih,
 
 ## Coba Secara Online
 
-Kunjungi  <b> --> https://stan-smith.github.io/Flowvia/ <-- </b>
+Kunjungi  <b> --> https://nyangko.github.io/Flowvia/ <-- </b>
 
 
 ------------------------------------------------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ Flowvia adalah aplikasi web progresif (PWA) open-source yang powerful untuk memb
 ### Peningkatan Docker & CI/CD
 - **Build Docker Otomatis** - Workflow GitHub Actions untuk deployment Docker Hub otomatis pada commit
 - **Dukungan Multi-arsitektur** - Image Docker untuk `linux/amd64` dan `linux/arm64`
-- **Image Pra-dibangun** - Tersedia di `stnsmith/fossflow:latest`
+- **Image Pra-dibangun** - Tersedia di `nyangko/flowvia:latest`
 
 ### Arsitektur Monorepo
 - **Repositori tunggal** untuk library dan aplikasi
@@ -95,14 +95,14 @@ Flowvia adalah aplikasi web progresif (PWA) open-source yang powerful untuk memb
 docker compose up
 
 # Atau jalankan langsung dari Docker Hub dengan penyimpanan persisten
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams stnsmith/fossflow:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
 ```
 
 Penyimpanan server diaktifkan secara default di Docker. Diagram Anda akan disimpan ke `./diagrams` di host.
 
 Untuk menonaktifkan penyimpanan server, set `ENABLE_SERVER_STORAGE=false`:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false stnsmith/fossflow:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
 ```
 
 ## Mulai Cepat (Pengembangan Lokal)

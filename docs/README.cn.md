@@ -39,7 +39,7 @@ Flowvia 是一款功能强大的、开源的渐进式 Web 应用（PWA），专�
 
 ## 在线试用
 
-访问 https://stan-smith.github.io/Flowvia/
+访问 https://nyangko.github.io/Flowvia/
 
 ## 快速开始 (本地开发)
 

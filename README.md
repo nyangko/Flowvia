@@ -37,14 +37,14 @@ Flowvia is a powerful, open-source Progressive Web App (PWA) for creating beauti
 docker compose up
 
 # Or run directly from Docker Hub with persistent storage
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams abrar74774/fossflow:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
 ```
 
 Server storage is enabled by default in Docker. Your diagrams will be saved (as root by default) to `./diagrams` on the host. To change user or group id for saving as, set the `PUID` and `PGID` env variables.
 
 To disable server storage, set `ENABLE_SERVER_STORAGE=false`:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false abrar74774/fossflow:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
 ```
 
 ### HTTP Basic Authentication (Optional)
@@ -59,7 +59,7 @@ HTTP_AUTH_USER=admin HTTP_AUTH_PASSWORD=secret docker compose up
 docker run -p 80:80 \
   -e HTTP_AUTH_USER=admin \
   -e HTTP_AUTH_PASSWORD=secret \
-  abrar74774/fossflow:latest
+  nyangko/flowvia:latest
 ```
 
 > **Note**: Both variables must be set to enable authentication. If either is empty, the app is accessible without login.
