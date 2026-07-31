@@ -206,11 +206,25 @@ def click_connector_tool(driver):
     return False
 
 
+def _wait_until_enabled(driver, btn, timeout=3):
+    """MUI disables pointer-events on a disabled button, so a click right
+    after an action (before React re-renders the enabled state) gets
+    intercepted by the button's own parent. Poll briefly instead of a
+    fixed sleep."""
+    deadline = time.time() + timeout
+    while time.time() < deadline:
+        if not driver.execute_script("return arguments[0].disabled;", btn):
+            return True
+        time.sleep(0.1)
+    return not driver.execute_script("return arguments[0].disabled;", btn)
+
+
 def click_undo(driver):
     btn = driver.execute_script("""
         return document.querySelector("button[aria-label*='Undo']");
     """)
     if btn:
+        _wait_until_enabled(driver, btn)
         btn.click()
         time.sleep(1)
         return True
@@ -222,6 +236,7 @@ def click_redo(driver):
         return document.querySelector("button[aria-label*='Redo']");
     """)
     if btn:
+        _wait_until_enabled(driver, btn)
         btn.click()
         time.sleep(1)
         return True

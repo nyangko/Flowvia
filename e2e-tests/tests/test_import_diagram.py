@@ -321,16 +321,18 @@ def test_import_via_app_button(driver):
     undo_btn = driver.execute_script(
         "return document.querySelector(\"button[aria-label*='Undo']\");"
     )
-    if undo_btn:
+    # Import clears history, so Undo is expected to be disabled here. MUI
+    # disables pointer-events on a disabled button, so clicking it anyway
+    # would just intercept onto its parent container.
+    if undo_btn and not driver.execute_script("return arguments[0].disabled;", undo_btn):
         undo_btn.click()
         time.sleep(1)
         state_after_undo = get_scene_state(driver)
         print(f"   Before undo: items={state_before_undo['modelItems']}")
         print(f"   After undo:  items={state_after_undo['modelItems']}")
-        # Import should clear history, so undo should be a no-op or have minimal effect
         print("   Undo after import behaves correctly.")
     else:
-        print("   No undo button found (OK for this test).")
+        print("   Undo button disabled after import, as expected (history was cleared).")
 
     save_screenshot(driver, "import_05_after_undo")
 
