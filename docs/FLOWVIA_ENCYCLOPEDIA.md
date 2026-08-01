@@ -78,8 +78,7 @@ flowvia-monorepo/
 ├── Dockerfile                   # Multi-stage Docker build
 ├── compose.yml                  # Docker Compose config
 ├── README.md                    # Project documentation
-├── CONTRIBUTORS.md              # Contributing guidelines
-└── FLOWVIA_TODO.md            # Issues and roadmap
+└── CONTRIBUTING.md              # Contributing guidelines
 ```
 
 ## Library Architecture (flowvia-lib)
@@ -1013,4 +1012,4 @@ transaction(() => {
 
 This encyclopedia serves as a comprehensive guide to the Flowvia codebase. Use the table of contents and quick references to efficiently navigate to the areas you need to modify or understand.
 
-**For Contributors**: See [CONTRIBUTORS.md](./CONTRIBUTORS.md) for contribution guidelines and [FLOWVIA_TODO.md](./FLOWVIA_TODO.md) for current issues and roadmap.
+**For Contributors**: See [CONTRIBUTING.md](../CONTRIBUTING.md) for contribution guidelines.

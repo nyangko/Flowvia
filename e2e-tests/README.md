@@ -143,6 +143,18 @@ Run tests with more verbose output:
 pytest -vv --tb=long
 ```
 
+### Add Screenshots on Failure
+
+```python
+def test_example(driver):
+    try:
+        # Your test code
+        assert something
+    except AssertionError:
+        driver.save_screenshot("failure.png")
+        raise
+```
+
 ### Running Specific Tests
 
 ```bash
@@ -178,3 +190,12 @@ pytest -k "canvas" -v
 - **selenium** (4.27.1) - WebDriver automation library
 - **pytest** (8.3.4) - Testing framework
 - **pytest-xdist** (3.6.1) - Parallel test execution support
+
+## Future Test Coverage
+
+Beyond the current smoke tests, the suite could expand to cover:
+
+- **Drawing Features**: add nodes, connect nodes, edit node properties, delete nodes
+- **UI Interactions**: menu navigation, settings dialogs, tool selection, hotkeys
+- **Data Operations**: save, load, export to JSON, import from JSON
+- **Advanced Features**: undo/redo, custom icons, multi-select, zoom/pan

@@ -155,7 +155,7 @@ npm run publish:lib  # ライブラリを npm に公開
 
 ## ドキュメント
 
-- [FLOWVIA_ENCYCLOPEDIA.md](../FLOWVIA_ENCYCLOPEDIA.md) - コードベースの包括的なガイド
+- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - コードベースの包括的なガイド
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - コントリビューションガイドライン
 
 ## ライセンス

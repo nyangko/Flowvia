@@ -155,7 +155,7 @@ npm run publish:lib  # 라이브러리를 npm에 배포
 
 ## 문서
 
-- [FLOWVIA_ENCYCLOPEDIA.md](../FLOWVIA_ENCYCLOPEDIA.md) - 코드베이스에 대한 종합 가이드
+- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - 코드베이스에 대한 종합 가이드
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - 기여 가이드라인
 
 ## 라이선스

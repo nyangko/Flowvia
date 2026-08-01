@@ -155,7 +155,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## Documentation
 
-- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - Comprehensive guide to the codebase
+- [FLOWVIA_ENCYCLOPEDIA.md](docs/FLOWVIA_ENCYCLOPEDIA.md) - Comprehensive guide to the codebase
 - [CONTRIBUTING.md](CONTRIBUTING.md) - Contributing guidelines
 
 ## License
