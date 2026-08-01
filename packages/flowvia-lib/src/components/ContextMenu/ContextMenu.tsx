@@ -1,12 +1,13 @@
 import React from 'react';
-import { Menu } from '@mui/material';
+import { Menu, Divider } from '@mui/material';
 import { MenuItem } from 'src/components/MainMenu/MenuItem';
 
 interface MenuItemI {
-  label: string;
-  onClick: () => void;
+  label?: string;
+  onClick?: () => void;
   Icon?: React.ReactNode;
   shortcut?: string;
+  isDivider?: boolean;
 }
 
 interface Props {
@@ -27,6 +28,10 @@ export const ContextMenu = ({
       onClose={onClose}
     >
       {menuItems.map((item, index) => {
+        if (item.isDivider) {
+          return <Divider key={index} sx={{ my: 0.5 }} />;
+        }
+
         return (
           <MenuItem key={index} onClick={item.onClick} Icon={item.Icon} shortcut={item.shortcut}>
             {item.label}

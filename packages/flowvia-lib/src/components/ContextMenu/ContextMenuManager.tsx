@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
-  ContentCopy as ContentCopyIcon,
-  ContentPaste as ContentPasteIcon,
-  FileCopyOutlined as DuplicateIcon,
-  AddOutlined as AddNodeIcon,
-  CropSquareOutlined as AddRectangleIcon,
-  EastOutlined as AddConnectorIcon,
-  EditOutlined as EditIcon,
-  DeleteOutlined as DeleteIcon
-} from '@mui/icons-material';
+  IconCopy as ContentCopyIcon,
+  IconClipboardText as ContentPasteIcon,
+  IconCopyPlus as DuplicateIcon,
+  IconPlus as AddNodeIcon,
+  IconRectangle as AddRectangleIcon,
+  IconRoute as AddConnectorIcon,
+  IconPencil as EditIcon,
+  IconTrash as DeleteIcon
+} from '@tabler/icons-react';
 import { useUiStateStore, useUiStateStoreApi } from 'src/stores/uiStateStore';
 import { generateId, findNearestUnoccupiedTile } from 'src/utils';
 import { useScene } from 'src/hooks/useScene';
@@ -36,7 +36,9 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
   });
   const uiStateApi = useUiStateStoreApi();
 
-  const [ menuItemsBeforeClosing, setMenuItemsBeforeClosing ] = useState([{ label: '', onClick:() => {} }]);
+  const [ menuItemsBeforeClosing, setMenuItemsBeforeClosing ] = useState<
+    { label?: string; onClick?: () => void; Icon?: React.ReactNode; shortcut?: string; isDivider?: boolean }[]
+  >([{ label: '', onClick:() => {} }]);
 
   const onClose = useCallback(() => {
     uiStateActions.setContextMenu(null);
@@ -46,7 +48,7 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
   // connector should let you drop a node at that spot too).
   const buildAddNodeItem = useCallback((tile: Coords) => ({
     label: t('addNode'),
-    Icon: <AddNodeIcon fontSize="small" />,
+    Icon: <AddNodeIcon size={20} />,
     onClick: () => {
       if (model.icons.length > 0) {
         const modelItemId = generateId();
@@ -78,7 +80,7 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
       return [
         {
           label: t('copySelection'),
-          Icon: <ContentCopyIcon fontSize="small" />,
+          Icon: <ContentCopyIcon size={20} />,
           shortcut: 'Ctrl+C',
           onClick: () => {
             scene.copyObjectsToClipboard(uiState);
@@ -87,7 +89,7 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
         },
         {
           label: t('deleteSelection'),
-          Icon: <DeleteIcon fontSize="small" />,
+          Icon: <DeleteIcon size={20} />,
           onClick: () => {
             scene.deleteObjects(uiState);
             onClose();
@@ -102,10 +104,9 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
       const connectorId = contextMenu.item.id;
 
       return [
-        buildAddNodeItem(contextMenu.tile),
         {
           label: t('addConnector'),
-          Icon: <AddConnectorIcon fontSize="small" />,
+          Icon: <AddConnectorIcon size={20} />,
           onClick: () => {
             const newConnector: ConnectorI = {
               id: generateId(),
@@ -129,9 +130,11 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
             onClose();
           }
         },
+        buildAddNodeItem(contextMenu.tile),
+        { isDivider: true },
         {
           label: t('editConnector'),
-          Icon: <EditIcon fontSize="small" />,
+          Icon: <EditIcon size={20} />,
           onClick: () => {
             uiStateActions.setItemControls({ type: 'CONNECTOR', id: connectorId });
             onClose();
@@ -139,7 +142,7 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
         },
         {
           label: t('deleteConnector'),
-          Icon: <DeleteIcon fontSize="small" />,
+          Icon: <DeleteIcon size={20} />,
           onClick: () => {
             scene.deleteConnector(connectorId);
             onClose();
@@ -151,7 +154,7 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
         ...(contextMenu.groupIds ? [
           {
             label: t('editConnectorsHere').replace('{count}', String(contextMenu.groupIds.length)),
-            Icon: <EditIcon fontSize="small" />,
+            Icon: <EditIcon size={20} />,
             onClick: () => {
               uiStateActions.setItemControls({
                 type: 'CONNECTOR_GROUP',
@@ -163,7 +166,7 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
           },
           {
             label: t('deleteConnectorsHere').replace('{count}', String(contextMenu.groupIds.length)),
-            Icon: <DeleteIcon fontSize="small" />,
+            Icon: <DeleteIcon size={20} />,
             onClick: () => {
               const ids = contextMenu.groupIds!;
               scene.transaction(() => {
@@ -189,43 +192,73 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
 
         if (!copyLabel) return menuItemsBeforeClosing;
 
-      const itemMenuItems = [
-        {
-          label: copyLabel,
-          Icon: <ContentCopyIcon fontSize="small" />,
-          shortcut: 'Ctrl+C',
+      const itemMenuItems: { label?: string; onClick?: () => void; Icon?: React.ReactNode; shortcut?: string; isDivider?: boolean }[] = [];
+
+      const editItem =
+        type === 'ITEM' ? {
+          label: t('editNode'),
+          Icon: <EditIcon size={20} />,
           onClick: () => {
-            const uiState = uiStateApi.getState();
-            scene.copyObjectsToClipboard(uiState, contextMenu.item);
+            uiStateActions.setItemControls({ type: 'ITEM', id: contextMenu.item!.id });
             onClose();
           }
-        },
-        ...(duplicateLabel ? [{
-          label: duplicateLabel,
-          Icon: <DuplicateIcon fontSize="small" />,
+        } :
+        type === 'RECTANGLE' ? {
+          label: t('editRectangle'),
+          Icon: <EditIcon size={20} />,
           onClick: () => {
-            if (!contextMenu.item) return;
-            scene.duplicateItem(contextMenu.item, scene);
+            uiStateActions.setItemControls({ type: 'RECTANGLE', id: contextMenu.item!.id });
             onClose();
           }
-        }] : [])
-      ];
+        } :
+        type === 'TEXTBOX' ? {
+          label: t('editText'),
+          Icon: <EditIcon size={20} />,
+          onClick: () => {
+            uiStateActions.setItemControls({ type: 'TEXTBOX', id: contextMenu.item!.id });
+            onClose();
+          }
+        } :
+        undefined;
+
+      const deleteItem =
+        type === 'ITEM' ? {
+          label: t('deleteNode'),
+          Icon: <DeleteIcon size={20} />,
+          onClick: () => {
+            uiStateActions.setItemControls(null);
+            scene.deleteViewItem(contextMenu.item!.id);
+            onClose();
+          }
+        } :
+        type === 'RECTANGLE' ? {
+          label: t('deleteRectangle'),
+          Icon: <DeleteIcon size={20} />,
+          onClick: () => {
+            uiStateActions.setItemControls(null);
+            scene.deleteRectangle(contextMenu.item!.id);
+            onClose();
+          }
+        } :
+        type === 'TEXTBOX' ? {
+          label: t('deleteText'),
+          Icon: <DeleteIcon size={20} />,
+          onClick: () => {
+            uiStateActions.setItemControls(null);
+            scene.deleteTextBox(contextMenu.item!.id);
+            onClose();
+          }
+        } :
+        undefined;
 
       if (type === 'ITEM') {
         const nodeId = contextMenu.item.id;
 
-        itemMenuItems.push({
-          label: t('editNode'),
-          Icon: <EditIcon fontSize="small" />,
-          onClick: () => {
-            uiStateActions.setItemControls({ type: 'ITEM', id: nodeId });
-            onClose();
-          }
-        });
-
+        // Add Connector is the most common thing to do from a node, so it
+        // leads the menu, set off from the edit/copy/duplicate/delete actions below.
         itemMenuItems.push({
           label: t('addConnector'),
-          Icon: <AddConnectorIcon fontSize="small" />,
+          Icon: <AddConnectorIcon size={20} />,
           onClick: () => {
             const newConnector: ConnectorI = {
               id: generateId(),
@@ -249,59 +282,35 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
             onClose();
           }
         });
+        itemMenuItems.push({ isDivider: true });
+      }
 
-        itemMenuItems.push({
-          label: t('deleteNode'),
-          Icon: <DeleteIcon fontSize="small" />,
-          onClick: () => {
-            uiStateActions.setItemControls(null);
-            scene.deleteViewItem(nodeId);
-            onClose();
-          }
-        });
-      } else if (type === 'RECTANGLE') {
-        const rectangleId = contextMenu.item.id;
+      if (editItem) itemMenuItems.push(editItem);
 
-        itemMenuItems.push({
-          label: t('editRectangle'),
-          Icon: <EditIcon fontSize="small" />,
-          onClick: () => {
-            uiStateActions.setItemControls({ type: 'RECTANGLE', id: rectangleId });
-            onClose();
-          }
-        });
+      itemMenuItems.push({
+        label: copyLabel,
+        Icon: <ContentCopyIcon size={20} />,
+        shortcut: 'Ctrl+C',
+        onClick: () => {
+          const uiState = uiStateApi.getState();
+          scene.copyObjectsToClipboard(uiState, contextMenu.item);
+          onClose();
+        }
+      });
 
+      if (duplicateLabel) {
         itemMenuItems.push({
-          label: t('deleteRectangle'),
-          Icon: <DeleteIcon fontSize="small" />,
+          label: duplicateLabel,
+          Icon: <DuplicateIcon size={20} />,
           onClick: () => {
-            uiStateActions.setItemControls(null);
-            scene.deleteRectangle(rectangleId);
-            onClose();
-          }
-        });
-      } else if (type === 'TEXTBOX') {
-        const textBoxId = contextMenu.item.id;
-
-        itemMenuItems.push({
-          label: t('editText'),
-          Icon: <EditIcon fontSize="small" />,
-          onClick: () => {
-            uiStateActions.setItemControls({ type: 'TEXTBOX', id: textBoxId });
-            onClose();
-          }
-        });
-
-        itemMenuItems.push({
-          label: t('deleteText'),
-          Icon: <DeleteIcon fontSize="small" />,
-          onClick: () => {
-            uiStateActions.setItemControls(null);
-            scene.deleteTextBox(textBoxId);
+            if (!contextMenu.item) return;
+            scene.duplicateItem(contextMenu.item, scene);
             onClose();
           }
         });
       }
+
+      if (deleteItem) itemMenuItems.push(deleteItem);
 
       return itemMenuItems;
     }
@@ -309,7 +318,7 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
       buildAddNodeItem(contextMenu.tile),
       {
         label: t('addRectangle'),
-        Icon: <AddRectangleIcon fontSize="small" />,
+        Icon: <AddRectangleIcon size={20} />,
         onClick: () => {
           if (!contextMenu) return;
           if (model.colors.length > 0) {
@@ -325,7 +334,7 @@ export const ContextMenuManager = ({ anchorEl }: Props) => {
       },
       ...(uiState.isAnythingCopied ? [{
         label: t('paste'),
-        Icon: <ContentPasteIcon fontSize="small" />,
+        Icon: <ContentPasteIcon size={20} />,
         shortcut: 'Ctrl+V',
         onClick: () => {
           scene.pasteObjectsFromClipboard(uiState, scene);
