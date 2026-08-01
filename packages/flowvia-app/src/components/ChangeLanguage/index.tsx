@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IconLanguage } from '@tabler/icons-react';
 import './styles.css';
 import { supportedLanguages } from '../../i18n';
 
@@ -35,7 +36,7 @@ const ChangeLanguage = () => {
         className="language-display"
         onMouseEnter={() => setIsOpen(true)}
       >
-        A/文
+        <IconLanguage size={18} />
       </div>
       {isOpen && (
         <div className="language-dropdown">
