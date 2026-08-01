@@ -142,10 +142,10 @@ npm run publish:lib  # Bibliothek auf npm veröffentlichen
 ## Kürzlich hinzugefügt
 
 ### Konnektor-Multiplexing
-<img src="demos/connectors.gif" alt="Multiplexed connectors demo" />
+<img src="../demos/connectors.gif" alt="Multiplexed connectors demo" />
 
 ### Elemente kopieren und einfügen
-<img src="demos/copy-paste-demo.gif" alt="Copy pasting demo" />
+<img src="../demos/copy-paste-demo.gif" alt="Copy pasting demo" />
 
 ## Beitragen
 

@@ -143,10 +143,10 @@ npm run publish:lib  # 라이브러리를 npm에 배포
 ## 최근 추가된 기능
 
 ### 커넥터 다중화
-<img src="demos/connectors.gif" alt="Multiplexed connectors demo" />
+<img src="../demos/connectors.gif" alt="Multiplexed connectors demo" />
 
 ### 아이템 복사/붙여넣기
-<img src="demos/copy-paste-demo.gif" alt="Copy pasting demo" />
+<img src="../demos/copy-paste-demo.gif" alt="Copy pasting demo" />
 
 
 ## 기여하기

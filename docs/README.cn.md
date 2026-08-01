@@ -142,10 +142,10 @@ npm run publish:lib  # 将库发布到 npm
 ## 最近新增功能
 
 ### 连接器多路复用
-<img src="demos/connectors.gif" alt="Multiplexed connectors demo" />
+<img src="../demos/connectors.gif" alt="Multiplexed connectors demo" />
 
 ### 复制粘贴项目
-<img src="demos/copy-paste-demo.gif" alt="Copy pasting demo" />
+<img src="../demos/copy-paste-demo.gif" alt="Copy pasting demo" />
 
 ## 贡献
 

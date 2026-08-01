@@ -142,10 +142,10 @@ npm run publish:lib  # Опубликовать библиотеку в npm
 ## Недавно добавлено
 
 ### Мультиплексирование соединителей
-<img src="demos/connectors.gif" alt="Multiplexed connectors demo" />
+<img src="../demos/connectors.gif" alt="Multiplexed connectors demo" />
 
 ### Копирование и вставка элементов
-<img src="demos/copy-paste-demo.gif" alt="Copy pasting demo" />
+<img src="../demos/copy-paste-demo.gif" alt="Copy pasting demo" />
 
 ## Внесение вклада
 

@@ -142,10 +142,10 @@ npm run publish:lib  # लाइब्रेरी को npm पर प्र�
 ## हाल में जोड़ी गई सुविधाएं
 
 ### कनेक्टर मल्टीप्लेक्सिंग
-<img src="demos/connectors.gif" alt="Multiplexed connectors demo" />
+<img src="../demos/connectors.gif" alt="Multiplexed connectors demo" />
 
 ### आइटम कॉपी-पेस्ट करना
-<img src="demos/copy-paste-demo.gif" alt="Copy pasting demo" />
+<img src="../demos/copy-paste-demo.gif" alt="Copy pasting demo" />
 
 ## योगदान देना
 

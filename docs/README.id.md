@@ -142,10 +142,10 @@ npm run publish:lib  # Publish library ke npm
 ## Baru ditambahkan
 
 ### Multiplexing konektor
-<img src="demos/connectors.gif" alt="Multiplexed connectors demo" />
+<img src="../demos/connectors.gif" alt="Multiplexed connectors demo" />
 
 ### Menyalin dan menempel item
-<img src="demos/copy-paste-demo.gif" alt="Copy pasting demo" />
+<img src="../demos/copy-paste-demo.gif" alt="Copy pasting demo" />
 
 ## Berkontribusi
 

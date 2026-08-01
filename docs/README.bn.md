@@ -142,10 +142,10 @@ npm run publish:lib  # npm-এ লাইব্রেরি প্রকাশ �
 ## সম্প্রতি যুক্ত হয়েছে
 
 ### সংযোজক মাল্টিপ্লেক্সিং
-<img src="demos/connectors.gif" alt="Multiplexed connectors demo" />
+<img src="../demos/connectors.gif" alt="Multiplexed connectors demo" />
 
 ### আইটেম কপি-পেস্ট করা
-<img src="demos/copy-paste-demo.gif" alt="Copy pasting demo" />
+<img src="../demos/copy-paste-demo.gif" alt="Copy pasting demo" />
 
 ## অবদান রাখা
 

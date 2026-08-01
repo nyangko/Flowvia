@@ -143,10 +143,10 @@ npm run publish:lib  # ライブラリを npm に公開
 ## 最近追加された機能
 
 ### コネクターの多重化
-<img src="demos/connectors.gif" alt="Multiplexed connectors demo" />
+<img src="../demos/connectors.gif" alt="Multiplexed connectors demo" />
 
 ### アイテムのコピー&ペースト
-<img src="demos/copy-paste-demo.gif" alt="Copy pasting demo" />
+<img src="../demos/copy-paste-demo.gif" alt="Copy pasting demo" />
 
 
 ## コントリビューション
