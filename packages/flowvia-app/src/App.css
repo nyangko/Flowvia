@@ -100,6 +100,16 @@
   background-color: #e8eaed;
 }
 
+.icon-btn--active {
+  background-color: #fdeceb;
+  color: #d0342c;
+}
+
+.icon-btn--active:hover {
+  background-color: #fadbd9;
+  color: #d0342c;
+}
+
 .diagram-badge {
   position: relative;
   max-width: 160px;
@@ -215,7 +225,12 @@
 
 .dialog {
   background-color: #fff;
-  padding: 20px;
+  /* No top padding here — the sticky <h2> below supplies its own, so it can
+     sit flush with the scroll container's true top edge. A sticky element
+     sticks relative to the padding edge, but padding-top on a scrolling
+     ancestor still scrolls away with the content in most browsers, leaving a
+     gap where already-scrolled-past content shows through above/behind it. */
+  padding: 0 20px 20px;
   border-radius: 12px;
   box-shadow: 0px 24px 48px -16px rgba(0, 0, 0, 0.28),
     0px 0px 0px 1px rgba(0, 0, 0, 0.04);
@@ -227,12 +242,39 @@
 
 .dialog h2 {
   margin: 0 0 14px;
+  padding-top: 20px;
   font-size: 17px;
   font-weight: 600;
   color: #1a1a1a;
   display: flex;
   align-items: baseline;
   gap: 8px;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 2;
+}
+
+.dialog-close-btn {
+  margin-left: auto;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.dialog-close-btn:hover {
+  background: #f0f0f0;
+  color: #1a1a1a;
 }
 
 .history-version {
@@ -334,12 +376,12 @@
   background-color: #0062cc;
 }
 
-.dialog-buttons button:last-child {
+.dialog-buttons button:last-child:not(:only-child) {
   background-color: #f1f3f4;
   color: #444;
 }
 
-.dialog-buttons button:last-child:hover {
+.dialog-buttons button:last-child:not(:only-child):hover {
   background-color: #e4e6e7;
 }
 

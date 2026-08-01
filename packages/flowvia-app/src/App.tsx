@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+import { createPortal } from 'react-dom';
+import { IconX } from '@tabler/icons-react';
 import { Isoflow } from 'flowvia';
 import { flattenCollections } from '@isoflow/isopacks/dist/utils';
 import isoflowIsopack from '@isoflow/isopacks/dist/isoflow';
@@ -15,7 +17,9 @@ import {
   CloudIcon,
   UploadIcon,
   TrashIcon,
-  HistoryIcon
+  HistoryIcon,
+  LockIcon,
+  UnlockIcon
 } from './components/ToolbarIcons';
 import { HistoryPanel } from './components/HistoryPanel';
 import { allLocales } from 'flowvia';
@@ -36,7 +40,7 @@ interface CurrentDiagramRef {
 
 // Bump this whenever the History panel's changelog content changes so returning
 // users see the "unread" dot again even if they already dismissed the tutorial hints.
-const HISTORY_VERSION = 'v1.1.0';
+const HISTORY_VERSION = 'v1.2.0';
 const TUTORIAL_HINT_KEYS = [
   'flowvia_import_hint_dismissed',
   'flowvia_connector_hint_dismissed',
@@ -70,6 +74,7 @@ function App() {
       <Routes>
         <Route path="/" element={<EditorPage />} />
         <Route path="/display/:readonlyDiagramId" element={<EditorPage />} />
+        <Route path="/edit/:editableDiagramId" element={<EditorPage />} />
       </Routes>
     </BrowserRouter>
   );
@@ -78,7 +83,10 @@ function App() {
 function EditorPage() {
   // Initialize icon pack manager with core icons
   const iconPackManager = useIconPackManager(coreIcons);
-  const { readonlyDiagramId } = useParams<{ readonlyDiagramId: string }>();
+  const { readonlyDiagramId, editableDiagramId } = useParams<{
+    readonlyDiagramId: string;
+    editableDiagramId: string;
+  }>();
 
   const [diagrams, setDiagrams] = useState<DiagramInfo[]>([]);
   const [currentDiagram, setCurrentDiagram] = useState<CurrentDiagramRef | null>(
@@ -97,6 +105,14 @@ function EditorPage() {
     useState<HTMLDivElement | null>(null);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [showLoadMenu, setShowLoadMenu] = useState(false);
+  // Position is captured at click time (button's own bounding rect) because the
+  // menu is portaled to document.body — it can't rely on CSS position:absolute
+  // relative to its wrapper once it's rendered outside the scrolling dialog.
+  const [shareMenu, setShareMenu] = useState<{
+    id: string;
+    top: number;
+    left: number;
+  } | null>(null);
   const [showHistoryPanel, setShowHistoryPanel] = useState(false);
   const [isHistoryUnread, setIsHistoryUnread] = useState(hasUnreadHistory);
   const [flowviaKey, setFlowviaKey] = useState(0); // Key to force re-render of Flowvia
@@ -110,6 +126,33 @@ function EditorPage() {
   const [serverStorageAvailable, setServerStorageAvailable] = useState(false);
   const isReadonlyUrl =
     window.location.pathname.startsWith('/display/') && readonlyDiagramId;
+  const isEditableUrl =
+    window.location.pathname.startsWith('/edit/') && editableDiagramId;
+
+  // Lets the current user lock their own diagram against accidental edits —
+  // separate from the URL-driven readonly mode above, and per-diagram so it
+  // survives switching between saved diagrams. Purely a local UI guard: with
+  // no account/auth system yet, it isn't enforced against other viewers.
+  const [lockedDiagramIds, setLockedDiagramIds] = useState<string[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem('flowvia-locked-diagrams') || '[]');
+    } catch {
+      return [];
+    }
+  });
+  const isDiagramLocked = !!currentDiagram && lockedDiagramIds.includes(currentDiagram.id);
+  const toggleDiagramLock = () => {
+    if (!currentDiagram) return;
+    setLockedDiagramIds((prev) => {
+      const next = prev.includes(currentDiagram.id)
+        ? prev.filter((id) => {
+            return id !== currentDiagram.id;
+          })
+        : [...prev, currentDiagram.id];
+      localStorage.setItem('flowvia-locked-diagrams', JSON.stringify(next));
+      return next;
+    });
+  };
 
   // Initialize with empty diagram data
   // Create default colors for connectors
@@ -181,15 +224,18 @@ function EditorPage() {
     })().catch(console.error);
   }, []);
 
-  // Check if readonlyDiagramId exists - if exists, load diagram in view-only mode
+  // If the URL names a shared diagram (view-only /display/ or editable
+  // /edit/), load it on mount — needs server storage since the recipient's
+  // browser has no local copy of someone else's diagram.
   useEffect(() => {
-    if (!isReadonlyUrl || !serverStorageAvailable) return;
-    loadDiagram(readonlyDiagramId, true).catch(() => {
-      // Alert if unable to load readonly diagram and redirect to new diagram
+    if ((!isReadonlyUrl && !isEditableUrl) || !serverStorageAvailable) return;
+    const sharedId = isReadonlyUrl ? readonlyDiagramId : editableDiagramId;
+    if (!sharedId) return;
+    loadDiagram(sharedId, true).catch(() => {
       alert(t('dialog.readOnly.failed'));
       window.location.href = '/';
     });
-  }, [readonlyDiagramId, serverStorageAvailable]);
+  }, [readonlyDiagramId, editableDiagramId, serverStorageAvailable]);
 
   // Update diagramData when loaded icons change
   useEffect(() => {
@@ -326,6 +372,7 @@ function EditorPage() {
       return prev + 1;
     }); // Force re-render of Flowvia
     setShowLoadDialog(false);
+    setShareMenu(null);
     setHasUnsavedChanges(false);
 
     // Save as last opened (without icons)
@@ -549,8 +596,8 @@ function EditorPage() {
     setHasUnsavedChanges(false); // Mark as saved after export
   };
 
-  const handleCopyShareLink = (id: string) => {
-    const shareUrl = `${window.location.origin}/display/${id}`;
+  const handleCopyShareLink = (id: string, mode: 'view' | 'edit' = 'view') => {
+    const shareUrl = `${window.location.origin}/${mode === 'edit' ? 'edit' : 'display'}/${id}`;
     navigator.clipboard
       .writeText(shareUrl)
       .then(() => {
@@ -724,6 +771,15 @@ function EditorPage() {
         <div className="main-menu-slot" ref={setMainMenuSlot} />
         {!isReadonlyUrl ? (
           <>
+            {currentDiagram && (
+              <button
+                className={`icon-btn${isDiagramLocked ? ' icon-btn--active' : ''}`}
+                onClick={toggleDiagramLock}
+                title={t(isDiagramLocked ? 'nav.unlockDiagram' : 'nav.lockDiagram')}
+              >
+                {isDiagramLocked ? <LockIcon /> : <UnlockIcon />}
+              </button>
+            )}
             {isEditingTitle ? (
               <input
                 className="diagram-title-input"
@@ -864,7 +920,7 @@ function EditorPage() {
           editorMode={
             isAnyDialogOpen
               ? 'NON_INTERACTIVE'
-              : isReadonlyUrl
+              : isReadonlyUrl || isDiagramLocked
                 ? 'EXPLORABLE_READONLY'
                 : 'EDITABLE'
           }
@@ -880,7 +936,19 @@ function EditorPage() {
       {showSaveDialog && (
         <div className="dialog-overlay">
           <div className="dialog">
-            <h2>{t('dialog.save.title')}</h2>
+            <h2>
+              {t('dialog.save.title')}
+              <button
+                type="button"
+                className="dialog-close-btn"
+                onClick={() => {
+                  return setShowSaveDialog(false);
+                }}
+                aria-label={t('dialog.save.btnCancel')}
+              >
+                <IconX size={18} />
+              </button>
+            </h2>
             <div
               className={`dialog-note ${serverStorageAvailable ? 'dialog-note--success' : 'dialog-note--warning'}`}
             >
@@ -912,13 +980,6 @@ function EditorPage() {
             />
             <div className="dialog-buttons">
               <button onClick={saveDiagram}>{t('dialog.save.btnSave')}</button>
-              <button
-                onClick={() => {
-                  return setShowSaveDialog(false);
-                }}
-              >
-                {t('dialog.save.btnCancel')}
-              </button>
             </div>
           </div>
         </div>
@@ -928,7 +989,20 @@ function EditorPage() {
       {showLoadDialog && (
         <div className="dialog-overlay">
           <div className="dialog">
-            <h2>{t('dialog.load.title')}</h2>
+            <h2>
+              {t('dialog.load.title')}
+              <button
+                type="button"
+                className="dialog-close-btn"
+                onClick={() => {
+                  setShowLoadDialog(false);
+                  setShareMenu(null);
+                }}
+                aria-label={t('dialog.load.btnClose')}
+              >
+                <IconX size={18} />
+              </button>
+            </h2>
             <div
               className={`dialog-note ${serverStorageAvailable ? 'dialog-note--success' : 'dialog-note--warning'}`}
             >
@@ -974,15 +1048,69 @@ function EditorPage() {
                           {t('dialog.load.btnLoad')}
                         </button>
                         {serverStorageAvailable && (
-                          <button
-                            className="share"
-                            onClick={() => {
-                              return handleCopyShareLink(diagram.id);
-                            }}
-                            title={t('dialog.load.btnShare')}
-                          >
-                            {t('dialog.load.btnShare')}
-                          </button>
+                          <div className="load-menu-wrapper">
+                            <button
+                              className="share"
+                              onClick={(e) => {
+                                if (shareMenu?.id === diagram.id) {
+                                  setShareMenu(null);
+                                  return;
+                                }
+                                const rect = e.currentTarget.getBoundingClientRect();
+                                setShareMenu({
+                                  id: diagram.id,
+                                  top: rect.bottom + 4,
+                                  left: rect.left
+                                });
+                              }}
+                              title={t('dialog.load.btnShare')}
+                            >
+                              {t('dialog.load.btnShare')}
+                            </button>
+                            {shareMenu?.id === diagram.id &&
+                              createPortal(
+                                <>
+                                  <div
+                                    className="load-menu-backdrop"
+                                    // Portaled to document.body, so it sits outside the
+                                    // Load dialog's own .dialog-overlay (z-index 1000) —
+                                    // needs to be above that or clicks on it never reach
+                                    // this backdrop to close the menu.
+                                    style={{ zIndex: 1010 }}
+                                    onClick={() => {
+                                      return setShareMenu(null);
+                                    }}
+                                  />
+                                  <div
+                                    className="load-menu"
+                                    style={{
+                                      position: 'fixed',
+                                      top: shareMenu.top,
+                                      left: shareMenu.left,
+                                      zIndex: 1011
+                                    }}
+                                  >
+                                    <button
+                                      onClick={() => {
+                                        setShareMenu(null);
+                                        handleCopyShareLink(diagram.id, 'view');
+                                      }}
+                                    >
+                                      {t('dialog.load.btnShareView')}
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        setShareMenu(null);
+                                        handleCopyShareLink(diagram.id, 'edit');
+                                      }}
+                                    >
+                                      {t('dialog.load.btnShareEdit')}
+                                    </button>
+                                  </div>
+                                </>,
+                                document.body
+                              )}
+                          </div>
                         )}
                         <button
                           onClick={() => {
@@ -998,15 +1126,6 @@ function EditorPage() {
                 })
               )}
             </div>
-            <div className="dialog-buttons">
-              <button
-                onClick={() => {
-                  return setShowLoadDialog(false);
-                }}
-              >
-                {t('dialog.load.btnClose')}
-              </button>
-            </div>
           </div>
         </div>
       )}
@@ -1015,7 +1134,19 @@ function EditorPage() {
       {showExportDialog && (
         <div className="dialog-overlay">
           <div className="dialog">
-            <h2>{t('dialog.export.title')}</h2>
+            <h2>
+              {t('dialog.export.title')}
+              <button
+                type="button"
+                className="dialog-close-btn"
+                onClick={() => {
+                  return setShowExportDialog(false);
+                }}
+                aria-label={t('dialog.export.btnCancel')}
+              >
+                <IconX size={18} />
+              </button>
+            </h2>
             <div className="dialog-note dialog-note--success">
               <strong className="dialog-note-title">
                 <span className="dialog-note-icon">✅</span>
@@ -1027,13 +1158,6 @@ function EditorPage() {
             <div className="dialog-buttons">
               <button onClick={exportDiagram}>
                 {t('dialog.export.btnDownload')}
-              </button>
-              <button
-                onClick={() => {
-                  return setShowExportDialog(false);
-                }}
-              >
-                {t('dialog.export.btnCancel')}
               </button>
             </div>
           </div>
