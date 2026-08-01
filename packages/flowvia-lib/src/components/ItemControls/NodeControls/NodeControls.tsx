@@ -1,10 +1,10 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Box, Stack, Button, IconButton as MUIIconButton } from '@mui/material';
 import {
-  ChevronRight as ChevronRightIcon,
-  ChevronLeft as ChevronLeftIcon,
-  Close as CloseIcon
-} from '@mui/icons-material';
+  IconChevronRight as ChevronRightIcon,
+  IconChevronLeft as ChevronLeftIcon,
+  IconX as CloseIcon
+} from '@tabler/icons-react';
 import { useIconCategories } from 'src/hooks/useIconCategories';
 import { useIcon } from 'src/hooks/useIcon';
 import { useScene } from 'src/hooks/useScene';

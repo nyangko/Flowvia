@@ -1,15 +1,15 @@
 import React, { useCallback } from 'react';
 import { Stack, Divider } from '@mui/material';
 import {
-  PanToolOutlined as PanToolIcon,
-  NearMeOutlined as NearMeIcon,
-  AddOutlined as AddIcon,
-  EastOutlined as ConnectorIcon,
-  CropSquareOutlined as CropSquareIcon,
-  TitleOutlined as TitleIcon,
-  HighlightAltOutlined as LassoIcon,
-  GestureOutlined as FreehandLassoIcon
-} from '@mui/icons-material';
+  IconArrowsMove as PanToolIcon,
+  IconPointer2 as NearMeIcon,
+  IconPlus as AddIcon,
+  IconRoute as ConnectorIcon,
+  IconShape as CropSquareIcon,
+  IconTextSize as TitleIcon,
+  IconSelectAll as LassoIcon,
+  IconLassoPolygon as FreehandLassoIcon
+} from '@tabler/icons-react';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { UiElement } from 'src/components/UiElement/UiElement';

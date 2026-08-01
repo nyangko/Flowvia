@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, IconButton, Tooltip } from '@mui/material';
-import { ClearAll as ClearAllIcon } from '@mui/icons-material';
+import { IconX as ClearAllIcon } from '@tabler/icons-react';
 import { ImportHintTooltip } from '../ImportHintTooltip/ImportHintTooltip';
 import { ConnectorHintTooltip } from '../ConnectorHintTooltip/ConnectorHintTooltip';
 import { LazyLoadingWelcomeNotification } from '../LazyLoadingWelcomeNotification/LazyLoadingWelcomeNotification';
@@ -60,7 +60,7 @@ export const HintStack = ({ showConnectorHint, showLazyLoadingWelcome }: Props) 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
           <Tooltip title="Dismiss all">
             <IconButton size="small" onClick={handleDismissAll} sx={{ backgroundColor: 'background.paper' }}>
-              <ClearAllIcon fontSize="small" />
+              <ClearAllIcon size={20} />
             </IconButton>
           </Tooltip>
         </Box>

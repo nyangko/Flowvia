@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, IconButton, Paper, Typography } from '@mui/material';
-import { Close as CloseIcon, FolderOpen as FolderOpenIcon } from '@mui/icons-material';
+import { IconX as CloseIcon, IconFolderOpen as FolderOpenIcon } from '@tabler/icons-react';
 import { useTranslation } from 'src/stores/localeStore';
 
 const STORAGE_KEY = 'flowvia_import_hint_dismissed';
@@ -52,11 +52,13 @@ export const ImportHintTooltip = ({ onDismiss }: Props) => {
           top: 4
         }}
       >
-        <CloseIcon fontSize="small" />
+        <CloseIcon size={20} />
       </IconButton>
 
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-        <FolderOpenIcon sx={{ mr: 1, color: 'info.main' }} />
+        <Box component="span" sx={{ display: 'inline-flex', mr: 1, color: 'info.main' }}>
+          <FolderOpenIcon size={20} />
+        </Box>
         <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
           {t('title')}
         </Typography>

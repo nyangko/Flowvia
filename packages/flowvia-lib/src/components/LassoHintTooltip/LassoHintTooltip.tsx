@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, IconButton, Paper, Typography, useTheme } from '@mui/material';
-import { Close as CloseIcon } from '@mui/icons-material';
+import { IconX as CloseIcon } from '@tabler/icons-react';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useTranslation } from 'src/stores/localeStore';
 
@@ -85,7 +85,7 @@ export const LassoHintTooltip = ({ toolMenuRef }: Props) => {
             top: 4
           }}
         >
-          <CloseIcon fontSize="small" />
+          <CloseIcon size={20} />
         </IconButton>
 
         <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 600 }}>

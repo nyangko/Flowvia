@@ -8,7 +8,7 @@ import { Section } from 'src/components/ItemControls/components/Section';
 import { Searchbox } from 'src/components/ItemControls/IconSelectionControls/Searchbox';
 import { useIconFiltering } from 'src/hooks/useIconFiltering';
 import { useIconCategories } from 'src/hooks/useIconCategories';
-import { Close as CloseIcon, FileUpload as FileUploadIcon } from '@mui/icons-material';
+import { IconX as CloseIcon, IconUpload as FileUploadIcon } from '@tabler/icons-react';
 import { useTranslation } from 'src/stores/localeStore';
 import { Icons } from './Icons';
 import { IconGrid } from './IconGrid';

@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { Divider, Stack, Typography, Button } from '@mui/material';
-import {
-  ExpandMore as ChevronDownIcon,
-  ExpandLess as ChevronUpIcon
-} from '@mui/icons-material';
+import { IconChevronDown as ChevronDownIcon, IconChevronUp as ChevronUpIcon } from '@tabler/icons-react';
 import { Icon as IconI } from 'src/types';
 import { Section } from 'src/components/ItemControls/components/Section';
 import { IconGrid } from './IconGrid';
@@ -49,11 +46,7 @@ export const IconCollection = ({
           >
             {id}
           </Typography>
-          {isExpanded ? (
-            <ChevronUpIcon color="action" />
-          ) : (
-            <ChevronDownIcon color="action" />
-          )}
+          {isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
         </Stack>
       </Button>
       <Divider />

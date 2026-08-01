@@ -1,17 +1,16 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import { Menu, Typography, Divider, Card } from '@mui/material';
 import {
-  Menu as MenuIcon,
-  GitHub as GitHubIcon,
-  DataObject as ExportJsonIcon,
-  ImageOutlined as ExportImageIcon,
-  FolderOpen as FolderOpenIcon,
-  DeleteOutlined as DeleteOutlineIcon,
-  Undo as UndoIcon,
-  Redo as RedoIcon,
-  Settings as SettingsIcon,
-
-} from '@mui/icons-material';
+  IconMenu2 as MenuIcon,
+  IconBrandGithub as GitHubIcon,
+  IconFileCode as ExportJsonIcon,
+  IconPhoto as ExportImageIcon,
+  IconFolderOpen as FolderOpenIcon,
+  IconTrash as DeleteOutlineIcon,
+  IconArrowBackUp as UndoIcon,
+  IconArrowForwardUp as RedoIcon,
+  IconSettings as SettingsIcon
+} from '@tabler/icons-react';
 import { UiElement } from 'src/components/UiElement/UiElement';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { useUiStateStore } from 'src/stores/uiStateStore';
@@ -189,7 +188,7 @@ export const MainMenu = () => {
           {/* Undo/Redo Section */}
           <MenuItem
             onClick={handleUndo}
-            Icon={<UndoIcon fontSize="small" />}
+            Icon={<UndoIcon size={20} />}
             disabled={!canUndo}
             shortcut="Ctrl+Z"
           >
@@ -198,7 +197,7 @@ export const MainMenu = () => {
 
           <MenuItem
             onClick={handleRedo}
-            Icon={<RedoIcon fontSize="small" />}
+            Icon={<RedoIcon size={20} />}
             disabled={!canRedo}
             shortcut="Ctrl+Y"
           >
@@ -210,38 +209,38 @@ export const MainMenu = () => {
 
           {/* File Actions */}
           {mainMenuOptions.includes('ACTION.OPEN') && (
-            <MenuItem onClick={onOpenModel} Icon={<FolderOpenIcon fontSize="small" />}>
+            <MenuItem onClick={onOpenModel} Icon={<FolderOpenIcon size={20} />}>
               {t('open')}
             </MenuItem>
           )}
 
           {mainMenuOptions.includes('EXPORT.JSON') && (
-            <MenuItem onClick={onExportAsJSON} Icon={<ExportJsonIcon fontSize="small" />}>
+            <MenuItem onClick={onExportAsJSON} Icon={<ExportJsonIcon size={20} />}>
               {t('exportJson')}
             </MenuItem>
           )}
 
           {mainMenuOptions.includes('EXPORT.JSON') && (
-            <MenuItem onClick={onExportAsCompactJSON} Icon={<ExportJsonIcon fontSize="small" />}>
+            <MenuItem onClick={onExportAsCompactJSON} Icon={<ExportJsonIcon size={20} />}>
               {t('exportCompactJson')}
             </MenuItem>
           )}
 
           {mainMenuOptions.includes('EXPORT.PNG') && (
-            <MenuItem onClick={onExportAsImage} Icon={<ExportImageIcon fontSize="small" />}>
+            <MenuItem onClick={onExportAsImage} Icon={<ExportImageIcon size={20} />}>
               {t('exportImage')}
             </MenuItem>
           )}
 
           {mainMenuOptions.includes('ACTION.CLEAR_CANVAS') && (
-            <MenuItem onClick={onClearCanvas} Icon={<DeleteOutlineIcon fontSize="small" />}>
+            <MenuItem onClick={onClearCanvas} Icon={<DeleteOutlineIcon size={20} />}>
               {t('clearCanvas')}
             </MenuItem>
           )}
 
           <Divider />
 
-          <MenuItem onClick={onOpenSettings} Icon={<SettingsIcon fontSize="small" />}>
+          <MenuItem onClick={onOpenSettings} Icon={<SettingsIcon size={20} />}>
             {t('settings')}
           </MenuItem>
 
@@ -254,7 +253,7 @@ export const MainMenu = () => {
                   onClick={() => {
                     return gotoUrl(`${REPOSITORY_URL}`);
                   }}
-                  Icon={<GitHubIcon fontSize="small" />}
+                  Icon={<GitHubIcon size={20} />}
                 >
                   {t('gitHub')}
                 </MenuItem>

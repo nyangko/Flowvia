@@ -8,10 +8,7 @@ import {
   Slider,
   IconButton as MUIIconButton
 } from '@mui/material';
-import {
-  TextRotationNone as TextRotationNoneIcon,
-  Close as CloseIcon
-} from '@mui/icons-material';
+import { IconTextSize as TextRotationNoneIcon, IconX as CloseIcon } from '@tabler/icons-react';
 import { useTextBox } from 'src/hooks/useTextBox';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { getIsoProjectionCss } from 'src/utils';
@@ -89,11 +86,11 @@ export const TextBoxControls = ({ id }: Props) => {
             }}
           >
             <ToggleButton value={ProjectionOrientationEnum.X}>
-              <TextRotationNoneIcon sx={{ transform: getIsoProjectionCss() }} />
+              <TextRotationNoneIcon style={{ transform: getIsoProjectionCss() }} />
             </ToggleButton>
             <ToggleButton value={ProjectionOrientationEnum.Y}>
               <TextRotationNoneIcon
-                sx={{
+                style={{
                   transform: `scale(-1, 1) ${getIsoProjectionCss()} scale(-1, 1)`
                 }}
               />

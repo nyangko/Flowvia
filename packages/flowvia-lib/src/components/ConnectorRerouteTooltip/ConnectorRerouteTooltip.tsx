@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Box, IconButton, Paper, Typography, Fade } from '@mui/material';
-import { Close as CloseIcon } from '@mui/icons-material';
+import { IconX as CloseIcon } from '@tabler/icons-react';
 import { useUiStateStore, useUiStateStoreApi } from 'src/stores/uiStateStore';
 import { useScene } from 'src/hooks/useScene';
 import { useTranslation } from 'src/stores/localeStore';
@@ -116,7 +116,7 @@ export const ConnectorRerouteTooltip = () => {
               top: 4
             }}
           >
-            <CloseIcon fontSize="small" />
+            <CloseIcon size={20} />
           </IconButton>
 
           <Typography variant="subtitle2" gutterBottom sx={{ fontWeight: 600 }}>

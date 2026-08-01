@@ -1,6 +1,6 @@
 import React from 'react';
 import { TextField, InputAdornment } from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
+import { IconSearch as SearchIcon } from '@tabler/icons-react';
 import { useTranslation } from 'src/stores/localeStore';
 
 interface Props {

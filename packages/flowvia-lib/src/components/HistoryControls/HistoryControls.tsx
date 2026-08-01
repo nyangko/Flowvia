@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { Stack } from '@mui/material';
-import { Undo as UndoIcon, Redo as RedoIcon } from '@mui/icons-material';
+import { IconArrowBackUp as UndoIcon, IconArrowForwardUp as RedoIcon } from '@tabler/icons-react';
 import { IconButton } from 'src/components/IconButton/IconButton';
 import { UiElement } from 'src/components/UiElement/UiElement';
 import { useHistory } from 'src/hooks/useHistory';

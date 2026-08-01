@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, IconButton, Tooltip } from '@mui/material';
-import { Colorize as ColorizeIcon } from '@mui/icons-material';
+import { IconColorSwatch as ColorizeIcon } from '@tabler/icons-react';
 import { ColorPicker } from './ColorPicker';
 
 interface EyeDropper {
@@ -77,7 +77,7 @@ export const CustomColorInput = ({ value, onChange }: Props) => {
       {hasEyeDropper && (
         <Tooltip title="Pick color from screen">
           <IconButton onClick={handleEyeDropper} size="small">
-            <ColorizeIcon fontSize="small" />
+            <ColorizeIcon size={20} />
           </IconButton>
         </Tooltip>
       )}

@@ -6,7 +6,7 @@ import { ColorPicker } from 'src/components/ColorSelector/ColorPicker';
 import { CustomColorInput } from 'src/components/ColorSelector/CustomColorInput';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useScene } from 'src/hooks/useScene';
-import { Close as CloseIcon } from '@mui/icons-material';
+import { IconX as CloseIcon } from '@tabler/icons-react';
 import { useTranslation } from 'src/stores/localeStore';
 import { ControlsContainer } from '../components/ControlsContainer';
 import { Section } from '../components/Section';

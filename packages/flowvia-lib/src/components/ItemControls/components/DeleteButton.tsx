@@ -1,5 +1,5 @@
 import React from 'react';
-import { DeleteOutlined as DeleteIcon } from '@mui/icons-material';
+import { IconTrash as DeleteIcon } from '@tabler/icons-react';
 import { Button } from '@mui/material';
 import { useTranslation } from 'src/stores/localeStore';
 
@@ -15,7 +15,7 @@ export const DeleteButton = ({ onClick }: Props) => {
       color="error"
       size="small"
       variant="outlined"
-      startIcon={<DeleteIcon color="error" />}
+      startIcon={<DeleteIcon />}
       onClick={onClick}
     >
       {t('common.delete')}

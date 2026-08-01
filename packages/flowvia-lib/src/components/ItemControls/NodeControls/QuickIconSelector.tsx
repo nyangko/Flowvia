@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { Box, Stack, Typography, Divider, TextField, InputAdornment, Alert } from '@mui/material';
-import { Search as SearchIcon } from '@mui/icons-material';
+import { IconSearch as SearchIcon } from '@tabler/icons-react';
 import { Icon } from 'src/types';
 import { useModelStore } from 'src/stores/modelStore';
 import { useIconCategories } from 'src/hooks/useIconCategories';

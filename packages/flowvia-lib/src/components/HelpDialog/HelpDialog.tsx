@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
+  IconButton,
   Table,
   TableBody,
   TableCell,
@@ -16,7 +17,7 @@ import {
   Box,
   Divider
 } from '@mui/material';
-import { Close as CloseIcon } from '@mui/icons-material';
+import { IconX as CloseIcon } from '@tabler/icons-react';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { DialogTypeEnum } from 'src/types/ui';
 import { useTranslation } from 'src/stores/localeStore';
@@ -146,20 +147,13 @@ export const HelpDialog = () => {
           <Typography variant="h6" component="div">
             {t('title')}
           </Typography>
-          <Button
+          <IconButton
+            aria-label={t('close')}
             onClick={handleClose}
-            sx={{
-              minWidth: 'auto',
-              p: 1,
-              bgcolor: 'transparent',
-              boxShadow: 'none',
-              '&:hover': { bgcolor: 'transparent' },
-              '&:focus': { bgcolor: 'transparent' },
-              '&:active': { bgcolor: 'transparent' }
-            }}
+            sx={{ color: (theme) => theme.palette.grey[500] }}
           >
             <CloseIcon />
-          </Button>
+          </IconButton>
         </Box>
       </DialogTitle>
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, IconButton, Paper, Typography, useTheme } from '@mui/material';
-import { Close as CloseIcon, Menu as MenuIcon } from '@mui/icons-material';
+import { IconX as CloseIcon, IconMenu2 as MenuIcon } from '@tabler/icons-react';
 import { useTranslation } from 'src/stores/localeStore';
 
 const STORAGE_KEY = 'flowvia-lazy-loading-welcome-dismissed';
@@ -54,7 +54,7 @@ export const LazyLoadingWelcomeNotification = ({ onDismiss }: Props) => {
           top: 8
         }}
       >
-        <CloseIcon fontSize="small" />
+        <CloseIcon size={20} />
       </IconButton>
 
       <Typography variant="subtitle1" gutterBottom sx={{ fontWeight: 700, mb: 1 }}>
@@ -74,7 +74,9 @@ export const LazyLoadingWelcomeNotification = ({ onDismiss }: Props) => {
         bgcolor: 'action.hover',
         borderRadius: 1
       }}>
-        <MenuIcon sx={{ color: 'primary.main' }} fontSize="small" />
+        <Box component="span" sx={{ display: 'inline-flex', color: 'primary.main' }}>
+          <MenuIcon size={20} />
+        </Box>
         <Typography variant="body2" sx={{ fontWeight: 500 }}>
           {t('configPath')} <strong>{t('configPath2')}</strong>
         </Typography>
