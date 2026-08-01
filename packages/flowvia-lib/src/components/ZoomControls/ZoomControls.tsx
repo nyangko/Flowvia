@@ -1,15 +1,16 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
 import {
-  Add as ZoomInIcon,
-  Remove as ZoomOutIcon,
-  CropFreeOutlined as FitToScreenIcon,
-  HelpOutline as HelpIcon
-} from '@mui/icons-material';
+  IconPlus as ZoomInIcon,
+  IconMinus as ZoomOutIcon,
+  IconMaximize as FitToScreenIcon,
+  IconHelpCircle as HelpIcon
+} from '@tabler/icons-react';
 import { Stack, Box, Typography, Divider } from '@mui/material';
 import { toPx } from 'src/utils';
 import { UiElement } from 'src/components/UiElement/UiElement';
 import { IconButton } from 'src/components/IconButton/IconButton';
+import { ProjectionToggle } from 'src/components/ProjectionToggle/ProjectionToggle';
 import { MAX_ZOOM, MIN_ZOOM } from 'src/config';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useDiagramUtils } from 'src/hooks/useDiagramUtils';
@@ -78,6 +79,7 @@ export const ZoomControls = () => {
           onClick={fitToView}
         />
       </UiElement>
+      <ProjectionToggle />
       {!helpButtonPortalTarget && helpButton}
       {helpButtonPortalTarget && createPortal(helpButton, helpButtonPortalTarget)}
     </Stack>

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useRef } from 'react';
-import { createStore, useStore } from 'zustand';
+import { createStore } from 'zustand';
+import { useStoreWithEqualityFn } from 'zustand/traditional';
 import {
   CoordsUtils,
   incrementZoom,
@@ -41,6 +42,7 @@ const initialState = () => {
       connectorInteractionMode: 'click', // Default to click mode
       connectorAnimationEnabled: true, // Default to animated flow direction
       expandLabels: false, // Default to collapsed labels
+      projectionMode: 'ISOMETRIC', // Default to the tilted isometric view
       iconPackManager: null, // Will be set by Isoflow if provided
       isAnythingCopied: false,
       mainMenuPortalTarget: null,
@@ -139,6 +141,9 @@ const initialState = () => {
         setExpandLabels: (expandLabels) => {
           set({ expandLabels });
         },
+        setProjectionMode: (projectionMode) => {
+          set({ projectionMode });
+        },
         setIconPackManager: (iconPackManager) => {
           set({ iconPackManager });
         },
@@ -184,7 +189,7 @@ export function useUiStateStore<T>(
     throw new Error('Missing provider in the tree');
   }
 
-  const value = useStore(store, selector, equalityFn);
+  const value = useStoreWithEqualityFn(store, selector, equalityFn);
   return value;
 }
 

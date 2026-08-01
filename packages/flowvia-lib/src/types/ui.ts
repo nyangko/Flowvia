@@ -1,4 +1,4 @@
-import { Coords, EditorModeEnum, MainMenuOptions } from './common';
+import { Coords, EditorModeEnum, ProjectionModeEnum, MainMenuOptions } from './common';
 import { Icon } from './model';
 import { ItemReference } from './scene';
 import { HotkeyProfile } from 'src/config/hotkeys';
@@ -196,6 +196,7 @@ export interface UiState {
   connectorInteractionMode: ConnectorInteractionMode;
   connectorAnimationEnabled: boolean;
   expandLabels: boolean;
+  projectionMode: keyof typeof ProjectionModeEnum;
   iconPackManager: IconPackManagerProps | null;
   isAnythingCopied: boolean;
   mainMenuPortalTarget: HTMLElement | null;
@@ -231,6 +232,7 @@ export interface UiStateActions {
   setConnectorInteractionMode: (mode: ConnectorInteractionMode) => void;
   setConnectorAnimationEnabled: (enabled: boolean) => void;
   setExpandLabels: (expand: boolean) => void;
+  setProjectionMode: (mode: keyof typeof ProjectionModeEnum) => void;
   setIconPackManager: (iconPackManager: IconPackManagerProps | null) => void;
   setIsAnythingCopied: (isAnythingCopied: boolean) => void;
 }

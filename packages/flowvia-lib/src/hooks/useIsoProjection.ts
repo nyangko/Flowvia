@@ -5,7 +5,8 @@ import {
   getIsoProjectionCss,
   getTilePosition
 } from 'src/utils';
-import { UNPROJECTED_TILE_SIZE } from 'src/config';
+import { UNPROJECTED_TILE_SIZE, FLAT_TILE_SIZE } from 'src/config';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 
 interface Props {
   from: Coords;
@@ -25,6 +26,10 @@ export const useIsoProjection = ({
   gridSize: Size;
   pxSize: Size;
 } => {
+  const isFlat = useUiStateStore((state) => {
+    return state.projectionMode === 'FLAT';
+  });
+
   const gridSize = useMemo(() => {
     return {
       width: Math.abs(from.x - to.x) + 1,
@@ -41,13 +46,29 @@ export const useIsoProjection = ({
   }, [from, to, originOverride]);
 
   const position = useMemo(() => {
-    const pos = getTilePosition({
+    if (isFlat) {
+      // The isometric "origin" corner (lowX/highY) plus a single-axis LEFT/TOP
+      // offset only works with the diamond math + skew below — flat content
+      // isn't skewed, so it needs its own true top-left screen corner instead:
+      // smallest x (screen x grows with tile.x) but LARGEST y, since flat's
+      // tile.y is negated in getTilePosition so screen y shrinks as tile.y grows.
+      const topLeftTile = {
+        x: Math.min(from.x, to.x),
+        y: Math.max(from.y, to.y)
+      };
+      const center = getTilePosition({ tile: topLeftTile, origin: 'CENTER', flat: true });
+
+      return {
+        x: center.x - FLAT_TILE_SIZE.width / 2,
+        y: center.y - FLAT_TILE_SIZE.height / 2
+      };
+    }
+
+    return getTilePosition({
       tile: origin,
       origin: orientation === 'Y' ? 'TOP' : 'LEFT'
     });
-
-    return pos;
-  }, [origin, orientation]);
+  }, [origin, orientation, isFlat, from, to]);
 
   const pxSize = useMemo(() => {
     return {
@@ -63,11 +84,11 @@ export const useIsoProjection = ({
       top: position.y,
       width: `${pxSize.width}px`,
       height: `${pxSize.height}px`,
-      transform: getIsoProjectionCss(orientation),
+      transform: getIsoProjectionCss(orientation, isFlat),
       transformOrigin: 'top left'
     },
     position,
     gridSize,
     pxSize
-  }), [position, pxSize, gridSize, orientation]);
+  }), [position, pxSize, gridSize, orientation, isFlat]);
 };

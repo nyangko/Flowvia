@@ -19,10 +19,13 @@ export const useDiagramUtils = () => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const isFlat = useUiStateStore((state) => {
+    return state.projectionMode === 'FLAT';
+  });
 
   const getUnprojectedBounds = useCallback((): Size & Coords => {
-    return getUnprojectedBoundsUtil(scene.currentView);
-  }, [scene.currentView]);
+    return getUnprojectedBoundsUtil(scene.currentView, isFlat);
+  }, [scene.currentView, isFlat]);
 
   const getVisualBounds = useCallback((): Size & Coords => {
     return getVisualBoundsUtil(scene.currentView);
@@ -30,9 +33,9 @@ export const useDiagramUtils = () => {
 
   const getFitToViewParams = useCallback(
     (viewportSize: Size) => {
-      return getFitToViewParamsUtil(scene.currentView, viewportSize);
+      return getFitToViewParamsUtil(scene.currentView, viewportSize, isFlat);
     },
-    [scene.currentView]
+    [scene.currentView, isFlat]
   );
 
   const fitToView = useCallback(async () => {

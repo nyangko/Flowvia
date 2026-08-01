@@ -23,6 +23,7 @@ const App = ({
   onModelUpdated,
   enableDebugTools = false,
   editorMode = 'EDITABLE',
+  projectionMode,
   renderer,
   locale = enUS,
   iconPackManager,
@@ -46,6 +47,14 @@ const App = ({
     uiStateActions.setEditorMode(editorMode);
     uiStateActions.setMainMenuOptions(mainMenuOptions);
   }, [editorMode, uiStateActions, mainMenuOptions]);
+
+  // Uncontrolled unless the host app passes an explicit value — otherwise the
+  // built-in toggle button drives this and a sync effect here would fight it.
+  useEffect(() => {
+    if (projectionMode !== undefined) {
+      uiStateActions.setProjectionMode(projectionMode);
+    }
+  }, [projectionMode, uiStateActions]);
 
   useEffect(() => {
     return () => {

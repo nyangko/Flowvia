@@ -12,6 +12,7 @@ import { getGroupOffset } from 'src/utils/connectorGroups';
 import { PROJECTED_TILE_SIZE, UNPROJECTED_TILE_SIZE } from 'src/config';
 import { Label } from 'src/components/Label/Label';
 import { ConnectorLabel as ConnectorLabelType } from 'src/types';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 
 /**
  * Calculate the perpendicular unit vector at a point along a tile path.
@@ -51,6 +52,7 @@ interface Props {
 
 export const ConnectorLabel = memo(({ connector: sceneConnector, groupIndex = 0, groupTotal = 1 }: Props) => {
   const connector = useConnector(sceneConnector.id);
+  const isFlat = useUiStateStore((state) => state.projectionMode === 'FLAT');
 
   const labels = useMemo(() => {
     if (!connector) return [];
@@ -87,7 +89,8 @@ export const ConnectorLabel = memo(({ connector: sceneConnector, groupIndex = 0,
           tile: connectorPathTileToGlobal(
             labelTile,
             sceneConnector.path.rectangle.from
-          )
+          ),
+          flat: isFlat
         });
 
         // For double line types, offset labels based on line assignment
@@ -129,7 +132,7 @@ export const ConnectorLabel = memo(({ connector: sceneConnector, groupIndex = 0,
           return item !== null;
         }
       );
-  }, [labels, sceneConnector.path, connector?.lineType, connector?.width, groupIndex, groupTotal]);
+  }, [labels, sceneConnector.path, connector?.lineType, connector?.width, groupIndex, groupTotal, isFlat]);
 
   return (
     <>

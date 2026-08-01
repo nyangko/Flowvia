@@ -1,9 +1,6 @@
 import React, { useMemo, useState, memo } from 'react';
 import { Box, Typography, Stack, IconButton } from '@mui/material';
-import {
-  ExpandMore as ExpandMoreIcon,
-  ExpandLess as ExpandLessIcon
-} from '@mui/icons-material';
+import { IconChevronDown as ExpandMoreIcon, IconChevronUp as ExpandLessIcon } from '@tabler/icons-react';
 import { PROJECTED_TILE_SIZE, DEFAULT_LABEL_HEIGHT } from 'src/config';
 import { getTilePosition } from 'src/utils';
 import { useIcon } from 'src/hooks/useIcon';
@@ -32,15 +29,17 @@ export const Node = memo(({ node, order }: Props) => {
   const { iconComponent } = useIcon(modelItem?.icon);
   const forceExpandLabels = useUiStateStore((state) => state.expandLabels);
   const editorMode = useUiStateStore((state) => state.editorMode);
+  const isFlat = useUiStateStore((state) => state.projectionMode === 'FLAT');
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const { t } = useTranslation();
 
   const position = useMemo(() => {
     return getTilePosition({
       tile: node.tile,
-      origin: 'BOTTOM'
+      origin: 'BOTTOM',
+      flat: isFlat
     });
-  }, [node.tile]);
+  }, [node.tile, isFlat]);
 
   const hasDescription = useMemo(() => {
     return !isMarkdownEmpty(modelItem?.description);
@@ -102,9 +101,9 @@ export const Node = memo(({ node, order }: Props) => {
                       }}
                     >
                       {isDescriptionExpanded ? (
-                        <ExpandLessIcon fontSize="small" />
+                        <ExpandLessIcon size={20} />
                       ) : (
-                        <ExpandMoreIcon fontSize="small" />
+                        <ExpandMoreIcon size={20} />
                       )}
                     </IconButton>
                   )}

@@ -144,7 +144,8 @@ export const FreehandLasso: ModeActions = {
           rendererSize: {
             width: rendererSize.width,
             height: rendererSize.height
-          }
+          },
+          flat: uiState.projectionMode === 'FLAT'
         });
       });
 

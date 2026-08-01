@@ -351,7 +351,8 @@ export const useInteractionManager = () => {
         scroll: uiState.scroll,
         lastMouse: uiState.mouse,
         mouseEvent: e,
-        rendererSize
+        rendererSize,
+        flat: uiState.projectionMode === 'FLAT'
       });
 
       if (e.type === 'mousemove') {
@@ -378,6 +379,13 @@ export const useInteractionManager = () => {
       e.preventDefault();
 
       const uiState = uiStateApi.getState();
+
+      // Read-only/locked diagrams (EXPLORABLE_READONLY) still attach mouse
+      // listeners for panning, but none of the edit/delete context-menu
+      // actions should be reachable there.
+      if (uiState.editorMode !== 'EDITABLE') {
+        return;
+      }
 
       if (uiState.mode.type === 'CONNECTOR') {
         const connectorMode = uiState.mode;

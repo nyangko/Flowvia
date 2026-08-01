@@ -4,6 +4,7 @@ import { useTheme, Box } from '@mui/material';
 import { getIsoProjectionCss } from 'src/utils';
 import { Svg } from 'src/components/Svg/Svg';
 import { TRANSFORM_ANCHOR_SIZE, TRANSFORM_CONTROLS_COLOR } from 'src/config';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 
 interface Props {
   position: Coords;
@@ -15,6 +16,7 @@ const strokeWidth = 2;
 export const TransformAnchor = ({ position, onMouseDown }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
   const theme = useTheme();
+  const isFlat = useUiStateStore((state) => state.projectionMode === 'FLAT');
 
   return (
     <Box
@@ -27,7 +29,7 @@ export const TransformAnchor = ({ position, onMouseDown }: Props) => {
       onMouseDown={onMouseDown}
       sx={{
         position: 'absolute',
-        transform: getIsoProjectionCss(),
+        transform: getIsoProjectionCss(undefined, isFlat),
         width: TRANSFORM_ANCHOR_SIZE,
         height: TRANSFORM_ANCHOR_SIZE
       }}

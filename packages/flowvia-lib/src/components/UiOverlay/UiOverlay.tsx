@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Box, useTheme, Typography, Stack } from '@mui/material';
-import { ChevronRight } from '@mui/icons-material';
+import { IconChevronRight as ChevronRight } from '@tabler/icons-react';
 import { EditorModeEnum, DialogTypeEnum } from 'src/types';
 import { UiElement } from 'components/UiElement/UiElement';
 import { SceneLayer } from 'src/components/SceneLayer/SceneLayer';
@@ -109,6 +109,9 @@ export const UiOverlay = () => {
   });
   const historyControlsPortalTarget = useUiStateStore((state) => {
     return state.historyControlsPortalTarget;
+  });
+  const isFlat = useUiStateStore((state) => {
+    return state.projectionMode === 'FLAT';
   });
   const { size: rendererSize } = useResizeObserver(rendererEl);
 
@@ -290,8 +293,8 @@ export const UiOverlay = () => {
             ref={contextMenuAnchorRef} 
             sx={{
               position: 'absolute',
-              left: getTilePosition({ tile: contextMenu.tile }).x,
-              top: getTilePosition({ tile: contextMenu.tile }).y
+              left: getTilePosition({ tile: contextMenu.tile, flat: isFlat }).x,
+              top: getTilePosition({ tile: contextMenu.tile, flat: isFlat }).y
             }}
           />
         )}

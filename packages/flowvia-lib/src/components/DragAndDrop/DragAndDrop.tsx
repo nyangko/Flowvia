@@ -4,6 +4,7 @@ import { Coords } from 'src/types';
 import { getTilePosition, findNearestUnoccupiedTile } from 'src/utils';
 import { useIcon } from 'src/hooks/useIcon';
 import { useScene } from 'src/hooks/useScene';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 
 interface Props {
   iconId: string;
@@ -13,6 +14,7 @@ interface Props {
 export const DragAndDrop = ({ iconId, tile }: Props) => {
   const { iconComponent } = useIcon(iconId);
   const scene = useScene();
+  const isFlat = useUiStateStore((state) => state.projectionMode === 'FLAT');
 
   // PlaceIcon.mouseup redirects onto the nearest unoccupied tile when the
   // hovered tile is already taken (src/interaction/modes/PlaceIcon.ts) — mirror
@@ -27,8 +29,8 @@ export const DragAndDrop = ({ iconId, tile }: Props) => {
   // cancels to CENTER). This preview must match that anchor, or it renders offset
   // from where the item actually lands once placed.
   const tilePosition = useMemo(() => {
-    return getTilePosition({ tile: targetTile, origin: 'CENTER' });
-  }, [targetTile]);
+    return getTilePosition({ tile: targetTile, origin: 'CENTER', flat: isFlat });
+  }, [targetTile, isFlat]);
 
   return (
     <Box

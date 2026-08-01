@@ -10,6 +10,7 @@ import {
   convertBoundsToNamedAnchors
 } from 'src/utils';
 import { TransformAnchor } from './TransformAnchor';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 
 interface Props {
   from: Coords;
@@ -20,6 +21,7 @@ interface Props {
 const strokeWidth = 2;
 
 export const TransformControls = ({ from, to, onAnchorMouseDown }: Props) => {
+  const isFlat = useUiStateStore((state) => state.projectionMode === 'FLAT');
   const { css, pxSize } = useIsoProjection({
     from,
     to
@@ -34,7 +36,8 @@ export const TransformControls = ({ from, to, onAnchorMouseDown }: Props) => {
       ([key, value], i) => {
         const position = getTilePosition({
           tile: value,
-          origin: outermostCornerPositions[i]
+          origin: outermostCornerPositions[i],
+          flat: isFlat
         });
 
         return {
@@ -47,7 +50,7 @@ export const TransformControls = ({ from, to, onAnchorMouseDown }: Props) => {
     );
 
     return cornerPositions;
-  }, [onAnchorMouseDown, from, to]);
+  }, [onAnchorMouseDown, from, to, isFlat]);
 
   return (
     <>
