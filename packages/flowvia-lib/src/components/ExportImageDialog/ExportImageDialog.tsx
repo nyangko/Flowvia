@@ -11,6 +11,7 @@ import {
   DialogTitle,
   Box,
   Button,
+  IconButton,
   Stack,
   Alert,
   Checkbox,
@@ -21,6 +22,7 @@ import {
   MenuItem,
   FormControl
 } from '@mui/material';
+import { IconX as CloseIcon } from '@tabler/icons-react';
 import { useModelStore } from 'src/stores/modelStore';
 import {
   exportAsImage,
@@ -436,7 +438,20 @@ export const ExportImageDialog = ({ onClose, quality = 1.5 }: Props) => {
 
   return (
     <Dialog open onClose={onClose} maxWidth="md" fullWidth>
-      <DialogTitle>Export as image</DialogTitle>
+      <DialogTitle>
+        <Box display="flex" alignItems="center" justifyContent="space-between">
+          <Typography variant="h6" component="div">
+            Export as image
+          </Typography>
+          <IconButton
+            aria-label="Close"
+            onClick={onClose}
+            sx={{ color: (theme) => theme.palette.grey[500] }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
+      </DialogTitle>
       <DialogContent>
         <Stack spacing={2}>
           <Alert severity="info">

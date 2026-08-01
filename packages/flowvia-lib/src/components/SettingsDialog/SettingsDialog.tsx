@@ -3,14 +3,12 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogActions,
-  Button,
   IconButton,
   Tabs,
   Tab,
   Box
 } from '@mui/material';
-import { Close as CloseIcon } from '@mui/icons-material';
+import { IconX as CloseIcon } from '@tabler/icons-react';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { HotkeySettings } from '../HotkeySettings/HotkeySettings';
 import { PanSettings } from '../PanSettings/PanSettings';
@@ -111,9 +109,6 @@ export const SettingsDialog = ({ iconPackManager }: SettingsDialogProps) => {
           )}
         </Box>
       </DialogContent>
-      <DialogActions>
-        <Button onClick={handleClose}>{t('helpDialog.close')}</Button>
-      </DialogActions>
     </Dialog>
   );
 };
