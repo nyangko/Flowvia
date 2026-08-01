@@ -5,7 +5,9 @@
     "loadSessionOnly": "Charger",
     "importFile": "Importer un fichier",
     "exportFile": "Exporter un fichier",
-    "quickSaveSession": "Enregistrement rapide (Session)"
+    "quickSaveSession": "Enregistrement rapide (Session)",
+    "lockDiagram": "Verrouiller l'édition",
+    "unlockDiagram": "Déverrouiller l'édition"
   },
   "status": {
     "current": "Actuel",
@@ -32,7 +34,9 @@
       "storageServer": "Synchronisé avec le serveur",
       "storageLocal": "Enregistré dans ce navigateur",
       "storageServerNote": "Les diagrammes se synchronisent entre vos appareils.",
-      "btnShare": "Partager"
+      "btnShare": "Partager",
+      "btnShareView": "Copier le lien en lecture seule",
+      "btnShareEdit": "Copier le lien modifiable"
     },
     "export": {
       "title": "Exporter le diagramme",

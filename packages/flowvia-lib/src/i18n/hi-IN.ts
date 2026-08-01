@@ -23,6 +23,10 @@ const locale: LocaleProps = {
     settings: "सेटिंग्स",
     gitHub: "GitHub"
   },
+  viewControls: {
+    switchToFlatView: "फ़्लैट व्यू पर स्विच करें",
+    switchToIsometricView: "आइसोमेट्रिक व्यू पर स्विच करें"
+  },
   helpDialog: {
     title: "कीबोर्ड शॉर्टकट और सहायता",
     close: "बंद करें",
@@ -294,6 +298,12 @@ const locale: LocaleProps = {
       collapseDescription: "विवरण छिपाएं"
     },
     connector: {
+      editTitle: "कनेक्टर संपादित करें",
+      options: "विकल्प",
+      name: "नाम",
+      namePlaceholder: "उदा. भुगतान अनुरोध",
+      description: "विवरण",
+      descriptionPlaceholder: "यह कनेक्टर क्या दर्शाता है, लिखें",
       labels: "लेबल",
       labelsCount: "{count} / {max} लेबल",
       addLabel: "लेबल जोड़ें",
@@ -307,6 +317,8 @@ const locale: LocaleProps = {
       width: "मोटाई",
       lineStyle: "लाइन शैली",
       showArrow: "तीर दिखाएं",
+      preventOverlap: "ओवरलैप रोकें",
+      reverseDirection: "दिशा बदलें",
       connectorsCount: "{count} कनेक्टर",
       connectorFallbackName: "कनेक्टर {number}",
       styleSolid: "ठोस",

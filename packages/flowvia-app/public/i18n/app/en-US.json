@@ -5,7 +5,9 @@
     "loadSessionOnly": "Load",
     "importFile": "Import File",
     "exportFile": "Export File",
-    "quickSaveSession": "Quick Save (Session)"
+    "quickSaveSession": "Quick Save (Session)",
+    "lockDiagram": "Lock editing",
+    "unlockDiagram": "Unlock editing"
   },
   "status": {
     "current": "Current",
@@ -32,7 +34,9 @@
       "storageServer": "Synced to server",
       "storageLocal": "Saved in this browser",
       "storageServerNote": "Diagrams sync across your devices.",
-      "btnShare": "Share"
+      "btnShare": "Share",
+      "btnShareView": "Copy view-only link",
+      "btnShareEdit": "Copy editable link"
     },
     "export": {
       "title": "Export Diagram",

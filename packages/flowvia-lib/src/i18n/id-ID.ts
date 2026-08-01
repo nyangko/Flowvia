@@ -23,6 +23,10 @@ const locale: LocaleProps = {
     settings: "Pengaturan",
     gitHub: "GitHub"
   },
+  viewControls: {
+    switchToFlatView: "Beralih ke tampilan datar",
+    switchToIsometricView: "Beralih ke tampilan isometrik"
+  },
   helpDialog: {
     title: "Pintasan Keyboard & Bantuan",
     close: "Tutup",
@@ -294,6 +298,12 @@ const locale: LocaleProps = {
       collapseDescription: "Sembunyikan deskripsi"
     },
     connector: {
+      editTitle: "Edit Konektor",
+      options: "Opsi",
+      name: "Nama",
+      namePlaceholder: "mis. Permintaan Pembayaran",
+      description: "Deskripsi",
+      descriptionPlaceholder: "Catat apa yang diwakili konektor ini",
       labels: "Label",
       labelsCount: "{count} / {max} label",
       addLabel: "Tambah Label",
@@ -307,6 +317,8 @@ const locale: LocaleProps = {
       width: "Ketebalan",
       lineStyle: "Gaya Garis",
       showArrow: "Tampilkan Panah",
+      preventOverlap: "Cegah Tumpang Tindih",
+      reverseDirection: "Balik Arah",
       connectorsCount: "{count} Konektor",
       connectorFallbackName: "Konektor {number}",
       styleSolid: "Solid",

@@ -23,6 +23,10 @@ const locale: LocaleProps = {
     settings: "Settings",
     gitHub: "GitHub"
   },
+  viewControls: {
+    switchToFlatView: "Switch to flat view",
+    switchToIsometricView: "Switch to isometric view"
+  },
   helpDialog: {
     title: "Keyboard Shortcuts & Help",
     close: "Close",
@@ -293,6 +297,12 @@ const locale: LocaleProps = {
       collapseDescription: "Hide description"
     },
     connector: {
+      editTitle: "Edit Connector",
+      options: "Options",
+      name: "Name",
+      namePlaceholder: "e.g. Payment Request",
+      description: "Description",
+      descriptionPlaceholder: "Note what this connector represents",
       labels: "Labels",
       labelsCount: "{count} / {max} labels",
       addLabel: "Add Label",
@@ -306,6 +316,8 @@ const locale: LocaleProps = {
       width: "Width",
       lineStyle: "Line Style",
       showArrow: "Show Arrow",
+      preventOverlap: "Prevent Overlap",
+      reverseDirection: "Reverse Direction",
       connectorsCount: "{count} Connectors",
       connectorFallbackName: "Connector {number}",
       styleSolid: "Solid",

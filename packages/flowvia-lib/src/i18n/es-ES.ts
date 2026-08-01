@@ -23,6 +23,10 @@ const locale: LocaleProps = {
     settings: "Configuración",
     gitHub: "GitHub"
   },
+  viewControls: {
+    switchToFlatView: "Cambiar a vista plana",
+    switchToIsometricView: "Cambiar a vista isométrica"
+  },
   helpDialog: {
     title: "Atajos de teclado y ayuda",
     close: "Cerrar",
@@ -293,6 +297,12 @@ const locale: LocaleProps = {
       collapseDescription: "Ocultar descripción"
     },
     connector: {
+      editTitle: "Editar conector",
+      options: "Opciones",
+      name: "Nombre",
+      namePlaceholder: "ej. Solicitud de pago",
+      description: "Descripción",
+      descriptionPlaceholder: "Anota qué representa este conector",
       labels: "Etiquetas",
       labelsCount: "{count} / {max} etiquetas",
       addLabel: "Añadir etiqueta",
@@ -306,6 +316,8 @@ const locale: LocaleProps = {
       width: "Grosor",
       lineStyle: "Estilo de línea",
       showArrow: "Mostrar flecha",
+      preventOverlap: "Evitar superposición",
+      reverseDirection: "Invertir dirección",
       connectorsCount: "{count} conectores",
       connectorFallbackName: "Conector {number}",
       styleSolid: "Sólido",

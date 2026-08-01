@@ -5,7 +5,9 @@
     "loadSessionOnly": "加载",
     "importFile": "导入文件",
     "exportFile": "导出文件",
-    "quickSaveSession": "快速保存（会话）"
+    "quickSaveSession": "快速保存（会话）",
+    "lockDiagram": "锁定编辑",
+    "unlockDiagram": "解除锁定"
   },
   "status": {
     "current": "当前",
@@ -32,7 +34,9 @@
       "storageServer": "已与服务器同步",
       "storageLocal": "已保存在此浏览器",
       "storageServerNote": "可在您的其他设备上访问此图表。",
-      "btnShare": "分享"
+      "btnShare": "分享",
+      "btnShareView": "复制只读链接",
+      "btnShareEdit": "复制可编辑链接"
     },
     "export": {
       "title": "导出图表",

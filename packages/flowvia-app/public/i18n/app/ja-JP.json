@@ -5,7 +5,9 @@
     "loadSessionOnly": "読み込み",
     "importFile": "ファイルをインポート",
     "exportFile": "ファイルをエクスポート",
-    "quickSaveSession": "クイック保存 (セッション)"
+    "quickSaveSession": "クイック保存 (セッション)",
+    "lockDiagram": "編集をロック",
+    "unlockDiagram": "ロック解除"
   },
   "status": {
     "current": "現在",
@@ -32,7 +34,9 @@
       "storageServer": "サーバーと同期済み",
       "storageLocal": "このブラウザに保存済み",
       "storageServerNote": "他のデバイスからもこのダイアグラムにアクセスできます。",
-      "btnShare": "共有"
+      "btnShare": "共有",
+      "btnShareView": "閲覧専用リンクをコピー",
+      "btnShareEdit": "編集可能リンクをコピー"
     },
     "export": {
       "title": "ダイアグラムをエクスポート",

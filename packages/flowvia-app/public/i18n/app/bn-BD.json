@@ -5,7 +5,9 @@
     "loadSessionOnly": "লোড করুন",
     "importFile": "ফাইল আমদানি করুন",
     "exportFile": "ফাইল রপ্তানি করুন",
-    "quickSaveSession": "দ্রুত সংরক্ষণ (সেশন)"
+    "quickSaveSession": "দ্রুত সংরক্ষণ (সেশন)",
+    "lockDiagram": "সম্পাদনা লক করুন",
+    "unlockDiagram": "সম্পাদনা আনলক করুন"
   },
   "status": {
     "current": "বর্তমান",
@@ -32,7 +34,9 @@
       "storageServer": "সার্ভারের সাথে সিঙ্ক করা হয়েছে",
       "storageLocal": "এই ব্রাউজারে সংরক্ষিত",
       "storageServerNote": "আপনার ডিভাইসগুলির মধ্যে ডায়াগ্রাম সিঙ্ক হয়।",
-      "btnShare": "শেয়ার করুন"
+      "btnShare": "শেয়ার করুন",
+      "btnShareView": "শুধুমাত্র-দেখার লিঙ্ক কপি করুন",
+      "btnShareEdit": "সম্পাদনাযোগ্য লিঙ্ক কপি করুন"
     },
     "export": {
       "title": "ডায়াগ্রাম রপ্তানি করুন",

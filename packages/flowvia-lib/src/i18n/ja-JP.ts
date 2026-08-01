@@ -23,6 +23,10 @@ const locale: LocaleProps = {
     settings: "設定",
     gitHub: "GitHub"
   },
+  viewControls: {
+    switchToFlatView: "フラット表示に切り替え",
+    switchToIsometricView: "アイソメトリック表示に切り替え"
+  },
   helpDialog: {
     title: "キーボードショートカットとヘルプ",
     close: "閉じる",
@@ -293,6 +297,12 @@ const locale: LocaleProps = {
       collapseDescription: "説明を非表示"
     },
     connector: {
+      editTitle: "コネクタを編集",
+      options: "オプション",
+      name: "名前",
+      namePlaceholder: "例: 支払いリクエスト",
+      description: "説明",
+      descriptionPlaceholder: "このコネクタが表すものを記入してください",
       labels: "ラベル",
       labelsCount: "{count} / {max} ラベル",
       addLabel: "ラベルを追加",
@@ -306,6 +316,8 @@ const locale: LocaleProps = {
       width: "太さ",
       lineStyle: "線のスタイル",
       showArrow: "矢印を表示",
+      preventOverlap: "重なりを防止",
+      reverseDirection: "方向を反転",
       connectorsCount: "接続線 {count}件",
       connectorFallbackName: "接続線 {number}",
       styleSolid: "実線",

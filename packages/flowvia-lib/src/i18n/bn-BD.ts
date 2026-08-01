@@ -23,6 +23,10 @@ const locale: LocaleProps = {
     settings: "সেটিংস",
     gitHub: "GitHub"
   },
+  viewControls: {
+    switchToFlatView: "ফ্ল্যাট ভিউতে স্যুইচ করুন",
+    switchToIsometricView: "আইসোমেট্রিক ভিউতে স্যুইচ করুন"
+  },
   helpDialog: {
     title: "কীবোর্ড শর্টকাট এবং সহায়তা",
     close: "বন্ধ করুন",
@@ -294,6 +298,12 @@ const locale: LocaleProps = {
       collapseDescription: "বিবরণ লুকান"
     },
     connector: {
+      editTitle: "সংযোগকারী সম্পাদনা",
+      options: "অপশন",
+      name: "নাম",
+      namePlaceholder: "যেমন: পেমেন্ট অনুরোধ",
+      description: "বিবরণ",
+      descriptionPlaceholder: "এই সংযোগকারীটি কী নির্দেশ করে তা লিখুন",
       labels: "লেবেল",
       labelsCount: "{count} / {max} লেবেল",
       addLabel: "লেবেল যোগ করুন",
@@ -307,6 +317,8 @@ const locale: LocaleProps = {
       width: "প্রস্থ",
       lineStyle: "লাইন স্টাইল",
       showArrow: "তীর দেখান",
+      preventOverlap: "ওভারল্যাপ প্রতিরোধ",
+      reverseDirection: "দিক পরিবর্তন",
       connectorsCount: "{count}টি সংযোগকারী",
       connectorFallbackName: "সংযোগকারী {number}",
       styleSolid: "সলিড",

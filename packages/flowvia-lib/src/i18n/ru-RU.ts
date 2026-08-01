@@ -23,6 +23,10 @@ const locale: LocaleProps = {
     settings: "Настройки",
     gitHub: "GitHub"
   },
+  viewControls: {
+    switchToFlatView: "Переключить на плоский вид",
+    switchToIsometricView: "Переключить на изометрический вид"
+  },
   helpDialog: {
     title: "Горячие клавиши и справка",
     close: "Закрыть",
@@ -294,6 +298,12 @@ const locale: LocaleProps = {
       collapseDescription: "Скрыть описание"
     },
     connector: {
+      editTitle: "Редактировать соединитель",
+      options: "Параметры",
+      name: "Название",
+      namePlaceholder: "напр. Запрос на оплату",
+      description: "Описание",
+      descriptionPlaceholder: "Опишите, что представляет этот соединитель",
       labels: "Метки",
       labelsCount: "{count} / {max} меток",
       addLabel: "Добавить метку",
@@ -307,6 +317,8 @@ const locale: LocaleProps = {
       width: "Толщина",
       lineStyle: "Стиль линии",
       showArrow: "Показать стрелку",
+      preventOverlap: "Предотвращать наложение",
+      reverseDirection: "Изменить направление",
       connectorsCount: "Соединителей: {count}",
       connectorFallbackName: "Соединитель {number}",
       styleSolid: "Сплошная",

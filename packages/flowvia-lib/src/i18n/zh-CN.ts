@@ -23,6 +23,10 @@ const locale: LocaleProps = {
     settings: "设置",
     gitHub: "GitHub"
   },
+  viewControls: {
+    switchToFlatView: "切换到平面视图",
+    switchToIsometricView: "切换到等距视图"
+  },
   helpDialog: {
     title: "键盘快捷键和帮助",
     close: "关闭",
@@ -294,6 +298,12 @@ const locale: LocaleProps = {
       collapseDescription: "隐藏描述"
     },
     connector: {
+      editTitle: "编辑连接线",
+      options: "选项",
+      name: "名称",
+      namePlaceholder: "例如：付款请求",
+      description: "描述",
+      descriptionPlaceholder: "记录此连接线所代表的内容",
       labels: "标签",
       labelsCount: "{count} / {max} 个标签",
       addLabel: "添加标签",
@@ -307,6 +317,8 @@ const locale: LocaleProps = {
       width: "宽度",
       lineStyle: "线条样式",
       showArrow: "显示箭头",
+      preventOverlap: "防止重叠",
+      reverseDirection: "反转方向",
       connectorsCount: "{count} 条连接线",
       connectorFallbackName: "连接线 {number}",
       styleSolid: "实线",

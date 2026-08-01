@@ -5,7 +5,9 @@
     "loadSessionOnly": "Muat",
     "importFile": "Impor File",
     "exportFile": "Ekspor File",
-    "quickSaveSession": "Simpan Cepat (Sesi)"
+    "quickSaveSession": "Simpan Cepat (Sesi)",
+    "lockDiagram": "Kunci pengeditan",
+    "unlockDiagram": "Buka kunci pengeditan"
   },
   "status": {
     "current": "Saat Ini",
@@ -32,7 +34,9 @@
       "storageServer": "Disinkronkan dengan server",
       "storageLocal": "Disimpan di browser ini",
       "storageServerNote": "Diagram disinkronkan di semua perangkat Anda.",
-      "btnShare": "Bagikan"
+      "btnShare": "Bagikan",
+      "btnShareView": "Salin tautan hanya-lihat",
+      "btnShareEdit": "Salin tautan yang dapat diedit"
     },
     "export": {
       "title": "Ekspor Diagram",

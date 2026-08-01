@@ -23,6 +23,10 @@ const locale: LocaleProps = {
     settings: "설정",
     gitHub: "GitHub"
   },
+  viewControls: {
+    switchToFlatView: "평면 보기로 전환",
+    switchToIsometricView: "아이소메트릭 보기로 전환"
+  },
   helpDialog: {
     title: "키보드 단축키 및 도움말",
     close: "닫기",
@@ -147,7 +151,7 @@ const locale: LocaleProps = {
     deleteText: "텍스트 삭제",
     editConnector: "연결선 수정",
     deleteConnector: "연결선 삭제",
-    editConnectorsHere: "여기 연결선 목록 보기 ({count}개)",
+    editConnectorsHere: "연결선 목록 보기 ({count}개)",
     deleteConnectorsHere: "여기 연결선 전체 삭제 ({count}개)",
     paste: "붙여넣기",
   },
@@ -293,6 +297,12 @@ const locale: LocaleProps = {
       collapseDescription: "설명 숨기기"
     },
     connector: {
+      editTitle: "연결선 편집",
+      options: "옵션",
+      name: "이름",
+      namePlaceholder: "예: 결제 요청",
+      description: "설명",
+      descriptionPlaceholder: "이 연결선이 나타내는 내용을 적어보세요",
       labels: "레이블",
       labelsCount: "{count} / {max}개 레이블",
       addLabel: "레이블 추가",
@@ -306,6 +316,8 @@ const locale: LocaleProps = {
       width: "두께",
       lineStyle: "선 스타일",
       showArrow: "화살표 표시",
+      preventOverlap: "겹침 방지",
+      reverseDirection: "방향 전환",
       connectorsCount: "연결선 {count}개",
       connectorFallbackName: "연결선 {number}",
       styleSolid: "실선",

@@ -23,6 +23,10 @@ const locale: LocaleProps = {
     settings: "Ayarlar",
     gitHub: "GitHub"
   },
+  viewControls: {
+    switchToFlatView: "Düz görünüme geç",
+    switchToIsometricView: "İzometrik görünüme geç"
+  },
   helpDialog: {
     title: "Klavye Kısayolları ve Yardım",
     close: "Kapat",
@@ -294,6 +298,12 @@ const locale: LocaleProps = {
       collapseDescription: "Açıklamayı gizle"
     },
     connector: {
+      editTitle: "Bağlayıcıyı Düzenle",
+      options: "Seçenekler",
+      name: "Ad",
+      namePlaceholder: "ör. Ödeme Talebi",
+      description: "Açıklama",
+      descriptionPlaceholder: "Bu bağlayıcının neyi temsil ettiğini not edin",
       labels: "Etiketler",
       labelsCount: "{count} / {max} etiket",
       addLabel: "Etiket Ekle",
@@ -307,6 +317,8 @@ const locale: LocaleProps = {
       width: "Kalınlık",
       lineStyle: "Çizgi Stili",
       showArrow: "Oku Göster",
+      preventOverlap: "Çakışmayı Önle",
+      reverseDirection: "Yönü Ters Çevir",
       connectorsCount: "{count} Bağlayıcı",
       connectorFallbackName: "Bağlayıcı {number}",
       styleSolid: "Düz",

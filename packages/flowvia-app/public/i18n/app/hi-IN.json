@@ -5,7 +5,9 @@
     "loadSessionOnly": "लोड करें",
     "importFile": "फ़ाइल आयात करें",
     "exportFile": "फ़ाइल निर्यात करें",
-    "quickSaveSession": "त्वरित सहेजें (सत्र)"
+    "quickSaveSession": "त्वरित सहेजें (सत्र)",
+    "lockDiagram": "संपादन लॉक करें",
+    "unlockDiagram": "संपादन अनलॉक करें"
   },
   "status": {
     "current": "वर्तमान",
@@ -32,7 +34,9 @@
       "storageServer": "सर्वर के साथ सिंक किया गया",
       "storageLocal": "इस ब्राउज़र में सहेजा गया",
       "storageServerNote": "आरेख आपके डिवाइसों के बीच सिंक होते हैं।",
-      "btnShare": "साझा करें"
+      "btnShare": "साझा करें",
+      "btnShareView": "केवल-दृश्य लिंक कॉपी करें",
+      "btnShareEdit": "संपादन योग्य लिंक कॉपी करें"
     },
     "export": {
       "title": "आरेख निर्यात करें",

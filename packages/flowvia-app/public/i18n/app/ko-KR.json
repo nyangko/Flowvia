@@ -5,7 +5,9 @@
     "loadSessionOnly": "불러오기",
     "importFile": "파일 가져오기",
     "exportFile": "파일 내보내기",
-    "quickSaveSession": "빠른 저장 (세션)"
+    "quickSaveSession": "빠른 저장 (세션)",
+    "lockDiagram": "편집 잠그기",
+    "unlockDiagram": "잠금 해제"
   },
   "status": {
     "current": "현재",
@@ -32,7 +34,9 @@
       "storageServer": "서버와 동기화됨",
       "storageLocal": "이 브라우저에 저장됨",
       "storageServerNote": "다른 기기에서도 이 다이어그램에 접근할 수 있습니다.",
-      "btnShare": "공유"
+      "btnShare": "공유",
+      "btnShareView": "보기 전용 링크 복사",
+      "btnShareEdit": "편집 가능 링크 복사"
     },
     "export": {
       "title": "다이어그램 내보내기",

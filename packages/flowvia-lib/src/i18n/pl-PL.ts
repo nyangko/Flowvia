@@ -23,6 +23,10 @@ const locale: LocaleProps = {
     settings: "Ustawienia",
     gitHub: "GitHub"
   },
+  viewControls: {
+    switchToFlatView: "Przełącz na widok płaski",
+    switchToIsometricView: "Przełącz na widok izometryczny"
+  },
   helpDialog: {
     title: "Skróty klawiaturowe i Pomoc",
     close: "Zamknij",
@@ -294,6 +298,12 @@ const locale: LocaleProps = {
       collapseDescription: "Ukryj opis"
     },
     connector: {
+      editTitle: "Edytuj łącznik",
+      options: "Opcje",
+      name: "Nazwa",
+      namePlaceholder: "np. Żądanie płatności",
+      description: "Opis",
+      descriptionPlaceholder: "Opisz, co reprezentuje to połączenie",
       labels: "Etykiety",
       labelsCount: "{count} / {max} etykiet",
       addLabel: "Dodaj etykietę",
@@ -307,6 +317,8 @@ const locale: LocaleProps = {
       width: "Grubość",
       lineStyle: "Styl linii",
       showArrow: "Pokaż strzałkę",
+      preventOverlap: "Zapobiegaj nakładaniu",
+      reverseDirection: "Odwróć kierunek",
       connectorsCount: "Połączenia: {count}",
       connectorFallbackName: "Połączenie {number}",
       styleSolid: "Ciągła",
