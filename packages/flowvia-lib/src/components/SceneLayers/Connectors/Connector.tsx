@@ -20,6 +20,7 @@ interface Props {
   isSelected?: boolean;
   groupIndex?: number;
   groupTotal?: number;
+  groupReversed?: boolean;
   dimmed?: boolean;
 }
 
@@ -70,13 +71,16 @@ const buildOffsetPolyline = (
   return points.join(' ');
 };
 
-export const Connector = memo(({ connector: _connector, isSelected, groupIndex = 0, groupTotal = 1, dimmed = false }: Props) => {
+export const Connector = memo(({ connector: _connector, isSelected, groupIndex = 0, groupTotal = 1, groupReversed = false, dimmed = false }: Props) => {
   const theme = useTheme();
   const predefinedColor = useColor(_connector.color);
   const { currentView } = useScene();
   const connector = useConnector(_connector.id);
   const connectorAnimationEnabled = useUiStateStore((state) => {
     return state.connectorAnimationEnabled;
+  });
+  const isFlat = useUiStateStore((state) => {
+    return state.projectionMode === 'FLAT';
   });
 
   if (!connector) {
@@ -103,31 +107,56 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
     };
   }, []);
 
+  // connector.path.tiles are stored as an offset from rectangle.from (the
+  // MAX-x/MAX-y corner) — isometric's skew + the scale(-1,1) mirror below turn
+  // that into a correctly-oriented drawing. Flat mode has no skew to lean on,
+  // so re-anchor the same tiles against the wrapper's actual anchor tile
+  // instead: useIsoProjection positions the flat wrapper at
+  // {x: rectangle.to.x, y: rectangle.from.y} (min-x, but MAX-y since flat's
+  // tile.y is negated in getTilePosition) — only x needs reflecting, y is
+  // already relative to the same corner the wrapper uses.
+  const pathTiles = useMemo(() => {
+    if (!isFlat) return connector.path.tiles;
+
+    const { from, to } = connector.path.rectangle;
+    const flipX = from.x - to.x;
+
+    return connector.path.tiles.map((tile) => {
+      return { x: flipX - tile.x, y: tile.y };
+    });
+  }, [connector.path.tiles, connector.path.rectangle, isFlat]);
+
   const connectorWidthPx = useMemo(() => {
     return (UNPROJECTED_TILE_SIZE / 100) * connector.width;
   }, [connector.width]);
 
-  // Pixel offset to spread parallel connectors within one tile
+  // Pixel offset to spread parallel connectors within one tile. The perpendicular
+  // direction below is derived from each connector's own tile path, which points
+  // the opposite way for a connector drawn start<->end reversed relative to its
+  // groupmates — negate here (once, for every consumer) so the group spreads
+  // apart consistently instead of two reversed connectors landing on top of
+  // each other.
   const groupOffsetPx = useMemo(() => {
-    return getGroupOffset(groupIndex, groupTotal, UNPROJECTED_TILE_SIZE);
-  }, [groupIndex, groupTotal]);
+    const offset = getGroupOffset(groupIndex, groupTotal, UNPROJECTED_TILE_SIZE);
+    return groupReversed ? -offset : offset;
+  }, [groupIndex, groupTotal, groupReversed]);
 
   const pathString = useMemo(() => {
     if (groupTotal > 1) {
-      return buildOffsetPolyline(connector.path.tiles, drawOffset, groupOffsetPx);
+      return buildOffsetPolyline(pathTiles, drawOffset, groupOffsetPx);
     }
-    return connector.path.tiles.reduce((acc, tile) => {
+    return pathTiles.reduce((acc, tile) => {
       return `${acc} ${tile.x * UNPROJECTED_TILE_SIZE + drawOffset.x},${
         tile.y * UNPROJECTED_TILE_SIZE + drawOffset.y
       }`;
     }, '');
-  }, [connector.path.tiles, drawOffset, groupTotal, groupOffsetPx]);
+  }, [pathTiles, drawOffset, groupTotal, groupOffsetPx]);
 
   // Create offset paths for double lines
   const offsetPaths = useMemo(() => {
     if (!connector.lineType || connector.lineType === 'SINGLE') return null;
 
-    const tiles = connector.path.tiles;
+    const tiles = pathTiles;
     if (tiles.length < 2) return null;
 
     const doubleOffset = connectorWidthPx * 3;
@@ -145,24 +174,23 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
       path1: buildOffsetPolyline(tiles, drawOffset, doubleOffset),
       path2: buildOffsetPolyline(tiles, drawOffset, -doubleOffset)
     };
-  }, [connector.path.tiles, connector.lineType, connectorWidthPx, drawOffset, groupTotal, groupOffsetPx]);
+  }, [pathTiles, connector.lineType, connectorWidthPx, drawOffset, groupTotal, groupOffsetPx]);
 
   const anchorPositions = useMemo(() => {
     if (!isSelected) return [];
 
+    const { from, to } = connector.path.rectangle;
+
     return connector.anchors.map((anchor) => {
       const position = getAnchorTile(anchor, currentView);
+      const local = isFlat
+        ? { x: position.x - to.x, y: from.y - position.y }
+        : { x: from.x - position.x, y: from.y - position.y };
 
       return {
         id: anchor.id,
-        x:
-          (connector.path.rectangle.from.x - position.x) *
-            UNPROJECTED_TILE_SIZE +
-          drawOffset.x,
-        y:
-          (connector.path.rectangle.from.y - position.y) *
-            UNPROJECTED_TILE_SIZE +
-          drawOffset.y
+        x: local.x * UNPROJECTED_TILE_SIZE + drawOffset.x,
+        y: local.y * UNPROJECTED_TILE_SIZE + drawOffset.y
       };
     });
   }, [
@@ -170,12 +198,25 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
     connector.path.rectangle,
     connector.anchors,
     drawOffset,
-    isSelected
+    isSelected,
+    isFlat
   ]);
 
   const directionIcon = useMemo(() => {
-    return getConnectorDirectionIcon(connector.path.tiles);
-  }, [connector.path.tiles]);
+    const icon = getConnectorDirectionIcon(pathTiles);
+    if (!icon || groupTotal <= 1) return icon;
+
+    // getConnectorDirectionIcon places the arrowhead on the connector's raw
+    // (un-offset) path, so every connector in a group would otherwise draw its
+    // arrow at the same spot — shift it by the same perpendicular offset
+    // applied to the line itself.
+    const { dx, dy } = getPerpendicularAt(pathTiles, pathTiles.length - 2);
+    return {
+      ...icon,
+      x: icon.x + dx * groupOffsetPx,
+      y: icon.y + dy * groupOffsetPx
+    };
+  }, [pathTiles, groupTotal, groupOffsetPx]);
 
   const strokeDashArray = useMemo(() => {
     switch (connector.style) {
@@ -218,10 +259,12 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
     <Box style={{ ...css, opacity: dimmed ? 0.25 : 1, transition: 'opacity 0.2s ease-in-out' }}>
       <Svg
         style={{
-          // TODO: The original x coordinates of each tile seems to be calculated wrongly.
-          // They are mirrored along the x-axis.  The hack below fixes this, but we should
-          // try to fix this issue at the root of the problem (might have further implications).
-          transform: 'scale(-1, 1)'
+          // TODO: The original x coordinates of each tile seems to be calculated wrongly
+          // in isometric mode — they're mirrored along the x-axis. The hack below fixes
+          // this, but we should try to fix this issue at the root of the problem (might
+          // have further implications). Flat mode's pathTiles above are already
+          // re-anchored to the correct orientation, so this mirror must not double up there.
+          transform: isFlat ? undefined : 'scale(-1, 1)'
         }}
         viewboxSize={pxSize}
       >
@@ -315,18 +358,18 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
         )}
 
         {/* Circle for port-channel representation */}
-        {lineType === 'DOUBLE_WITH_CIRCLE' && connector.path.tiles.length >= 2 && (() => {
-          const midIndex = Math.floor(connector.path.tiles.length / 2);
-          const midTile = connector.path.tiles[midIndex];
-          const { dx, dy } = getPerpendicularAt(connector.path.tiles, midIndex);
+        {lineType === 'DOUBLE_WITH_CIRCLE' && pathTiles.length >= 2 && (() => {
+          const midIndex = Math.floor(pathTiles.length / 2);
+          const midTile = pathTiles[midIndex];
+          const { dx, dy } = getPerpendicularAt(pathTiles, midIndex);
           const x = midTile.x * UNPROJECTED_TILE_SIZE + drawOffset.x + dx * groupOffsetPx;
           const y = midTile.y * UNPROJECTED_TILE_SIZE + drawOffset.y + dy * groupOffsetPx;
 
           // Calculate rotation based on line direction at middle point
           let rotation = 0;
-          if (midIndex > 0 && midIndex < connector.path.tiles.length - 1) {
-            const prevTile = connector.path.tiles[midIndex - 1];
-            const nextTile = connector.path.tiles[midIndex + 1];
+          if (midIndex > 0 && midIndex < pathTiles.length - 1) {
+            const prevTile = pathTiles[midIndex - 1];
+            const nextTile = pathTiles[midIndex + 1];
             const rdx = nextTile.x - prevTile.x;
             const rdy = nextTile.y - prevTile.y;
             rotation = Math.atan2(rdy, rdx) * (180 / Math.PI);

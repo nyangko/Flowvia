@@ -60,6 +60,7 @@ export const Connectors = ({ connectors }: Props) => {
             }
             groupIndex={group?.index ?? 0}
             groupTotal={group?.total ?? 1}
+            groupReversed={group?.reversed ?? false}
             dimmed={isDimmed}
           />
         );

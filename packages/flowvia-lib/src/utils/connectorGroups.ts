@@ -20,32 +20,44 @@ function getAnchorRefString(ref: Connector['anchors'][0]['ref']): string {
  */
 export function getConnectorGroups(
   connectors: Connector[]
-): Map<string, { index: number; total: number }> {
-  const groups = new Map<string, string[]>();
+): Map<string, { index: number; total: number; reversed: boolean }> {
+  const groups = new Map<string, { id: string; reversed: boolean }[]>();
 
   for (const connector of connectors) {
     if (connector.anchors.length !== 2) {
       continue;
     }
+    // Connectors that opt out of auto-spacing are left out of every group
+    // entirely, so they always render at their raw (un-offset) position and
+    // don't shift where their groupmates land.
+    if (connector.preventOverlap === false) {
+      continue;
+    }
 
     const ref1 = getAnchorRefString(connector.anchors[0].ref);
     const ref2 = getAnchorRefString(connector.anchors[1].ref);
-    const key = [ref1, ref2].sort().join('|');
+    const sorted = [ref1, ref2].sort();
+    const key = sorted.join('|');
+    // Anchor order (which endpoint was drawn first) differs per connector even
+    // within the same group; normalize against the group's canonical (sorted)
+    // order so perpendicular offsets below are all computed relative to the
+    // same direction instead of each connector's own draw direction.
+    const reversed = ref1 !== sorted[0];
 
     const existing = groups.get(key);
     if (existing) {
-      existing.push(connector.id);
+      existing.push({ id: connector.id, reversed });
     } else {
-      groups.set(key, [connector.id]);
+      groups.set(key, [{ id: connector.id, reversed }]);
     }
   }
 
-  const result = new Map<string, { index: number; total: number }>();
+  const result = new Map<string, { index: number; total: number; reversed: boolean }>();
 
-  for (const connectorIds of groups.values()) {
-    const total = connectorIds.length;
-    connectorIds.forEach((id, index) => {
-      result.set(id, { index, total });
+  for (const entries of groups.values()) {
+    const total = entries.length;
+    entries.forEach(({ id, reversed }, index) => {
+      result.set(id, { index, total, reversed });
     });
   }
 

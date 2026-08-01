@@ -2,6 +2,7 @@ import { produce } from 'immer';
 import {
   UNPROJECTED_TILE_SIZE,
   PROJECTED_TILE_SIZE,
+  FLAT_TILE_SIZE,
   ZOOM_INCREMENT,
   MAX_ZOOM,
   MIN_ZOOM,
@@ -45,6 +46,7 @@ interface ScreenToIso {
   zoom: number;
   scroll: Scroll;
   rendererSize: Size;
+  flat?: boolean;
 }
 
 // converts a mouse position to a tile position
@@ -52,16 +54,33 @@ export const screenToIso = ({
   mouse,
   zoom,
   scroll,
-  rendererSize
+  rendererSize,
+  flat = false
 }: ScreenToIso) => {
-  const projectedTileSize = SizeUtils.multiply(PROJECTED_TILE_SIZE, zoom);
-  const halfW = projectedTileSize.width / 2;
-  const halfH = projectedTileSize.height / 2;
-
   const projectPosition = {
     x: -rendererSize.width * 0.5 + mouse.x - scroll.position.x,
     y: -rendererSize.height * 0.5 + mouse.y - scroll.position.y
   };
+
+  if (flat) {
+    const flatTileSize = SizeUtils.multiply(FLAT_TILE_SIZE, zoom);
+    // getTilePosition centers tile N's cell on screen offset N * tileSize (it
+    // spans (N-0.5)..(N+0.5) tiles), so the inverse needs the same +half-tile
+    // correction the isometric branch below already applies before flooring.
+    // tile.y is negated below to match isometric's convention (increasing
+    // tile.y moves up the screen), so its inverse is negated too.
+    const halfW = flatTileSize.width / 2;
+    const halfH = flatTileSize.height / 2;
+
+    return {
+      x: Math.floor((projectPosition.x + halfW) / flatTileSize.width),
+      y: Math.floor((-projectPosition.y + halfH) / flatTileSize.height)
+    };
+  }
+
+  const projectedTileSize = SizeUtils.multiply(PROJECTED_TILE_SIZE, zoom);
+  const halfW = projectedTileSize.width / 2;
+  const halfH = projectedTileSize.height / 2;
 
   const tile = {
     x: Math.floor(
@@ -80,12 +99,40 @@ export const screenToIso = ({
 interface GetTilePosition {
   tile: Coords;
   origin?: TileOrigin;
+  flat?: boolean;
 }
 
 export const getTilePosition = ({
   tile,
-  origin = 'CENTER'
+  origin = 'CENTER',
+  flat = false
 }: GetTilePosition) => {
+  if (flat) {
+    const halfW = FLAT_TILE_SIZE.width / 2;
+    const halfH = FLAT_TILE_SIZE.height / 2;
+    // y is negated so increasing tile.y moves up the screen, matching the
+    // isometric branch below — otherwise toggling between projections
+    // flips everything upside down relative to itself.
+    const position: Coords = {
+      x: FLAT_TILE_SIZE.width * tile.x,
+      y: -FLAT_TILE_SIZE.height * tile.y
+    };
+
+    switch (origin) {
+      case 'TOP':
+        return CoordsUtils.add(position, { x: 0, y: -halfH });
+      case 'BOTTOM':
+        return CoordsUtils.add(position, { x: 0, y: halfH });
+      case 'LEFT':
+        return CoordsUtils.add(position, { x: -halfW, y: 0 });
+      case 'RIGHT':
+        return CoordsUtils.add(position, { x: halfW, y: 0 });
+      case 'CENTER':
+      default:
+        return position;
+    }
+  }
+
   const halfW = PROJECTED_TILE_SIZE.width / 2;
   const halfH = PROJECTED_TILE_SIZE.height / 2;
 
@@ -113,8 +160,8 @@ type IsoToScreen = GetTilePosition & {
   rendererSize: Size;
 };
 
-export const isoToScreen = ({ tile, origin, rendererSize }: IsoToScreen) => {
-  const position = getTilePosition({ tile, origin });
+export const isoToScreen = ({ tile, origin, rendererSize, flat }: IsoToScreen) => {
+  const position = getTilePosition({ tile, origin, flat });
 
   return {
     x: position.x + rendererSize.width / 2,
@@ -202,10 +249,14 @@ export const getBoundingBoxSize = (boundingBox: Coords[]): Size => {
 };
 
 const isoProjectionBaseValues = [0.707, -0.409, 0.707, 0.409, 0, -0.816];
+const flatProjectionValues = [1, 0, 0, 1, 0, 0];
 
 export const getIsoMatrix = (
-  orientation?: keyof typeof ProjectionOrientationEnum
+  orientation?: keyof typeof ProjectionOrientationEnum,
+  flat = false
 ) => {
+  if (flat) return flatProjectionValues;
+
   switch (orientation) {
     case ProjectionOrientationEnum.Y:
       return produce(isoProjectionBaseValues, (draft) => {
@@ -219,9 +270,10 @@ export const getIsoMatrix = (
 };
 
 export const getIsoProjectionCss = (
-  orientation?: keyof typeof ProjectionOrientationEnum
+  orientation?: keyof typeof ProjectionOrientationEnum,
+  flat = false
 ) => {
-  const matrixTransformValues = getIsoMatrix(orientation);
+  const matrixTransformValues = getIsoMatrix(orientation, flat);
 
   return `matrix(${matrixTransformValues.join(', ')})`;
 };
@@ -247,6 +299,7 @@ interface GetMouse {
   lastMouse: Mouse;
   mouseEvent: SlimMouseEvent;
   rendererSize: Size;
+  flat?: boolean;
 }
 
 export const getMouse = ({
@@ -255,7 +308,8 @@ export const getMouse = ({
   scroll,
   lastMouse,
   mouseEvent,
-  rendererSize
+  rendererSize,
+  flat
 }: GetMouse): Mouse => {
   const componentOffset = interactiveElement.getBoundingClientRect();
   const offset: Coords = {
@@ -276,7 +330,8 @@ export const getMouse = ({
       mouse: mousePosition,
       zoom,
       scroll,
-      rendererSize
+      rendererSize,
+      flat
     })
   };
 
@@ -385,13 +440,25 @@ export const getConnectorPath = ({
       if (i === 0) return acc;
 
       const prev = positionsNormalisedFromSearchArea[i - 1];
+      // findPath(A, B) and findPath(B, A) aren't guaranteed to return
+      // mirror-image routes — the A* + diagonal-movement combo can pick a
+      // different (equally short) route depending on which end it starts
+      // from. Two connectors sharing the same anchor pair but drawn in
+      // opposite click order would then get differently-shaped paths,
+      // which isometric's skew visually hides but flat's unskewed
+      // rendering exposes as the paths crossing each other. Pathfind in a
+      // canonical (position-sorted) direction so any connector between the
+      // same two points always gets the identical route shape, then
+      // reverse the result if this segment was actually walked backwards.
+      const forward =
+        prev.x !== position.x ? prev.x < position.x : prev.y <= position.y;
       const path = findPath({
-        from: prev,
-        to: position,
+        from: forward ? prev : position,
+        to: forward ? position : prev,
         gridSize: searchAreaSize
       });
 
-      return [...acc, ...path];
+      return [...acc, ...(forward ? path : [...path].reverse())];
     },
     []
   );
@@ -614,9 +681,10 @@ export const getAnchorParent = (anchorId: string, connectors: Connector[]) => {
 
 export const getTileScrollPosition = (
   tile: Coords,
-  origin?: TileOrigin
+  origin?: TileOrigin,
+  flat?: boolean
 ): Coords => {
-  const tilePosition = getTilePosition({ tile, origin });
+  const tilePosition = getTilePosition({ tile, origin, flat });
 
   return {
     x: -tilePosition.x,
@@ -794,12 +862,13 @@ export const getVisualBounds = (view: View, padding = 50) => {
   };
 };
 
-export const getUnprojectedBounds = (view: View) => {
+export const getUnprojectedBounds = (view: View, flat?: boolean) => {
   const projectBounds = getProjectBounds(view);
 
   const cornerPositions = projectBounds.map((corner) => {
     return getTilePosition({
-      tile: corner
+      tile: corner,
+      flat
     });
   });
   const sortedCorners = sortByPosition(cornerPositions);
@@ -814,11 +883,11 @@ export const getUnprojectedBounds = (view: View) => {
   };
 };
 
-export const getFitToViewParams = (view: View, viewportSize: Size) => {
+export const getFitToViewParams = (view: View, viewportSize: Size, flat?: boolean) => {
   const projectBounds = getProjectBounds(view);
   const sortedCornerPositions = sortByPosition(projectBounds);
   const boundingBoxSize = getBoundingBoxSize(projectBounds);
-  const unprojectedBounds = getUnprojectedBounds(view);
+  const unprojectedBounds = getUnprojectedBounds(view, flat);
   const zoom = clamp(
     Math.min(
       viewportSize.width / unprojectedBounds.width,
@@ -831,7 +900,7 @@ export const getFitToViewParams = (view: View, viewportSize: Size) => {
     x: (sortedCornerPositions.lowX + boundingBoxSize.width / 2) * zoom,
     y: (sortedCornerPositions.lowY + boundingBoxSize.height / 2) * zoom
   };
-  const scroll = getTileScrollPosition(scrollTarget);
+  const scroll = getTileScrollPosition(scrollTarget, undefined, flat);
 
   return {
     zoom,
