@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IconChevronRight, IconX } from '@tabler/icons-react';
 import type { IsoflowProps } from 'flowvia';
 
 type Locale = NonNullable<IsoflowProps['locale']>;
@@ -22,6 +24,28 @@ interface ChangelogGroup {
 // Grouped by version, newest first. When adding new entries, add a new group
 // rather than appending to an existing one's `items`.
 const CHANGELOG_KO: ChangelogGroup[] = [
+  {
+    version: 'v1.2.0',
+    date: '2026-08-01',
+    items: [
+      ['노드/영역/텍스트 우클릭 메뉴 순서', ' 변경 — 노드는 연결선 추가가 최상단(구분선으로 구분), 이어서 수정 → 복사 → 복제 → 삭제 순'],
+      ['연결선을 빈 타일에 연결한 뒤 그 자리에 노드 추가', '하면 연결선이 자동으로 그 노드에 연결됨'],
+      ['연결선이 겹칠 때', ' 화살표가 한 곳에 뭉쳐 보이거나, 반대 방향으로 그린 연결선끼리 서로 겹치던 문제 수정'],
+      ['연결선 목록', '에 겹침 방지 켜고 끄기 스위치, 드래그로 순서(간격 위치) 변경 기능 추가'],
+      ['연결선', '에 방향 전환 버튼 추가'],
+      ['연결선 선 스타일', '을 드롭다운 대신 실선/파선/점선 버튼으로 변경'],
+      ['연결선 편집 패널', ' 스크롤해도 제목/닫기 버튼이 고정되도록 수정, 이름/설명 입력란 추가, 항목 순서 정리 (이름 → 설명 → 색상 → 두께 → 선 스타일 → 옵션 → 레이블)'],
+      ['연결선 우클릭 메뉴', ' 구분선 위치 조정 및 "여기 연결선 목록 보기" 문구 정리'],
+      ['저장/불러오기/도구 모음 아이콘', ' 새 디자인으로 교체']
+    ]
+  },
+  {
+    version: 'v1.1.1',
+    date: '2026-07-31',
+    items: [
+      ['Docker 이미지 빌드', ' 캐시 저장 단계에서 실패 오류가 뜨던 문제 수정 (실제 빌드·배포 자체에는 영향 없었음)']
+    ]
+  },
   {
     version: 'v1.1.0',
     date: '2026-07-31',
@@ -50,6 +74,28 @@ const CHANGELOG_KO: ChangelogGroup[] = [
 
 const CHANGELOG_EN: ChangelogGroup[] = [
   {
+    version: 'v1.2.0',
+    date: '2026-08-01',
+    items: [
+      ['Node/rectangle/text right-click menus reordered', ' — nodes lead with Add Connector (set off by a divider), then Edit → Copy → Duplicate → Delete'],
+      ['Connectors ended on an empty tile', ' now auto-connect if a node is later placed on that same tile'],
+      ['Overlapping connectors', ' — fixed arrowheads bunching up at one spot, and reversed-direction connectors overlapping instead of spreading apart'],
+      ['Connector list', ' — added a per-connector overlap toggle and drag-to-reorder for spacing order'],
+      ['Connectors', ' — added a Reverse Direction button'],
+      ['Connector line style', ' — switched from a dropdown to Solid/Dashed/Dotted buttons'],
+      ['Connector edit panel', ' — title/close button now stay pinned while scrolling, added Name/Description fields, reordered sections (Name → Description → Color → Width → Line Style → Options → Labels)'],
+      ['Connector right-click menu', ' — divider repositioned, tidied up the "view connectors here" wording'],
+      ['Save/load/toolbar icons', ' redesigned']
+    ]
+  },
+  {
+    version: 'v1.1.1',
+    date: '2026-07-31',
+    items: [
+      ['Docker image builds', ' fixed a failing cache-save step (the actual build/push itself was never affected)']
+    ]
+  },
+  {
     version: 'v1.1.0',
     date: '2026-07-31',
     items: [
@@ -75,10 +121,30 @@ const CHANGELOG_EN: ChangelogGroup[] = [
   }
 ];
 
+// Same reasoning as the changelog above: a KO/EN-only fallback rather than
+// plumbing new keys through all 14 flowvia-lib locales for a single tip.
+const CONNECTOR_GROUP_TIP_KO = {
+  title: '팁: 겹친 연결선 다루기',
+  description:
+    '한 지점에 연결선이 여러 개 겹치면, 그 지점을 우클릭했을 때 메뉴 하단에 "여기 연결선 목록 보기"와 "여기 연결선 전체 삭제"가 추가로 나타납니다.'
+};
+
+const CONNECTOR_GROUP_TIP_EN = {
+  title: 'Tip: Overlapping Connectors',
+  description:
+    'When multiple connectors cross the same point, right-clicking there adds "View Connectors Here" and "Delete All Here" to the bottom of the menu.'
+};
+
 export const HistoryPanel = ({ locale, onClose }: Props) => {
   const { t, i18n } = useTranslation('app');
-  const changelog = i18n.language.startsWith('ko') ? CHANGELOG_KO : CHANGELOG_EN;
+  const isKo = i18n.language.startsWith('ko');
+  const changelog = isKo ? CHANGELOG_KO : CHANGELOG_EN;
   const latest = changelog[0];
+  // Only the newest version starts expanded — older ones are collapsed so the
+  // panel doesn't open into a wall of text from every past release.
+  const [expandedVersion, setExpandedVersion] = useState<string | null>(
+    latest?.version ?? null
+  );
 
   const tips = [
     {
@@ -102,7 +168,8 @@ export const HistoryPanel = ({ locale, onClose }: Props) => {
     {
       title: locale.lazyLoadingWelcome.title,
       description: locale.lazyLoadingWelcome.message
-    }
+    },
+    isKo ? CONNECTOR_GROUP_TIP_KO : CONNECTOR_GROUP_TIP_EN
   ];
 
   return (
@@ -115,25 +182,47 @@ export const HistoryPanel = ({ locale, onClose }: Props) => {
               {latest.version} · {latest.date}
             </span>
           )}
+          <button
+            type="button"
+            className="dialog-close-btn"
+            onClick={onClose}
+            aria-label={t('dialog.load.btnClose')}
+          >
+            <IconX size={18} />
+          </button>
         </h2>
 
         <h3 className="history-section-title">{t('history.whatsNew')}</h3>
         {changelog.map((group) => {
+          const isExpanded = expandedVersion === group.version;
+
           return (
             <div className="history-version-group" key={group.version}>
-              <div className="history-version-heading">
+              <button
+                type="button"
+                className="history-version-heading history-version-heading-toggle"
+                aria-expanded={isExpanded}
+                onClick={() => {
+                  setExpandedVersion(isExpanded ? null : group.version);
+                }}
+              >
+                <span className={`history-version-chevron${isExpanded ? ' is-expanded' : ''}`}>
+                  <IconChevronRight size={14} />
+                </span>
                 {group.version} · {group.date}
+              </button>
+              <div className={`history-version-collapse${isExpanded ? ' is-expanded' : ''}`}>
+                <ul className="history-list">
+                  {group.items.map(([bold, rest]) => {
+                    return (
+                      <li key={bold}>
+                        <strong>{bold}</strong>
+                        {rest}
+                      </li>
+                    );
+                  })}
+                </ul>
               </div>
-              <ul className="history-list">
-                {group.items.map(([bold, rest]) => {
-                  return (
-                    <li key={bold}>
-                      <strong>{bold}</strong>
-                      {rest}
-                    </li>
-                  );
-                })}
-              </ul>
             </div>
           );
         })}
@@ -148,10 +237,6 @@ export const HistoryPanel = ({ locale, onClose }: Props) => {
               </div>
             );
           })}
-        </div>
-
-        <div className="dialog-buttons history-dialog-buttons">
-          <button onClick={onClose}>{t('dialog.load.btnClose')}</button>
         </div>
       </div>
     </div>

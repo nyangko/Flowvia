@@ -465,6 +465,47 @@
   margin-bottom: 6px;
 }
 
+.history-version-heading-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.history-version-chevron {
+  display: inline-flex;
+  transition: transform 0.15s ease;
+  font-size: 10px;
+}
+
+.history-version-chevron.is-expanded {
+  transform: rotate(90deg);
+}
+
+/* Animates height:auto content without JS measurement — the grid track goes
+   from 0fr to 1fr, and the inner list is clipped by the grid item's own
+   overflow:hidden until it reaches its natural size. */
+.history-version-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.2s ease;
+}
+
+.history-version-collapse.is-expanded {
+  grid-template-rows: 1fr;
+}
+
+.history-version-collapse > .history-list {
+  overflow: hidden;
+  min-height: 0;
+}
+
 .history-list {
   margin: 0;
   padding-left: 18px;
