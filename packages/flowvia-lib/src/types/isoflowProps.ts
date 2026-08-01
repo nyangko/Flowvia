@@ -1,4 +1,4 @@
-import type { EditorModeEnum, MainMenuOptions } from './common';
+import type { EditorModeEnum, ProjectionModeEnum, MainMenuOptions } from './common';
 import type { Model } from './model';
 import type { RendererProps } from './rendererProps';
 
@@ -29,6 +29,10 @@ export interface LocaleProps {
     clearCanvasConfirm: string;
     settings: string;
     gitHub: string;
+  };
+  viewControls: {
+    switchToFlatView: string;
+    switchToIsometricView: string;
   };
   helpDialog: {
     title: string;
@@ -264,6 +268,12 @@ export interface LocaleProps {
       collapseDescription: string;
     };
     connector: {
+      editTitle: string;
+      options: string;
+      name: string;
+      namePlaceholder: string;
+      description: string;
+      descriptionPlaceholder: string;
       labels: string;
       labelsCount: string;
       addLabel: string;
@@ -277,6 +287,8 @@ export interface LocaleProps {
       width: string;
       lineStyle: string;
       showArrow: string;
+      preventOverlap: string;
+      reverseDirection: string;
       connectorsCount: string;
       connectorFallbackName: string;
       styleSolid: string;
@@ -325,6 +337,8 @@ export interface IsoflowProps {
   height?: number | string;
   enableDebugTools?: boolean;
   editorMode?: keyof typeof EditorModeEnum;
+  /** Same scene, same interactions — just a top-down square grid instead of the tilted isometric one. */
+  projectionMode?: keyof typeof ProjectionModeEnum;
   renderer?: RendererProps;
   locale?: LocaleProps;
   iconPackManager?: IconPackManagerProps;

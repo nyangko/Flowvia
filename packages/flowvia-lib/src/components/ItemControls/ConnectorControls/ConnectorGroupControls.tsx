@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import {
   Box,
   List,
@@ -7,12 +7,14 @@ import {
   ListItemText,
   Typography,
   IconButton as MUIIconButton,
+  Switch,
   Collapse
 } from '@mui/material';
-import { Close as CloseIcon } from '@mui/icons-material';
+import { IconX as CloseIcon, IconGripVertical as DragIndicatorIcon } from '@tabler/icons-react';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useConnector } from 'src/hooks/useConnector';
 import { useColor } from 'src/hooks/useColor';
+import { useScene } from 'src/hooks/useScene';
 import { useTranslation } from 'src/stores/localeStore';
 import { getConnectorLabels } from 'src/utils';
 import { ControlsContainer } from '../components/ControlsContainer';
@@ -23,22 +25,32 @@ interface ConnectorPickerRowProps {
   connectorId: string;
   index: number;
   isFocused: boolean;
+  isDragging: boolean;
   onToggleFocus: (id: string) => void;
+  onDragStart: (id: string) => void;
+  onDragOver: (id: string) => void;
+  onDragEnd: () => void;
 }
 
 const ConnectorPickerRow = memo(function ConnectorPickerRow({
   connectorId,
   index,
   isFocused,
-  onToggleFocus
+  isDragging,
+  onToggleFocus,
+  onDragStart,
+  onDragOver,
+  onDragEnd
 }: ConnectorPickerRowProps) {
   const connector = useConnector(connectorId);
   const colorData = useColor(connector?.color);
+  const { updateConnector } = useScene();
   const labels = connector ? getConnectorLabels(connector) : [];
   const { t } = useTranslation();
 
   const displayColor = connector?.customColor || colorData?.value || '#9e9e9e';
   const primaryText =
+    connector?.name ||
     labels[0]?.text ||
     t('itemControls.connector.connectorFallbackName').replace(
       '{number}',
@@ -56,15 +68,34 @@ const ConnectorPickerRow = memo(function ConnectorPickerRow({
   }, [connectorId, onToggleFocus]);
 
   return (
-    <Box>
+    <Box
+      draggable
+      onDragStart={(e) => {
+        e.dataTransfer.effectAllowed = 'move';
+        onDragStart(connectorId);
+      }}
+      onDragOver={(e) => {
+        e.preventDefault();
+        onDragOver(connectorId);
+      }}
+      onDragEnd={onDragEnd}
+      onDrop={(e) => e.preventDefault()}
+      sx={{ opacity: isDragging ? 0.4 : 1 }}
+    >
       <ListItemButton
         onClick={handleClick}
         sx={{
           borderLeft: isFocused ? '2px solid' : '2px solid transparent',
           borderLeftColor: isFocused ? 'primary.main' : 'transparent',
-          pl: 1.5
+          pl: 0.5
         }}
       >
+        <Box
+          component="span"
+          sx={{ display: 'inline-flex', color: 'text.disabled', cursor: 'grab', mr: 0.5 }}
+        >
+          <DragIndicatorIcon size={20} />
+        </Box>
         <ListItemIcon sx={{ minWidth: 32 }}>
           <Box
             sx={{
@@ -80,6 +111,17 @@ const ConnectorPickerRow = memo(function ConnectorPickerRow({
           secondary={styleLabel}
           primaryTypographyProps={{ variant: 'body2', noWrap: true }}
           secondaryTypographyProps={{ variant: 'caption' }}
+        />
+        <Switch
+          size="small"
+          checked={connector?.preventOverlap !== false}
+          onClick={(e) => e.stopPropagation()}
+          onChange={(e) => {
+            if (!connector) return;
+            updateConnector(connector.id, {
+              preventOverlap: e.target.checked
+            });
+          }}
         />
       </ListItemButton>
       <Collapse in={isFocused} timeout="auto" unmountOnExit>
@@ -101,7 +143,9 @@ export const ConnectorGroupControls = memo(function ConnectorGroupControls({
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const { reorderConnectors } = useScene();
   const { t } = useTranslation();
+  const [draggedId, setDraggedId] = useState<string | null>(null);
 
   const handleClose = useCallback(() => {
     uiStateActions.setItemControls(null);
@@ -115,36 +159,64 @@ export const ConnectorGroupControls = memo(function ConnectorGroupControls({
     [controls, uiStateActions]
   );
 
+  // Live-reorders the picker as you drag over other rows; the underlying
+  // model only gets updated once, on drag end, so undo/history isn't spammed
+  // with an entry per hovered row.
+  const handleDragOver = useCallback(
+    (overId: string) => {
+      if (!draggedId || draggedId === overId) return;
+
+      const fromIndex = controls.ids.indexOf(draggedId);
+      const toIndex = controls.ids.indexOf(overId);
+      if (fromIndex === -1 || toIndex === -1) return;
+
+      const newIds = [...controls.ids];
+      newIds.splice(fromIndex, 1);
+      newIds.splice(toIndex, 0, draggedId);
+
+      uiStateActions.setItemControls({ ...controls, ids: newIds });
+    },
+    [controls, draggedId, uiStateActions]
+  );
+
+  const handleDragEnd = useCallback(() => {
+    setDraggedId(null);
+    reorderConnectors(controls.ids);
+  }, [controls.ids, reorderConnectors]);
+
   if (controls.ids.length === 1) {
     return <ConnectorControls id={controls.ids[0]} />;
   }
 
   return (
-    <ControlsContainer>
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          px: 2,
-          pt: 2,
-          pb: 1
-        }}
-      >
-        <Typography variant="subtitle2" color="text.primary">
-          {t('itemControls.connector.connectorsCount').replace(
-            '{count}',
-            String(controls.ids.length)
-          )}
-        </Typography>
-        <MUIIconButton
-          size="small"
-          aria-label={t('itemControls.close')}
-          onClick={handleClose}
+    <ControlsContainer
+      header={
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            px: 2,
+            pt: 2,
+            pb: 1
+          }}
         >
-          <CloseIcon fontSize="small" />
-        </MUIIconButton>
-      </Box>
+          <Typography variant="subtitle2" color="text.primary">
+            {t('itemControls.connector.connectorsCount').replace(
+              '{count}',
+              String(controls.ids.length)
+            )}
+          </Typography>
+          <MUIIconButton
+            size="small"
+            aria-label={t('itemControls.close')}
+            onClick={handleClose}
+          >
+            <CloseIcon size={20} />
+          </MUIIconButton>
+        </Box>
+      }
+    >
       <List dense disablePadding>
         {controls.ids.map((id, index) => (
           <ConnectorPickerRow
@@ -152,7 +224,11 @@ export const ConnectorGroupControls = memo(function ConnectorGroupControls({
             connectorId={id}
             index={index}
             isFocused={controls.focusedId === id}
+            isDragging={draggedId === id}
             onToggleFocus={handleToggleFocus}
+            onDragStart={setDraggedId}
+            onDragOver={handleDragOver}
+            onDragEnd={handleDragEnd}
           />
         ))}
       </List>

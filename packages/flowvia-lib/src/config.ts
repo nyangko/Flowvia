@@ -24,6 +24,13 @@ export const PROJECTED_TILE_SIZE = {
   height: UNPROJECTED_TILE_SIZE * TILE_PROJECTION_MULTIPLIERS.height
 };
 
+// Square grid used when projectionMode is 'FLAT' — a straight top-down
+// mapping instead of the isometric diamond above.
+export const FLAT_TILE_SIZE: Size = {
+  width: UNPROJECTED_TILE_SIZE,
+  height: UNPROJECTED_TILE_SIZE
+};
+
 export const DEFAULT_COLOR: Colors[0] = {
   id: '__DEFAULT__',
   value: customVars.customPalette.defaultColor
@@ -47,6 +54,8 @@ export const VIEW_ITEM_DEFAULTS: Required<Omit<ViewItem, 'id' | 'tile'>> = {
 
 export const CONNECTOR_DEFAULTS: Required<Omit<Connector, 'id' | 'color'>> = {
   width: 7,
+  name: '',
+  notes: '',
   description: '',
   startLabel: '',
   endLabel: '',
@@ -58,7 +67,8 @@ export const CONNECTOR_DEFAULTS: Required<Omit<Connector, 'id' | 'color'>> = {
   anchors: [],
   style: 'SOLID',
   lineType: 'SINGLE',
-  showArrow: true
+  showArrow: true,
+  preventOverlap: true
 };
 
 // The boundaries of the search area for the pathfinder algorithm

@@ -79,6 +79,40 @@ export const updateConnector = (
   return newState;
 };
 
+// Reorders a subset of connectors (identified by id) relative to each other,
+// leaving every other connector's position untouched — used by the connector
+// list's drag-to-reorder, which changes which offset slot each one gets from
+// getConnectorGroups (group order follows array order).
+export const reorderConnectors = (
+  orderedIds: string[],
+  { state, viewId }: ViewReducerContext
+): State => {
+  const newState = produce(state, (draft) => {
+    const view = getItemByIdOrThrow(draft.model.views, viewId);
+    const connectors = draft.model.views[view.index].connectors;
+
+    if (!connectors) return;
+
+    const indices = orderedIds.map((id) => {
+      return connectors.findIndex((connector) => connector.id === id);
+    });
+
+    if (indices.some((index) => index === -1)) return;
+
+    const items = orderedIds.map((id) => {
+      return connectors.find((connector) => connector.id === id)!;
+    });
+    const firstIndex = Math.min(...indices);
+
+    [...indices]
+      .sort((a, b) => b - a)
+      .forEach((index) => connectors.splice(index, 1));
+    connectors.splice(firstIndex, 0, ...items);
+  });
+
+  return newState;
+};
+
 export const createConnector = (
   newConnector: Connector,
   { state, viewId }: ViewReducerContext

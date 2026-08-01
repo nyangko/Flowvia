@@ -31,6 +31,13 @@ export const EditorModeEnum = {
   EDITABLE: 'EDITABLE'
 } as const;
 
+// ISOMETRIC is the classic tilted diamond grid; FLAT is a straight top-down
+// square grid — same scene, same interactions, different camera angle.
+export const ProjectionModeEnum = {
+  ISOMETRIC: 'ISOMETRIC',
+  FLAT: 'FLAT'
+} as const;
+
 export const MainMenuOptionsEnum = {
   'ACTION.OPEN': 'ACTION.OPEN',
   'EXPORT.JSON': 'EXPORT.JSON',

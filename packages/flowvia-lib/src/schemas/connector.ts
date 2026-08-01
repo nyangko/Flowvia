@@ -26,6 +26,11 @@ export const anchorSchema = z.object({
 
 export const connectorSchema = z.object({
   id,
+  // Identity fields — purely for the author's own reference (shown in the
+  // connector list/settings), distinct from `labels`, which render as visual
+  // text on the canvas itself.
+  name: constrainedStrings.name.optional(),
+  notes: constrainedStrings.description.optional(),
   // Legacy label fields (for backward compatibility)
   description: constrainedStrings.description.optional(),
   startLabel: constrainedStrings.description.optional(),
@@ -41,5 +46,9 @@ export const connectorSchema = z.object({
   style: z.enum(connectorStyleOptions).optional(),
   lineType: z.enum(connectorLineTypeOptions).optional(),
   showArrow: z.boolean().optional(),
+  // Whether this connector participates in group auto-spacing when it shares
+  // both endpoints with other connectors (defaults to true). Set to false to
+  // let it overlap its groupmates instead of being offset.
+  preventOverlap: z.boolean().optional(),
   anchors: z.array(anchorSchema)
 });

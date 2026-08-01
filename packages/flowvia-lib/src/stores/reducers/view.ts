@@ -119,6 +119,9 @@ export const view = ({ action, payload, ctx }: ViewReducerParams) => {
     case 'DELETE_CONNECTOR':
       newState = connectorReducers.deleteConnector(payload, ctx);
       break;
+    case 'REORDER_CONNECTORS':
+      newState = connectorReducers.reorderConnectors(payload, ctx);
+      break;
     case 'CREATE_TEXTBOX':
       newState = textBoxReducers.createTextBox(payload, ctx);
       break;

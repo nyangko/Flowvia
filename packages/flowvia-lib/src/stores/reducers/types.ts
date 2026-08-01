@@ -61,6 +61,10 @@ type ViewReducerAction =
       payload: Parameters<typeof connectorReducers.syncConnector>[0];
     }
   | {
+      action: 'REORDER_CONNECTORS';
+      payload: Parameters<typeof connectorReducers.reorderConnectors>[0];
+    }
+  | {
       action: 'CREATE_TEXTBOX';
       payload: Parameters<typeof textBoxReducers.createTextBox>[0];
     }

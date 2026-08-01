@@ -7,8 +7,8 @@ import {
 import {
   Box,
   Slider,
-  Select,
-  MenuItem,
+  ToggleButton,
+  ToggleButtonGroup,
   TextField,
   IconButton as MUIIconButton,
   FormControlLabel,
@@ -24,10 +24,11 @@ import { CustomColorInput } from 'src/components/ColorSelector/CustomColorInput'
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useScene } from 'src/hooks/useScene';
 import {
-  Close as CloseIcon,
-  Add as AddIcon,
-  DeleteOutlined as DeleteIcon
-} from '@mui/icons-material';
+  IconX as CloseIcon,
+  IconPlus as AddIcon,
+  IconTrash as DeleteIcon,
+  IconArrowsExchange as SwapHorizIcon
+} from '@tabler/icons-react';
 import { getConnectorLabels, generateId } from 'src/utils';
 import { useTranslation } from 'src/stores/localeStore';
 import { ControlsContainer } from '../components/ControlsContainer';
@@ -124,6 +125,149 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
 
   const sections = (
     <>
+      <Section title={t('itemControls.connector.name')}>
+        <TextField
+          fullWidth
+          size="small"
+          placeholder={t('itemControls.connector.namePlaceholder')}
+          value={connector.name || ''}
+          onChange={(e) => {
+            updateConnector(connector.id, { name: e.target.value });
+          }}
+        />
+      </Section>
+      <Section title={t('itemControls.connector.description')}>
+        <TextField
+          fullWidth
+          multiline
+          minRows={2}
+          size="small"
+          placeholder={t('itemControls.connector.descriptionPlaceholder')}
+          value={connector.notes || ''}
+          onChange={(e) => {
+            updateConnector(connector.id, { notes: e.target.value });
+          }}
+        />
+      </Section>
+      <Section title={t('itemControls.color')}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={useCustomColor}
+                onChange={(e) => {
+                  setUseCustomColor(e.target.checked);
+                  if (!e.target.checked) {
+                    updateConnector(connector.id, { customColor: '' });
+                  }
+                }}
+              />
+            }
+            label={t('itemControls.useCustomColor')}
+            sx={{ mb: 2 }}
+          />
+          {useCustomColor ? (
+            <CustomColorInput
+              value={connector.customColor || '#000000'}
+              onChange={(color) => {
+                updateConnector(connector.id, { customColor: color });
+              }}
+            />
+          ) : (
+            <ColorSelector
+              onChange={(color) => {
+                return updateConnector(connector.id, {
+                  color,
+                  customColor: ''
+                });
+              }}
+              activeColor={connector.color}
+            />
+          )}
+        </Section>
+        <Section
+          title={`${t('itemControls.connector.width')} (${connector.width})`}
+        >
+          <Slider
+            marks
+            step={10}
+            min={10}
+            max={30}
+            value={connector.width}
+            valueLabelDisplay="auto"
+            onChange={(e, newWidth) => {
+              updateConnector(connector.id, { width: newWidth as number });
+            }}
+          />
+        </Section>
+        <Section title={t('itemControls.connector.lineStyle')}>
+          <ToggleButtonGroup
+            value={connector.style || 'SOLID'}
+            exclusive
+            fullWidth
+            size="small"
+            onChange={(e, newStyle: Connector['style'] | null) => {
+              if (!newStyle) return;
+              updateConnector(connector.id, { style: newStyle });
+            }}
+            sx={{ mb: 2 }}
+          >
+            {Object.values(connectorStyleOptions).map((style) => {
+              const label =
+                style === 'DASHED'
+                  ? t('itemControls.connector.styleDashed')
+                  : style === 'DOTTED'
+                    ? t('itemControls.connector.styleDotted')
+                    : t('itemControls.connector.styleSolid');
+
+              return (
+                <ToggleButton key={style} value={style}>
+                  {label}
+                </ToggleButton>
+              );
+            })}
+          </ToggleButtonGroup>
+        </Section>
+        <Section title={t('itemControls.connector.options')}>
+          <Button
+            startIcon={<SwapHorizIcon />}
+            variant="outlined"
+            size="small"
+            onClick={() => {
+              updateConnector(connector.id, {
+                anchors: [...connector.anchors].reverse()
+              });
+            }}
+            sx={{ mb: 2 }}
+          >
+            {t('itemControls.connector.reverseDirection')}
+          </Button>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={connector.showArrow !== false}
+                onChange={(e) => {
+                  updateConnector(connector.id, {
+                    showArrow: e.target.checked
+                  });
+                }}
+              />
+            }
+            label={t('itemControls.connector.showArrow')}
+          />
+          <FormControlLabel
+            control={
+              <Switch
+                checked={connector.preventOverlap !== false}
+                onChange={(e) => {
+                  updateConnector(connector.id, {
+                    preventOverlap: e.target.checked
+                  });
+                }}
+              />
+            }
+            label={t('itemControls.connector.preventOverlap')}
+          />
+        </Section>
       <Section title={t('itemControls.connector.labels')}>
           <Box sx={{ mb: 2 }}>
             <Box
@@ -185,7 +329,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                       }}
                       color="error"
                     >
-                      <DeleteIcon fontSize="small" />
+                      <DeleteIcon size={20} />
                     </MUIIconButton>
                   </Box>
 
@@ -272,88 +416,6 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
             })}
           </Box>
         </Section>
-        <Section title={t('itemControls.color')}>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={useCustomColor}
-                onChange={(e) => {
-                  setUseCustomColor(e.target.checked);
-                  if (!e.target.checked) {
-                    updateConnector(connector.id, { customColor: '' });
-                  }
-                }}
-              />
-            }
-            label={t('itemControls.useCustomColor')}
-            sx={{ mb: 2 }}
-          />
-          {useCustomColor ? (
-            <CustomColorInput
-              value={connector.customColor || '#000000'}
-              onChange={(color) => {
-                updateConnector(connector.id, { customColor: color });
-              }}
-            />
-          ) : (
-            <ColorSelector
-              onChange={(color) => {
-                return updateConnector(connector.id, {
-                  color,
-                  customColor: ''
-                });
-              }}
-              activeColor={connector.color}
-            />
-          )}
-        </Section>
-        <Section title={t('itemControls.connector.width')}>
-          <Slider
-            marks
-            step={10}
-            min={10}
-            max={30}
-            value={connector.width}
-            onChange={(e, newWidth) => {
-              updateConnector(connector.id, { width: newWidth as number });
-            }}
-          />
-        </Section>
-        <Section title={t('itemControls.connector.lineStyle')}>
-          <Select
-            value={connector.style || 'SOLID'}
-            onChange={(e) => {
-              updateConnector(connector.id, {
-                style: e.target.value as Connector['style']
-              });
-            }}
-            fullWidth
-            sx={{ mb: 2 }}
-          >
-            {Object.values(connectorStyleOptions).map((style) => {
-              return (
-                <MenuItem key={style} value={style}>
-                  {style}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </Section>
-        <Section>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={connector.showArrow !== false}
-                onChange={(e) => {
-                  updateConnector(connector.id, {
-                    showArrow: e.target.checked
-                  });
-                }}
-              />
-            }
-            label={t('itemControls.connector.showArrow')}
-          />
-        </Section>
       <Section>
         <Box>
           <DeleteButton
@@ -372,27 +434,34 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
   }
 
   return (
-    <ControlsContainer>
-      <Box
-        sx={{ position: 'relative', paddingTop: '24px', paddingBottom: '24px' }}
-      >
-        <MUIIconButton
-          aria-label={t('itemControls.close')}
-          onClick={() => {
-            return uiStateActions.setItemControls(null);
-          }}
+    <ControlsContainer
+      header={
+        <Box
           sx={{
-            position: 'absolute',
-            top: 16,
-            right: 16,
-            zIndex: 2
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            px: 2,
+            pt: 2,
+            pb: 1
           }}
-          size="small"
         >
-          <CloseIcon />
-        </MUIIconButton>
-        {sections}
-      </Box>
+          <Typography variant="subtitle2" color="text.primary">
+            {t('itemControls.connector.editTitle')}
+          </Typography>
+          <MUIIconButton
+            size="small"
+            aria-label={t('itemControls.close')}
+            onClick={() => {
+              return uiStateActions.setItemControls(null);
+            }}
+          >
+            <CloseIcon size={20} />
+          </MUIIconButton>
+        </Box>
+      }
+    >
+      {sections}
     </ControlsContainer>
   );
 };

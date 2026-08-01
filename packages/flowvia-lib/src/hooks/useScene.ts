@@ -4,6 +4,7 @@ import {
   ModelItem,
   ViewItem,
   Connector,
+  ConnectorAnchor,
   TextBox,
   Rectangle,
   UiStateStore,
@@ -288,6 +289,21 @@ export const useScene = () => {
     [getState, setState, currentViewId, saveToHistoryBeforeChange]
   );
 
+  const reorderConnectors = useCallback(
+    (orderedIds: string[]) => {
+      if (!currentViewId) return;
+
+      saveToHistoryBeforeChange();
+      const newState = reducers.view({
+        action: 'REORDER_CONNECTORS',
+        payload: orderedIds,
+        ctx: { viewId: currentViewId, state: getState() }
+      });
+      setState(newState);
+    },
+    [getState, setState, currentViewId, saveToHistoryBeforeChange]
+  );
+
   const createTextBox = useCallback(
     (newTextBox: TextBox, state?: State) => {
       saveToHistoryBeforeChange();
@@ -418,11 +434,31 @@ export const useScene = () => {
         if (stateAfterModelItem) {
           createViewItem(params.viewItem, stateAfterModelItem);
         }
+
+        // A connector ended on an empty tile is anchored there by coordinate
+        // (ref: { tile }) rather than to an item. Placing a node on that exact
+        // tile afterwards would otherwise only coincide visually — snap any
+        // matching tile-anchor onto the new node so the connector actually links to it.
+        (currentView.connectors ?? []).forEach((connector) => {
+          const matchesNewTile = (anchor: ConnectorAnchor) =>
+            anchor.ref.tile?.x === params.viewItem.tile.x &&
+            anchor.ref.tile?.y === params.viewItem.tile.y;
+
+          if (!connector.anchors.some(matchesNewTile)) return;
+
+          updateConnector(connector.id, {
+            anchors: connector.anchors.map((anchor) =>
+              matchesNewTile(anchor)
+                ? { ...anchor, ref: { item: params.modelItem.id } }
+                : anchor
+            )
+          });
+        });
       } finally {
         transactionInProgress.current = false;
       }
     },
-    [createModelItem, createViewItem, saveToHistoryBeforeChange]
+    [createModelItem, createViewItem, updateConnector, currentView.connectors, saveToHistoryBeforeChange]
   );
 
   const copyObjectsToClipboard = (uiState: UiStateStore, selectedItem?: ItemReference) => {
@@ -604,6 +640,7 @@ export const useScene = () => {
     createConnector,
     updateConnector,
     deleteConnector,
+    reorderConnectors,
     createTextBox,
     updateTextBox,
     deleteTextBox,
