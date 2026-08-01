@@ -8,85 +8,26 @@
  <a href="../README.md">English</a> | <a href="README.cn.md">简体中文</a> | <a href="README.es.md">Español</a> | <a href="README.pt.md">Português</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.bn.md">বাংলা</a> | <a href="README.ru.md">Русский</a> | <a href="README.id.md">Bahasa Indonesia</a> | <a href="README.de.md">Deutsch</a> | <a href="README.ko.md">한국어</a> | <a href="README.ja.md">日本語</a>
 </p>
 
-<b>Halo!</b> Saya Stan, jika Anda telah menggunakan Flowvia dan ini membantu Anda, <b>saya akan sangat menghargai jika Anda bisa menyumbang sesuatu yang kecil :)</b> Saya bekerja penuh waktu, dan menemukan waktu untuk mengerjakan proyek ini sudah cukup menantang.
-Jika saya telah mengimplementasikan fitur untuk Anda atau memperbaiki bug, akan sangat bagus jika Anda bisa menyumbang :) jika tidak, tidak masalah, software ini akan selalu tetap gratis!
+## Catatan:
 
+Repositori ini (Flowvia) adalah turunan dari [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW), yang itu sendiri adalah fork dari stan-smith/FossFLOW (yang pada gilirannya merupakan fork dari [markmanx/isoflow](https://github.com/markmanx/isoflow)), awalnya dibuat untuk tujuan berkontribusi ke repositori asli melalui PR. Namun nama pengguna GitHub penulis tampaknya telah diubah menjadi [mug-book-droid](https://github.com/mug-book-droid) dan aktivitasnya diatur menjadi privat (mungkin akun ditangguhkan?), sehingga repositori asli tidak dapat diakses.
 
-<b>Juga!</b> Jika Anda belum melakukannya, silakan lihat library dasar yang digunakan untuk membangun ini oleh <a href="https://github.com/markmanx/isoflow">@markmanx</a> Saya benar-benar berdiri di atas bahu raksasa di sini 🫡
+Untuk saat ini, saya bermaksud menjadikan repositori ini (sekarang bernama Flowvia) sebagai kelanjutan pengembangan dari FossFLOW, dan kontribusi apa pun melalui PR juga diterima dengan baik.
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P61KBXA3)
+Anda dapat melihat status terakhir repositori asli yang saya ambil di branch `backup/stan-smith-FossFLOW`.
 
-<img width="30" height="30" alt="image" src="https://github.com/user-attachments/assets/dc6ec9ca-48d7-4047-94cf-5c4f7ed63b84" /> <b> https://buymeacoffee.com/stan.smith </b>
+---
 
+Flowvia adalah aplikasi web progresif (PWA) open-source yang powerful untuk membuat diagram isometrik yang indah. Dibangun dengan React dan library <a href="https://github.com/markmanx/isoflow">Isoflow</a> (di-fork dan dipublikasikan ke npm sebagai fossflow, dan sebagai flowvia di fork ini), berjalan sepenuhnya di browser Anda dengan dukungan offline.
 
-Terima kasih,
+---
+<p align="center">
+<b>Coba secara online --> https://nyangko.github.io/Flowvia/ <-- </b>
+</p>
 
--Stan
+<img width="100%" alt="Flowvia-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
 
-## Coba Secara Online
-
-Kunjungi  <b> --> https://nyangko.github.io/Flowvia/ <-- </b>
-
-
-------------------------------------------------------------------------------------------------------------------------------
-Flowvia adalah aplikasi web progresif (PWA) open-source yang powerful untuk membuat diagram isometrik yang indah. Dibangun dengan React dan library <a href="https://github.com/markmanx/isoflow">Isoflow</a> (Sekarang di-fork dan dipublikasikan ke NPM sebagai fossflow), berjalan sepenuhnya di browser Anda dengan dukungan offline.
-
-![Screenshot_20250630_160954](https://github.com/user-attachments/assets/e7f254ad-625f-4b8a-8efc-5293b5be9d55)
-
-- **🤝 [CONTRIBUTORS.md](https://github.com/Abrar74774/Flowvia/blob/master/CONTRIBUTORS.md)** - Cara berkontribusi pada proyek.
-
-## Pembaruan Terbaru (Oktober 2025)
-
-### Impor Ikon Kustom
-- **Impor Ikon Anda Sendiri** - Unggah ikon kustom (PNG, JPG, SVG) untuk digunakan dalam diagram Anda
-- **Penskalaan Otomatis** - Ikon secara otomatis diskalakan ke ukuran yang konsisten untuk tampilan profesional
-- **Toggle Isometrik/Datar** - Pilih apakah ikon yang diimpor muncul sebagai 3D isometrik atau 2D datar
-- **Persistence Cerdas** - Ikon kustom disimpan dengan diagram dan bekerja di semua metode penyimpanan
-- **Sumber Daya Ikon** - Temukan ikon gratis di:
-  - [Iconify Icon Sets](https://icon-sets.iconify.design/) - Ribuan ikon SVG gratis
-  - [Flaticon Isometric Icons](https://www.flaticon.com/free-icons/isometric) - Paket ikon isometrik berkualitas tinggi
-
-### Dukungan Penyimpanan Server
-- **Penyimpanan Persisten** - Diagram disimpan ke filesystem server, bertahan di seluruh sesi browser
-- **Akses Multi-perangkat** - Akses diagram Anda dari perangkat apa pun saat menggunakan deployment Docker
-- **Deteksi Otomatis** - UI secara otomatis menampilkan penyimpanan server saat tersedia
-- **Perlindungan Penimpaan** - Dialog konfirmasi saat menyimpan dengan nama duplikat
-- **Integrasi Docker** - Penyimpanan server diaktifkan secara default dalam deployment Docker
-
-### Fitur Interaksi yang Ditingkatkan
-- **Hotkey yang Dapat Dikonfigurasi** - Tiga profil (QWERTY, SMNRCT, None) untuk pemilihan alat dengan indikator visual
-- **Kontrol Pan Lanjutan** - Beberapa metode pan termasuk seret area kosong, klik tengah/kanan, tombol modifier (Ctrl/Alt), dan navigasi keyboard (Arrow/WASD/IJKL)
-- **Toggle Panah Konektor** - Opsi untuk menampilkan/menyembunyikan panah pada konektor individual
-- **Pemilihan Alat Persisten** - Alat konektor tetap aktif setelah membuat koneksi
-- **Dialog Pengaturan** - Konfigurasi terpusat untuk hotkey dan kontrol pan
-
-### Peningkatan Docker & CI/CD
-- **Build Docker Otomatis** - Workflow GitHub Actions untuk deployment Docker Hub otomatis pada commit
-- **Dukungan Multi-arsitektur** - Image Docker untuk `linux/amd64` dan `linux/arm64`
-- **Image Pra-dibangun** - Tersedia di `nyangko/flowvia:latest`
-
-### Arsitektur Monorepo
-- **Repositori tunggal** untuk library dan aplikasi
-- **NPM Workspaces** untuk manajemen dependensi yang efisien
-- **Proses build terpadu** dengan `npm run build` di root
-
-### Perbaikan UI
-- Memperbaiki masalah tampilan ikon toolbar editor Quill
-- Menyelesaikan peringatan key React di menu konteks
-- Meningkatkan styling editor markdown
-
-## Fitur
-
-- 🎨 **Diagram Isometrik** - Buat diagram teknis bergaya 3D yang menakjubkan
-- 💾 **Auto-Save** - Pekerjaan Anda secara otomatis disimpan setiap 5 detik
-- 📱 **Dukungan PWA** - Instal sebagai aplikasi native di Mac dan Linux
-- 🔒 **Privasi Pertama** - Semua data disimpan secara lokal di browser Anda
-- 📤 **Impor/Ekspor** - Bagikan diagram sebagai file JSON
-- 🎯 **Penyimpanan Sesi** - Simpan cepat tanpa dialog
-- 🌐 **Dukungan Offline** - Bekerja tanpa koneksi internet
-- 🗄️ **Penyimpanan Server** - Penyimpanan persisten opsional saat menggunakan Docker (diaktifkan secara default)
-- 🌍 **Multibahasa** - Dukungan lengkap untuk 9 bahasa: English, 简体中文, Español, Português, Français, हिन्दी, বাংলা, Русский, Bahasa Indonesia
-
+---------
 
 ## 🐳 Deploy Cepat dengan Docker
 
@@ -98,12 +39,29 @@ docker compose up
 docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
 ```
 
-Penyimpanan server diaktifkan secara default di Docker. Diagram Anda akan disimpan ke `./diagrams` di host.
+Penyimpanan server diaktifkan secara default di Docker. Diagram Anda akan disimpan (secara default sebagai root) ke `./diagrams` di host. Untuk mengubah pengguna atau ID grup yang digunakan saat menyimpan, atur variabel lingkungan `PUID` dan `PGID`.
 
-Untuk menonaktifkan penyimpanan server, set `ENABLE_SERVER_STORAGE=false`:
+Untuk menonaktifkan penyimpanan server, atur `ENABLE_SERVER_STORAGE=false`:
 ```bash
 docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
 ```
+
+### Autentikasi Dasar HTTP (Opsional)
+
+Lindungi instance Flowvia Anda dengan HTTP Basic Auth:
+
+```bash
+# Dengan Docker Compose
+HTTP_AUTH_USER=admin HTTP_AUTH_PASSWORD=secret docker compose up
+
+# Atau dengan docker run
+docker run -p 80:80 \
+  -e HTTP_AUTH_USER=admin \
+  -e HTTP_AUTH_PASSWORD=secret \
+  nyangko/flowvia:latest
+```
+
+> **Catatan**: Kedua variabel harus diatur untuk mengaktifkan autentikasi. Jika salah satu kosong, aplikasi dapat diakses tanpa login.
 
 ## Mulai Cepat (Pengembangan Lokal)
 
@@ -129,7 +87,7 @@ Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
 Ini adalah monorepo yang berisi dua paket:
 
 - `packages/flowvia-lib` - Library komponen React untuk menggambar diagram jaringan (dibangun dengan Webpack)
-- `packages/flowvia-app` - Progressive Web App untuk membuat diagram isometrik (dibangun dengan RSBuild)
+- `packages/flowvia-app` - Progressive Web App yang membungkus dan menampilkan library (dibangun dengan RSBuild)
 
 ### Perintah Pengembangan
 
@@ -164,7 +122,7 @@ npm run publish:lib  # Publish library ke npm
    - Seret dan lepas komponen dari library ke kanvas
    - Atau klik kanan pada grid dan pilih "Add node"
 
-2. **Hubungkan Item**: 
+2. **Hubungkan Item**:
    - Pilih alat Konektor (tekan 'C' atau klik ikon konektor)
    - **Mode klik** (default): Klik node pertama, lalu klik node kedua
    - **Mode seret** (opsional): Klik dan seret dari node pertama ke node kedua
@@ -181,16 +139,23 @@ npm run publish:lib  # Publish library ke npm
 - **Ekspor/Impor**: Penyimpanan permanen sebagai file JSON
 - **Auto-Save**: Secara otomatis menyimpan perubahan setiap 5 detik ke sesi
 
+## Baru ditambahkan
+
+### Multiplexing konektor
+<img src="demos/connectors.gif" alt="Multiplexed connectors demo" />
+
+### Menyalin dan menempel item
+<img src="demos/copy-paste-demo.gif" alt="Copy pasting demo" />
+
 ## Berkontribusi
 
-Kami menyambut kontribusi! Silakan lihat [CONTRIBUTORS.md](../CONTRIBUTORS.md) untuk panduan.
+Kami menyambut kontribusi! Silakan lihat [CONTRIBUTING.md](../CONTRIBUTING.md) untuk panduan.
 
 ## Dokumentasi
 
-- [FOSSFLOW_ENCYCLOPEDIA.md](../FOSSFLOW_ENCYCLOPEDIA.md) - Panduan lengkap untuk codebase
-- [CONTRIBUTORS.md](../CONTRIBUTORS.md) - Panduan kontribusi
+- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - Panduan lengkap untuk codebase
+- [CONTRIBUTING.md](../CONTRIBUTING.md) - Panduan kontribusi
 
 ## Lisensi
 
 MIT
-

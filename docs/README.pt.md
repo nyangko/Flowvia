@@ -8,97 +8,26 @@
  <a href="../README.md">English</a> | <a href="README.cn.md">简体中文</a> | <a href="README.es.md">Español</a> | <a href="README.pt.md">Português</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.bn.md">বাংলা</a> | <a href="README.ru.md">Русский</a> | <a href="README.id.md">Bahasa Indonesia</a> | <a href="README.de.md">Deutsch</a> | <a href="README.ko.md">한국어</a> | <a href="README.ja.md">日本語</a>
 </p>
 
-<b>Olá!</b> Aqui é o Stan, se você usou o Flowvia e ele te ajudou, <b>eu realmente agradeceria se você pudesse doar algo pequeno :)</b> Eu trabalho em tempo integral, e encontrar tempo para trabalhar neste projeto já é desafiador o suficiente.
-Se eu implementei um recurso para você ou corrigi um bug, seria ótimo se você pudesse :) se não, não há problema, este software sempre será gratuito!
+## Nota:
 
+Este repositório (Flowvia) é um derivado de [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW), que por sua vez é um fork de stan-smith/FossFLOW (que por sua vez era um fork de [markmanx/isoflow](https://github.com/markmanx/isoflow)), originalmente criado com o propósito de contribuir para o repositório original através de PRs. No entanto, o nome de usuário do GitHub do autor parece ter sido alterado para [mug-book-droid](https://github.com/mug-book-droid) e sua atividade tornada privada (talvez conta suspensa?), tornando o repositório original inacessível.
 
-<b>Também!</b> Se você ainda não o fez, por favor confira a biblioteca subjacente na qual isso é construído por <a href="https://github.com/markmanx/isoflow">@markmanx</a> Eu realmente estou sobre os ombros de um gigante aqui 🫡
+Por enquanto, minha intenção é fazer deste repositório (agora chamado Flowvia) uma continuação do desenvolvimento do FossFLOW, e qualquer contribuição através de PRs também é bem-vinda.
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P61KBXA3)
+Você pode conferir o último estado do repositório original que obtive na branch `backup/stan-smith-FossFLOW`.
 
-<img width="30" height="30" alt="image" src="https://github.com/user-attachments/assets/dc6ec9ca-48d7-4047-94cf-5c4f7ed63b84" /> <b> https://buymeacoffee.com/stan.smith </b>
+---
 
+Flowvia é um poderoso Progressive Web App (PWA) de código aberto para criar belos diagramas isométricos. Construído com React e a biblioteca <a href="https://github.com/markmanx/isoflow">Isoflow</a> (bifurcada e publicada no npm como fossflow, e como flowvia neste fork), ele roda inteiramente no seu navegador com suporte offline.
 
-Obrigado,
+---
+<p align="center">
+<b>Experimente online --> https://nyangko.github.io/Flowvia/ <-- </b>
+</p>
 
--Stan
+<img width="100%" alt="Flowvia-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
 
-## Experimente online
-
-Vá para  <b> --> https://nyangko.github.io/Flowvia/ <-- </b>
-
-
-------------------------------------------------------------------------------------------------------------------------------
-Flowvia é um poderoso Progressive Web App (PWA) de código aberto para criar belos diagramas isométricos. Construído com React e a biblioteca <a href="https://github.com/markmanx/isoflow">Isoflow</a> (Agora bifurcada e publicada no NPM como fossflow), ele roda inteiramente no seu navegador com suporte offline.
-
-![Screenshot_20250630_160954](https://github.com/user-attachments/assets/e7f254ad-625f-4b8a-8efc-5293b5be9d55)
-
-- **🤝 [CONTRIBUTORS.md](https://github.com/Abrar74774/Flowvia/blob/master/CONTRIBUTORS.md)** - Como contribuir para o projeto.
-
-## Atualizações Recentes (Outubro 2025)
-
-### Suporte Multilíngue
-- **8 Idiomas Suportados** - Tradução completa da interface em inglês, chinês (simplificado), espanhol, português (brasileiro), francês, hindi, bengali e russo
-- **Seletor de Idioma** - Seletor de idioma fácil de usar no cabeçalho do aplicativo
-- **Tradução Completa** - Todos os menus, diálogos, configurações, dicas de ferramentas e conteúdo de ajuda traduzidos
-- **Consciente de Localidade** - Detecta e lembra automaticamente sua preferência de idioma
-
-### Ferramenta de Conector Aprimorada
-- **Criação Baseada em Cliques** - Novo modo padrão: clique no primeiro nó, depois no segundo nó para conectar
-- **Opção de Modo de Arrastar** - O arrastar e soltar original ainda está disponível através das configurações
-- **Seleção de Modo** - Alterne entre os modos de clique e arrastar em Configurações → aba Conectores
-- **Melhor Confiabilidade** - O modo de clique fornece criação de conexão mais previsível
-
-### Importação de Ícones Personalizados
-- **Importe Seus Próprios Ícones** - Carregue ícones personalizados (PNG, JPG, SVG) para usar em seus diagramas
-- **Dimensionamento Automático** - Os ícones são dimensionados automaticamente para tamanhos consistentes para aparência profissional
-- **Alternar Isométrico/Plano** - Escolha se os ícones importados aparecem como 3D isométrico ou 2D plano
-- **Persistência Inteligente** - Ícones personalizados são salvos com diagramas e funcionam em todos os métodos de armazenamento
-- **Recursos de Ícones** - Encontre ícones gratuitos em:
-  - [Iconify Icon Sets](https://icon-sets.iconify.design/) - Milhares de ícones SVG gratuitos
-  - [Flaticon Isometric Icons](https://www.flaticon.com/free-icons/isometric) - Pacotes de ícones isométricos de alta qualidade
-
-### Suporte de Armazenamento no Servidor
-- **Armazenamento Persistente** - Diagramas salvos no sistema de arquivos do servidor, persistem entre sessões do navegador
-- **Acesso Multi-dispositivo** - Acesse seus diagramas de qualquer dispositivo ao usar implantação Docker
-- **Detecção Automática** - A interface do usuário mostra automaticamente o armazenamento do servidor quando disponível
-- **Proteção contra Sobrescrita** - Diálogo de confirmação ao salvar com nomes duplicados
-- **Integração Docker** - Armazenamento no servidor habilitado por padrão em implantações Docker
-
-### Recursos de Interação Aprimorados
-- **Teclas de Atalho Configuráveis** - Três perfis (QWERTY, SMNRCT, Nenhum) para seleção de ferramentas com indicadores visuais
-- **Controles de Panorâmica Avançados** - Múltiplos métodos de panorâmica incluindo arrastar área vazia, clique do meio/direito, teclas modificadoras (Ctrl/Alt) e navegação por teclado (Setas/WASD/IJKL)
-- **Alternar Setas do Conector** - Opção para mostrar/ocultar setas em conectores individuais
-- **Seleção de Ferramenta Persistente** - A ferramenta de conector permanece ativa após criar conexões
-- **Diálogo de Configurações** - Configuração centralizada para teclas de atalho e controles de panorâmica
-
-### Melhorias de Docker e CI/CD
-- **Builds Docker Automatizadas** - Fluxo de trabalho do GitHub Actions para implantação automática do Docker Hub em commits
-- **Suporte Multi-arquitetura** - Imagens Docker para `linux/amd64` e `linux/arm64`
-- **Imagens Pré-construídas** - Disponíveis em `nyangko/flowvia:latest`
-
-### Arquitetura Monorepo
-- **Repositório único** para biblioteca e aplicação
-- **NPM Workspaces** para gerenciamento de dependências simplificado
-- **Processo de build unificado** com `npm run build` na raiz
-
-### Correções de Interface
-- Corrigido problema de exibição de ícones da barra de ferramentas do editor Quill
-- Resolvidos avisos de chave React em menus de contexto
-- Melhorado estilo do editor de markdown
-
-## Características
-
-- 🎨 **Diagramação Isométrica** - Crie impressionantes diagramas técnicos em estilo 3D
-- 💾 **Salvamento Automático** - Seu trabalho é salvo automaticamente a cada 5 segundos
-- 📱 **Suporte PWA** - Instale como um aplicativo nativo no Mac e Linux
-- 🔒 **Privacidade em Primeiro Lugar** - Todos os dados armazenados localmente no seu navegador
-- 📤 **Importar/Exportar** - Compartilhe diagramas como arquivos JSON
-- 🎯 **Armazenamento de Sessão** - Salvamento rápido sem diálogos
-- 🌐 **Suporte Offline** - Trabalhe sem conexão à internet
-- 🗄️ **Armazenamento no Servidor** - Armazenamento persistente opcional ao usar Docker (habilitado por padrão)
-- 🌍 **Multilíngue** - Suporte completo para 8 idiomas: English, 简体中文, Español, Português, Français, हिन्दी, বাংলা, Русский
-
+---------
 
 ## 🐳 Implantação Rápida com Docker
 
@@ -110,12 +39,29 @@ docker compose up
 docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
 ```
 
-O armazenamento no servidor está habilitado por padrão no Docker. Seus diagramas serão salvos em `./diagrams` no host.
+O armazenamento no servidor está habilitado por padrão no Docker. Seus diagramas serão salvos (por padrão como root) em `./diagrams` no host. Para alterar o usuário ou ID de grupo usado ao salvar, defina as variáveis de ambiente `PUID` e `PGID`.
 
 Para desabilitar o armazenamento no servidor, defina `ENABLE_SERVER_STORAGE=false`:
 ```bash
 docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
 ```
+
+### Autenticação Básica HTTP (Opcional)
+
+Proteja sua instância do Flowvia com HTTP Basic Auth:
+
+```bash
+# Com Docker Compose
+HTTP_AUTH_USER=admin HTTP_AUTH_PASSWORD=secret docker compose up
+
+# Ou com docker run
+docker run -p 80:80 \
+  -e HTTP_AUTH_USER=admin \
+  -e HTTP_AUTH_PASSWORD=secret \
+  nyangko/flowvia:latest
+```
+
+> **Nota**: Ambas as variáveis devem ser definidas para habilitar a autenticação. Se qualquer uma delas estiver vazia, o aplicativo é acessível sem login.
 
 ## Início Rápido (Desenvolvimento Local)
 
@@ -141,7 +87,7 @@ Abra [http://localhost:3000](http://localhost:3000) no seu navegador.
 Este é um monorepo contendo dois pacotes:
 
 - `packages/flowvia-lib` - Biblioteca de componentes React para desenhar diagramas de rede (construída com Webpack)
-- `packages/flowvia-app` - Progressive Web App para criar diagramas isométricos (construído com RSBuild)
+- `packages/flowvia-app` - Progressive Web App que encapsula e apresenta a biblioteca (construído com RSBuild)
 
 ### Comandos de Desenvolvimento
 
@@ -193,14 +139,22 @@ npm run publish:lib  # Publicar biblioteca no npm
 - **Exportar/Importar**: Armazenamento permanente como arquivos JSON
 - **Salvamento Automático**: Salva automaticamente as alterações a cada 5 segundos na sessão
 
+## Adicionado recentemente
+
+### Multiplexação de conectores
+<img src="demos/connectors.gif" alt="Multiplexed connectors demo" />
+
+### Copiar e colar itens
+<img src="demos/copy-paste-demo.gif" alt="Copy pasting demo" />
+
 ## Contribuindo
 
-Damos as boas-vindas a contribuições! Por favor veja [CONTRIBUTORS.md](../CONTRIBUTORS.md) para diretrizes.
+Damos as boas-vindas a contribuições! Por favor veja [CONTRIBUTING.md](../CONTRIBUTING.md) para diretrizes.
 
 ## Documentação
 
-- [FOSSFLOW_ENCYCLOPEDIA.md](../FOSSFLOW_ENCYCLOPEDIA.md) - Guia abrangente para a base de código
-- [CONTRIBUTORS.md](../CONTRIBUTORS.md) - Diretrizes de contribuição
+- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - Guia abrangente para a base de código
+- [CONTRIBUTING.md](../CONTRIBUTING.md) - Diretrizes de contribuição
 
 ## Licença
 

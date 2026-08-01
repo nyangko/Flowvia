@@ -8,30 +8,26 @@
  <a href="../README.md">English</a> | <a href="README.cn.md">简体中文</a> | <a href="README.es.md">Español</a> | <a href="README.pt.md">Português</a> | <a href="README.fr.md">Français</a> | <a href="README.hi.md">हिन्दी</a> | <a href="README.bn.md">বাংলা</a> | <a href="README.ru.md">Русский</a> | <a href="README.id.md">Bahasa Indonesia</a> | <a href="README.de.md">Deutsch</a> | <a href="README.ko.md">한국어</a> | <a href="README.ja.md">日本語</a>
 </p>
 
-<b>Hey!</b> Hier ist Stan. Wenn du Flowvia benutzt hast und es dir geholfen hat, <b>würde ich mich sehr über eine kleine Spende freuen :)</b> Ich arbeite Vollzeit, und Zeit für dieses Projekt zu finden ist schon schwer genug.
-Wenn ich ein Feature für dich implementiert oder einen Bug behoben habe, wäre es toll, wenn du etwas spenden könntest :) Falls nicht, ist das kein Problem – diese Software bleibt immer kostenlos!
+## Hinweis:
 
-<b>Außerdem!</b> Falls noch nicht geschehen, schau dir bitte die zugrunde liegende Bibliothek an, auf der dies aufbaut, von <a href="https://github.com/markmanx/isoflow">@markmanx</a>. Ich stehe hier wirklich auf den Schultern eines Riesen 🫡
+Dieses Repository (Flowvia) ist ein Derivat von [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW), das selbst ein Fork von stan-smith/FossFLOW ist (der wiederum ein Fork von [markmanx/isoflow](https://github.com/markmanx/isoflow) war), ursprünglich erstellt, um über PRs zum Original-Repository beizutragen. Der GitHub-Benutzername des Autors scheint jedoch zu [mug-book-droid](https://github.com/mug-book-droid) geändert worden zu sein, und seine Aktivität wurde auf privat gesetzt (vielleicht wurde das Konto gesperrt?), wodurch das Original-Repository unzugänglich wurde.
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/P5P61KBXA3)
+Vorerst beabsichtige ich, dieses Repository (jetzt Flowvia genannt) als Fortsetzung der Entwicklung von FossFLOW zu führen, und jeder Beitrag über PRs ist ebenfalls willkommen.
 
-<a href="https://www.buymeacoffee.com/stan.smith" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+Den letzten Stand des Original-Repositorys, den ich abgerufen habe, findest du im Branch `backup/stan-smith-FossFLOW`.
 
-Danke,
+---
 
--Stan
+Flowvia ist eine leistungsstarke, quelloffene Progressive Web App (PWA) zum Erstellen schöner isometrischer Diagramme. Gebaut mit React und der <a href="https://github.com/markmanx/isoflow">Isoflow</a>-Bibliothek (geforkt und auf npm als fossflow veröffentlicht, und in diesem Fork als flowvia), läuft sie vollständig in deinem Browser mit Offline-Unterstützung.
 
-## Online ausprobieren
+---
+<p align="center">
+<b>Online ausprobieren --> https://nyangko.github.io/Flowvia/ <-- </b>
+</p>
 
-Gehe zu <b> --> https://nyangko.github.io/Flowvia/ <-- </b>
+<img width="100%" alt="Flowvia-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
 
-
-------------------------------------------------------------------------------------------------------------------------------
-Flowvia ist eine leistungsstarke, quelloffene Progressive Web App (PWA) zum Erstellen schöner isometrischer Diagramme. Gebaut mit React und der <a href="https://github.com/markmanx/isoflow">Isoflow</a>-Bibliothek (jetzt geforkt und auf NPM als fossflow veröffentlicht), läuft sie vollständig in deinem Browser mit Offline-Unterstützung.
-
-![Screenshot_20250630_160954](https://github.com/user-attachments/assets/e7f254ad-625f-4b8a-8efc-5293b5be9d55)
-
-- **🤝 [CONTRIBUTING.md](https://github.com/Abrar74774/Flowvia/blob/master/CONTRIBUTING.md)** - Wie du zum Projekt beitragen kannst.
+---------
 
 ## 🐳 Schnelle Bereitstellung mit Docker
 
@@ -43,12 +39,29 @@ docker compose up
 docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
 ```
 
-Server-Speicher ist in Docker standardmäßig aktiviert. Deine Diagramme werden in `./diagrams` auf dem Host gespeichert.
+Server-Speicher ist in Docker standardmäßig aktiviert. Deine Diagramme werden (standardmäßig als root) in `./diagrams` auf dem Host gespeichert. Um den Benutzer oder die Gruppen-ID zum Speichern zu ändern, setze die Umgebungsvariablen `PUID` und `PGID`.
 
 Um den Server-Speicher zu deaktivieren, setze `ENABLE_SERVER_STORAGE=false`:
 ```bash
 docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
 ```
+
+### HTTP Basic Authentication (Optional)
+
+Schütze deine Flowvia-Instanz mit HTTP Basic Auth:
+
+```bash
+# Mit Docker Compose
+HTTP_AUTH_USER=admin HTTP_AUTH_PASSWORD=secret docker compose up
+
+# Oder mit docker run
+docker run -p 80:80 \
+  -e HTTP_AUTH_USER=admin \
+  -e HTTP_AUTH_PASSWORD=secret \
+  nyangko/flowvia:latest
+```
+
+> **Hinweis**: Beide Variablen müssen gesetzt sein, um die Authentifizierung zu aktivieren. Ist eine davon leer, ist die App ohne Login zugänglich.
 
 ## Schnellstart (Lokale Entwicklung)
 
@@ -126,14 +139,22 @@ npm run publish:lib  # Bibliothek auf npm veröffentlichen
 - **Export/Import**: Permanente Speicherung als JSON-Dateien
 - **Automatisches Speichern**: Speichert Änderungen automatisch alle 5 Sekunden in der Sitzung
 
+## Kürzlich hinzugefügt
+
+### Konnektor-Multiplexing
+<img src="demos/connectors.gif" alt="Multiplexed connectors demo" />
+
+### Elemente kopieren und einfügen
+<img src="demos/copy-paste-demo.gif" alt="Copy pasting demo" />
+
 ## Beitragen
 
-Wir freuen uns über Beiträge! Siehe [CONTRIBUTORS.md](../CONTRIBUTORS.md) für Richtlinien.
+Wir freuen uns über Beiträge! Siehe [CONTRIBUTING.md](../CONTRIBUTING.md) für Richtlinien.
 
 ## Dokumentation
 
-- [FOSSFLOW_ENCYCLOPEDIA.md](../FOSSFLOW_ENCYCLOPEDIA.md) - Umfassender Leitfaden zur Codebase
-- [CONTRIBUTORS.md](../CONTRIBUTORS.md) - Beitragsrichtlinien
+- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - Umfassender Leitfaden zur Codebase
+- [CONTRIBUTING.md](../CONTRIBUTING.md) - Beitragsrichtlinien
 
 ## Lizenz
 
