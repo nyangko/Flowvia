@@ -1,20 +1,20 @@
+import { FallbackProps } from 'react-error-boundary';
 import './ErrorBoundary.css';
-
-interface ErrorFallbackProps {
-  error: Error;
-}
 
 export default function ErrorFallback({
   error
-}: ErrorFallbackProps) {
+}: FallbackProps) {
+  const message = error instanceof Error ? error.message : String(error);
+  const stack = error instanceof Error ? error.stack : undefined;
+
   const onRefresh = () => {
     window.location.reload();
   };
 
   const onReport = () => {
     const errorDetails = {
-      message: error.message,
-      stack: error.stack,
+      message,
+      stack,
       userAgent: navigator.userAgent,
       url: window.location.href,
       timestamp: new Date().toISOString()
@@ -23,7 +23,7 @@ export default function ErrorFallback({
     const githubUrl = new URL(
       'https://github.com/nyangko/Flowvia/issues/new'
     );
-    githubUrl.searchParams.set('title', `Error: ${error.message}`);
+    githubUrl.searchParams.set('title', `Error: ${message}`);
     githubUrl.searchParams.set(
       'body',
       `## Error Details\n\n\`\`\`\n${JSON.stringify(errorDetails, null, 2)}\n\`\`\`\n\n## Steps to Reproduce\n1. \n2. \n3. \n\n## Expected Behavior\n\n## Actual Behavior\n\n## Environment\n- Browser: ${navigator.userAgent}\n- URL: ${window.location.href}\n- Timestamp: ${new Date().toISOString()}`
@@ -40,9 +40,9 @@ export default function ErrorFallback({
         </div>
         <div className="error-content">
           <p>
-            <strong>Error:</strong> {error.message}
+            <strong>Error:</strong> {message}
           </p>
-          {error.stack && (
+          {stack && (
             <details style={{ marginTop: '10px' }}>
               <summary
                 style={{ cursor: 'pointer', fontSize: '12px', color: '#666' }}
@@ -60,7 +60,7 @@ export default function ErrorFallback({
                   overflow: 'auto'
                 }}
               >
-                {error.stack}
+                {stack}
               </pre>
             </details>
           )}
