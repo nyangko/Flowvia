@@ -129,15 +129,16 @@ npm run publish:lib  # Publicar biblioteca no npm
    - Alterne os modos em Configurações → aba Conectores
 
 3. **Salvar Seu Trabalho**:
-   - **Salvamento Rápido** - Salva na sessão do navegador
+   - **Salvamento Rápido** - Salva no armazenamento local do seu dispositivo
    - **Exportar** - Baixar como arquivo JSON
    - **Importar** - Carregar de arquivo JSON
 
 ### Opções de Armazenamento
 
-- **Armazenamento de Sessão**: Salvamentos temporários apagados quando o navegador fecha
+- **Armazenamento Local**: Os diagramas são salvos no IndexedDB do seu navegador e persistem mesmo depois de fechar o navegador ou reiniciar o dispositivo
+- **Salvamento Automático**: Salva automaticamente as alterações 5 segundos depois de você parar de editar
 - **Exportar/Importar**: Armazenamento permanente como arquivos JSON
-- **Salvamento Automático**: Salva automaticamente as alterações a cada 5 segundos na sessão
+- **Armazenamento no Servidor** (self-hosted): Ao executar via Docker com `ENABLE_SERVER_STORAGE` habilitado (habilitado por padrão), os diagramas também são sincronizados com `./diagrams` no host
 
 ## Adicionado recentemente
 

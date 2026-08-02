@@ -130,15 +130,16 @@ npm run publish:lib  # Publish library to npm
    - Switch modes in Settings → Connectors tab
 
 3. **Save Your Work**:
-   - **Quick Save** - Saves to browser session
+   - **Quick Save** - Saves to local storage on your device
    - **Export** - Download as JSON file
    - **Import** - Load from JSON file
 
 ### Storage Options
 
-- **Session Storage**: Temporary saves cleared when browser closes
+- **Local Storage**: Diagrams persist in your browser's IndexedDB and survive closing the browser or restarting your device
+- **Auto-Save**: Automatically saves changes 5 seconds after you stop editing
 - **Export/Import**: Permanent storage as JSON files
-- **Auto-Save**: Automatically saves changes every 5 seconds to session
+- **Server Storage** (self-hosted): When running via Docker with `ENABLE_SERVER_STORAGE` enabled (the default), diagrams also sync to `./diagrams` on the host
 
 ## Recently added
 

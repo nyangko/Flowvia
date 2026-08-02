@@ -129,15 +129,16 @@ npm run publish:lib  # Bibliothek auf npm veröffentlichen
    - Wechsle den Modus in Einstellungen → Verbindungen
 
 3. **Arbeit speichern**:
-   - **Schnellspeichern** - Speichert in der Browser-Sitzung
+   - **Schnellspeichern** - Speichert lokal auf deinem Gerät
    - **Exportieren** - Als JSON-Datei herunterladen
    - **Importieren** - Aus JSON-Datei laden
 
 ### Speicheroptionen
 
-- **Sitzungsspeicher**: Temporäre Speicherungen, die beim Schließen des Browsers gelöscht werden
+- **Lokaler Speicher**: Diagramme werden in der IndexedDB deines Browsers gespeichert und bleiben auch nach dem Schließen des Browsers oder einem Neustart des Geräts erhalten
+- **Automatisches Speichern**: Speichert Änderungen automatisch 5 Sekunden nach der letzten Bearbeitung
 - **Export/Import**: Permanente Speicherung als JSON-Dateien
-- **Automatisches Speichern**: Speichert Änderungen automatisch alle 5 Sekunden in der Sitzung
+- **Server-Speicher** (Self-Hosting): Bei Ausführung über Docker mit aktiviertem `ENABLE_SERVER_STORAGE` (standardmäßig aktiviert) werden Diagramme zusätzlich mit `./diagrams` auf dem Host synchronisiert
 
 ## Kürzlich hinzugefügt
 

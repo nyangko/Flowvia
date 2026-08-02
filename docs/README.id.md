@@ -129,15 +129,16 @@ npm run publish:lib  # Publish library ke npm
    - Beralih mode di Pengaturan → tab Konektor
 
 3. **Simpan Pekerjaan Anda**:
-   - **Simpan Cepat** - Menyimpan ke sesi browser
+   - **Simpan Cepat** - Menyimpan ke penyimpanan lokal di perangkat Anda
    - **Ekspor** - Unduh sebagai file JSON
    - **Impor** - Muat dari file JSON
 
 ### Opsi Penyimpanan
 
-- **Penyimpanan Sesi**: Simpan sementara yang dihapus saat browser ditutup
+- **Penyimpanan Lokal**: Diagram disimpan di IndexedDB browser Anda dan tetap ada meskipun browser ditutup atau perangkat di-restart
+- **Auto-Save**: Secara otomatis menyimpan perubahan 5 detik setelah Anda berhenti mengedit
 - **Ekspor/Impor**: Penyimpanan permanen sebagai file JSON
-- **Auto-Save**: Secara otomatis menyimpan perubahan setiap 5 detik ke sesi
+- **Penyimpanan Server** (self-hosted): Saat dijalankan melalui Docker dengan `ENABLE_SERVER_STORAGE` aktif (aktif secara default), diagram juga disinkronkan ke `./diagrams` di host
 
 ## Baru ditambahkan
 
