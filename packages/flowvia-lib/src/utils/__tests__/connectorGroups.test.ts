@@ -7,15 +7,21 @@ const makeConnector = (
   id: string,
   fromItem: string,
   toItem: string,
-  customColor?: string
+  customColor?: string,
+  width?: number
 ): Connector => ({
   id,
   anchors: [
     { id: `${id}-a1`, ref: { item: fromItem } },
     { id: `${id}-a2`, ref: { item: toItem } }
   ],
-  ...(customColor ? { customColor } : {})
+  ...(customColor ? { customColor } : {}),
+  ...(width !== undefined ? { width } : {})
 });
+
+// CONNECTOR_DEFAULTS.width (config.ts) — connectors below that don't pass an
+// explicit width fall back to this for groupWidthRatio purposes.
+const DEFAULT_WIDTH = 7;
 
 const makeTileConnector = (
   id: string,
@@ -37,7 +43,12 @@ describe('getConnectorGroups', () => {
 
   it('should return index=0, total=1 for single connector', () => {
     const result = getConnectorGroups([makeConnector('c1', 'item1', 'item2')]);
-    expect(result.get('c1')).toEqual({ index: 0, total: 1, reversed: false });
+    expect(result.get('c1')).toEqual({
+      index: 0,
+      total: 1,
+      reversed: false,
+      groupWidthRatio: DEFAULT_WIDTH / TILE_SIZE
+    });
   });
 
   it('should group two connectors between same items', () => {
@@ -45,8 +56,9 @@ describe('getConnectorGroups', () => {
       makeConnector('c1', 'item1', 'item2'),
       makeConnector('c2', 'item1', 'item2')
     ]);
-    expect(result.get('c1')).toEqual({ index: 0, total: 2, reversed: false });
-    expect(result.get('c2')).toEqual({ index: 1, total: 2, reversed: false });
+    const ratio = (2 * DEFAULT_WIDTH) / TILE_SIZE;
+    expect(result.get('c1')).toEqual({ index: 0, total: 2, reversed: false, groupWidthRatio: ratio });
+    expect(result.get('c2')).toEqual({ index: 1, total: 2, reversed: false, groupWidthRatio: ratio });
   });
 
   it('should group connectors regardless of anchor order', () => {
@@ -54,8 +66,9 @@ describe('getConnectorGroups', () => {
       makeConnector('c1', 'item1', 'item2'),
       makeConnector('c2', 'item2', 'item1')
     ]);
-    expect(result.get('c1')).toEqual({ index: 0, total: 2, reversed: false });
-    expect(result.get('c2')).toEqual({ index: 1, total: 2, reversed: true });
+    const ratio = (2 * DEFAULT_WIDTH) / TILE_SIZE;
+    expect(result.get('c1')).toEqual({ index: 0, total: 2, reversed: false, groupWidthRatio: ratio });
+    expect(result.get('c2')).toEqual({ index: 1, total: 2, reversed: true, groupWidthRatio: ratio });
   });
 
   it('should NOT group connectors between different items', () => {
@@ -63,8 +76,9 @@ describe('getConnectorGroups', () => {
       makeConnector('c1', 'item1', 'item2'),
       makeConnector('c2', 'item1', 'item3')
     ]);
-    expect(result.get('c1')).toEqual({ index: 0, total: 1, reversed: false });
-    expect(result.get('c2')).toEqual({ index: 0, total: 1, reversed: false });
+    const ratio = DEFAULT_WIDTH / TILE_SIZE;
+    expect(result.get('c1')).toEqual({ index: 0, total: 1, reversed: false, groupWidthRatio: ratio });
+    expect(result.get('c2')).toEqual({ index: 0, total: 1, reversed: false, groupWidthRatio: ratio });
   });
 
   it('should handle 8 connectors between the same two items', () => {
@@ -72,9 +86,10 @@ describe('getConnectorGroups', () => {
       makeConnector(`c${i}`, 'item1', 'item2')
     );
     const result = getConnectorGroups(connectors);
+    const ratio = (8 * DEFAULT_WIDTH) / TILE_SIZE;
 
     for (let i = 0; i < 8; i++) {
-      expect(result.get(`c${i}`)).toEqual({ index: i, total: 8, reversed: false });
+      expect(result.get(`c${i}`)).toEqual({ index: i, total: 8, reversed: false, groupWidthRatio: ratio });
     }
   });
 
@@ -84,9 +99,11 @@ describe('getConnectorGroups', () => {
       makeTileConnector('c2', { x: 0, y: 0 }, { x: 1, y: 1 }),
       makeTileConnector('c3', { x: 2, y: 2 }, { x: 3, y: 3 })
     ]);
-    expect(result.get('c1')).toEqual({ index: 0, total: 2, reversed: false });
-    expect(result.get('c2')).toEqual({ index: 1, total: 2, reversed: false });
-    expect(result.get('c3')).toEqual({ index: 0, total: 1, reversed: false });
+    const pairRatio = (2 * DEFAULT_WIDTH) / TILE_SIZE;
+    const soloRatio = DEFAULT_WIDTH / TILE_SIZE;
+    expect(result.get('c1')).toEqual({ index: 0, total: 2, reversed: false, groupWidthRatio: pairRatio });
+    expect(result.get('c2')).toEqual({ index: 1, total: 2, reversed: false, groupWidthRatio: pairRatio });
+    expect(result.get('c3')).toEqual({ index: 0, total: 1, reversed: false, groupWidthRatio: soloRatio });
   });
 
   it('should handle mixed groups', () => {
@@ -98,13 +115,28 @@ describe('getConnectorGroups', () => {
       makeConnector('c5', 'A', 'C'),
       makeConnector('c6', 'D', 'E')
     ]);
+    const trioRatio = (3 * DEFAULT_WIDTH) / TILE_SIZE;
+    const pairRatio = (2 * DEFAULT_WIDTH) / TILE_SIZE;
+    const soloRatio = DEFAULT_WIDTH / TILE_SIZE;
 
-    expect(result.get('c1')).toEqual({ index: 0, total: 3, reversed: false });
-    expect(result.get('c2')).toEqual({ index: 1, total: 3, reversed: false });
-    expect(result.get('c3')).toEqual({ index: 2, total: 3, reversed: false });
-    expect(result.get('c4')).toEqual({ index: 0, total: 2, reversed: false });
-    expect(result.get('c5')).toEqual({ index: 1, total: 2, reversed: false });
-    expect(result.get('c6')).toEqual({ index: 0, total: 1, reversed: false });
+    expect(result.get('c1')).toEqual({ index: 0, total: 3, reversed: false, groupWidthRatio: trioRatio });
+    expect(result.get('c2')).toEqual({ index: 1, total: 3, reversed: false, groupWidthRatio: trioRatio });
+    expect(result.get('c3')).toEqual({ index: 2, total: 3, reversed: false, groupWidthRatio: trioRatio });
+    expect(result.get('c4')).toEqual({ index: 0, total: 2, reversed: false, groupWidthRatio: pairRatio });
+    expect(result.get('c5')).toEqual({ index: 1, total: 2, reversed: false, groupWidthRatio: pairRatio });
+    expect(result.get('c6')).toEqual({ index: 0, total: 1, reversed: false, groupWidthRatio: soloRatio });
+  });
+
+  it('should widen spacing for a group with mixed connector widths', () => {
+    const result = getConnectorGroups([
+      makeConnector('thin1', 'item1', 'item2', undefined, 10),
+      makeConnector('thick', 'item1', 'item2', undefined, 30),
+      makeConnector('thin2', 'item1', 'item2', undefined, 10)
+    ]);
+    const ratio = (10 + 30 + 10) / TILE_SIZE;
+    expect(result.get('thin1')?.groupWidthRatio).toBeCloseTo(ratio);
+    expect(result.get('thick')?.groupWidthRatio).toBeCloseTo(ratio);
+    expect(result.get('thin2')?.groupWidthRatio).toBeCloseTo(ratio);
   });
 });
 
@@ -165,6 +197,18 @@ describe('getGroupOffset', () => {
     const offset200 = getGroupOffset(0, 4, 200);
     expect(offset200).toBeCloseTo(offset100 * 2);
   });
+
+  it('should widen spacing when groupWidthRatio exceeds the default 80% budget', () => {
+    const narrow = getGroupOffset(0, 3, TILE_SIZE, 0.2);
+    const wide = getGroupOffset(0, 3, TILE_SIZE, 0.9);
+    expect(Math.abs(wide)).toBeGreaterThan(Math.abs(narrow));
+  });
+
+  it('should ignore groupWidthRatio below the default 80% budget', () => {
+    const withoutRatio = getGroupOffset(0, 3, TILE_SIZE);
+    const withSmallRatio = getGroupOffset(0, 3, TILE_SIZE, 0.1);
+    expect(withSmallRatio).toBeCloseTo(withoutRatio);
+  });
 });
 
 describe('8 parallel connectors with individual colors', () => {
@@ -185,7 +229,7 @@ describe('8 parallel connectors with individual colors', () => {
 
     const groups = getConnectorGroups(connectors);
     for (let i = 0; i < 8; i++) {
-      expect(groups.get(`c${i}`)).toEqual({ index: i, total: 8, reversed: false });
+      expect(groups.get(`c${i}`)).toEqual({ index: i, total: 8, reversed: false, groupWidthRatio: (8 * DEFAULT_WIDTH) / TILE_SIZE });
     }
   });
 
@@ -218,7 +262,7 @@ describe('8 parallel connectors with individual colors', () => {
     // Verify grouping works after deserialization
     const groups = getConnectorGroups(parsed.connectors);
     for (let i = 0; i < 8; i++) {
-      expect(groups.get(`c${i}`)).toEqual({ index: i, total: 8, reversed: false });
+      expect(groups.get(`c${i}`)).toEqual({ index: i, total: 8, reversed: false, groupWidthRatio: (8 * DEFAULT_WIDTH) / TILE_SIZE });
     }
   });
 });

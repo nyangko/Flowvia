@@ -21,6 +21,7 @@ interface Props {
   groupIndex?: number;
   groupTotal?: number;
   groupReversed?: boolean;
+  groupWidthRatio?: number;
   dimmed?: boolean;
 }
 
@@ -71,7 +72,7 @@ const buildOffsetPolyline = (
   return points.join(' ');
 };
 
-export const Connector = memo(({ connector: _connector, isSelected, groupIndex = 0, groupTotal = 1, groupReversed = false, dimmed = false }: Props) => {
+export const Connector = memo(({ connector: _connector, isSelected, groupIndex = 0, groupTotal = 1, groupReversed = false, groupWidthRatio = 0, dimmed = false }: Props) => {
   const theme = useTheme();
   const predefinedColor = useColor(_connector.color);
   const { currentView } = useScene();
@@ -130,6 +131,13 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
     return (UNPROJECTED_TILE_SIZE / 100) * connector.width;
   }, [connector.width]);
 
+  // 20 is the width slider's midpoint — the arrowhead's fixed points below were
+  // sized for that reference width, so thinner/thicker lines get a proportionally
+  // smaller/larger arrow instead of always the same fixed size.
+  const arrowScale = useMemo(() => {
+    return Math.max(0.6, Math.min(1.8, connectorWidthPx / 20));
+  }, [connectorWidthPx]);
+
   // Pixel offset to spread parallel connectors within one tile. The perpendicular
   // direction below is derived from each connector's own tile path, which points
   // the opposite way for a connector drawn start<->end reversed relative to its
@@ -137,9 +145,9 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
   // apart consistently instead of two reversed connectors landing on top of
   // each other.
   const groupOffsetPx = useMemo(() => {
-    const offset = getGroupOffset(groupIndex, groupTotal, UNPROJECTED_TILE_SIZE);
+    const offset = getGroupOffset(groupIndex, groupTotal, UNPROJECTED_TILE_SIZE, groupWidthRatio);
     return groupReversed ? -offset : offset;
-  }, [groupIndex, groupTotal, groupReversed]);
+  }, [groupIndex, groupTotal, groupReversed, groupWidthRatio]);
 
   const pathString = useMemo(() => {
     if (groupTotal > 1) {
@@ -426,7 +434,7 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
 
         {directionIcon && connector.showArrow !== false && (
           <g transform={`translate(${directionIcon.x}, ${directionIcon.y})`}>
-            <g transform={`rotate(${directionIcon.rotation})`}>
+            <g transform={`rotate(${directionIcon.rotation}) scale(${arrowScale})`}>
               <polygon
                 fill="black"
                 stroke={theme.palette.common.white}

@@ -29,6 +29,7 @@ export const ConnectorLabels = ({ connectors }: Props) => {
               connector={connector}
               groupIndex={group?.index ?? 0}
               groupTotal={group?.total ?? 1}
+              groupWidthRatio={group?.groupWidthRatio ?? 0}
             />
           );
         })}

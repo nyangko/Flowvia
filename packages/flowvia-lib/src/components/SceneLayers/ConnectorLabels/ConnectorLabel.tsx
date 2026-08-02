@@ -48,9 +48,10 @@ interface Props {
   connector: ReturnType<typeof useScene>['connectors'][0];
   groupIndex?: number;
   groupTotal?: number;
+  groupWidthRatio?: number;
 }
 
-export const ConnectorLabel = memo(({ connector: sceneConnector, groupIndex = 0, groupTotal = 1 }: Props) => {
+export const ConnectorLabel = memo(({ connector: sceneConnector, groupIndex = 0, groupTotal = 1, groupWidthRatio = 0 }: Props) => {
   const connector = useConnector(sceneConnector.id);
   const isFlat = useUiStateStore((state) => state.projectionMode === 'FLAT');
 
@@ -78,7 +79,7 @@ export const ConnectorLabel = memo(({ connector: sceneConnector, groupIndex = 0,
         if (groupTotal > 1) {
           const { tiles } = sceneConnector.path;
           const perp = getPerpendicularAt(tiles, tileIndex);
-          const offsetInTiles = getGroupOffset(groupIndex, groupTotal, 1.0);
+          const offsetInTiles = getGroupOffset(groupIndex, groupTotal, 1.0, groupWidthRatio);
           labelTile = {
             x: labelTile.x + perp.dx * offsetInTiles,
             y: labelTile.y + perp.dy * offsetInTiles
@@ -132,7 +133,7 @@ export const ConnectorLabel = memo(({ connector: sceneConnector, groupIndex = 0,
           return item !== null;
         }
       );
-  }, [labels, sceneConnector.path, connector?.lineType, connector?.width, groupIndex, groupTotal, isFlat]);
+  }, [labels, sceneConnector.path, connector?.lineType, connector?.width, groupIndex, groupTotal, groupWidthRatio, isFlat]);
 
   return (
     <>
