@@ -25,11 +25,13 @@ Flowvia is a **simple, privacy-first, browser-based isometric diagramming tool**
 
 The following are **out of scope** and PRs implementing them will be closed immediately:
 
-- Authentication, RBAC, OIDC, SSO, or any identity management
+- Authentication, RBAC, OIDC, SSO, or any full identity/account management system
 - User accounts, teams, or multi-tenancy
 - Cloud hosting, SaaS features, or paid tiers
 - Database integrations
 - Anything that fundamentally changes what Flowvia is
+
+Note: the optional HTTP Basic Auth for self-hosted instances (see [README](./README.md#http-basic-authentication-optional)) is already a supported exception — it just gates access to a single shared instance and isn't a user-account or identity system. The rule above targets full auth/identity stacks, not that.
 
 If you're unsure whether your idea fits, open a [Discussion](https://github.com/nyangko/Flowvia/discussions) first.
 
@@ -46,7 +48,7 @@ By participating in this project, you agree to abide by our Code of Conduct:
 
 ### Prerequisites
 
-- Node.js (v18 or higher)
+- Node.js (v24 or higher)
 - npm (v9 or higher)
 - Git
 - A code editor (VS Code recommended)
