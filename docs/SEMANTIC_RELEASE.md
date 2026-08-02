@@ -9,7 +9,8 @@ Flowvia uses [semantic-release](https://github.com/semantic-release/semantic-rel
 - CHANGELOG.md generation
 - GitHub release creation
 - Git tag creation
-- Docker image tagging with version numbers
+
+Docker image publishing is a **separate, parallel** pipeline (see below) — it is not currently driven by the version tags semantic-release creates.
 
 ## How It Works
 
@@ -26,29 +27,50 @@ When you commit code using conventional commits, the commit type determines the 
 | `feat!:` or `BREAKING CHANGE:` | Major (1.0.0 → 2.0.0) | Breaking changes |
 | `docs:`, `style:`, `test:`, `chore:` | No bump | Non-code changes |
 
-### 2. Automated Workflow
+### 2. The Actual Workflow Chain
 
-When you push to `master` branch:
+The workflows are **not** chained "tests → release → tag → docker build". They're chained via GitHub Actions `workflow_run` triggers, each gated on the parent's `conclusion == 'success'`, like this:
 
-1. **Tests run** (via `.github/workflows/test.yml`)
-2. **If tests pass**, semantic-release workflow triggers (`.github/workflows/release.yml`)
-3. **Semantic-release analyzes** commits since last release
-4. **If version bump needed**:
-   - Calculates new version number
+```
+push to master/main
+  → Run Tests (test.yml)
+    → E2E Tests (e2e-tests.yml)                    [workflow_run: "Run Tests"]
+      → Build and Push Docker Image (docker.yml)      [workflow_run: "E2E Tests"]
+      → Deploy static content to Pages (pages.yml)     [workflow_run: "E2E Tests"]
+        → Release (release.yml)                          [workflow_run: "Deploy static content to Pages"]
+          → runs semantic-release
+```
+
+Step by step:
+
+1. **`test.yml` ("Run Tests")** runs directly on `push` to `master`/`main` (and on pull requests).
+2. **`e2e-tests.yml` ("E2E Tests")** triggers via `workflow_run` when "Run Tests" completes, but only runs if that run's conclusion was `success` (it also runs directly on pull requests).
+3. Once "E2E Tests" completes with `success`, **two workflows fire in parallel**, both watching "E2E Tests" via `workflow_run`:
+   - **`docker.yml` ("Build and Push Docker Image")** — builds and pushes the Docker image.
+   - **`pages.yml` ("Deploy static content to Pages")** — builds and deploys the app to GitHub Pages.
+4. **`release.yml` ("Release")** triggers via `workflow_run` only when "Deploy static content to Pages" completes with `success`. This is the workflow that actually runs `semantic-release`, which:
+   - Analyzes commits since the last release
+   - Calculates the new version (if any)
    - Updates `package.json` files in all workspace packages
-   - Generates CHANGELOG.md
-   - Creates git tag (e.g., `v1.2.0`)
-   - Commits changes with `[skip ci]`
-   - Pushes tag to GitHub
-   - Creates GitHub release with notes
-5. **Docker workflow triggers** on new tag (`.github/workflows/docker.yml`)
-6. **Docker images are tagged** with:
-   - `latest`
-   - `1.2.0` (full version)
-   - `1.2` (major.minor)
-   - `1` (major only)
+   - Generates `CHANGELOG.md`
+   - Creates a git tag (e.g., `v1.2.0`) and commits with `[skip ci]`
+   - Pushes the tag and creates a GitHub release
 
-### 3. Multiple Package Versioning
+**Important:** `docker.yml` is triggered by "E2E Tests" completing, in parallel with the Pages deploy — it does **not** wait for, or depend on, `release.yml` / semantic-release / the git tag. The Docker image build happens *independently of* the version bump, not after it.
+
+### 3. Docker Image Tagging Is Currently Branch/SHA-Based, Not Version-Based
+
+`docker.yml` contains `docker/metadata-action` tag rules that look like they produce semver tags (`{{version}}`, `{{major}}.{{minor}}`, `{{major}}`) gated on:
+
+```yaml
+enable=${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v') }}
+```
+
+This condition can **never be true** under the workflow's actual triggers (`workflow_run` / `workflow_dispatch` only — the workflow has no `push` trigger at all). It's dead code, most likely left over from an earlier design where this workflow triggered directly on tag pushes. In practice every run falls through to the `type=ref,event=branch` / `type=sha` / `latest` rules instead, so images actually get tagged with the branch name, a branch-prefixed short SHA, and `latest` (on the default branch) — never `1.2.0`, `1.2`, or `1`.
+
+If version-tagged Docker images are wanted, either add a `push: tags: ["v*"]` trigger to `docker.yml` (or re-trigger it from `release.yml` after a version is published) and fix the `enable` condition to match. Worth cleaning up either way, since the current condition is unreachable.
+
+### 4. Multiple Package Versioning
 
 Flowvia is a monorepo with multiple packages. All packages are versioned together:
 - Root `package.json`
@@ -67,14 +89,21 @@ Main semantic-release configuration:
 - Configures commit analysis rules
 - Sets up changelog generation
 - Defines which files to commit
+- No npm-publishing plugin is configured — this project does not publish to npm as part of the release
 
 ### `.github/workflows/release.yml`
 
 GitHub Actions workflow that:
-- Runs after tests pass
+- Triggers via `workflow_run` when "Deploy static content to Pages" completes (only runs semantic-release if that run's conclusion was `success`), or via manual `workflow_dispatch`
 - Executes semantic-release
-- Uses `GITHUB_TOKEN` for GitHub API access
-- Uses `NPM_TOKEN` for npm publishing (optional)
+- Uses only `GITHUB_TOKEN` for GitHub API access — there is no `NPM_TOKEN` and no npm publish step
+
+### `.github/workflows/docker.yml`
+
+GitHub Actions workflow that:
+- Triggers via `workflow_run` when "E2E Tests" completes (only builds if that run's conclusion was `success`), or via manual `workflow_dispatch`
+- Runs independently of, and in parallel with, the Pages deploy / Release chain
+- Currently tags images by branch/SHA/`latest` only (see above — the semver tag rules are unreachable dead code)
 
 ### `scripts/update-version.js`
 
@@ -92,13 +121,15 @@ git push origin master
 ```
 
 **Result:**
-- Tests run and pass
-- Semantic-release detects `feat:` commit
+- "Run Tests" runs and passes
+- "E2E Tests" runs and passes
+- In parallel: "Build and Push Docker Image" pushes an image tagged `master`, `master-<sha>`, and `latest`; "Deploy static content to Pages" deploys the app
+- Once the Pages deploy succeeds, "Release" runs semantic-release, which detects the `feat:` commit
 - Version bumps from 1.0.5 → 1.1.0
 - CHANGELOG.md updated with new entry
 - Git tag `v1.1.0` created
 - GitHub release created
-- Docker images tagged: `1.1.0`, `1.1`, `1`, `latest`
+- (The Docker image published earlier in this run was **not** retagged with `1.1.0` — see the Docker tagging note above)
 
 ### Scenario: Fixing a Bug
 
@@ -135,6 +166,7 @@ git push origin master
 - No version bump
 - No release created
 - Changes still merged to master
+- Tests, E2E tests, Docker build, and Pages deploy still run as normal (none of them depend on semantic-release)
 
 ## Manual Testing Locally
 
@@ -155,7 +187,7 @@ npx semantic-release --dry-run --no-ci
 Check if:
 - Commits follow conventional commit format
 - Commits include version-bumping types (`feat`, `fix`, etc.)
-- Tests passed successfully
+- "Run Tests" → "E2E Tests" → "Deploy static content to Pages" all completed with `success` (Release only triggers off the Pages deploy's `workflow_run` completion — not directly off tests passing)
 - You're on the `master` or `main` branch
 
 ### Version Not Updated
@@ -164,11 +196,9 @@ Ensure:
 - `scripts/update-version.js` has execute permissions
 - Script is referenced in `.releaserc.json` under `@semantic-release/exec`
 
-### Docker Not Tagged
+### Docker Image Not Tagged With the Version Number
 
-Verify:
-- Git tag was created successfully
-- Docker workflow has permission to run
+This is expected given the current wiring — `docker.yml` triggers off "E2E Tests" completing, not off the release's git tag, and its semver tag rules are gated on a `push`-to-tag event that never occurs given its actual triggers. See "Docker Image Tagging Is Currently Branch/SHA-Based, Not Version-Based" above for how to fix this if version-tagged images are needed.
 
 ## Additional Resources
 
