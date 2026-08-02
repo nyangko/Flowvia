@@ -38,12 +38,20 @@ export const customVars: CustomThemeVars = {
 };
 
 const createShadows = () => {
-  const shadows = Array(25)
-    .fill('none')
-    .map((shadow, i) => {
-      if (i === 0) return 'none';
+  const flat = '0px 1px 2px rgba(0,0,0,0.04)';
+  // Menus/popovers/hint tooltips all sit in this range — border carries most of
+  // the depth cue, this shadow just softens the edge.
+  const floating = '0px 4px 12px rgba(0,0,0,0.08)';
+  // Matches flowvia-app's own .dialog shadow (App.css) so both look like one system.
+  const modal = '0px 24px 48px -16px rgba(0,0,0,0.28)';
 
-      return `0px 10px 20px ${i - 10}px rgba(0,0,0,0.25)`;
+  const shadows = Array(25)
+    .fill(flat)
+    .map((_, i) => {
+      if (i === 0) return 'none';
+      if (i <= 3) return flat;
+      if (i <= 15) return floating;
+      return modal;
     }) as Required<ThemeOptions>['shadows'];
 
   return shadows;
@@ -82,12 +90,35 @@ export const themeConfig: ThemeOptions = {
       lineHeight: 1.2
     }
   },
+  shape: {
+    borderRadius: 8
+  },
   palette: {
+    primary: {
+      main: '#23262b',
+      dark: '#16181b',
+      light: '#4a4e55',
+      contrastText: '#ffffff'
+    },
     secondary: {
       main: '#df004c'
-    }
+    },
+    divider: 'rgba(0,0,0,0.08)'
   },
   components: {
+    MuiPaper: {
+      variants: [
+        {
+          // Card already forces variant:'outlined' via its own defaultProps below,
+          // so this only touches Dialog/Menu/Popover/tooltip Paper's, which default
+          // to variant:'elevation'.
+          props: { variant: 'elevation' },
+          style: ({ theme }) => ({
+            border: `1px solid ${theme.palette.divider}`
+          })
+        }
+      ]
+    },
     MuiCard: {
       defaultProps: {
         elevation: 0,
@@ -129,6 +160,76 @@ export const themeConfig: ThemeOptions = {
           width: 17,
           height: 17
         }
+      }
+    },
+    MuiToggleButtonGroup: {
+      styleOverrides: {
+        root: {
+          gap: 4
+        },
+        grouped: {
+          margin: 0,
+          border: 0,
+          borderRadius: '999px !important'
+        }
+      }
+    },
+    MuiToggleButton: {
+      styleOverrides: {
+        root: ({ theme }) => ({
+          border: 0,
+          borderRadius: 999,
+          color: theme.palette.text.secondary,
+          '&.Mui-selected': {
+            backgroundColor: theme.palette.grey[200],
+            color: theme.palette.text.primary
+          },
+          '&.Mui-selected:hover': {
+            backgroundColor: theme.palette.grey[300]
+          }
+        })
+      }
+    },
+    MuiSlider: {
+      styleOverrides: {
+        rail: {
+          height: 3
+        },
+        track: {
+          height: 3
+        },
+        thumb: {
+          width: 16,
+          height: 16
+        }
+      }
+    },
+    MuiSwitch: {
+      styleOverrides: {
+        root: {
+          width: 36,
+          height: 20,
+          padding: 0
+        },
+        switchBase: {
+          padding: 2,
+          '&.Mui-checked': {
+            transform: 'translateX(16px)'
+          },
+          '&.Mui-checked + .MuiSwitch-track': {
+            opacity: 1
+          }
+        },
+        thumb: {
+          width: 16,
+          height: 16,
+          boxShadow: '0 1px 2px rgba(0,0,0,0.2)'
+        },
+        track: ({ theme }) => ({
+          borderRadius: 10,
+          opacity: 1,
+          backgroundColor: theme.palette.grey[300]
+        })
       }
     },
     MuiTextField: {
