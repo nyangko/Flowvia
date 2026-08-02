@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > Looking for pre-fork history? See [UPSTREAM_HISTORY.md](docs/UPSTREAM_HISTORY.md).
 
+## [1.3.1](https://github.com/nyangko/Flowvia/compare/v1.3.0...v1.3.1) (2026-08-02)
+
+### Bug Fixes
+
+* **design:** two Switch layout regressions from the theme redesign ([77044a9](https://github.com/nyangko/Flowvia/commit/77044a9cfa8a73780568fbcad8ffc7e22962f66b))
+* force white Switch thumb color to prevent invisible thumb when checked ([b44d7b4](https://github.com/nyangko/Flowvia/commit/b44d7b4ced1c643e0a72d1c1f18b7837f92915e3))
+
 ## [1.3.0](https://github.com/nyangko/Flowvia/compare/v1.2.1...v1.3.0) (2026-08-02)
 
 ### Features
