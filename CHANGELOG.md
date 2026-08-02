@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > Looking for pre-fork history? See [UPSTREAM_HISTORY.md](docs/UPSTREAM_HISTORY.md).
 
+## [1.3.0](https://github.com/nyangko/Flowvia/compare/v1.2.1...v1.3.0) (2026-08-02)
+
+### Features
+
+* **design:** MUI theme overhaul — borders over shadows, flat controls, vuesax-style Switch ([f9c303c](https://github.com/nyangko/Flowvia/commit/f9c303c080c0faf6681e44cb713af3ef58745e72)), closes [#17](https://github.com/nyangko/Flowvia/issues/17)
+* **interaction:** hold-to-pan gesture, 0.3s delay on empty space ([60934c2](https://github.com/nyangko/Flowvia/commit/60934c24f598f429b2a4cf0b7275155d8d2baf16)), closes [#15](https://github.com/nyangko/Flowvia/issues/15)
+* **menu:** remove duplicate undo/redo, separate clear-canvas as a danger action ([d9af301](https://github.com/nyangko/Flowvia/commit/d9af3011152c54053dfac47b595d14716b6c832f)), closes [#16](https://github.com/nyangko/Flowvia/issues/16)
+
+### Bug Fixes
+
+* **app:** show diagram lock toggle even before the first save ([008d52c](https://github.com/nyangko/Flowvia/commit/008d52c52a5f0cf1e8d4de1b9382835092f135ac))
+* **connector:** widen group spacing and scale arrowheads with width ([b19e92e](https://github.com/nyangko/Flowvia/commit/b19e92e6498420b520f054ee5580b354ee82c13a)), closes [#24](https://github.com/nyangko/Flowvia/issues/24)
+* **icons:** unify Tabler icon sizes at 20px across remaining components ([b16d719](https://github.com/nyangko/Flowvia/commit/b16d7194dc0227e5baf59287fd711443fdf7461b))
+
 ## [1.2.1](https://github.com/nyangko/Flowvia/compare/v1.2.0...v1.2.1) (2026-08-02)
 
 ### Bug Fixes
