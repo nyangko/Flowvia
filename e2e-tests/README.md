@@ -66,18 +66,30 @@ FLOWVIA_TEST_URL=http://localhost:8080 pytest -v
 
 ## Available Tests
 
-- `test_homepage_loads` - Verifies the homepage loads and has basic React elements
-- `test_page_has_canvas` - Checks for the canvas element used for diagram drawing
-- `test_page_renders_without_crash` - Verifies the page fully renders with all key elements visible
+18 tests across 8 files in `tests/`:
+
+- `test_basic_load.py` - `test_can_connect_to_server`, `test_homepage_loads`, `test_page_has_body_and_root`, `test_javascript_is_executing`, `test_app_renders_diagram_components`
+- `test_base_path_routing.py` - `test_app_loads_at_base_path`, `test_static_assets_load_correctly`, `test_react_router_navigation_works`, `test_router_basename_detection`, `test_no_console_errors_at_base_path`
+- `test_node_placement.py` - `test_place_node_on_canvas`, `test_undo_redo_node`
+- `test_rect_text_undo.py` - `test_rectangle_undo_redo`, `test_textbox_undo_redo`
+- `test_connector_undo.py` - `test_connector_undo_redo` (place 2 nodes, connect, undo/redo the connector)
+- `test_multi_node_undo.py` - `test_multi_node_undo_redo` (undo/redo across multiple nodes, including forked history)
+- `test_export_svg.py` - `test_export_svg` (build a scene and export it to SVG)
+- `test_import_diagram.py` - `test_import_via_app_button` (import a diagram JSON via the MainMenu "Open" action)
+
+There's also `test_store_debug.py`, a standalone manual debugging script (not collected by pytest, no `test_*` functions) for inspecting store state directly - run it with `python test_store_debug.py`, not `pytest`.
 
 ## CI/CD
 
-Tests run automatically in GitHub Actions on:
-- Push to `master` or `main` branches
-- Pull requests to `master` or `main` branches
+The E2E workflow (`.github/workflows/e2e-tests.yml`) runs on:
+- Pull requests to `master` or `main`
+- Completion of the "Run Tests" workflow on `master` or `main` (only proceeds if that workflow succeeded)
+- Manual trigger via `workflow_dispatch`
+
+It does **not** run on every push - only on PRs, after unit tests pass, or on demand.
 
 The CI workflow:
-1. Builds the app
+1. Builds the Flowvia library and app
 2. Starts the app server in background
 3. Starts Selenium standalone Chrome
 4. Installs Python dependencies
@@ -88,7 +100,15 @@ The CI workflow:
 ```
 e2e-tests/
 ├── tests/
-│   └── test_basic_load.py    # Main test suite
+│   ├── test_basic_load.py          # Smoke tests: page load, JS execution, DOM structure
+│   ├── test_base_path_routing.py   # Serving the app from a sub-path (React Router basename)
+│   ├── test_node_placement.py      # Placing a node + undo/redo
+│   ├── test_rect_text_undo.py      # Rectangle/text-box undo/redo
+│   ├── test_connector_undo.py      # Connector undo/redo
+│   ├── test_multi_node_undo.py     # Multi-node undo/redo with forked history
+│   ├── test_export_svg.py          # Export a scene to SVG
+│   ├── test_import_diagram.py      # Import a diagram JSON
+│   └── test_store_debug.py         # Manual debug script, not a pytest suite
 ├── requirements.txt           # Python dependencies
 ├── pytest.ini                 # Pytest configuration
 ├── run-tests.sh              # Test runner script
@@ -193,9 +213,9 @@ pytest -k "canvas" -v
 
 ## Future Test Coverage
 
-Beyond the current smoke tests, the suite could expand to cover:
+Beyond the current suite (node placement, connectors, rectangles/text, multi-node history, SVG export, JSON import, base-path routing, and their undo/redo), coverage could expand to:
 
-- **Drawing Features**: add nodes, connect nodes, edit node properties, delete nodes
+- **Drawing Features**: editing node properties, deleting nodes
 - **UI Interactions**: menu navigation, settings dialogs, tool selection, hotkeys
-- **Data Operations**: save, load, export to JSON, import from JSON
-- **Advanced Features**: undo/redo, custom icons, multi-select, zoom/pan
+- **Data Operations**: save/load, export to JSON (only SVG export is currently tested)
+- **Advanced Features**: custom icons, multi-select, zoom/pan
