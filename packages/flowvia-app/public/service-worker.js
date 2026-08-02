@@ -1,13 +1,16 @@
-const CACHE_NAME = 'flowvia-v2';
+const CACHE_NAME = 'flowvia-v3';
 
 // Get the base path from the service worker's location
 const swPath = self.location.pathname;
 const basePath = swPath.substring(0, swPath.lastIndexOf('/') + 1);
 
+// ponytail: rsbuild content-hashes static/css and static/js filenames
+// (e.g. index.<hash>.js), so they can't be precached by a fixed path here
+// without a build step to read the real manifest. Only precache the
+// unhashed public/ assets up front; hashed bundles get picked up lazily by
+// the fetch handler below (cache-first, populated on first real request).
 const urlsToCache = [
   basePath,
-  `${basePath}static/css/main.css`,
-  `${basePath}static/js/bundle.js`,
   `${basePath}manifest.json`,
   `${basePath}favicon.ico`,
   `${basePath}logo192.png`,
