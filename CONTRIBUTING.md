@@ -25,13 +25,11 @@ Flowvia is a **simple, privacy-first, browser-based isometric diagramming tool**
 
 The following are **out of scope** and PRs implementing them will be closed immediately:
 
-- Authentication, RBAC, OIDC, SSO, or any full identity/account management system
+- Authentication, RBAC, OIDC, SSO, or any identity management
 - User accounts, teams, or multi-tenancy
 - Cloud hosting, SaaS features, or paid tiers
 - Database integrations
 - Anything that fundamentally changes what Flowvia is
-
-Note: the optional HTTP Basic Auth for self-hosted instances (see [README](./README.md#http-basic-authentication-optional)) is already a supported exception — it just gates access to a single shared instance and isn't a user-account or identity system. The rule above targets full auth/identity stacks, not that.
 
 If you're unsure whether your idea fits, open a [Discussion](https://github.com/nyangko/Flowvia/discussions) first.
 
@@ -48,7 +46,7 @@ By participating in this project, you agree to abide by our Code of Conduct:
 
 ### Prerequisites
 
-- Node.js (v24 or higher)
+- Node.js (v18 or higher)
 - npm (v9 or higher)
 - Git
 - A code editor (VS Code recommended)
@@ -106,7 +104,7 @@ Recommended extensions:
 
 ## Project Structure
 
-This is a monorepo containing two packages:
+This is a monorepo containing three packages:
 
 ```
 Flowvia/
@@ -122,13 +120,17 @@ Flowvia/
 │   │   ├── rslib.config.ts # Library build config
 │   │   └── package.json
 │   │
-│   └── flowvia-app/      # PWA application
-│       ├── src/
-│       │   ├── App.tsx         # Main app component
-│       │   ├── diagramUtils.ts # Diagram utilities
-│       │   └── index.tsx       # App entry point
-│       ├── public/            # Static assets
-│       ├── rsbuild.config.ts  # App build config
+│   ├── flowvia-app/      # PWA application
+│   │   ├── src/
+│   │   │   ├── App.tsx         # Main app component
+│   │   │   ├── diagramUtils.ts # Diagram utilities
+│   │   │   └── index.tsx       # App entry point
+│   │   ├── public/            # Static assets
+│   │   ├── rsbuild.config.ts  # App build config
+│   │   └── package.json
+│   │
+│   └── flowvia-backend/  # Optional server storage backend
+│       ├── server.js     # Express server
 │       └── package.json
 │
 ├── Dockerfile             # Docker configuration
@@ -138,9 +140,10 @@ Flowvia/
 ```
 
 ### Key Differences:
-- **flowvia-lib**: The core library, built with RSpack
+- **flowvia-lib**: The core library, built with Rslib/Rspack
 - **flowvia-app**: The PWA application, built with RSBuild
-- Both packages are managed as npm workspaces
+- **flowvia-backend**: Express server providing optional self-hosted storage for diagrams
+- All three packages are managed as npm workspaces
 
 ## How to Contribute
 

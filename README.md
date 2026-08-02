@@ -85,10 +85,11 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Monorepo Structure
 
-This is a monorepo containing two packages:
+This is a monorepo containing three packages:
 
-- `packages/flowvia-lib` - React component library for drawing network diagrams (built with Webpack)
+- `packages/flowvia-lib` - React component library for drawing network diagrams (built with Rslib/Rspack)
 - `packages/flowvia-app` - Progressive Web App which wraps the lib and presents it (built with RSBuild)
+- `packages/flowvia-backend` - Express server providing optional self-hosted storage for diagrams (used in the Docker deployment)
 
 ### Development Commands
 
@@ -130,16 +131,15 @@ npm run publish:lib  # Publish library to npm
    - Switch modes in Settings → Connectors tab
 
 3. **Save Your Work**:
-   - **Quick Save** - Saves to local storage on your device
+   - **Quick Save** - Saves to browser session
    - **Export** - Download as JSON file
    - **Import** - Load from JSON file
 
 ### Storage Options
 
-- **Local Storage**: Diagrams persist in your browser's IndexedDB and survive closing the browser or restarting your device
-- **Auto-Save**: Automatically saves changes 5 seconds after you stop editing
+- **Session Storage**: Temporary saves cleared when browser closes
 - **Export/Import**: Permanent storage as JSON files
-- **Server Storage** (self-hosted): When running via Docker with `ENABLE_SERVER_STORAGE` enabled (the default), diagrams also sync to `./diagrams` on the host
+- **Auto-Save**: Automatically saves changes every 5 seconds to session
 
 ## Recently added
 

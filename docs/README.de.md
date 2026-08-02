@@ -84,10 +84,11 @@ npm run dev
 
 ## Monorepo-Struktur
 
-Dies ist ein Monorepo mit zwei Paketen:
+Dies ist ein Monorepo mit drei Paketen:
 
-- `packages/flowvia-lib` - React-Komponentenbibliothek zum Zeichnen von Netzwerkdiagrammen (gebaut mit Webpack)
+- `packages/flowvia-lib` - React-Komponentenbibliothek zum Zeichnen von Netzwerkdiagrammen (gebaut mit Rslib/Rspack)
 - `packages/flowvia-app` - Progressive Web App, die die Bibliothek umhüllt und präsentiert (gebaut mit RSBuild)
+- `packages/flowvia-backend` - Express-Server, der optionalen selbst gehosteten Speicher für Diagramme bereitstellt (verwendet im Docker-Deployment)
 
 ### Entwicklungsbefehle
 
@@ -129,16 +130,15 @@ npm run publish:lib  # Bibliothek auf npm veröffentlichen
    - Wechsle den Modus in Einstellungen → Verbindungen
 
 3. **Arbeit speichern**:
-   - **Schnellspeichern** - Speichert lokal auf deinem Gerät
+   - **Schnellspeichern** - Speichert in der Browser-Sitzung
    - **Exportieren** - Als JSON-Datei herunterladen
    - **Importieren** - Aus JSON-Datei laden
 
 ### Speicheroptionen
 
-- **Lokaler Speicher**: Diagramme werden in der IndexedDB deines Browsers gespeichert und bleiben auch nach dem Schließen des Browsers oder einem Neustart des Geräts erhalten
-- **Automatisches Speichern**: Speichert Änderungen automatisch 5 Sekunden nach der letzten Bearbeitung
+- **Sitzungsspeicher**: Temporäre Speicherungen, die beim Schließen des Browsers gelöscht werden
 - **Export/Import**: Permanente Speicherung als JSON-Dateien
-- **Server-Speicher** (Self-Hosting): Bei Ausführung über Docker mit aktiviertem `ENABLE_SERVER_STORAGE` (standardmäßig aktiviert) werden Diagramme zusätzlich mit `./diagrams` auf dem Host synchronisiert
+- **Automatisches Speichern**: Speichert Änderungen automatisch alle 5 Sekunden in der Sitzung
 
 ## Kürzlich hinzugefügt
 

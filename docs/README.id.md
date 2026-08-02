@@ -84,10 +84,11 @@ Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
 
 ## Struktur Monorepo
 
-Ini adalah monorepo yang berisi dua paket:
+Ini adalah monorepo yang berisi tiga paket:
 
-- `packages/flowvia-lib` - Library komponen React untuk menggambar diagram jaringan (dibangun dengan Webpack)
+- `packages/flowvia-lib` - Library komponen React untuk menggambar diagram jaringan (dibangun dengan Rslib/Rspack)
 - `packages/flowvia-app` - Progressive Web App yang membungkus dan menampilkan library (dibangun dengan RSBuild)
+- `packages/flowvia-backend` - Server Express yang menyediakan penyimpanan self-hosted opsional untuk diagram (digunakan dalam deployment Docker)
 
 ### Perintah Pengembangan
 
@@ -129,16 +130,15 @@ npm run publish:lib  # Publish library ke npm
    - Beralih mode di Pengaturan → tab Konektor
 
 3. **Simpan Pekerjaan Anda**:
-   - **Simpan Cepat** - Menyimpan ke penyimpanan lokal di perangkat Anda
+   - **Simpan Cepat** - Menyimpan ke sesi browser
    - **Ekspor** - Unduh sebagai file JSON
    - **Impor** - Muat dari file JSON
 
 ### Opsi Penyimpanan
 
-- **Penyimpanan Lokal**: Diagram disimpan di IndexedDB browser Anda dan tetap ada meskipun browser ditutup atau perangkat di-restart
-- **Auto-Save**: Secara otomatis menyimpan perubahan 5 detik setelah Anda berhenti mengedit
+- **Penyimpanan Sesi**: Simpan sementara yang dihapus saat browser ditutup
 - **Ekspor/Impor**: Penyimpanan permanen sebagai file JSON
-- **Penyimpanan Server** (self-hosted): Saat dijalankan melalui Docker dengan `ENABLE_SERVER_STORAGE` aktif (aktif secara default), diagram juga disinkronkan ke `./diagrams` di host
+- **Auto-Save**: Secara otomatis menyimpan perubahan setiap 5 detik ke sesi
 
 ## Baru ditambahkan
 

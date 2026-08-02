@@ -84,10 +84,11 @@ Ouvrez [http://localhost:3000](http://localhost:3000) dans votre navigateur.
 
 ## Structure du Monorepo
 
-Ceci est un monorepo contenant deux packages :
+Ceci est un monorepo contenant trois packages :
 
-- `packages/flowvia-lib` - Bibliothèque de composants React pour dessiner des diagrammes de réseau (construit avec Webpack)
+- `packages/flowvia-lib` - Bibliothèque de composants React pour dessiner des diagrammes de réseau (construite avec Rslib/Rspack)
 - `packages/flowvia-app` - Progressive Web App qui encapsule et présente la bibliothèque (construit avec RSBuild)
+- `packages/flowvia-backend` - Serveur Express fournissant un stockage auto-hébergé optionnel pour les diagrammes (utilisé dans le déploiement Docker)
 
 ### Commandes de Développement
 
@@ -129,16 +130,15 @@ npm run publish:lib  # Publier la bibliothèque sur npm
    - Basculez entre les modes dans Paramètres → onglet Connecteurs
 
 3. **Sauvegarder Votre Travail** :
-   - **Sauvegarde Rapide** - Enregistre dans le stockage local de votre appareil
+   - **Sauvegarde Rapide** - Enregistre dans la session du navigateur
    - **Exporter** - Télécharger comme fichier JSON
    - **Importer** - Charger depuis un fichier JSON
 
 ### Options de Stockage
 
-- **Stockage Local** : Les diagrammes sont enregistrés dans l'IndexedDB de votre navigateur et persistent même après la fermeture du navigateur ou le redémarrage de l'appareil
-- **Sauvegarde Automatique** : Enregistre automatiquement les modifications 5 secondes après la dernière modification
+- **Stockage de Session** : Sauvegardes temporaires effacées à la fermeture du navigateur
 - **Exporter/Importer** : Stockage permanent sous forme de fichiers JSON
-- **Stockage Serveur** (auto-hébergé) : Lors d'une exécution via Docker avec `ENABLE_SERVER_STORAGE` activé (par défaut), les diagrammes sont également synchronisés avec `./diagrams` sur l'hôte
+- **Sauvegarde Automatique** : Enregistre automatiquement les modifications toutes les 5 secondes dans la session
 
 ## Récemment ajouté
 
