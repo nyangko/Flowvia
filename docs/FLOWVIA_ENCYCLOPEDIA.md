@@ -60,7 +60,8 @@ Web-Flowvia/
 │   │   │   ├── services/       # Services (storage)
 │   │   │   ├── i18n.ts         # i18n configuration
 │   │   │   ├── serviceWorkerRegistration.ts
-│   │   │   └── setupTests.ts
+│   │   │   ├── StorageManager.tsx
+│   │   │   └── reportWebVitals.ts
 │   │   ├── public/             # Static assets
 │   │   │   ├── service-worker.js  # Hand-written cache-first service worker
 │   │   │   └── i18n/app/       # App-level translation JSON files, one per locale
@@ -70,8 +71,7 @@ Web-Flowvia/
 │   │
 │   └── flowvia-backend/        # Optional backend server
 │       ├── server.js           # Express server (filesystem-backed diagram storage)
-│       ├── package.json        # Backend dependencies
-│       └── .env.example        # Environment config template
+│       └── package.json        # Backend dependencies
 │
 ├── e2e-tests/                    # Python/Selenium end-to-end tests
 ├── package.json                  # Root workspace configuration
@@ -92,20 +92,20 @@ Web-Flowvia/
 ### Provider Hierarchy
 
 ```typescript
-<ModelProvider>       // Core data model
-  <SceneProvider>      // Visual state
-    <UiStateProvider>  // UI interaction state
-      <ThemeProvider>  // MUI theme
-        <LocaleProvider> // i18n locale
+<ThemeProvider>        // MUI theme
+  <LocaleProvider>     // i18n locale
+    <ModelProvider>    // Core data model
+      <SceneProvider>  // Visual state
+        <UiStateProvider> // UI interaction state
           <App>
             <Renderer />   // Canvas rendering
             <UiOverlay />  // UI controls
           </App>
-        </LocaleProvider>
-      </ThemeProvider>
-    </UiStateProvider>
-  </SceneProvider>
-</ModelProvider>
+        </UiStateProvider>
+      </SceneProvider>
+    </ModelProvider>
+  </LocaleProvider>
+</ThemeProvider>
 ```
 
 (See `packages/flowvia-lib/src/Isoflow.tsx` for the exact nesting — the outer providers wrap the internal `App` component that renders `Renderer` and `UiOverlay`.)
@@ -198,7 +198,7 @@ All `/api/diagrams*` routes return `503` when `ENABLE_SERVER_STORAGE` is not `tr
 ### Integration with App
 
 **App Service** (`packages/flowvia-app/src/services/storageService.ts`):
-- `StorageManager` treats IndexedDB as the local source of truth and the server (when reachable) as a best-effort sync target — every write lands in IndexedDB first and must succeed; server writes/reads are attempted opportunistically and silently fall back to local on failure
+- `StorageManager` treats IndexedDB as the local source of truth and the server (when reachable) as a best-effort sync target for most operations — `saveDiagram`/`deleteDiagram` write to IndexedDB first (must succeed) and fire-and-forget a server sync. `createDiagram` is the exception: when the server is available it awaits server creation first (to get the server-assigned id), then caches locally — only creating locally-first if the server is unavailable or the create call fails
 - Detects server availability on startup and re-checks periodically (60s cache)
 - Handles request timeouts (5–15s depending on operation) and error states
 
@@ -271,7 +271,7 @@ The Flowvia application is a Progressive Web App built with Rsbuild that provide
 
 #### Service Worker
 - **Registration**: `packages/flowvia-app/src/serviceWorkerRegistration.ts` — standard CRA-style `register()`/`unregister()`. In production it registers `service-worker.js` directly; on localhost it first validates the script is served correctly before registering, to avoid caching issues during development.
-- **Worker script**: `packages/flowvia-app/public/service-worker.js` — a hand-written cache-first worker. On `install` it pre-caches a fixed list of asset paths (derived from the SW's own scope, e.g. `static/css/main.css`, `static/js/bundle.js`, `manifest.json`, favicon/logo files) under a versioned cache name (`flowvia-v2`). On `fetch` it serves from cache when present, otherwise fetches from the network and caches the (basic, 200-status) response for next time. On `activate` it deletes any cache not matching the current cache name.
+- **Worker script**: `packages/flowvia-app/public/service-worker.js` — a hand-written cache-first worker, versioned cache name (`flowvia-v3`). rsbuild content-hashes JS/CSS filenames (e.g. `index.<hash>.js`), so those can't be precached by a fixed path without a build-time manifest step; `install` only precaches the unhashed `public/` assets (`manifest.json`, favicon/logo files). On `fetch` it serves from cache when present, otherwise fetches from the network and lazily caches the (basic, 200-status) response — this is how hashed bundles end up cached, on first real request rather than up front. On `activate` it deletes any cache not matching the current cache name.
 
 ### App Features
 
@@ -604,7 +604,7 @@ Exact version ranges live in each package's `package.json` — treat the numbers
 ### Monorepo Build Architecture
 
 The project uses **pnpm workspaces** (`pnpm-workspace.yaml`) to manage three packages:
-- **flowvia-lib**: Built with Rslib/Rspack, output as a CommonJS/ESM library for npm publishing
+- **flowvia-lib**: Built with Rslib/Rspack, output as a CommonJS library (see `rslib.config.ts`'s `format: 'cjs'`)
 - **flowvia-app**: Built with Rsbuild (Rspack-based)
 - **flowvia-backend**: Node.js ES modules (no build step)
 
@@ -716,9 +716,9 @@ pnpm run dev:backend
 #### 1. Configuration (`packages/flowvia-lib/src/config.ts`)
 
 **Key Constants**:
-- `TILE_SIZE`: Base tile dimensions
-- `DEFAULT_ZOOM`: Initial zoom level
-- `DEFAULT_FONT_SIZE`: Text defaults
+- `UNPROJECTED_TILE_SIZE` / `PROJECTED_TILE_SIZE` / `FLAT_TILE_SIZE`: Base tile dimensions per projection mode
+- `MIN_ZOOM` / `MAX_ZOOM` / `ZOOM_INCREMENT`: Zoom bounds and step
+- `DEFAULT_FONT_FAMILY`: Text defaults
 - `INITIAL_DATA`: Default model state
 - `MAIN_MENU_OPTIONS`: Default main-menu configuration
 
