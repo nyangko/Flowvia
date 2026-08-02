@@ -15,7 +15,7 @@ export const DeleteButton = ({ onClick }: Props) => {
       color="error"
       size="small"
       variant="outlined"
-      startIcon={<DeleteIcon />}
+      startIcon={<DeleteIcon size={20} />}
       onClick={onClick}
     >
       {t('common.delete')}

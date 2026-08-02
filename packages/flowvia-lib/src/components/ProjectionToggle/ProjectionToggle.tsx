@@ -18,7 +18,7 @@ export const ProjectionToggle = () => {
     <UiElement>
       <IconButton
         name={isFlat ? t('switchToIsometricView') : t('switchToFlatView')}
-        Icon={isFlat ? <FlatIcon /> : <IsometricIcon />}
+        Icon={isFlat ? <FlatIcon size={20} /> : <IsometricIcon size={20} />}
         onClick={() => {
           uiStateActions.setProjectionMode(isFlat ? 'ISOMETRIC' : 'FLAT');
         }}

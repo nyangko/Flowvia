@@ -86,7 +86,7 @@ export const NodeControls = ({ id }: Props) => {
           }}
           size="small"
         >
-          <CloseIcon />
+          <CloseIcon size={20} />
         </MUIIconButton>
         <Section sx={{ py: 2 }}>
           <Stack
@@ -102,7 +102,7 @@ export const NodeControls = ({ id }: Props) => {
             />
             {mode === 'SETTINGS' && (
               <Button
-                endIcon={<ChevronRightIcon />}
+                endIcon={<ChevronRightIcon size={20} />}
                 onClick={() => {
                   onSwitchMode('CHANGE_ICON');
                 }}
@@ -113,7 +113,7 @@ export const NodeControls = ({ id }: Props) => {
             )}
             {mode === 'CHANGE_ICON' && (
               <Button
-                startIcon={<ChevronLeftIcon />}
+                startIcon={<ChevronLeftIcon size={20} />}
                 onClick={() => {
                   onSwitchMode('SETTINGS');
                 }}

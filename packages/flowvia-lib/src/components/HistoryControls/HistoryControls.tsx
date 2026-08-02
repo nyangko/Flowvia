@@ -23,13 +23,13 @@ export const HistoryControls = () => {
       <Stack direction="row" spacing={0.5} alignItems="center">
         <IconButton
           name={`${t('undo')} (Ctrl+Z)`}
-          Icon={<UndoIcon />}
+          Icon={<UndoIcon size={20} />}
           onClick={handleUndo}
           disabled={!canUndo}
         />
         <IconButton
           name={`${t('redo')} (Ctrl+Y)`}
-          Icon={<RedoIcon />}
+          Icon={<RedoIcon size={20} />}
           onClick={handleRedo}
           disabled={!canRedo}
         />

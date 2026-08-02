@@ -46,7 +46,7 @@ export const IconCollection = ({
           >
             {id}
           </Typography>
-          {isExpanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
+          {isExpanded ? <ChevronUpIcon size={20} /> : <ChevronDownIcon size={20} />}
         </Stack>
       </Button>
       <Divider />

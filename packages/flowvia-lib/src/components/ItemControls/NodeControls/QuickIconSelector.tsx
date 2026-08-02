@@ -157,7 +157,7 @@ export const QuickIconSelector = ({ onIconSelected, onClose, currentIconId }: Pr
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon />
+                  <SearchIcon size={20} />
                 </InputAdornment>
               )
             }}

@@ -52,7 +52,7 @@ export const TextBoxControls = ({ id }: Props) => {
           }}
           size="small"
         >
-          <CloseIcon />
+          <CloseIcon size={20} />
         </MUIIconButton>
         <Section title={t('textBoxControls.enterText')}>
           <TextField
@@ -86,7 +86,7 @@ export const TextBoxControls = ({ id }: Props) => {
             }}
           >
             <ToggleButton value={ProjectionOrientationEnum.X}>
-              <TextRotationNoneIcon style={{ transform: getIsoProjectionCss() }} />
+              <TextRotationNoneIcon size={20} style={{ transform: getIsoProjectionCss() }} />
             </ToggleButton>
             <ToggleButton value={ProjectionOrientationEnum.Y}>
               <TextRotationNoneIcon

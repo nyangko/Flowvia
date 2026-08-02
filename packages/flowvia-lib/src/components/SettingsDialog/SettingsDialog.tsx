@@ -72,7 +72,7 @@ export const SettingsDialog = ({ iconPackManager }: SettingsDialogProps) => {
             color: (theme) => theme.palette.grey[500],
           }}
         >
-          <CloseIcon />
+          <CloseIcon size={20} />
         </IconButton>
       </DialogTitle>
       <DialogContent dividers>

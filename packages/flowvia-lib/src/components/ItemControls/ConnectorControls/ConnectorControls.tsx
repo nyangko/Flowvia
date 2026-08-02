@@ -229,7 +229,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
         </Section>
         <Section title={t('itemControls.connector.options')}>
           <Button
-            startIcon={<SwapHorizIcon />}
+            startIcon={<SwapHorizIcon size={20} />}
             variant="outlined"
             size="small"
             onClick={() => {
@@ -284,7 +284,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                   .replace('{max}', '256')}
               </Typography>
               <Button
-                startIcon={<AddIcon />}
+                startIcon={<AddIcon size={20} />}
                 onClick={handleAddLabel}
                 disabled={labels.length >= 256}
                 size="small"

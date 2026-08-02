@@ -204,7 +204,7 @@ export const IconSelectionControls = () => {
             }}
             size="small"
           >
-            <CloseIcon />
+            <CloseIcon size={20} />
           </MUIIconButton>
           <Stack spacing={2}>
             <Box sx={{ marginTop: '8px' }}>
@@ -232,7 +232,7 @@ export const IconSelectionControls = () => {
         }}>
           <Button
             variant="outlined"
-            startIcon={<FileUploadIcon />}
+            startIcon={<FileUploadIcon size={20} />}
             onClick={handleImportClick}
             fullWidth
           >

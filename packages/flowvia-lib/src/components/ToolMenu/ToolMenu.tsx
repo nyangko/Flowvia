@@ -59,7 +59,7 @@ export const ToolMenu = () => {
         {/* Main Tools */}
         <IconButton
           name={`${t('settings.hotkeys.toolSelect')}${hotkeys.select ? ` (${hotkeys.select.toUpperCase()})` : ''}`}
-          Icon={<NearMeIcon />}
+          Icon={<NearMeIcon size={20} />}
           onClick={() => {
             uiStateStoreActions.setMode({
               type: 'CURSOR',
@@ -71,7 +71,7 @@ export const ToolMenu = () => {
         />
         <IconButton
           name={`${t('settings.hotkeys.toolLasso')}${hotkeys.lasso ? ` (${hotkeys.lasso.toUpperCase()})` : ''}`}
-          Icon={<LassoIcon />}
+          Icon={<LassoIcon size={20} />}
           onClick={() => {
             uiStateStoreActions.setMode({
               type: 'LASSO',
@@ -84,7 +84,7 @@ export const ToolMenu = () => {
         />
         <IconButton
           name={`${t('settings.hotkeys.toolFreehandLasso')}${hotkeys.freehandLasso ? ` (${hotkeys.freehandLasso.toUpperCase()})` : ''}`}
-          Icon={<FreehandLassoIcon />}
+          Icon={<FreehandLassoIcon size={20} />}
           onClick={() => {
             uiStateStoreActions.setMode({
               type: 'FREEHAND_LASSO',
@@ -98,7 +98,7 @@ export const ToolMenu = () => {
         />
         <IconButton
           name={`${t('settings.hotkeys.toolPan')}${hotkeys.pan ? ` (${hotkeys.pan.toUpperCase()})` : ''}`}
-          Icon={<PanToolIcon />}
+          Icon={<PanToolIcon size={20} />}
           onClick={() => {
             uiStateStoreActions.setMode({
               type: 'PAN',
@@ -111,7 +111,7 @@ export const ToolMenu = () => {
         />
         <IconButton
           name={`${t('settings.hotkeys.toolAddItem')}${hotkeys.addItem ? ` (${hotkeys.addItem.toUpperCase()})` : ''}`}
-          Icon={<AddIcon />}
+          Icon={<AddIcon size={20} />}
           onClick={() => {
             uiStateStoreActions.setItemControls({
               type: 'ADD_ITEM'
@@ -126,7 +126,7 @@ export const ToolMenu = () => {
         />
         <IconButton
           name={`${t('settings.hotkeys.toolRectangle')}${hotkeys.rectangle ? ` (${hotkeys.rectangle.toUpperCase()})` : ''}`}
-          Icon={<CropSquareIcon />}
+          Icon={<CropSquareIcon size={20} />}
           onClick={() => {
             uiStateStoreActions.setMode({
               type: 'RECTANGLE.DRAW',
@@ -138,7 +138,7 @@ export const ToolMenu = () => {
         />
         <IconButton
           name={`${t('settings.hotkeys.toolConnector')}${hotkeys.connector ? ` (${hotkeys.connector.toUpperCase()})` : ''}`}
-          Icon={<ConnectorIcon />}
+          Icon={<ConnectorIcon size={20} />}
           onClick={() => {
             uiStateStoreActions.setMode({
               type: 'CONNECTOR',
@@ -150,7 +150,7 @@ export const ToolMenu = () => {
         />
         <IconButton
           name={`${t('settings.hotkeys.toolText')}${hotkeys.text ? ` (${hotkeys.text.toUpperCase()})` : ''}`}
-          Icon={<TitleIcon />}
+          Icon={<TitleIcon size={20} />}
           onClick={createTextBoxProxy}
           isActive={mode.type === 'TEXTBOX'}
         />

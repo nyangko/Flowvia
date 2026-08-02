@@ -152,7 +152,7 @@ export const HelpDialog = () => {
             onClick={handleClose}
             sx={{ color: (theme) => theme.palette.grey[500] }}
           >
-            <CloseIcon />
+            <CloseIcon size={20} />
           </IconButton>
         </Box>
       </DialogTitle>

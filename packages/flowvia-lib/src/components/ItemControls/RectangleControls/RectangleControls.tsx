@@ -47,7 +47,7 @@ export const RectangleControls = ({ id }: Props) => {
           }}
           size="small"
         >
-          <CloseIcon />
+          <CloseIcon size={20} />
         </MUIIconButton>
         <Section title={t('itemControls.color')}>
           <FormControlLabel
