@@ -195,6 +195,7 @@ const locale: LocaleProps = {
       title: "Configurações de movimentação",
       mousePanOptions: "Opções de movimentação com mouse",
       emptyAreaClickPan: "Clicar e arrastar em área vazia",
+      holdToPan: "Manter pressionado em área vazia para deslocar automaticamente",
       middleClickPan: "Clicar com o botão do meio e arrastar",
       rightClickPan: "Clicar com o botão direito e arrastar",
       ctrlClickPan: "Ctrl + clicar e arrastar",

@@ -195,6 +195,7 @@ const locale: LocaleProps = {
       title: "Pengaturan Geser",
       mousePanOptions: "Opsi Geser Mouse",
       emptyAreaClickPan: "Klik dan seret pada area kosong",
+      holdToPan: "Tahan pada area kosong untuk menggeser otomatis",
       middleClickPan: "Klik tengah dan seret",
       rightClickPan: "Klik kanan dan seret",
       ctrlClickPan: "Ctrl + klik dan seret",

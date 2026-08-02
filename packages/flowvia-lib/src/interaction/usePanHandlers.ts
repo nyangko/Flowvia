@@ -1,8 +1,16 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { useUiStateStore, useUiStateStoreApi } from 'src/stores/uiStateStore';
 import { CoordsUtils, getItemAtTile } from 'src/utils';
+import { hasMovedTile } from 'src/utils/renderer';
 import { useScene } from 'src/hooks/useScene';
 import { SlimMouseEvent } from 'src/types';
+
+// How long a plain left-click on empty space must be held before it
+// auto-switches to Pan mode (issue #15).
+const HOLD_TO_PAN_DELAY_MS = 300;
+// A hold-triggered pan wasn't a deliberate modifier-click, so ease back to
+// the previous mode after release instead of snapping back instantly.
+const HOLD_TO_PAN_RELEASE_DELAY_MS = 150;
 
 export const usePanHandlers = () => {
   const modeType = useUiStateStore((state) => state.mode.type);
@@ -14,6 +22,15 @@ export const usePanHandlers = () => {
   const scene = useScene();
   const isPanningRef = useRef(false);
   const prevModeRef = useRef(uiStateApi.getState().mode);
+  const holdTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const holdTriggeredRef = useRef(false);
+
+  const clearHoldTimer = useCallback(() => {
+    if (holdTimerRef.current !== null) {
+      clearTimeout(holdTimerRef.current);
+      holdTimerRef.current = null;
+    }
+  }, []);
 
   const startPan = useCallback(() => {
     if (modeType !== 'PAN') {
@@ -58,16 +75,47 @@ export const usePanHandlers = () => {
       startPan();
       return true;
     }
+
+    // Holding a plain left click on empty space (no modifier, and none of the
+    // instant-pan triggers above matched) auto-switches to Pan after a delay,
+    // so panning doesn't require a modifier key or switching tools. Scoped to
+    // empty area only, same as emptyAreaClickPan, so holding on an item still
+    // lets you drag it instead of hijacking the gesture into Pan.
+    if (e.button === 0 && panSettings.holdToPan && isEmptyArea(e)) {
+      clearHoldTimer();
+      holdTimerRef.current = setTimeout(() => {
+        holdTimerRef.current = null;
+        const stillHeld = uiStateApi.getState().mouse;
+        // A real drag (marquee-select, etc.) already claimed this gesture via
+        // Cursor's own mousemove handling, or something else changed the mode
+        // while we waited — don't clobber whatever's happening now.
+        if (hasMovedTile(stillHeld) || uiStateApi.getState().mode.type !== 'CURSOR') {
+          return;
+        }
+        holdTriggeredRef.current = true;
+        startPan();
+      }, HOLD_TO_PAN_DELAY_MS);
+    }
+
     return false;
-  }, [panSettings, startPan, isEmptyArea]);
+  }, [panSettings, startPan, isEmptyArea, clearHoldTimer, uiStateApi]);
 
   const handleMouseUp = useCallback((e: SlimMouseEvent): boolean => {
+    clearHoldTimer();
     if (isPanningRef.current) {
-      endPan();
+      if (holdTriggeredRef.current) {
+        holdTriggeredRef.current = false;
+        setTimeout(endPan, HOLD_TO_PAN_RELEASE_DELAY_MS);
+      } else {
+        endPan();
+      }
       return true;
     }
     return false;
-  }, [endPan]);
+  }, [endPan, clearHoldTimer]);
+
+  // Clear any pending hold-timer on unmount so it can't fire after teardown.
+  useEffect(() => clearHoldTimer, [clearHoldTimer]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {

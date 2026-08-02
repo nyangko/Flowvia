@@ -195,6 +195,7 @@ const locale: LocaleProps = {
       title: "Настройки перемещения",
       mousePanOptions: "Параметры перемещения мышью",
       emptyAreaClickPan: "Нажать и перетащить на пустой области",
+      holdToPan: "Удерживать на пустой области для автоматической прокрутки",
       middleClickPan: "Средняя кнопка и перетаскивание",
       rightClickPan: "Правая кнопка и перетаскивание",
       ctrlClickPan: "Ctrl + нажатие и перетаскивание",

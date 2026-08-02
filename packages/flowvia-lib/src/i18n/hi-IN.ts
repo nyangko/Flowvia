@@ -195,6 +195,7 @@ const locale: LocaleProps = {
       title: "पैन सेटिंग्स",
       mousePanOptions: "माउस पैन विकल्प",
       emptyAreaClickPan: "खाली क्षेत्र पर क्लिक करें और ड्रैग करें",
+      holdToPan: "खाली क्षेत्र पर दबाए रखने पर अपने आप पैन होगा",
       middleClickPan: "मध्य क्लिक करें और ड्रैग करें",
       rightClickPan: "राइट क्लिक करें और ड्रैग करें",
       ctrlClickPan: "Ctrl + क्लिक करें और ड्रैग करें",

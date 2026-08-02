@@ -5,7 +5,8 @@ export interface PanSettings {
   ctrlClickPan: boolean;
   altClickPan: boolean;
   emptyAreaClickPan: boolean;
-  
+  holdToPan: boolean;
+
   // Keyboard pan options
   arrowKeysPan: boolean;
   wasdPan: boolean;
@@ -21,8 +22,12 @@ export const DEFAULT_PAN_SETTINGS: PanSettings = {
   rightClickPan: false,
   ctrlClickPan: false,
   altClickPan: false,
-  emptyAreaClickPan: true,
-  
+  // Superseded by holdToPan below as the default empty-area behavior — this
+  // instant (no-delay) trigger always wins over the 0.3s hold, so it's now
+  // opt-in for users who want the old immediate click-drag-to-pan feel.
+  emptyAreaClickPan: false,
+  holdToPan: true,
+
   // Keyboard options
   arrowKeysPan: true,
   wasdPan: false,

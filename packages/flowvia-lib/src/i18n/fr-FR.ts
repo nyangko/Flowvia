@@ -195,6 +195,7 @@ const locale: LocaleProps = {
       title: "Paramètres de déplacement",
       mousePanOptions: "Options de déplacement à la souris",
       emptyAreaClickPan: "Cliquer et glisser sur une zone vide",
+      holdToPan: "Maintenir sur une zone vide pour déplacer automatiquement",
       middleClickPan: "Clic du milieu et glisser",
       rightClickPan: "Clic droit et glisser",
       ctrlClickPan: "Ctrl + clic et glisser",

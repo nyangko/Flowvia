@@ -195,6 +195,7 @@ const locale: LocaleProps = {
       title: "Impostazioni Panoramica",
       mousePanOptions: "Opzioni panoramica con mouse",
       emptyAreaClickPan: "Clicca e trascina su un'area vuota",
+      holdToPan: "Tieni premuto su un'area vuota per lo spostamento automatico",
       middleClickPan: "Clic centrale e trascina",
       rightClickPan: "Clic destro e trascina",
       ctrlClickPan: "Ctrl + clic e trascina",

@@ -194,6 +194,7 @@ const locale: LocaleProps = {
       title: "移動設定",
       mousePanOptions: "マウス移動オプション",
       emptyAreaClickPan: "空白部分をクリックしてドラッグ",
+      holdToPan: "空白部分を長押しすると自動的にパン",
       middleClickPan: "中クリックしてドラッグ",
       rightClickPan: "右クリックしてドラッグ",
       ctrlClickPan: "Ctrl + クリックしてドラッグ",

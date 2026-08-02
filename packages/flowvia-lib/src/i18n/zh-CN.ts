@@ -195,6 +195,7 @@ const locale: LocaleProps = {
       title: "平移设置",
       mousePanOptions: "鼠标平移选项",
       emptyAreaClickPan: "点击并拖拽空白区域",
+      holdToPan: "按住空白区域自动平移",
       middleClickPan: "中键点击并拖拽",
       rightClickPan: "右键点击并拖拽",
       ctrlClickPan: "Ctrl + 点击并拖拽",

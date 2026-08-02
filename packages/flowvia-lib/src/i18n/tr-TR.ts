@@ -195,6 +195,7 @@ const locale: LocaleProps = {
       title: "Kaydırma Ayarları",
       mousePanOptions: "Fare Kaydırma Seçenekleri",
       emptyAreaClickPan: "Boş alanda tıkla ve sürükle",
+      holdToPan: "Otomatik kaydırma için boş alanda basılı tut",
       middleClickPan: "Orta tık ve sürükle",
       rightClickPan: "Sağ tık ve sürükle",
       ctrlClickPan: "Ctrl + tık ve sürükle",

@@ -195,6 +195,7 @@ const locale: LocaleProps = {
       title: "Ustawienia przesuwania",
       mousePanOptions: "Opcje przesuwania myszą",
       emptyAreaClickPan: "Kliknij i przesuń obszar",
+      holdToPan: "Przytrzymaj pusty obszar, aby automatycznie przesunąć widok",
       middleClickPan: "Kliknij środkowym przyciskiem myszy i przeciągnij",
       rightClickPan: "Kliknij prawym przyciskiem myszy i przeciągnij",
       ctrlClickPan: "Ctrl + kliknij i przeciągnij",

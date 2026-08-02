@@ -201,6 +201,7 @@ export interface LocaleProps {
       title: string;
       mousePanOptions: string;
       emptyAreaClickPan: string;
+      holdToPan: string;
       middleClickPan: string;
       rightClickPan: string;
       ctrlClickPan: string;

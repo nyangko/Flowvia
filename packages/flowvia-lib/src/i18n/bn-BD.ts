@@ -195,6 +195,7 @@ const locale: LocaleProps = {
       title: "প্যান সেটিংস",
       mousePanOptions: "মাউস প্যান বিকল্প",
       emptyAreaClickPan: "খালি এলাকায় ক্লিক করুন এবং টেনে আনুন",
+      holdToPan: "খালি এলাকায় ধরে রাখলে স্বয়ংক্রিয়ভাবে সরে যাবে",
       middleClickPan: "মধ্য ক্লিক করুন এবং টেনে আনুন",
       rightClickPan: "ডান ক্লিক করুন এবং টেনে আনুন",
       ctrlClickPan: "Ctrl + ক্লিক করুন এবং টেনে আনুন",

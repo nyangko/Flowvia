@@ -194,6 +194,7 @@ const locale: LocaleProps = {
       title: "이동 설정",
       mousePanOptions: "마우스 이동 옵션",
       emptyAreaClickPan: "빈 영역을 클릭하고 드래그",
+      holdToPan: "빈 영역을 누르고 있으면 자동으로 이동",
       middleClickPan: "가운데 버튼 클릭 후 드래그",
       rightClickPan: "오른쪽 클릭 후 드래그",
       ctrlClickPan: "Ctrl + 클릭 후 드래그",

@@ -194,6 +194,7 @@ const locale: LocaleProps = {
       title: "Pan Settings",
       mousePanOptions: "Mouse Pan Options",
       emptyAreaClickPan: "Click and drag on empty area",
+      holdToPan: "Hold on empty area to auto-pan",
       middleClickPan: "Middle click and drag",
       rightClickPan: "Right click and drag",
       ctrlClickPan: "Ctrl + click and drag",
