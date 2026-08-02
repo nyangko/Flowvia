@@ -239,7 +239,12 @@ export const themeConfig: ThemeOptions = {
         thumb: {
           width: 16,
           height: 16,
-          boxShadow: '0 1px 2px rgba(0,0,0,0.2)'
+          boxShadow: '0 1px 2px rgba(0,0,0,0.2)',
+          // MUI's default checked-thumb color is currentColor, which inherits
+          // the switchBase's checked color (theme.palette.primary.main) — now
+          // that primary is near-black, the thumb became the same color as
+          // the track and visually vanished. Force it white in both states.
+          backgroundColor: '#fff'
         },
         track: ({ theme }) => ({
           borderRadius: 10,
