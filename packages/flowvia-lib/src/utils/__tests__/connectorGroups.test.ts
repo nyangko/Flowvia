@@ -37,7 +37,7 @@ describe('getConnectorGroups', () => {
 
   it('should return index=0, total=1 for single connector', () => {
     const result = getConnectorGroups([makeConnector('c1', 'item1', 'item2')]);
-    expect(result.get('c1')).toEqual({ index: 0, total: 1 });
+    expect(result.get('c1')).toEqual({ index: 0, total: 1, reversed: false });
   });
 
   it('should group two connectors between same items', () => {
@@ -45,8 +45,8 @@ describe('getConnectorGroups', () => {
       makeConnector('c1', 'item1', 'item2'),
       makeConnector('c2', 'item1', 'item2')
     ]);
-    expect(result.get('c1')).toEqual({ index: 0, total: 2 });
-    expect(result.get('c2')).toEqual({ index: 1, total: 2 });
+    expect(result.get('c1')).toEqual({ index: 0, total: 2, reversed: false });
+    expect(result.get('c2')).toEqual({ index: 1, total: 2, reversed: false });
   });
 
   it('should group connectors regardless of anchor order', () => {
@@ -54,8 +54,8 @@ describe('getConnectorGroups', () => {
       makeConnector('c1', 'item1', 'item2'),
       makeConnector('c2', 'item2', 'item1')
     ]);
-    expect(result.get('c1')).toEqual({ index: 0, total: 2 });
-    expect(result.get('c2')).toEqual({ index: 1, total: 2 });
+    expect(result.get('c1')).toEqual({ index: 0, total: 2, reversed: false });
+    expect(result.get('c2')).toEqual({ index: 1, total: 2, reversed: true });
   });
 
   it('should NOT group connectors between different items', () => {
@@ -63,8 +63,8 @@ describe('getConnectorGroups', () => {
       makeConnector('c1', 'item1', 'item2'),
       makeConnector('c2', 'item1', 'item3')
     ]);
-    expect(result.get('c1')).toEqual({ index: 0, total: 1 });
-    expect(result.get('c2')).toEqual({ index: 0, total: 1 });
+    expect(result.get('c1')).toEqual({ index: 0, total: 1, reversed: false });
+    expect(result.get('c2')).toEqual({ index: 0, total: 1, reversed: false });
   });
 
   it('should handle 8 connectors between the same two items', () => {
@@ -74,7 +74,7 @@ describe('getConnectorGroups', () => {
     const result = getConnectorGroups(connectors);
 
     for (let i = 0; i < 8; i++) {
-      expect(result.get(`c${i}`)).toEqual({ index: i, total: 8 });
+      expect(result.get(`c${i}`)).toEqual({ index: i, total: 8, reversed: false });
     }
   });
 
@@ -84,9 +84,9 @@ describe('getConnectorGroups', () => {
       makeTileConnector('c2', { x: 0, y: 0 }, { x: 1, y: 1 }),
       makeTileConnector('c3', { x: 2, y: 2 }, { x: 3, y: 3 })
     ]);
-    expect(result.get('c1')).toEqual({ index: 0, total: 2 });
-    expect(result.get('c2')).toEqual({ index: 1, total: 2 });
-    expect(result.get('c3')).toEqual({ index: 0, total: 1 });
+    expect(result.get('c1')).toEqual({ index: 0, total: 2, reversed: false });
+    expect(result.get('c2')).toEqual({ index: 1, total: 2, reversed: false });
+    expect(result.get('c3')).toEqual({ index: 0, total: 1, reversed: false });
   });
 
   it('should handle mixed groups', () => {
@@ -99,12 +99,12 @@ describe('getConnectorGroups', () => {
       makeConnector('c6', 'D', 'E')
     ]);
 
-    expect(result.get('c1')).toEqual({ index: 0, total: 3 });
-    expect(result.get('c2')).toEqual({ index: 1, total: 3 });
-    expect(result.get('c3')).toEqual({ index: 2, total: 3 });
-    expect(result.get('c4')).toEqual({ index: 0, total: 2 });
-    expect(result.get('c5')).toEqual({ index: 1, total: 2 });
-    expect(result.get('c6')).toEqual({ index: 0, total: 1 });
+    expect(result.get('c1')).toEqual({ index: 0, total: 3, reversed: false });
+    expect(result.get('c2')).toEqual({ index: 1, total: 3, reversed: false });
+    expect(result.get('c3')).toEqual({ index: 2, total: 3, reversed: false });
+    expect(result.get('c4')).toEqual({ index: 0, total: 2, reversed: false });
+    expect(result.get('c5')).toEqual({ index: 1, total: 2, reversed: false });
+    expect(result.get('c6')).toEqual({ index: 0, total: 1, reversed: false });
   });
 });
 
@@ -185,7 +185,7 @@ describe('8 parallel connectors with individual colors', () => {
 
     const groups = getConnectorGroups(connectors);
     for (let i = 0; i < 8; i++) {
-      expect(groups.get(`c${i}`)).toEqual({ index: i, total: 8 });
+      expect(groups.get(`c${i}`)).toEqual({ index: i, total: 8, reversed: false });
     }
   });
 
@@ -218,7 +218,7 @@ describe('8 parallel connectors with individual colors', () => {
     // Verify grouping works after deserialization
     const groups = getConnectorGroups(parsed.connectors);
     for (let i = 0; i < 8; i++) {
-      expect(groups.get(`c${i}`)).toEqual({ index: i, total: 8 });
+      expect(groups.get(`c${i}`)).toEqual({ index: i, total: 8, reversed: false });
     }
   });
 });
