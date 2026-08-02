@@ -1,3 +1,10 @@
+:root {
+  /* Must stay in sync with packages/flowvia-lib/src/styles/theme.ts palette.primary.main/.dark —
+     flowvia-app has no @mui/material dependency and can't read the theme object directly. */
+  --flowvia-primary: #23262b;
+  --flowvia-primary-dark: #16181b;
+}
+
 .App {
   height: 100vh;
   display: flex;
@@ -14,8 +21,7 @@
   height: 40px;
   padding: 0 10px;
   background-color: #fff;
-  /* Matches flowvia-lib's MuiPaper-root elevation (theme.shadows[1]) for visual consistency */
-  box-shadow: 0px 10px 20px -9px rgba(0, 0, 0, 0.25);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 /* Isoflow's own hamburger menu portals into this slot (see mainMenuPortalTarget)
@@ -139,7 +145,7 @@
   color: #444;
   padding: 2px 7px;
   margin-right: 2px;
-  border: 1px solid #007bff;
+  border: 1px solid var(--flowvia-primary);
   border-radius: 6px;
   outline: none;
 }
@@ -165,8 +171,8 @@
   min-width: 180px;
   background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0px 16px 32px -12px rgba(0, 0, 0, 0.25),
-    0px 0px 0px 1px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
   padding: 4px;
 }
 
@@ -232,8 +238,8 @@
      gap where already-scrolled-past content shows through above/behind it. */
   padding: 0 20px 20px;
   border-radius: 12px;
-  box-shadow: 0px 24px 48px -16px rgba(0, 0, 0, 0.28),
-    0px 0px 0px 1px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 24px 48px -16px rgba(0, 0, 0, 0.28);
   min-width: 420px;
   max-width: 600px;
   max-height: 80vh;
@@ -343,8 +349,8 @@
 
 .dialog input[type="text"]:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.15);
+  border-color: var(--flowvia-primary);
+  box-shadow: 0 0 0 3px rgba(35, 38, 43, 0.15);
 }
 
 .dialog-buttons {
@@ -368,12 +374,12 @@
 }
 
 .dialog-buttons button:first-child {
-  background-color: #007bff;
+  background-color: var(--flowvia-primary);
   color: white;
 }
 
 .dialog-buttons button:first-child:hover {
-  background-color: #0062cc;
+  background-color: var(--flowvia-primary-dark);
 }
 
 .dialog-buttons button:last-child:not(:only-child) {

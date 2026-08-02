@@ -140,9 +140,18 @@ function EditorPage() {
       return [];
     }
   });
-  const isDiagramLocked = !!currentDiagram && lockedDiagramIds.includes(currentDiagram.id);
+  // Diagrams that haven't been saved yet have no id to key the lock by — track
+  // that case as plain session state so the toggle still works pre-save, then
+  // fold it into lockedDiagramIds once the diagram gets its first id (below).
+  const [unsavedDiagramLocked, setUnsavedDiagramLocked] = useState(false);
+  const isDiagramLocked = currentDiagram
+    ? lockedDiagramIds.includes(currentDiagram.id)
+    : unsavedDiagramLocked;
   const toggleDiagramLock = () => {
-    if (!currentDiagram) return;
+    if (!currentDiagram) {
+      setUnsavedDiagramLocked((prev) => !prev);
+      return;
+    }
     setLockedDiagramIds((prev) => {
       const next = prev.includes(currentDiagram.id)
         ? prev.filter((id) => {
@@ -315,6 +324,14 @@ function EditorPage() {
       }
     }
 
+    if (unsavedDiagramLocked) {
+      setLockedDiagramIds((prev) => {
+        const next = [...prev, savedId];
+        localStorage.setItem('flowvia-locked-diagrams', JSON.stringify(next));
+        return next;
+      });
+      setUnsavedDiagramLocked(false);
+    }
     setCurrentDiagram({ id: savedId, name: diagramName });
     setShowSaveDialog(false);
     setHasUnsavedChanges(false);
@@ -771,15 +788,13 @@ function EditorPage() {
         <div className="main-menu-slot" ref={setMainMenuSlot} />
         {!isReadonlyUrl ? (
           <>
-            {currentDiagram && (
-              <button
-                className={`icon-btn${isDiagramLocked ? ' icon-btn--active' : ''}`}
-                onClick={toggleDiagramLock}
-                title={t(isDiagramLocked ? 'nav.unlockDiagram' : 'nav.lockDiagram')}
-              >
-                {isDiagramLocked ? <LockIcon /> : <UnlockIcon />}
-              </button>
-            )}
+            <button
+              className={`icon-btn${isDiagramLocked ? ' icon-btn--active' : ''}`}
+              onClick={toggleDiagramLock}
+              title={t(isDiagramLocked ? 'nav.unlockDiagram' : 'nav.lockDiagram')}
+            >
+              {isDiagramLocked ? <LockIcon /> : <UnlockIcon />}
+            </button>
             {isEditingTitle ? (
               <input
                 className="diagram-title-input"
