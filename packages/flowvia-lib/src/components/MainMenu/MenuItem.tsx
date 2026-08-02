@@ -7,6 +7,7 @@ export interface Props {
   children: string | React.ReactNode;
   disabled?: boolean;
   shortcut?: string;
+  danger?: boolean;
 }
 
 export const MenuItem = ({
@@ -14,11 +15,20 @@ export const MenuItem = ({
   Icon,
   children,
   disabled = false,
-  shortcut
+  shortcut,
+  danger = false
 }: Props) => {
   return (
-    <MuiMenuItem onClick={onClick} disabled={disabled}>
-      <ListItemIcon sx={{ opacity: disabled ? 0.5 : 1 }}>{Icon}</ListItemIcon>
+    <MuiMenuItem
+      onClick={onClick}
+      disabled={disabled}
+      sx={danger ? { color: 'error.main' } : undefined}
+    >
+      <ListItemIcon
+        sx={{ opacity: disabled ? 0.5 : 1, color: danger ? 'error.main' : undefined }}
+      >
+        {Icon}
+      </ListItemIcon>
       <span style={{ flex: 1 }}>{children}</span>
       {shortcut && (
         <Typography variant="body2" color="text.secondary" sx={{ pl: 2 }}>

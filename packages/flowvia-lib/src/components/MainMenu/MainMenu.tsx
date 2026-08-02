@@ -7,8 +7,6 @@ import {
   IconPhoto as ExportImageIcon,
   IconFolderOpen as FolderOpenIcon,
   IconTrash as DeleteOutlineIcon,
-  IconArrowBackUp as UndoIcon,
-  IconArrowForwardUp as RedoIcon,
   IconSettings as SettingsIcon
 } from '@tabler/icons-react';
 import { UiElement } from 'src/components/UiElement/UiElement';
@@ -42,7 +40,7 @@ export const MainMenu = () => {
     return state.actions;
   });
   const initialDataManager = useInitialDataManager();
-  const { undo, redo, canUndo, canRedo, clearHistory } = useHistory();
+  const { clearHistory } = useHistory();
 
   const { t } = useTranslation('mainMenu');
 
@@ -120,16 +118,6 @@ export const MainMenu = () => {
     clearHistory(); // Clear history when clearing canvas
   }, [uiStateActions, clear, clearHistory, t]);
 
-  const handleUndo = useCallback(() => {
-    undo();
-    uiStateActions.setIsMainMenuOpen(false);
-  }, [undo, uiStateActions]);
-
-  const handleRedo = useCallback(() => {
-    redo();
-    uiStateActions.setIsMainMenuOpen(false);
-  }, [redo, uiStateActions]);
-
   const onOpenSettings = useCallback(() => {
     uiStateActions.setIsMainMenuOpen(false);
     uiStateActions.setDialog(DialogTypeEnum.SETTINGS);
@@ -140,11 +128,6 @@ export const MainMenu = () => {
 
   const sectionVisibility = useMemo(() => {
     return {
-      actions: Boolean(
-        mainMenuOptions.find((opt) => {
-          return opt.includes('ACTION') || opt.includes('EXPORT');
-        })
-      ),
       links: Boolean(
         mainMenuOptions.find((opt) => {
           return opt.includes('LINK');
@@ -161,7 +144,7 @@ export const MainMenu = () => {
   return (
     <UiElement>
       <IconButton
-        Icon={<MenuIcon />}
+        Icon={<MenuIcon size={20} />}
         name="Main menu"
         onClick={onToggleMenu}
         isActive={isMainMenuOpen}
@@ -185,28 +168,6 @@ export const MainMenu = () => {
         }}
       >
         <Card sx={{ py: 1 }}>
-          {/* Undo/Redo Section */}
-          <MenuItem
-            onClick={handleUndo}
-            Icon={<UndoIcon size={20} />}
-            disabled={!canUndo}
-            shortcut="Ctrl+Z"
-          >
-            {t('undo')}
-          </MenuItem>
-
-          <MenuItem
-            onClick={handleRedo}
-            Icon={<RedoIcon size={20} />}
-            disabled={!canRedo}
-            shortcut="Ctrl+Y"
-          >
-            {t('redo')}
-          </MenuItem>
-
-
-          {(canUndo || canRedo) && sectionVisibility.actions && <Divider />}
-
           {/* File Actions */}
           {mainMenuOptions.includes('ACTION.OPEN') && (
             <MenuItem onClick={onOpenModel} Icon={<FolderOpenIcon size={20} />}>
@@ -229,12 +190,6 @@ export const MainMenu = () => {
           {mainMenuOptions.includes('EXPORT.PNG') && (
             <MenuItem onClick={onExportAsImage} Icon={<ExportImageIcon size={20} />}>
               {t('exportImage')}
-            </MenuItem>
-          )}
-
-          {mainMenuOptions.includes('ACTION.CLEAR_CANVAS') && (
-            <MenuItem onClick={onClearCanvas} Icon={<DeleteOutlineIcon size={20} />}>
-              {t('clearCanvas')}
             </MenuItem>
           )}
 
@@ -272,6 +227,15 @@ export const MainMenu = () => {
                   </Typography>
                 </MenuItem>
               )}
+            </>
+          )}
+
+          {mainMenuOptions.includes('ACTION.CLEAR_CANVAS') && (
+            <>
+              <Divider />
+              <MenuItem onClick={onClearCanvas} Icon={<DeleteOutlineIcon size={20} />} danger>
+                {t('clearCanvas')}
+              </MenuItem>
             </>
           )}
         </Card>
