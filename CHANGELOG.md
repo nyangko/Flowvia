@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > Looking for pre-fork history? See [UPSTREAM_HISTORY.md](docs/UPSTREAM_HISTORY.md).
 
+## [1.2.1](https://github.com/nyangko/Flowvia/compare/v1.2.0...v1.2.1) (2026-08-02)
+
+### Bug Fixes
+
+* **app:** resolve pre-existing flowvia-app typecheck errors ([e21fc58](https://github.com/nyangko/Flowvia/commit/e21fc58e12dae0f00125ad99a8b1a0624712fdbb))
+* **pwa:** remove precache entries for asset files that never exist ([e392635](https://github.com/nyangko/Flowvia/commit/e392635499cbb7a2e938f39b9fab2f0367d5891c))
+
+### Documentation
+
+* **changelog:** fix version ordering, split pre-fork FossFLOW history ([e1981ed](https://github.com/nyangko/Flowvia/commit/e1981ed90fdd3a5879b099789cc5096bee799954))
+* **contributing:** unify Node requirement at v24, resolve auth scope contradiction ([1488ffa](https://github.com/nyangko/Flowvia/commit/1488ffaac4e2d48db5e52d605e8452b6958c37f2))
+* correct package count and build tool across README/CONTRIBUTING ([d800f70](https://github.com/nyangko/Flowvia/commit/d800f70661045e8a7818948dc053aab71924c193))
+* correct SEMANTIC_RELEASE.md to match the actual workflow_run chain ([96f7ea3](https://github.com/nyangko/Flowvia/commit/96f7ea3566ce4504d3909f8ec8fa6ae72104a2f7))
+* correct storage description across README and all translations ([3534484](https://github.com/nyangko/Flowvia/commit/353448442fd093409422be6e814ea43e39a694b1))
+* **e2e:** update test list and CI trigger description to match reality ([381f697](https://github.com/nyangko/Flowvia/commit/381f6973c09e4c5fa6aaf750cf62c71360103f2d))
+* fix remaining factual errors in FLOWVIA_ENCYCLOPEDIA.md ([ee30ad2](https://github.com/nyangko/Flowvia/commit/ee30ad243864974d83655aea35ba77cb6da98df2))
+* rewrite FLOWVIA_ENCYCLOPEDIA.md against the current codebase ([e7f681b](https://github.com/nyangko/Flowvia/commit/e7f681bddf6ea58a2f1eb0bfb7b16d67fbd55394))
+
 ## [1.2.0](https://github.com/nyangko/Flowvia/compare/v1.1.1...v1.2.0) (2026-08-02)
 
 ### Features
