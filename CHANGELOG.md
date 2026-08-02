@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > Looking for pre-fork history? See [UPSTREAM_HISTORY.md](docs/UPSTREAM_HISTORY.md).
 
+## [1.2.0](https://github.com/nyangko/Flowvia/compare/v1.1.1...v1.2.0) (2026-08-02)
+
+### Features
+
+* **app:** diagram lock, editable share links, and share-menu clipping fix ([c06e04c](https://github.com/nyangko/Flowvia/commit/c06e04ce8075bc4b6327f166165f9eec54f51a6d)), closes [#14](https://github.com/nyangko/Flowvia/issues/14) [#22](https://github.com/nyangko/Flowvia/issues/22) [#23](https://github.com/nyangko/Flowvia/issues/23)
+* **connector:** editor panel overhaul, list reorder, direction toggle, auto-connect ([4de3af4](https://github.com/nyangko/Flowvia/commit/4de3af40ca79a24e058fe9cf4907822461412940)), closes [#4](https://github.com/nyangko/Flowvia/issues/4) [#6](https://github.com/nyangko/Flowvia/issues/6) [#7](https://github.com/nyangko/Flowvia/issues/7) [#8](https://github.com/nyangko/Flowvia/issues/8) [#9](https://github.com/nyangko/Flowvia/issues/9)
+* **history:** collapsible version groups with slide animation ([09172a1](https://github.com/nyangko/Flowvia/commit/09172a1e5a523df3eebcb86910467165897da8c0)), closes [#13](https://github.com/nyangko/Flowvia/issues/13)
+* **ui:** redesign save/load/toolbar icons ([b6eb31b](https://github.com/nyangko/Flowvia/commit/b6eb31b4be650cced4e5cef3b85baac05c7a8c6d)), closes [#11](https://github.com/nyangko/Flowvia/issues/11)
+* **view:** add isometric/flat projection toggle ([97bdf1e](https://github.com/nyangko/Flowvia/commit/97bdf1e089bf6278753d7c4824300b761fb7f087)), closes [#21](https://github.com/nyangko/Flowvia/issues/21)
+
+### Bug Fixes
+
+* **connector:** overlapping arrowhead bunching and reversed-connector overlap ([b3eaa71](https://github.com/nyangko/Flowvia/commit/b3eaa717c638d7413ef5c13e688e23236bbb70ca)), closes [#5](https://github.com/nyangko/Flowvia/issues/5)
+* **context-menu:** reorder node/rectangle/textbox right-click menus ([8d36a95](https://github.com/nyangko/Flowvia/commit/8d36a95a8c5d33c5344b1ba55ce71117a08bf0f8)), closes [#3](https://github.com/nyangko/Flowvia/issues/3)
+* **dialogs:** remove duplicate close button, add missing close button ([c1990c3](https://github.com/nyangko/Flowvia/commit/c1990c33edc144001cee7911778c7e8715ebee0a)), closes [#12](https://github.com/nyangko/Flowvia/issues/12) [#20](https://github.com/nyangko/Flowvia/issues/20)
+* **docs:** correct broken demo gif paths in translated READMEs ([b11468e](https://github.com/nyangko/Flowvia/commit/b11468e2ed5f47090dbe5c87b5d0ef625efef454))
+
+### Documentation
+
+* sync all translated READMEs with current root structure ([84b6b72](https://github.com/nyangko/Flowvia/commit/84b6b72e67c7316d22412c7df070bdf2b4e15863))
+
 ## [1.1.1](https://github.com/nyangko/Flowvia/compare/v1.1.0...v1.1.1) (2026-07-31)
 
 ### Bug Fixes
