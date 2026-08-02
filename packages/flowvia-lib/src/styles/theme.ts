@@ -204,12 +204,28 @@ export const themeConfig: ThemeOptions = {
         }
       }
     },
+    MuiFormControlLabel: {
+      styleOverrides: {
+        root: {
+          // Stock MUI Switch has ~48px of invisible touch-target padding, so
+          // consecutive FormControlLabels never touched even at margin:0. Our
+          // Switch root is a real 20px tall, so without this two stacked
+          // Switch rows render back to back with zero gap between them.
+          marginBottom: 8
+        }
+      }
+    },
     MuiSwitch: {
       styleOverrides: {
         root: {
           width: 36,
           height: 20,
-          padding: 0
+          padding: 0,
+          // FormControlLabel applies a fixed -11px margin to pull its label
+          // toward the switch, sized for MUI's default (much wider, padded)
+          // 58px root. Our root is only 36px, so without this the label ends
+          // up touching (or overlapping) the switch with zero visual gap.
+          marginRight: 10
         },
         switchBase: {
           padding: 2,
