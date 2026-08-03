@@ -22,16 +22,13 @@ function getAnchorRefString(ref: Connector['anchors'][0]['ref']): string {
 export function getConnectorGroups(
   connectors: Connector[]
 ): Map<string, { index: number; total: number; reversed: boolean; groupWidthRatio: number }> {
-  const groups = new Map<string, { id: string; reversed: boolean; width: number }[]>();
+  const groups = new Map<
+    string,
+    { id: string; reversed: boolean; width: number; fixed: boolean }[]
+  >();
 
   for (const connector of connectors) {
     if (connector.anchors.length !== 2) {
-      continue;
-    }
-    // Connectors that opt out of auto-spacing are left out of every group
-    // entirely, so they always render at their raw (un-offset) position and
-    // don't shift where their groupmates land.
-    if (connector.preventOverlap === false) {
       continue;
     }
 
@@ -45,12 +42,17 @@ export function getConnectorGroups(
     // same direction instead of each connector's own draw direction.
     const reversed = ref1 !== sorted[0];
     const width = connector.width ?? CONNECTOR_DEFAULTS.width;
+    // A connector that opts out of auto-spacing still renders at its raw,
+    // un-offset (i.e. tile-centered) position — it stays in the group so its
+    // width/presence is accounted for, it just never gets assigned an offset
+    // slot itself (see the `floating` split below).
+    const fixed = connector.preventOverlap === false;
 
     const existing = groups.get(key);
     if (existing) {
-      existing.push({ id: connector.id, reversed, width });
+      existing.push({ id: connector.id, reversed, width, fixed });
     } else {
-      groups.set(key, [{ id: connector.id, reversed, width }]);
+      groups.set(key, [{ id: connector.id, reversed, width, fixed }]);
     }
   }
 
@@ -60,15 +62,30 @@ export function getConnectorGroups(
   >();
 
   for (const entries of groups.values()) {
-    const total = entries.length;
     // Fraction of a tile the group's connectors would occupy side by side —
     // used by getGroupOffset to widen spacing when the group is thick, so a
     // fatter connector doesn't visually overlap its thinner groupmates.
+    // Includes fixed connectors' width too, since they still take up space.
     const groupWidthRatio =
       entries.reduce((sum, entry) => sum + entry.width, 0) / UNPROJECTED_TILE_SIZE;
-    entries.forEach(({ id, reversed }, index) => {
-      result.set(id, { index, total, reversed, groupWidthRatio });
+
+    const floating = entries.filter((entry) => !entry.fixed);
+    const hasFixed = floating.length !== entries.length;
+    const n = floating.length;
+    // A plain n-member group's middle slot lands exactly on offset 0 whenever
+    // n is odd (see getGroupOffset) — harmless by itself, but that's exactly
+    // where every fixed sibling renders, so an odd-sized floating subgroup
+    // would silently land on top of it. Padding the slot count to the next
+    // even number shifts every floating slot off of 0 without changing
+    // anything when there's no fixed sibling to collide with.
+    const effectiveTotal = hasFixed && n % 2 === 1 ? n + 1 : n;
+
+    floating.forEach(({ id, reversed }, index) => {
+      result.set(id, { index, total: effectiveTotal, reversed, groupWidthRatio });
     });
+    // Fixed entries are intentionally left out of `result` — callers default
+    // a missing entry to `{ total: 1 }`, which renders it at its raw,
+    // un-offset position (exactly what "prevent overlap: false" should mean).
   }
 
   return result;

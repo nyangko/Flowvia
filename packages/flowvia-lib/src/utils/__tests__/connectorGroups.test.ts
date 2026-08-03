@@ -8,7 +8,8 @@ const makeConnector = (
   fromItem: string,
   toItem: string,
   customColor?: string,
-  width?: number
+  width?: number,
+  preventOverlap?: boolean
 ): Connector => ({
   id,
   anchors: [
@@ -16,7 +17,8 @@ const makeConnector = (
     { id: `${id}-a2`, ref: { item: toItem } }
   ],
   ...(customColor ? { customColor } : {}),
-  ...(width !== undefined ? { width } : {})
+  ...(width !== undefined ? { width } : {}),
+  ...(preventOverlap !== undefined ? { preventOverlap } : {})
 });
 
 // CONNECTOR_DEFAULTS.width (config.ts) — connectors below that don't pass an
@@ -125,6 +127,67 @@ describe('getConnectorGroups', () => {
     expect(result.get('c4')).toEqual({ index: 0, total: 2, reversed: false, groupWidthRatio: pairRatio });
     expect(result.get('c5')).toEqual({ index: 1, total: 2, reversed: false, groupWidthRatio: pairRatio });
     expect(result.get('c6')).toEqual({ index: 0, total: 1, reversed: false, groupWidthRatio: soloRatio });
+  });
+
+  describe('mixed preventOverlap within a group', () => {
+    // A connector with preventOverlap: false is left out of `result` entirely
+    // (callers default a missing entry to `{ total: 1 }`, which renders at
+    // the raw, un-offset/tile-centered position) — so "no collision" below
+    // means the floating connector's own offset never comes out to 0.
+    it('gives the one floating connector a non-zero offset when its sibling opts out', () => {
+      const result = getConnectorGroups([
+        makeConnector('c1', 'A', 'B', undefined, undefined, true),
+        makeConnector('c2', 'A', 'B', undefined, undefined, false)
+      ]);
+
+      expect(result.get('c2')).toBeUndefined();
+      const c1 = result.get('c1')!;
+      expect(getGroupOffset(c1.index, c1.total, TILE_SIZE, c1.groupWidthRatio)).not.toBe(0);
+    });
+
+    it('keeps an even-sized floating subgroup unchanged (already avoids 0)', () => {
+      const result = getConnectorGroups([
+        makeConnector('c1', 'A', 'B', undefined, undefined, true),
+        makeConnector('c2', 'A', 'B', undefined, undefined, true),
+        makeConnector('c3', 'A', 'B', undefined, undefined, false)
+      ]);
+
+      expect(result.get('c3')).toBeUndefined();
+      const c1 = result.get('c1')!;
+      const c2 = result.get('c2')!;
+      expect(c1.total).toBe(2);
+      const offsets = [
+        getGroupOffset(c1.index, c1.total, TILE_SIZE, c1.groupWidthRatio),
+        getGroupOffset(c2.index, c2.total, TILE_SIZE, c2.groupWidthRatio)
+      ];
+      expect(offsets).not.toContain(0);
+    });
+
+    it('pads an odd-sized floating subgroup so none of them land on 0', () => {
+      const result = getConnectorGroups([
+        makeConnector('c1', 'A', 'B', undefined, undefined, true),
+        makeConnector('c2', 'A', 'B', undefined, undefined, false),
+        makeConnector('c3', 'A', 'B', undefined, undefined, true),
+        makeConnector('c4', 'A', 'B', undefined, undefined, true)
+      ]);
+
+      expect(result.get('c2')).toBeUndefined();
+      const offsets = ['c1', 'c3', 'c4'].map((id) => {
+        const entry = result.get(id)!;
+        return getGroupOffset(entry.index, entry.total, TILE_SIZE, entry.groupWidthRatio);
+      });
+      expect(offsets).not.toContain(0);
+    });
+
+    it('leaves a pure floating group (no preventOverlap: false) unaffected', () => {
+      const result = getConnectorGroups([
+        makeConnector('c1', 'A', 'B', undefined, undefined, true),
+        makeConnector('c2', 'A', 'B', undefined, undefined, true),
+        makeConnector('c3', 'A', 'B', undefined, undefined, true)
+      ]);
+
+      expect(result.get('c1')).toEqual({ index: 0, total: 3, reversed: false, groupWidthRatio: (3 * DEFAULT_WIDTH) / TILE_SIZE });
+    });
   });
 
   it('should widen spacing for a group with mixed connector widths', () => {
