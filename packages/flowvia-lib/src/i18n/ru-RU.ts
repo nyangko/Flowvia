@@ -321,6 +321,7 @@ const locale: LocaleProps = {
       preventOverlap: "Предотвращать наложение",
       reverseDirection: "Изменить направление",
       connectorsCount: "Соединителей: {count}",
+      labelCountChip: "Меток: {count}",
       connectorFallbackName: "Соединитель {number}",
       styleSolid: "Сплошная",
       styleDashed: "Пунктирная",

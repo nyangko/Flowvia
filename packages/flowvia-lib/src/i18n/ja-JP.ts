@@ -320,6 +320,7 @@ const locale: LocaleProps = {
       preventOverlap: "重なりを防止",
       reverseDirection: "方向を反転",
       connectorsCount: "接続線 {count}件",
+      labelCountChip: "ラベル{count}件",
       connectorFallbackName: "接続線 {number}",
       styleSolid: "実線",
       styleDashed: "破線",

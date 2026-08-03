@@ -320,6 +320,7 @@ const locale: LocaleProps = {
       preventOverlap: "겹침 방지",
       reverseDirection: "방향 전환",
       connectorsCount: "연결선 {count}개",
+      labelCountChip: "레이블 {count}개",
       connectorFallbackName: "연결선 {number}",
       styleSolid: "실선",
       styleDashed: "파선",

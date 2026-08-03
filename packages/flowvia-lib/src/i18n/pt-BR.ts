@@ -321,6 +321,7 @@ const locale: LocaleProps = {
       preventOverlap: "Evitar Sobreposição",
       reverseDirection: "Inverter Direção",
       connectorsCount: "{count} conectores",
+      labelCountChip: "{count} rótulos",
       connectorFallbackName: "Conector {number}",
       styleSolid: "Sólido",
       styleDashed: "Tracejado",

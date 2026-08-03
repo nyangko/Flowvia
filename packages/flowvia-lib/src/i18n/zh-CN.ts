@@ -321,6 +321,7 @@ const locale: LocaleProps = {
       preventOverlap: "防止重叠",
       reverseDirection: "反转方向",
       connectorsCount: "{count} 条连接线",
+      labelCountChip: "{count} 个标签",
       connectorFallbackName: "连接线 {number}",
       styleSolid: "实线",
       styleDashed: "虚线",

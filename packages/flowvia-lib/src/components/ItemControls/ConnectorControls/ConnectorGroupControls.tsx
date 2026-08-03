@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useState } from 'react';
 import {
   Box,
+  Chip,
   List,
   ListItemButton,
   ListItemIcon,
@@ -108,9 +109,32 @@ const ConnectorPickerRow = memo(function ConnectorPickerRow({
         </ListItemIcon>
         <ListItemText
           primary={primaryText}
-          secondary={styleLabel}
+          secondary={
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flexWrap: 'wrap' }}>
+              <Typography component="span" variant="caption" color="text.secondary">
+                {styleLabel}
+              </Typography>
+              <Chip
+                size="small"
+                variant="outlined"
+                label={`${t('itemControls.connector.width')} ${connector?.width ?? 0}`}
+                sx={{ height: 16, '& .MuiChip-label': { px: 0.75, fontSize: '0.65rem' } }}
+              />
+              {labels.length > 0 && (
+                <Chip
+                  size="small"
+                  variant="outlined"
+                  label={t('itemControls.connector.labelCountChip').replace(
+                    '{count}',
+                    String(labels.length)
+                  )}
+                  sx={{ height: 16, '& .MuiChip-label': { px: 0.75, fontSize: '0.65rem' } }}
+                />
+              )}
+            </Box>
+          }
           primaryTypographyProps={{ variant: 'body2', noWrap: true }}
-          secondaryTypographyProps={{ variant: 'caption' }}
+          secondaryTypographyProps={{ component: 'div' }}
         />
         <Switch
           size="small"

@@ -321,6 +321,7 @@ const locale: LocaleProps = {
       preventOverlap: "ওভারল্যাপ প্রতিরোধ",
       reverseDirection: "দিক পরিবর্তন",
       connectorsCount: "{count}টি সংযোগকারী",
+      labelCountChip: "{count}টি লেবেল",
       connectorFallbackName: "সংযোগকারী {number}",
       styleSolid: "সলিড",
       styleDashed: "ড্যাশড",

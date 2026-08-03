@@ -320,6 +320,7 @@ const locale: LocaleProps = {
       preventOverlap: "Prevent Overlap",
       reverseDirection: "Reverse Direction",
       connectorsCount: "{count} Connectors",
+      labelCountChip: "{count} Labels",
       connectorFallbackName: "Connector {number}",
       styleSolid: "Solid",
       styleDashed: "Dashed",

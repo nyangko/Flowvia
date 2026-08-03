@@ -321,6 +321,7 @@ const locale: LocaleProps = {
       preventOverlap: "Çakışmayı Önle",
       reverseDirection: "Yönü Ters Çevir",
       connectorsCount: "{count} Bağlayıcı",
+      labelCountChip: "{count} Etiket",
       connectorFallbackName: "Bağlayıcı {number}",
       styleSolid: "Düz",
       styleDashed: "Kesikli",

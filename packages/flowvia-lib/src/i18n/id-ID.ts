@@ -321,6 +321,7 @@ const locale: LocaleProps = {
       preventOverlap: "Cegah Tumpang Tindih",
       reverseDirection: "Balik Arah",
       connectorsCount: "{count} Konektor",
+      labelCountChip: "{count} Label",
       connectorFallbackName: "Konektor {number}",
       styleSolid: "Solid",
       styleDashed: "Putus-putus",

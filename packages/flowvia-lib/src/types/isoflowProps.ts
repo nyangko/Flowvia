@@ -291,6 +291,7 @@ export interface LocaleProps {
       preventOverlap: string;
       reverseDirection: string;
       connectorsCount: string;
+      labelCountChip: string;
       connectorFallbackName: string;
       styleSolid: string;
       styleDashed: string;
