@@ -98,7 +98,7 @@ export const NodeSettings = ({
         />
       </Section>
       {modelItem.name && (
-        <Section title={t('itemControls.node.labelHeight')}>
+        <Section title={`${t('itemControls.node.labelHeight')} (${node.labelHeight})`}>
           <Slider
             marks
             step={20}
@@ -113,7 +113,7 @@ export const NodeSettings = ({
         </Section>
       )}
 
-      <Section title={t('itemControls.node.iconSize')}>
+      <Section title={`${t('itemControls.node.iconSize')} (${localScale.toFixed(1)})`}>
         <Slider
           marks
           step={0.1}

@@ -190,7 +190,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
           <Slider
             marks
             step={10}
-            min={10}
+            min={3}
             max={30}
             value={connector.width}
             valueLabelDisplay="auto"
