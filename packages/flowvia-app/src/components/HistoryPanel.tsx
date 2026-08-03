@@ -25,6 +25,33 @@ interface ChangelogGroup {
 // rather than appending to an existing one's `items`.
 const CHANGELOG_KO: ChangelogGroup[] = [
   {
+    version: 'v1.3.1',
+    date: '2026-08-02',
+    items: [
+      ['스위치(토글) 켰을 때', ' 흰색 손잡이가 배경과 같은 색이 되어 안 보이던 문제 수정'],
+      ['연결선 편집 패널의 스위치 2개(화살표 표시/겹침 방지)', ' 간격 없이 붙어 보이던 레이아웃 버그와, 라벨이 스위치에 딱 붙어 보이던 문제 수정']
+    ]
+  },
+  {
+    version: 'v1.3.0',
+    date: '2026-08-02',
+    items: [
+      ['전체 디자인', ' 개편 — 그림자 대신 얇은 테두리 사용, 버튼/슬라이더를 더 플랫한 스타일로, 스위치를 vuesax.com 스타일로 변경'],
+      ['빈 캔버스를 꾹 누르고 있으면', ' 0.3초 후 화면 이동(팬) 모드로 자동 전환 (기존처럼 클릭 즉시 이동하던 방식은 설정에서 다시 켤 수 있음)'],
+      ['햄버거 메뉴', '에서 중복된 실행취소/다시실행 제거, "캔버스 지우기"는 위험한 동작이라 메뉴 맨 아래로 분리하고 빨간색으로 표시'],
+      ['연결선 그룹', '의 간격을 두께에 맞게 넓히고, 화살표 크기도 연결선 두께에 비례하도록 수정'],
+      ['다이어그램 잠금 버튼', '이 처음 저장하기 전에는 안 보이던 문제 수정'],
+      ['남아있던 일부 아이콘', ' 크기를 20px로 통일 (도구모음, 확대/축소, 다이얼로그 닫기 버튼 등)']
+    ]
+  },
+  {
+    version: 'v1.2.1',
+    date: '2026-08-02',
+    items: [
+      ['오프라인 지원(PWA)', '이 매 빌드마다 조용히 깨져있던 문제 수정 — 캐시 파일 경로가 실제 빌드 결과물과 달라 설치 단계에서 실패하고 있었음']
+    ]
+  },
+  {
     version: 'v1.2.0',
     date: '2026-08-01',
     items: [
@@ -73,6 +100,33 @@ const CHANGELOG_KO: ChangelogGroup[] = [
 ];
 
 const CHANGELOG_EN: ChangelogGroup[] = [
+  {
+    version: 'v1.3.1',
+    date: '2026-08-02',
+    items: [
+      ['Switch (toggle) thumb', ' fixed turning invisible against the track when checked'],
+      ['Two stacked switches in the connector panel (show arrow / prevent overlap)', ' fixed rendering with no gap between them, and the label sitting flush against the switch']
+    ]
+  },
+  {
+    version: 'v1.3.0',
+    date: '2026-08-02',
+    items: [
+      ['Overall visual redesign', ' — thin borders instead of shadows, flatter buttons/sliders, and a vuesax.com-style Switch'],
+      ['Hold-clicking empty canvas', ' now switches to pan mode after 0.3s (the old instant-pan-on-click behavior is still available as a setting)'],
+      ['Hamburger menu', ' — removed duplicate undo/redo, moved "Clear Canvas" to the bottom as a red danger action'],
+      ['Connector groups', ' — spacing now widens for thicker connectors, and arrowheads scale with connector width'],
+      ['Diagram lock button', ' fixed disappearing before a diagram was saved for the first time'],
+      ['A few remaining icons', ' resized to a consistent 20px (toolbar, zoom controls, dialog close buttons)']
+    ]
+  },
+  {
+    version: 'v1.2.1',
+    date: '2026-08-02',
+    items: [
+      ['Offline support (PWA)', ' was silently broken on every build — fixed a cache path mismatch that made the install step fail']
+    ]
+  },
   {
     version: 'v1.2.0',
     date: '2026-08-01',
