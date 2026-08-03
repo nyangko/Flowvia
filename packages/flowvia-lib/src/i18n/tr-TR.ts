@@ -3,7 +3,8 @@ import { LocaleProps } from '../types/isoflowProps';
 const locale: LocaleProps = {
   common: {
     exampleText: "Bu bir örnek metindir",
-    delete: "Sil"
+    delete: "Sil",
+    duplicate: "Çoğalt"
   },
   textBoxControls: {
     enterText: "Metin girin",

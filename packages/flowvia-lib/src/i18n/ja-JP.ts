@@ -3,7 +3,8 @@ import { LocaleProps } from '../types/isoflowProps';
 const locale: LocaleProps = {
   common: {
     exampleText: "これはサンプルテキストです",
-    delete: "削除"
+    delete: "削除",
+    duplicate: "複製"
   },
   textBoxControls: {
     enterText: "テキストを入力",

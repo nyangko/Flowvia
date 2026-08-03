@@ -3,7 +3,8 @@ import { LocaleProps } from '../types/isoflowProps';
 const locale: LocaleProps = {
   common: {
     exampleText: "这是一段示例文本",
-    delete: "删除"
+    delete: "删除",
+    duplicate: "复制"
   },
   textBoxControls: {
     enterText: "输入文字",

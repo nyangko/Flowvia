@@ -11,6 +11,7 @@ export interface LocaleProps {
   common: {
     exampleText: string;
     delete: string;
+    duplicate: string;
   };
   textBoxControls: {
     enterText: string;

@@ -3,7 +3,8 @@ import { LocaleProps } from '../types/isoflowProps';
 const locale: LocaleProps = {
   common: {
     exampleText: "예시 텍스트입니다",
-    delete: "삭제"
+    delete: "삭제",
+    duplicate: "복제"
   },
   textBoxControls: {
     enterText: "텍스트 입력",

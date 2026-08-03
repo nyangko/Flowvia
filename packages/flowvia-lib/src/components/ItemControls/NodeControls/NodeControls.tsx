@@ -3,6 +3,7 @@ import { Box, Stack, Button, Typography, Divider, IconButton as MUIIconButton } 
 import {
   IconChevronRight as ChevronRightIcon,
   IconChevronLeft as ChevronLeftIcon,
+  IconCopyPlus as DuplicateIcon,
   IconX as CloseIcon
 } from '@tabler/icons-react';
 import { useIconCategories } from 'src/hooks/useIconCategories';
@@ -13,6 +14,7 @@ import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useModelItem } from 'src/hooks/useModelItem';
 import { useTranslation } from 'src/stores/localeStore';
 import { ControlsContainer } from '../components/ControlsContainer';
+import { DeleteButton } from '../components/DeleteButton';
 import { Icons } from '../IconSelectionControls/Icons';
 import { NodeSettings } from './NodeSettings/NodeSettings';
 import { Section } from '../components/Section';
@@ -31,7 +33,8 @@ type Mode = keyof typeof ModeOptions;
 
 export const NodeControls = ({ id }: Props) => {
   const [mode, setMode] = useState<Mode>('SETTINGS');
-  const { updateModelItem, updateViewItem, deleteViewItem } = useScene();
+  const scene = useScene();
+  const { updateModelItem, updateViewItem, deleteViewItem, duplicateItem } = scene;
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
@@ -63,7 +66,28 @@ export const NodeControls = ({ id }: Props) => {
   }
 
   return (
-    <ControlsContainer>
+    <ControlsContainer
+      footer={
+        <Stack direction="row" spacing={1}>
+          <DeleteButton
+            onClick={() => {
+              uiStateActions.setItemControls(null);
+              deleteViewItem(viewItem.id);
+            }}
+          />
+          <Button
+            variant="outlined"
+            size="small"
+            startIcon={<DuplicateIcon size={20} />}
+            onClick={() => {
+              duplicateItem({ type: 'ITEM', id: viewItem.id }, scene);
+            }}
+          >
+            {t('common.duplicate')}
+          </Button>
+        </Stack>
+      }
+    >
       <Box
         sx={{
           bgcolor: (theme) => {
@@ -162,10 +186,6 @@ export const NodeControls = ({ id }: Props) => {
           }}
           onViewItemUpdated={(updates) => {
             updateViewItem(viewItem.id, updates);
-          }}
-          onDeleted={() => {
-            uiStateActions.setItemControls(null);
-            deleteViewItem(viewItem.id);
           }}
         />
       )}

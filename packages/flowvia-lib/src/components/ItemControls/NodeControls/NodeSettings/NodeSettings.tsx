@@ -7,6 +7,7 @@ import {
   Typography,
   InputAdornment,
   Tooltip,
+  Divider,
   IconButton as MUIIconButton
 } from '@mui/material';
 import {
@@ -20,7 +21,6 @@ import { RichTextEditor } from 'src/components/RichTextEditor/RichTextEditor';
 import { useModelItem } from 'src/hooks/useModelItem';
 import { useModelStore } from 'src/stores/modelStore';
 import { useTranslation } from 'src/stores/localeStore';
-import { DeleteButton } from '../../components/DeleteButton';
 import { Section } from '../../components/Section';
 
 export type NodeUpdates = {
@@ -113,14 +113,12 @@ interface Props {
   node: ViewItem;
   onModelItemUpdated: (updates: Partial<ModelItem>) => void;
   onViewItemUpdated: (updates: Partial<ViewItem>) => void;
-  onDeleted: () => void;
 }
 
 export const NodeSettings = ({
   node,
   onModelItemUpdated,
-  onViewItemUpdated,
-  onDeleted
+  onViewItemUpdated
 }: Props) => {
   const modelItem = useModelItem(node.id);
   const modelActions = useModelStore((state) => state.actions);
@@ -176,17 +174,7 @@ export const NodeSettings = ({
           {t('itemControls.node.basicInfoSection')}
         </Typography>
       </Section>
-      <Section
-        sx={{
-          mx: 3,
-          mt: 1.5,
-          px: 2,
-          py: 2,
-          border: '1px solid',
-          borderColor: 'divider',
-          borderRadius: 2
-        }}
-      >
+      <Section sx={{ pt: 1.5 }}>
         <Section title={t('itemControls.node.name')} sx={{ p: 0 }}>
           <TextField
             value={modelItem.name}
@@ -219,22 +207,14 @@ export const NodeSettings = ({
         </Section>
       </Section>
 
+      <Divider sx={{ mx: 3, mt: 1 }} />
+
       <Section sx={{ pb: 0 }}>
         <Typography variant="subtitle2" fontWeight={600}>
           {t('itemControls.node.appearanceSection')}
         </Typography>
       </Section>
-      <Section
-        sx={{
-          mx: 3,
-          mt: 1.5,
-          px: 2,
-          py: 2,
-          border: '1px solid',
-          borderColor: 'divider',
-          borderRadius: 2
-        }}
-      >
+      <Section sx={{ pt: 1.5 }}>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
           {t('itemControls.node.appearanceSectionDescription')}
         </Typography>
@@ -266,11 +246,6 @@ export const NodeSettings = ({
             }}
           />
         </Stack>
-      </Section>
-      <Section>
-        <Box>
-          <DeleteButton onClick={onDeleted} />
-        </Box>
       </Section>
     </>
   );
