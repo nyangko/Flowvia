@@ -195,6 +195,7 @@ export interface UiState {
   labelSettings: LabelSettings;
   connectorInteractionMode: ConnectorInteractionMode;
   connectorAnimationEnabled: boolean;
+  connectorAnimationSpeed: number;
   expandLabels: boolean;
   projectionMode: keyof typeof ProjectionModeEnum;
   iconPackManager: IconPackManagerProps | null;
@@ -231,6 +232,7 @@ export interface UiStateActions {
   setLabelSettings: (settings: LabelSettings) => void;
   setConnectorInteractionMode: (mode: ConnectorInteractionMode) => void;
   setConnectorAnimationEnabled: (enabled: boolean) => void;
+  setConnectorAnimationSpeed: (speed: number) => void;
   setExpandLabels: (expand: boolean) => void;
   setProjectionMode: (mode: keyof typeof ProjectionModeEnum) => void;
   setIconPackManager: (iconPackManager: IconPackManagerProps | null) => void;
