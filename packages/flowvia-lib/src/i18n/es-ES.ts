@@ -215,6 +215,7 @@ const locale: LocaleProps = {
       dragModeDesc: "Haz clic y arrastra desde el primer nodo hasta el segundo nodo",
       animation: "Animar dirección del flujo",
       animationDesc: "Muestra un patrón de guiones en movimiento a lo largo de los conectores para indicar la dirección del flujo.",
+      animationSpeed: "Velocidad de la animación",
       note: "Nota: Puedes cambiar esta configuración en cualquier momento. El modo seleccionado se usará cuando la herramienta de conector esté activa."
     },
     iconPacks: {

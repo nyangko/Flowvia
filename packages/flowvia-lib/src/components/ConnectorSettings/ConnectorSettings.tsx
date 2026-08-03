@@ -7,6 +7,7 @@ import {
   FormControlLabel,
   Radio,
   Switch,
+  Slider,
   Typography,
   Paper
 } from '@mui/material';
@@ -18,6 +19,8 @@ export const ConnectorSettings = () => {
   const setConnectorInteractionMode = useUiStateStore((state) => state.actions.setConnectorInteractionMode);
   const connectorAnimationEnabled = useUiStateStore((state) => state.connectorAnimationEnabled);
   const setConnectorAnimationEnabled = useUiStateStore((state) => state.actions.setConnectorAnimationEnabled);
+  const connectorAnimationSpeed = useUiStateStore((state) => state.connectorAnimationSpeed);
+  const setConnectorAnimationSpeed = useUiStateStore((state) => state.actions.setConnectorAnimationSpeed);
   const { t } = useTranslation();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,6 +89,23 @@ export const ConnectorSettings = () => {
             </Box>
           }
         />
+        {connectorAnimationEnabled && (
+          <Box sx={{ mt: 2, px: 1 }}>
+            <Typography variant="body2" color="text.secondary" gutterBottom>
+              {`${t('settings.connector.animationSpeed')} (${connectorAnimationSpeed})`}
+            </Typography>
+            <Slider
+              min={50}
+              max={500}
+              step={10}
+              value={connectorAnimationSpeed}
+              valueLabelDisplay="auto"
+              onChange={(event, newSpeed) => {
+                setConnectorAnimationSpeed(newSpeed as number);
+              }}
+            />
+          </Box>
+        )}
       </Paper>
 
       <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>

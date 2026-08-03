@@ -216,6 +216,7 @@ const locale: LocaleProps = {
       dragModeDesc: "Klik dan seret dari node pertama ke node kedua",
       animation: "Animasikan Arah Aliran",
       animationDesc: "Menampilkan pola garis putus-putus yang bergerak di sepanjang konektor untuk menunjukkan arah aliran.",
+      animationSpeed: "Kecepatan animasi",
       note: "Catatan: Anda dapat mengubah pengaturan ini kapan saja. Mode yang dipilih akan digunakan saat alat Konektor aktif."
     },
     iconPacks: {

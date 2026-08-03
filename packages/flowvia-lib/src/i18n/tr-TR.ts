@@ -216,6 +216,7 @@ const locale: LocaleProps = {
       dragModeDesc: "İlk düğümden ikinci düğüme tıklayın ve sürükleyin",
       animation: "Akış Yönünü Canlandır",
       animationDesc: "Akış yönünü belirtmek için bağlayıcılar boyunca hareket eden bir kesik çizgi deseni gösterir.",
+      animationSpeed: "Animasyon hızı",
       note: "Not: Bu ayarı istediğiniz zaman değiştirebilirsiniz. Seçilen mod, Bağlayıcı aracı etkin olduğunda kullanılacaktır."
     },
     iconPacks: {

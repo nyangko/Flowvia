@@ -41,6 +41,7 @@ const initialState = () => {
       labelSettings: DEFAULT_LABEL_SETTINGS,
       connectorInteractionMode: 'click', // Default to click mode
       connectorAnimationEnabled: true, // Default to animated flow direction
+      connectorAnimationSpeed: 220, // px/sec — matches the original hardcoded default
       expandLabels: false, // Default to collapsed labels
       projectionMode: 'ISOMETRIC', // Default to the tilted isometric view
       iconPackManager: null, // Will be set by Isoflow if provided
@@ -137,6 +138,9 @@ const initialState = () => {
         },
         setConnectorAnimationEnabled: (connectorAnimationEnabled) => {
           set({ connectorAnimationEnabled });
+        },
+        setConnectorAnimationSpeed: (connectorAnimationSpeed) => {
+          set({ connectorAnimationSpeed });
         },
         setExpandLabels: (expandLabels) => {
           set({ expandLabels });

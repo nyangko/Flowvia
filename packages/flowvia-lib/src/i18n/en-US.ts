@@ -215,6 +215,7 @@ const locale: LocaleProps = {
       dragModeDesc: "Click and drag from the first node to the second node",
       animation: "Animate flow direction",
       animationDesc: "Shows a moving dash pattern along connectors to indicate flow direction.",
+      animationSpeed: "Animation speed",
       note: "Note: You can change this setting at any time. The selected mode will be used when the Connector tool is active."
     },
     iconPacks: {

@@ -222,6 +222,7 @@ export interface LocaleProps {
       dragModeDesc: string;
       animation: string;
       animationDesc: string;
+      animationSpeed: string;
       note: string;
     };
     iconPacks: {

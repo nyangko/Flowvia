@@ -216,6 +216,7 @@ const locale: LocaleProps = {
       dragModeDesc: "Clicca e trascina dal primo nodo al secondo per creare una connessione",
       animation: "Anima direzione del flusso",
       animationDesc: "Mostra un motivo di trattini in movimento lungo i connettori per indicare la direzione del flusso.",
+      animationSpeed: "Velocità dell'animazione",
       note: "Nota: Puoi modificare questa impostazione in qualsiasi momento. La modalità selezionata verrà usata quando lo strumento Connettore è attivo."
     },
     iconPacks: {

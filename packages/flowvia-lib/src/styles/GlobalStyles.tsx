@@ -31,6 +31,14 @@ export const GlobalStyles = () => {
         },
         '*::-webkit-scrollbar-corner': {
           background: 'transparent'
+        },
+        // Drives the connector flow-direction dot (see Connector.tsx). CSS
+        // animation-delay reliably supports negative values for phase sync
+        // across elements with the same duration — SVG SMIL (animateMotion)
+        // doesn't honor that consistently, which is why this isn't SMIL.
+        '@keyframes flowvia-flow-motion': {
+          from: { offsetDistance: '0%' },
+          to: { offsetDistance: '100%' }
         }
       }}
     />

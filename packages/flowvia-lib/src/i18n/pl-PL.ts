@@ -216,6 +216,7 @@ const locale: LocaleProps = {
       dragModeDesc: "Kliknij i przeciągnij od pierwszego węzła do drugiego węzła.",
       animation: "Animuj kierunek przepływu",
       animationDesc: "Pokazuje ruchomy wzór kresek wzdłuż łączników, wskazujący kierunek przepływu.",
+      animationSpeed: "Szybkość animacji",
       note: "Uwaga: To ustawienie można zmienić w dowolnym momencie. Wybrany tryb będzie używany, gdy narzędzie Połączeń jest aktywne.."
     },
     iconPacks: {

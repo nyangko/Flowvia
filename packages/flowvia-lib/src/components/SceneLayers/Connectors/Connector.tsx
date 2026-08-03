@@ -15,6 +15,10 @@ import { useScene } from 'src/hooks/useScene';
 import { useColor } from 'src/hooks/useColor';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 
+// Shared reference point for flow-animation phase sync (see flowBeginSec
+// below) — captured once per page load, not per connector.
+const ANIMATION_EPOCH = Date.now();
+
 interface Props {
   connector: ReturnType<typeof useScene>['connectors'][0];
   isSelected?: boolean;
@@ -79,6 +83,9 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
   const connector = useConnector(_connector.id);
   const connectorAnimationEnabled = useUiStateStore((state) => {
     return state.connectorAnimationEnabled;
+  });
+  const connectorAnimationSpeed = useUiStateStore((state) => {
+    return state.connectorAnimationSpeed;
   });
   const isFlat = useUiStateStore((state) => {
     return state.projectionMode === 'FLAT';
@@ -241,8 +248,6 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
   // Flow indicator: a dot that rides along the connector's own path, independent
   // of its style (SOLID/DASHED/DOTTED stay exactly as drawn — nothing about the
   // line itself changes when animation is on).
-  const flowPathId = `flowvia-flow-path-${connector.id}`;
-
   const flowPathD = useMemo(() => {
     const points = pathString.trim();
     if (!points) return '';
@@ -250,7 +255,6 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
   }, [pathString]);
 
   const flowDurationSec = useMemo(() => {
-    const FLOW_SPEED_PX_PER_SEC = 220;
     const tiles = connector.path.tiles;
     let lengthPx = 0;
     for (let i = 1; i < tiles.length; i++) {
@@ -258,8 +262,22 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
       const dy = (tiles[i].y - tiles[i - 1].y) * UNPROJECTED_TILE_SIZE;
       lengthPx += Math.sqrt(dx * dx + dy * dy);
     }
-    return Math.max(0.6, lengthPx / FLOW_SPEED_PX_PER_SEC);
-  }, [connector.path.tiles]);
+    return Math.max(0.6, lengthPx / connectorAnimationSpeed);
+  }, [connector.path.tiles, connectorAnimationSpeed]);
+
+  // Connectors mount at different times (drawn later, re-rendered, etc.), so
+  // each one's own animation would otherwise start its cycle at 0 on mount
+  // and drift out of phase from groupmates with the same duration. Phase
+  // every connector's flow dot against one shared clock instead: a negative
+  // animation-delay jumps it straight to where it would already be if it had
+  // been running since that shared reference point, so two connectors with
+  // the same length/speed always line up. (CSS animation-delay honors
+  // negative values reliably; SVG SMIL's `begin` does not, which is why this
+  // is a CSS animation rather than <animateMotion>.)
+  const flowBeginSec = useMemo(() => {
+    const elapsedSec = (Date.now() - ANIMATION_EPOCH) / 1000;
+    return -(elapsedSec % flowDurationSec);
+  }, [flowDurationSec]);
 
   const lineType = connector.lineType || 'SINGLE';
 
@@ -344,25 +362,32 @@ export const Connector = memo(({ connector: _connector, isSelected, groupIndex =
         ) : null}
 
         {/* Flow direction indicator: a dot riding the connector's own path,
-            independent of its line style (solid/dashed/dotted are untouched). */}
+            independent of its line style (solid/dashed/dotted are untouched).
+            Driven by a CSS motion-path animation (not SVG SMIL) so the
+            negative animation-delay phase sync above actually takes effect —
+            see flowBeginSec's comment. */}
         {connectorAnimationEnabled && flowPathD && (
-          <>
-            <path id={flowPathId} d={flowPathD} fill="none" stroke="none" />
-            <circle
-              r={connectorWidthPx * 1.3}
-              fill={getColorVariant(color.value, 'dark', { grade: 1 })}
-              stroke={theme.palette.common.white}
-              strokeWidth={connectorWidthPx * 0.4}
-            >
-              <animateMotion
-                dur={`${flowDurationSec}s`}
-                repeatCount="indefinite"
-              >
-                {/* eslint-disable-next-line react/no-unknown-property */}
-                <mpath xlinkHref={`#${flowPathId}`} href={`#${flowPathId}`} />
-              </animateMotion>
-            </circle>
-          </>
+          <circle
+            // A CSS animation already running with a given animation-delay
+            // doesn't reliably re-jump to a new phase if that delay changes
+            // in place (e.g. once flowDurationSec settles after the
+            // connector's path finalizes) — keying on both forces a clean
+            // remount instead, so the sync offset is always applied fresh.
+            key={`${flowDurationSec}-${flowBeginSec}`}
+            r={connectorWidthPx * 1.3}
+            fill={getColorVariant(color.value, 'dark', { grade: 1 })}
+            stroke={theme.palette.common.white}
+            strokeWidth={connectorWidthPx * 0.4}
+            style={{
+              offsetPath: `path("${flowPathD}")`,
+              offsetRotate: '0deg',
+              animationName: 'flowvia-flow-motion',
+              animationDuration: `${flowDurationSec}s`,
+              animationDelay: `${flowBeginSec}s`,
+              animationTimingFunction: 'linear',
+              animationIterationCount: 'infinite'
+            } as React.CSSProperties}
+          />
         )}
 
         {/* Circle for port-channel representation */}

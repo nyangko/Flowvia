@@ -215,6 +215,7 @@ const locale: LocaleProps = {
       dragModeDesc: "첫 번째 노드에서 두 번째 노드까지 클릭한 채로 드래그합니다",
       animation: "흐름 애니메이션",
       animationDesc: "연결선을 따라 점선이 움직여 흐름 방향을 표시합니다.",
+      animationSpeed: "애니메이션 속도",
       note: "참고: 이 설정은 언제든지 변경할 수 있습니다. 선택한 모드는 연결선 도구가 활성화되어 있을 때 사용됩니다."
     },
     iconPacks: {

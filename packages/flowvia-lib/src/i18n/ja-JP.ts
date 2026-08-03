@@ -215,6 +215,7 @@ const locale: LocaleProps = {
       dragModeDesc: "最初のノードから2番目のノードまでクリックしたままドラッグします",
       animation: "流れのアニメーション",
       animationDesc: "コネクタに沿って破線が動き、流れの方向を示します。",
+      animationSpeed: "アニメーション速度",
       note: "注意: この設定はいつでも変更できます。選択したモードはコネクタツールが有効なときに使用されます。"
     },
     iconPacks: {

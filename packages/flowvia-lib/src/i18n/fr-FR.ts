@@ -216,6 +216,7 @@ const locale: LocaleProps = {
       dragModeDesc: "Cliquez et glissez du premier nœud au deuxième nœud",
       animation: "Animer le sens du flux",
       animationDesc: "Affiche un motif de tirets en mouvement le long des connecteurs pour indiquer le sens du flux.",
+      animationSpeed: "Vitesse d'animation",
       note: "Remarque : Vous pouvez modifier ce paramètre à tout moment. Le mode sélectionné sera utilisé lorsque l'outil de connecteur est actif."
     },
     iconPacks: {

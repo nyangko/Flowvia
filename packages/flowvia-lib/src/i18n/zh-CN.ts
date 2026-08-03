@@ -216,6 +216,7 @@ const locale: LocaleProps = {
       dragModeDesc: "从第一个节点点击并拖拽到第二个节点",
       animation: "流动动画",
       animationDesc: "沿连接线显示移动的虚线，指示流动方向。",
+      animationSpeed: "动画速度",
       note: "注意：您可以随时更改此设置。所选模式将在连接器工具激活时使用。"
     },
     iconPacks: {
