@@ -289,6 +289,12 @@ const locale: LocaleProps = {
     color: "रंग",
     useCustomColor: "कस्टम रंग का उपयोग करें",
     node: {
+      editLabelTitle: "लेबल संपादित करें",
+      editLabelDescription: "इस नोड की लेबल जानकारी अपडेट करें।",
+      basicInfoSection: "मूल जानकारी",
+      appearanceSection: "रूप",
+      iconLabel: "आइकन",
+      iconChangeDescription: "मौजूदा आइकन बदलें।",
       name: "नाम",
       description: "विवरण",
       labelHeight: "लेबल ऊंचाई",

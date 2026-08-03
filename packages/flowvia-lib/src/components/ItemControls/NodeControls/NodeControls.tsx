@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Box, Stack, Button, IconButton as MUIIconButton } from '@mui/material';
+import { Box, Stack, Button, Typography, IconButton as MUIIconButton } from '@mui/material';
 import {
   IconChevronRight as ChevronRightIcon,
   IconChevronLeft as ChevronLeftIcon,
@@ -88,36 +88,64 @@ export const NodeControls = ({ id }: Props) => {
         >
           <CloseIcon size={20} />
         </MUIIconButton>
+        {mode === 'SETTINGS' && (
+          <Section sx={{ pb: 0 }}>
+            <Typography variant="h6">
+              {t('itemControls.node.editLabelTitle')}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {t('itemControls.node.editLabelDescription')}
+            </Typography>
+          </Section>
+        )}
         <Section sx={{ py: 2 }}>
           <Stack
             direction="row"
-            spacing={2}
-            alignItems="flex-end"
+            spacing={1.5}
+            alignItems="center"
             justifyContent="space-between"
+            sx={{
+              border: '1px solid',
+              borderColor: 'divider',
+              borderRadius: 2,
+              p: 1.5
+            }}
           >
             <Box
               component="img"
               src={icon.url}
-              sx={{ width: 70, height: 70 }}
+              sx={{ width: 48, height: 48, flexShrink: 0 }}
             />
             {mode === 'SETTINGS' && (
-              <Button
-                endIcon={<ChevronRightIcon size={20} />}
-                onClick={() => {
-                  onSwitchMode('CHANGE_ICON');
-                }}
-                variant="text"
-              >
-                {t('itemControls.node.updateIcon')}
-              </Button>
+              <>
+                <Box sx={{ flex: 1, minWidth: 0 }}>
+                  <Typography variant="body2" fontWeight={600}>
+                    {t('itemControls.node.iconLabel')}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {t('itemControls.node.iconChangeDescription')}
+                  </Typography>
+                </Box>
+                <Button
+                  endIcon={<ChevronRightIcon size={16} />}
+                  onClick={() => {
+                    onSwitchMode('CHANGE_ICON');
+                  }}
+                  variant="text"
+                  size="small"
+                >
+                  {t('itemControls.node.updateIcon')}
+                </Button>
+              </>
             )}
             {mode === 'CHANGE_ICON' && (
               <Button
-                startIcon={<ChevronLeftIcon size={20} />}
+                startIcon={<ChevronLeftIcon size={16} />}
                 onClick={() => {
                   onSwitchMode('SETTINGS');
                 }}
                 variant="text"
+                size="small"
               >
                 {t('itemControls.node.backToSettings')}
               </Button>

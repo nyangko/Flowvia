@@ -289,6 +289,12 @@ const locale: LocaleProps = {
     color: "Цвет",
     useCustomColor: "Использовать свой цвет",
     node: {
+      editLabelTitle: "Редактировать метку",
+      editLabelDescription: "Обновите информацию метки этого узла.",
+      basicInfoSection: "Основная информация",
+      appearanceSection: "Внешний вид",
+      iconLabel: "Значок",
+      iconChangeDescription: "Изменить текущий значок.",
       name: "Имя",
       description: "Описание",
       labelHeight: "Высота метки",

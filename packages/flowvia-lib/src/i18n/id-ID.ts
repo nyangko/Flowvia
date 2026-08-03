@@ -289,6 +289,12 @@ const locale: LocaleProps = {
     color: "Warna",
     useCustomColor: "Gunakan Warna Kustom",
     node: {
+      editLabelTitle: "Edit Label",
+      editLabelDescription: "Perbarui informasi label node ini.",
+      basicInfoSection: "Info Dasar",
+      appearanceSection: "Tampilan",
+      iconLabel: "Ikon",
+      iconChangeDescription: "Ubah ikon saat ini.",
       name: "Nama",
       description: "Deskripsi",
       labelHeight: "Tinggi label",

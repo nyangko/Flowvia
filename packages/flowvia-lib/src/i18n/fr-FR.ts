@@ -289,6 +289,12 @@ const locale: LocaleProps = {
     color: "Couleur",
     useCustomColor: "Utiliser une couleur personnalisée",
     node: {
+      editLabelTitle: "Modifier le libellé",
+      editLabelDescription: "Mettez à jour les informations de libellé de ce nœud.",
+      basicInfoSection: "Informations de base",
+      appearanceSection: "Apparence",
+      iconLabel: "Icône",
+      iconChangeDescription: "Changer l'icône actuelle.",
       name: "Nom",
       description: "Description",
       labelHeight: "Hauteur de l'étiquette",

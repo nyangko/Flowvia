@@ -289,6 +289,12 @@ const locale: LocaleProps = {
     color: "颜色",
     useCustomColor: "使用自定义颜色",
     node: {
+      editLabelTitle: "编辑标签",
+      editLabelDescription: "更新此节点的标签信息。",
+      basicInfoSection: "基本信息",
+      appearanceSection: "外观",
+      iconLabel: "图标",
+      iconChangeDescription: "更改当前图标。",
       name: "名称",
       description: "描述",
       labelHeight: "标签高度",

@@ -288,6 +288,12 @@ const locale: LocaleProps = {
     color: "Color",
     useCustomColor: "Usar color personalizado",
     node: {
+      editLabelTitle: "Editar etiqueta",
+      editLabelDescription: "Actualiza la información de la etiqueta de este nodo.",
+      basicInfoSection: "Información básica",
+      appearanceSection: "Apariencia",
+      iconLabel: "Icono",
+      iconChangeDescription: "Cambiar el icono actual.",
       name: "Nombre",
       description: "Descripción",
       labelHeight: "Altura de la etiqueta",

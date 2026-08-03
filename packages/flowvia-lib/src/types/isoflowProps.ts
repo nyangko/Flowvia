@@ -259,6 +259,12 @@ export interface LocaleProps {
     color: string;
     useCustomColor: string;
     node: {
+      editLabelTitle: string;
+      editLabelDescription: string;
+      basicInfoSection: string;
+      appearanceSection: string;
+      iconLabel: string;
+      iconChangeDescription: string;
       name: string;
       description: string;
       labelHeight: string;

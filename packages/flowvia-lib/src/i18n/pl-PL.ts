@@ -289,6 +289,12 @@ const locale: LocaleProps = {
     color: "Kolor",
     useCustomColor: "Użyj niestandardowego koloru",
     node: {
+      editLabelTitle: "Edytuj etykietę",
+      editLabelDescription: "Zaktualizuj informacje o etykiecie tego węzła.",
+      basicInfoSection: "Podstawowe informacje",
+      appearanceSection: "Wygląd",
+      iconLabel: "Ikona",
+      iconChangeDescription: "Zmień bieżącą ikonę.",
       name: "Nazwa",
       description: "Opis",
       labelHeight: "Wysokość etykiety",

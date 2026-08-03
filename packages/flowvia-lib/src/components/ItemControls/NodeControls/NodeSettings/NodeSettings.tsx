@@ -1,5 +1,14 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
-import { Slider, Box, TextField } from '@mui/material';
+import {
+  Slider,
+  Box,
+  Stack,
+  TextField,
+  Typography,
+  InputAdornment,
+  IconButton as MUIIconButton
+} from '@mui/material';
+import { IconMinus, IconPlus } from '@tabler/icons-react';
 import { ModelItem, ViewItem } from 'src/types';
 import { RichTextEditor } from 'src/components/RichTextEditor/RichTextEditor';
 import { useModelItem } from 'src/hooks/useModelItem';
@@ -11,6 +20,88 @@ import { Section } from '../../components/Section';
 export type NodeUpdates = {
   model: Partial<ModelItem>;
   view: Partial<ViewItem>;
+};
+
+interface SteppedSliderProps {
+  label: string;
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  unit: string;
+  onChange: (value: number) => void;
+}
+
+// Slider + numeric stepper for the label height / icon size controls — lets
+// users drag for a rough value or type/step to an exact one, with the
+// min/max range always visible instead of implied by the slider alone.
+const SteppedSlider = ({
+  label,
+  value,
+  min,
+  max,
+  step,
+  unit,
+  onChange
+}: SteppedSliderProps) => {
+  const clamp = (n: number) => Math.min(max, Math.max(min, n));
+
+  return (
+    <Box>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{ mb: 1 }}
+      >
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          textTransform="uppercase"
+        >
+          {label}
+        </Typography>
+        <Stack direction="row" alignItems="center" spacing={0.5}>
+          <MUIIconButton size="small" onClick={() => onChange(clamp(value - step))}>
+            <IconMinus size={14} />
+          </MUIIconButton>
+          <TextField
+            size="small"
+            type="number"
+            value={value}
+            onChange={(e) => {
+              const n = Number(e.target.value);
+              if (!Number.isNaN(n)) onChange(clamp(n));
+            }}
+            InputProps={{
+              endAdornment: <InputAdornment position="end">{unit}</InputAdornment>
+            }}
+            sx={{ width: 90 }}
+          />
+          <MUIIconButton size="small" onClick={() => onChange(clamp(value + step))}>
+            <IconPlus size={14} />
+          </MUIIconButton>
+        </Stack>
+      </Stack>
+      <Stack direction="row" alignItems="center" spacing={1.5}>
+        <Typography variant="caption" color="text.secondary">
+          {min}{unit}
+        </Typography>
+        <Slider
+          marks
+          step={step}
+          min={min}
+          max={max}
+          value={value}
+          onChange={(e, newValue) => onChange(newValue as number)}
+          sx={{ flex: 1 }}
+        />
+        <Typography variant="caption" color="text.secondary">
+          {max}{unit}
+        </Typography>
+      </Stack>
+    </Box>
+  );
 };
 
 interface Props {
@@ -57,13 +148,6 @@ export const NodeSettings = ({
     }, 100); // 100ms debounce
   }, [icons, modelItem?.icon, modelActions]);
 
-  // Handle slider change with local state + debounced store update
-  const handleScaleChange = useCallback((e: Event, newScale: number | number[]) => {
-    const scale = newScale as number;
-    setLocalScale(scale); // Immediate UI update
-    updateIconScale(scale); // Debounced store update
-  }, [updateIconScale]);
-
   // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
@@ -79,6 +163,9 @@ export const NodeSettings = ({
 
   return (
     <>
+      <Typography variant="subtitle2" fontWeight={600} sx={{ px: 3, pt: 3 }}>
+        {t('itemControls.node.basicInfoSection')}
+      </Typography>
       <Section title={t('itemControls.node.name')}>
         <TextField
           value={modelItem.name}
@@ -97,30 +184,37 @@ export const NodeSettings = ({
           }}
         />
       </Section>
+
+      <Typography variant="subtitle2" fontWeight={600} sx={{ px: 3, pt: 3 }}>
+        {t('itemControls.node.appearanceSection')}
+      </Typography>
       {modelItem.name && (
-        <Section title={`${t('itemControls.node.labelHeight')} (${node.labelHeight})`}>
-          <Slider
-            marks
-            step={20}
+        <Section>
+          <SteppedSlider
+            label={t('itemControls.node.labelHeight')}
+            value={node.labelHeight ?? 80}
             min={60}
             max={280}
-            value={node.labelHeight}
-            onChange={(e, newHeight) => {
-              const labelHeight = newHeight as number;
-              onViewItemUpdated({ labelHeight });
-            }}
+            step={20}
+            unit="px"
+            onChange={(labelHeight) => onViewItemUpdated({ labelHeight })}
           />
         </Section>
       )}
 
-      <Section title={`${t('itemControls.node.iconSize')} (${localScale.toFixed(1)})`}>
-        <Slider
-          marks
-          step={0.1}
-          min={0.3}
-          max={2.5}
-          value={localScale}
-          onChange={handleScaleChange}
+      <Section>
+        <SteppedSlider
+          label={t('itemControls.node.iconSize')}
+          value={Math.round(localScale * 100)}
+          min={30}
+          max={150}
+          step={10}
+          unit="%"
+          onChange={(pct) => {
+            const scale = pct / 100;
+            setLocalScale(scale);
+            updateIconScale(scale);
+          }}
         />
       </Section>
       <Section>

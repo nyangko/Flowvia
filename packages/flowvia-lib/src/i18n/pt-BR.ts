@@ -289,6 +289,12 @@ const locale: LocaleProps = {
     color: "Cor",
     useCustomColor: "Usar cor personalizada",
     node: {
+      editLabelTitle: "Editar rótulo",
+      editLabelDescription: "Atualize as informações do rótulo deste nó.",
+      basicInfoSection: "Informações básicas",
+      appearanceSection: "Aparência",
+      iconLabel: "Ícone",
+      iconChangeDescription: "Alterar o ícone atual.",
       name: "Nome",
       description: "Descrição",
       labelHeight: "Altura do rótulo",

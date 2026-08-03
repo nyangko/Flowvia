@@ -289,6 +289,12 @@ const locale: LocaleProps = {
     color: "Renk",
     useCustomColor: "Özel Renk Kullan",
     node: {
+      editLabelTitle: "Etiketi Düzenle",
+      editLabelDescription: "Bu düğümün etiket bilgilerini güncelleyin.",
+      basicInfoSection: "Temel Bilgiler",
+      appearanceSection: "Görünüm",
+      iconLabel: "Simge",
+      iconChangeDescription: "Mevcut simgeyi değiştirin.",
       name: "Ad",
       description: "Açıklama",
       labelHeight: "Etiket yüksekliği",

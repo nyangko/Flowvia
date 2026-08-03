@@ -288,6 +288,12 @@ const locale: LocaleProps = {
     color: "Color",
     useCustomColor: "Use Custom Color",
     node: {
+      editLabelTitle: "Edit Label",
+      editLabelDescription: "Update this node's label information.",
+      basicInfoSection: "Basic Info",
+      appearanceSection: "Appearance",
+      iconLabel: "Icon",
+      iconChangeDescription: "Change the current icon.",
       name: "Name",
       description: "Description",
       labelHeight: "Label height",

@@ -288,6 +288,12 @@ const locale: LocaleProps = {
     color: "색상",
     useCustomColor: "사용자 지정 색상 사용",
     node: {
+      editLabelTitle: "레이블 편집",
+      editLabelDescription: "노드의 레이블 정보를 수정합니다.",
+      basicInfoSection: "기본 정보",
+      appearanceSection: "모양",
+      iconLabel: "아이콘",
+      iconChangeDescription: "현재 아이콘을 변경합니다.",
       name: "이름",
       description: "설명",
       labelHeight: "레이블 높이",
