@@ -169,56 +169,75 @@ export const NodeSettings = ({
 
   return (
     <>
-      <Section sx={{ pb: 0 }}>
+      <Section sx={{ pb: 2 }}>
         <Typography variant="subtitle2" fontWeight={600}>
           {t('itemControls.node.basicInfoSection')}
         </Typography>
       </Section>
-      <Section sx={{ pt: 1.5 }}>
-        <Section title={t('itemControls.node.name')} sx={{ p: 0 }}>
-          <TextField
-            value={modelItem.name}
-            onChange={(e) => {
-              const text = e.target.value.slice(0, NAME_MAX_LENGTH);
-              if (modelItem.name !== text) onModelItemUpdated({ name: text });
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Stack direction="row" alignItems="center" spacing={0.75}>
-                    <Typography variant="caption" color="text.secondary">
-                      {nameLength} / {NAME_MAX_LENGTH}
-                    </Typography>
-                    {isNameValid && <IconCheck size={16} color="#2e7d32" />}
-                  </Stack>
-                </InputAdornment>
-              )
-            }}
-          />
-        </Section>
-        <Section title={t('itemControls.node.description')} sx={{ p: 0, pt: 3 }}>
-          <RichTextEditor
-            value={modelItem.description}
-            onChange={(text) => {
-              if (modelItem.description !== text)
-                onModelItemUpdated({ description: text });
-            }}
-          />
-        </Section>
+      <Section sx={{ pt: 0 }}>
+        <Stack spacing={2.5}>
+          <Box>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              textTransform="uppercase"
+              sx={{ mb: 1 }}
+            >
+              {t('itemControls.node.name')}
+            </Typography>
+            <TextField
+              fullWidth
+              value={modelItem.name}
+              onChange={(e) => {
+                const text = e.target.value.slice(0, NAME_MAX_LENGTH);
+                if (modelItem.name !== text) onModelItemUpdated({ name: text });
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Stack direction="row" alignItems="center" spacing={0.75}>
+                      <Typography variant="caption" color="text.secondary">
+                        {nameLength} / {NAME_MAX_LENGTH}
+                      </Typography>
+                      {isNameValid && <IconCheck size={16} color="#2e7d32" />}
+                    </Stack>
+                  </InputAdornment>
+                )
+              }}
+            />
+          </Box>
+          <Box>
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              textTransform="uppercase"
+              sx={{ mb: 1 }}
+            >
+              {t('itemControls.node.description')}
+            </Typography>
+            <RichTextEditor
+              value={modelItem.description}
+              onChange={(text) => {
+                if (modelItem.description !== text)
+                  onModelItemUpdated({ description: text });
+              }}
+            />
+          </Box>
+        </Stack>
       </Section>
 
-      <Divider sx={{ mx: 3, mt: 1 }} />
+      <Divider sx={{ mx: 3, mt: 2 }} />
 
-      <Section sx={{ pb: 0 }}>
+      <Section sx={{ pb: 2 }}>
         <Typography variant="subtitle2" fontWeight={600}>
           {t('itemControls.node.appearanceSection')}
         </Typography>
       </Section>
-      <Section sx={{ pt: 1.5 }}>
-        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+      <Section sx={{ pt: 0 }}>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2.5 }}>
           {t('itemControls.node.appearanceSectionDescription')}
         </Typography>
-        <Stack spacing={3}>
+        <Stack spacing={2.5}>
           {modelItem.name && (
             <SteppedSlider
               label={t('itemControls.node.labelHeight')}
