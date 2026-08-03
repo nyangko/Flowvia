@@ -263,12 +263,15 @@ export interface LocaleProps {
       editLabelDescription: string;
       basicInfoSection: string;
       appearanceSection: string;
+      appearanceSectionDescription: string;
       iconLabel: string;
       iconChangeDescription: string;
       name: string;
       description: string;
       labelHeight: string;
+      labelHeightHelp: string;
       iconSize: string;
+      iconSizeHelp: string;
       updateIcon: string;
       backToSettings: string;
       expandDescription: string;

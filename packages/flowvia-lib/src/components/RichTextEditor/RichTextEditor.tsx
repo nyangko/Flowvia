@@ -72,22 +72,24 @@ export const RichTextEditor = ({
     >
       <Box
         sx={{
+          // Toolbar and text area share one bordered box (divided by the
+          // toolbar's own border-bottom) instead of each having its own
+          // border, so the whole editor reads as a single input.
+          border: readOnly ? 'none' : '1px solid',
+          borderColor: 'grey.300',
+          borderRadius: 1.5,
           '.ql-toolbar.ql-snow': {
             border: 'none',
-            pt: 0,
-            px: 0,
-            pb: 1 // Add padding below toolbar to prevent overlap, might remove or make configurable at some point
-          },
-          '.ql-toolbar.ql-snow + .ql-container.ql-snow': {
-            border: '1px solid',
+            borderBottom: '1px solid',
             borderColor: 'grey.300',
-            borderTop: 'auto',
-            borderRadius: 1.5,
-            height,
-            color: 'text.secondary'
+            pt: 1,
+            px: 1.5,
+            pb: 1
           },
           '.ql-container.ql-snow': {
-            ...(readOnly ? { border: 'none' } : {}),
+            border: 'none',
+            height,
+            color: 'text.secondary',
             ...styles
           },
           '.ql-editor': {

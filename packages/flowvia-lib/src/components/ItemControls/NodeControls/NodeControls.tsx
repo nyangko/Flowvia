@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Box, Stack, Button, Typography, IconButton as MUIIconButton } from '@mui/material';
+import { Box, Stack, Button, Typography, Divider, IconButton as MUIIconButton } from '@mui/material';
 import {
   IconChevronRight as ChevronRightIcon,
   IconChevronLeft as ChevronLeftIcon,
@@ -89,14 +89,14 @@ export const NodeControls = ({ id }: Props) => {
           <CloseIcon size={20} />
         </MUIIconButton>
         {mode === 'SETTINGS' && (
-          <Section sx={{ pb: 0 }}>
-            <Typography variant="h6">
-              {t('itemControls.node.editLabelTitle')}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {t('itemControls.node.editLabelDescription')}
-            </Typography>
-          </Section>
+          <>
+            <Section sx={{ pb: 2 }}>
+              <Typography variant="h6">
+                {t('itemControls.node.editLabelTitle')}
+              </Typography>
+            </Section>
+            <Divider />
+          </>
         )}
         <Section sx={{ py: 2 }}>
           <Stack
