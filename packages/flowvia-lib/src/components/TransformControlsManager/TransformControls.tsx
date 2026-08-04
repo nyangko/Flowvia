@@ -22,7 +22,7 @@ const strokeWidth = 2;
 
 export const TransformControls = ({ from, to, onAnchorMouseDown }: Props) => {
   const isFlat = useUiStateStore((state) => state.projectionMode === 'FLAT');
-  const { css, pxSize } = useIsoProjection({
+  const { css, pxSize, position: flatTopLeft } = useIsoProjection({
     from,
     to
   });
@@ -30,14 +30,39 @@ export const TransformControls = ({ from, to, onAnchorMouseDown }: Props) => {
   const anchors = useMemo(() => {
     if (!onAnchorMouseDown) return [];
 
+    // getTilePosition's named-corner origins (outermostCornerPositions) only
+    // ever offset a single axis, which is correct for the skewed iso diamond
+    // but not for a flat, unrotated rectangle — a real corner there needs
+    // both axes offset at once. useIsoProjection already computes that true
+    // top-left corner for the body itself, so derive all 4 corners from it
+    // directly instead, guaranteeing they land exactly on the body's edges.
+    if (isFlat) {
+      const flatCorners: Record<AnchorPosition, Coords> = {
+        TOP_LEFT: flatTopLeft,
+        TOP_RIGHT: { x: flatTopLeft.x + pxSize.width, y: flatTopLeft.y },
+        BOTTOM_RIGHT: {
+          x: flatTopLeft.x + pxSize.width,
+          y: flatTopLeft.y + pxSize.height
+        },
+        BOTTOM_LEFT: { x: flatTopLeft.x, y: flatTopLeft.y + pxSize.height }
+      };
+
+      return (Object.keys(flatCorners) as AnchorPosition[]).map((key) => ({
+        position: flatCorners[key],
+        anchorPosition: key,
+        onMouseDown: () => {
+          onAnchorMouseDown(key);
+        }
+      }));
+    }
+
     const corners = getBoundingBox([from, to]);
     const namedCorners = convertBoundsToNamedAnchors(corners);
     const cornerPositions = Object.entries(namedCorners).map(
       ([key, value], i) => {
         const position = getTilePosition({
           tile: value,
-          origin: outermostCornerPositions[i],
-          flat: isFlat
+          origin: outermostCornerPositions[i]
         });
 
         return {
@@ -51,7 +76,7 @@ export const TransformControls = ({ from, to, onAnchorMouseDown }: Props) => {
     );
 
     return cornerPositions;
-  }, [onAnchorMouseDown, from, to, isFlat]);
+  }, [onAnchorMouseDown, from, to, isFlat, flatTopLeft, pxSize]);
 
   return (
     <>
