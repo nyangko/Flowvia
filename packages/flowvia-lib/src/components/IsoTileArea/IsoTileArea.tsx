@@ -14,6 +14,7 @@ interface Props {
     color: string;
     dashArray?: string;
   };
+  cursor?: string;
 }
 
 export const IsoTileArea = memo(({
@@ -21,7 +22,8 @@ export const IsoTileArea = memo(({
   to,
   fill = 'none',
   cornerRadius = 0,
-  stroke
+  stroke,
+  cursor
 }: Props) => {
   const { css, pxSize } = useIsoProjection({
     from,
@@ -44,7 +46,7 @@ export const IsoTileArea = memo(({
   }, [stroke]);
 
   return (
-    <Svg viewboxSize={pxSize} style={css}>
+    <Svg viewboxSize={pxSize} style={cursor ? { ...css, cursor } : css}>
       <rect
         width={pxSize.width}
         height={pxSize.height}

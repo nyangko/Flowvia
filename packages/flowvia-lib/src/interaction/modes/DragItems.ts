@@ -8,7 +8,8 @@ import {
   hasMovedTile,
   getAnchorParent,
   getItemAtTile,
-  findNearestUnoccupiedTilesForGroup
+  findNearestUnoccupiedTilesForGroup,
+  setWindowCursor
 } from 'src/utils';
 
 const dragItems = (
@@ -128,10 +129,12 @@ export const DragItems: ModeActions = {
   entry: ({ uiState, rendererRef }) => {
     if (uiState.mode.type !== 'DRAG_ITEMS' || !uiState.mouse.mousedown) return;
 
+    setWindowCursor('grabbing');
     const renderer = rendererRef;
     renderer.style.userSelect = 'none';
   },
   exit: ({ rendererRef }) => {
+    setWindowCursor('default');
     const renderer = rendererRef;
     renderer.style.userSelect = 'auto';
   },

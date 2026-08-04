@@ -2,13 +2,27 @@ import {
   getItemByIdOrThrow,
   getBoundingBox,
   convertBoundsToNamedAnchors,
-  hasMovedTile
+  hasMovedTile,
+  setWindowCursor
 } from 'src/utils';
 import { ModeActions } from 'src/types';
 
+const RESIZE_CURSORS = {
+  TOP_LEFT: 'nwse-resize',
+  BOTTOM_RIGHT: 'nwse-resize',
+  TOP_RIGHT: 'nesw-resize',
+  BOTTOM_LEFT: 'nesw-resize'
+} as const;
+
 export const TransformRectangle: ModeActions = {
-  entry: () => {},
-  exit: () => {},
+  entry: ({ uiState }) => {
+    if (uiState.mode.type !== 'RECTANGLE.TRANSFORM') return;
+    const anchor = uiState.mode.selectedAnchor;
+    setWindowCursor(anchor ? RESIZE_CURSORS[anchor] : 'default');
+  },
+  exit: () => {
+    setWindowCursor('default');
+  },
   mousemove: ({ uiState, scene }) => {
     if (
       uiState.mode.type !== 'RECTANGLE.TRANSFORM' ||

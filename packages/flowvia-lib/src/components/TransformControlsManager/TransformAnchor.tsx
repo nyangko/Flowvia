@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Coords } from 'src/types';
+import { Coords, AnchorPosition } from 'src/types';
 import { useTheme, Box } from '@mui/material';
 import { getIsoProjectionCss } from 'src/utils';
 import { Svg } from 'src/components/Svg/Svg';
@@ -8,12 +8,20 @@ import { useUiStateStore } from 'src/stores/uiStateStore';
 
 interface Props {
   position: Coords;
+  anchorPosition: AnchorPosition;
   onMouseDown: () => void;
 }
 
 const strokeWidth = 2;
 
-export const TransformAnchor = ({ position, onMouseDown }: Props) => {
+const RESIZE_CURSORS: Record<AnchorPosition, string> = {
+  TOP_LEFT: 'nwse-resize',
+  BOTTOM_RIGHT: 'nwse-resize',
+  TOP_RIGHT: 'nesw-resize',
+  BOTTOM_LEFT: 'nesw-resize'
+};
+
+export const TransformAnchor = ({ position, anchorPosition, onMouseDown }: Props) => {
   const [isHovered, setIsHovered] = useState(false);
   const theme = useTheme();
   const isFlat = useUiStateStore((state) => state.projectionMode === 'FLAT');
@@ -31,7 +39,8 @@ export const TransformAnchor = ({ position, onMouseDown }: Props) => {
         position: 'absolute',
         transform: getIsoProjectionCss(undefined, isFlat),
         width: TRANSFORM_ANCHOR_SIZE,
-        height: TRANSFORM_ANCHOR_SIZE
+        height: TRANSFORM_ANCHOR_SIZE,
+        cursor: RESIZE_CURSORS[anchorPosition]
       }}
       style={{
         left: position.x - TRANSFORM_ANCHOR_SIZE / 2,
