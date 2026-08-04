@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from 'react';
+import React, { memo, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import {
   Box,
   Chip,
@@ -11,10 +11,15 @@ import {
   Switch,
   Collapse
 } from '@mui/material';
-import { IconX as CloseIcon, IconGripVertical as DragIndicatorIcon } from '@tabler/icons-react';
+import {
+  IconX as CloseIcon,
+  IconGripVertical as DragIndicatorIcon,
+  IconArrowRight as DirectionIcon
+} from '@tabler/icons-react';
 import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useConnector } from 'src/hooks/useConnector';
 import { useColor } from 'src/hooks/useColor';
+import { useModelItem } from 'src/hooks/useModelItem';
 import { useScene } from 'src/hooks/useScene';
 import { useTranslation } from 'src/stores/localeStore';
 import { getConnectorLabels } from 'src/utils';
@@ -27,10 +32,12 @@ interface ConnectorPickerRowProps {
   index: number;
   isFocused: boolean;
   isDragging: boolean;
+  isDropTarget: boolean;
   onToggleFocus: (id: string) => void;
   onDragStart: (id: string) => void;
   onDragOver: (id: string) => void;
   onDragEnd: () => void;
+  registerRowEl: (id: string, el: HTMLDivElement | null) => void;
 }
 
 const ConnectorPickerRow = memo(function ConnectorPickerRow({
@@ -38,16 +45,31 @@ const ConnectorPickerRow = memo(function ConnectorPickerRow({
   index,
   isFocused,
   isDragging,
+  isDropTarget,
   onToggleFocus,
   onDragStart,
   onDragOver,
-  onDragEnd
+  onDragEnd,
+  registerRowEl
 }: ConnectorPickerRowProps) {
   const connector = useConnector(connectorId);
   const colorData = useColor(connector?.color);
   const { updateConnector } = useScene();
   const labels = connector ? getConnectorLabels(connector) : [];
   const { t } = useTranslation();
+
+  const anchors = connector?.anchors ?? [];
+  const startItem = useModelItem(anchors[0]?.ref.item ?? '');
+  const endItem = useModelItem(anchors[anchors.length - 1]?.ref.item ?? '');
+  const direction =
+    startItem?.name && endItem?.name
+      ? { start: startItem.name, end: endItem.name }
+      : null;
+
+  const setRowEl = useCallback(
+    (el: HTMLDivElement | null) => registerRowEl(connectorId, el),
+    [connectorId, registerRowEl]
+  );
 
   const displayColor = connector?.customColor || colorData?.value || '#9e9e9e';
   const primaryText =
@@ -70,6 +92,7 @@ const ConnectorPickerRow = memo(function ConnectorPickerRow({
 
   return (
     <Box
+      ref={setRowEl}
       draggable
       onDragStart={(e) => {
         e.dataTransfer.effectAllowed = 'move';
@@ -81,7 +104,11 @@ const ConnectorPickerRow = memo(function ConnectorPickerRow({
       }}
       onDragEnd={onDragEnd}
       onDrop={(e) => e.preventDefault()}
-      sx={{ opacity: isDragging ? 0.4 : 1 }}
+      sx={{
+        opacity: isDragging ? 0.4 : 1,
+        borderTop: '2px solid',
+        borderTopColor: isDropTarget ? 'primary.main' : 'transparent'
+      }}
     >
       <ListItemButton
         onClick={handleClick}
@@ -110,27 +137,52 @@ const ConnectorPickerRow = memo(function ConnectorPickerRow({
         <ListItemText
           primary={primaryText}
           secondary={
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flexWrap: 'wrap' }}>
-              <Typography component="span" variant="caption" color="text.secondary">
-                {styleLabel}
-              </Typography>
-              <Chip
-                size="small"
-                variant="outlined"
-                label={`${t('itemControls.connector.width')} ${connector?.width ?? 0}`}
-                sx={{ height: 16, '& .MuiChip-label': { px: 0.75, fontSize: '0.65rem' } }}
-              />
-              {labels.length > 0 && (
+            <Box>
+              {direction && (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25, mb: 0.25 }}>
+                  <Typography
+                    component="span"
+                    variant="caption"
+                    color="text.secondary"
+                    noWrap
+                    sx={{ maxWidth: '40%' }}
+                  >
+                    {direction.start}
+                  </Typography>
+                  <DirectionIcon size={12} style={{ flexShrink: 0, opacity: 0.6 }} />
+                  <Typography
+                    component="span"
+                    variant="caption"
+                    color="text.secondary"
+                    noWrap
+                    sx={{ maxWidth: '40%' }}
+                  >
+                    {direction.end}
+                  </Typography>
+                </Box>
+              )}
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flexWrap: 'wrap' }}>
+                <Typography component="span" variant="caption" color="text.secondary">
+                  {styleLabel}
+                </Typography>
                 <Chip
                   size="small"
                   variant="outlined"
-                  label={t('itemControls.connector.labelCountChip').replace(
-                    '{count}',
-                    String(labels.length)
-                  )}
+                  label={`${t('itemControls.connector.width')} ${connector?.width ?? 0}`}
                   sx={{ height: 16, '& .MuiChip-label': { px: 0.75, fontSize: '0.65rem' } }}
                 />
-              )}
+                {labels.length > 0 && (
+                  <Chip
+                    size="small"
+                    variant="outlined"
+                    label={t('itemControls.connector.labelCountChip').replace(
+                      '{count}',
+                      String(labels.length)
+                    )}
+                    sx={{ height: 16, '& .MuiChip-label': { px: 0.75, fontSize: '0.65rem' } }}
+                  />
+                )}
+              </Box>
             </Box>
           }
           primaryTypographyProps={{ variant: 'body2', noWrap: true }}
@@ -170,6 +222,47 @@ export const ConnectorGroupControls = memo(function ConnectorGroupControls({
   const { reorderConnectors } = useScene();
   const { t } = useTranslation();
   const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [dropTargetId, setDropTargetId] = useState<string | null>(null);
+  const rowElsRef = useRef(new Map<string, HTMLDivElement>());
+  const prevRectsRef = useRef<Map<string, DOMRect> | null>(null);
+
+  const registerRowEl = useCallback((id: string, el: HTMLDivElement | null) => {
+    if (el) {
+      rowElsRef.current.set(id, el);
+    } else {
+      rowElsRef.current.delete(id);
+    }
+  }, []);
+
+  // FLIP: rows swap identically (same labels/colors) with only 2 items, so a
+  // reorder is invisible unless we animate it. Measuring the old position and
+  // animating a transform back to 0 keeps the rows live and interactive
+  // (unlike document.startViewTransition(), which hides the real elements
+  // while its snapshot animates). This only runs on drop (see handleDragEnd)
+  // rather than on every dragover: reordering the DOM live, mid-drag, moves
+  // the dragged row's own element, and browsers implicitly end a native drag
+  // when its source element is relocated in the DOM — so the drag would die
+  // after the first hop.
+  useLayoutEffect(() => {
+    const prevRects = prevRectsRef.current;
+    if (!prevRects) return;
+    prevRectsRef.current = null;
+
+    rowElsRef.current.forEach((el, id) => {
+      const prevRect = prevRects.get(id);
+      if (!prevRect) return;
+      const deltaY = prevRect.top - el.getBoundingClientRect().top;
+      if (!deltaY) return;
+
+      el.style.transition = 'none';
+      el.style.transform = `translateY(${deltaY}px)`;
+      el.getBoundingClientRect(); // force reflow so the transition below applies
+      requestAnimationFrame(() => {
+        el.style.transition = 'transform 200ms ease';
+        el.style.transform = '';
+      });
+    });
+  }, [controls.ids]);
 
   const handleClose = useCallback(() => {
     uiStateActions.setItemControls(null);
@@ -183,30 +276,44 @@ export const ConnectorGroupControls = memo(function ConnectorGroupControls({
     [controls, uiStateActions]
   );
 
-  // Live-reorders the picker as you drag over other rows; the underlying
-  // model only gets updated once, on drag end, so undo/history isn't spammed
-  // with an entry per hovered row.
+  const handleDragStart = useCallback((id: string) => {
+    setDraggedId(id);
+    setDropTargetId(null);
+  }, []);
+
+  // Only tracks which row you're hovering over (for the insertion-line cue
+  // below); doesn't touch controls.ids. See the FLIP comment above for why
+  // reordering live, per dragover, isn't safe here.
   const handleDragOver = useCallback(
     (overId: string) => {
       if (!draggedId || draggedId === overId) return;
-
-      const fromIndex = controls.ids.indexOf(draggedId);
-      const toIndex = controls.ids.indexOf(overId);
-      if (fromIndex === -1 || toIndex === -1) return;
-
-      const newIds = [...controls.ids];
-      newIds.splice(fromIndex, 1);
-      newIds.splice(toIndex, 0, draggedId);
-
-      uiStateActions.setItemControls({ ...controls, ids: newIds });
+      setDropTargetId(overId);
     },
-    [controls, draggedId, uiStateActions]
+    [draggedId]
   );
 
   const handleDragEnd = useCallback(() => {
+    const fromId = draggedId;
+    const toId = dropTargetId;
     setDraggedId(null);
-    reorderConnectors(controls.ids);
-  }, [controls.ids, reorderConnectors]);
+    setDropTargetId(null);
+    if (!fromId || !toId || fromId === toId) return;
+
+    const fromIndex = controls.ids.indexOf(fromId);
+    const toIndex = controls.ids.indexOf(toId);
+    if (fromIndex === -1 || toIndex === -1) return;
+
+    const newIds = [...controls.ids];
+    newIds.splice(fromIndex, 1);
+    newIds.splice(toIndex, 0, fromId);
+
+    const rects = new Map<string, DOMRect>();
+    rowElsRef.current.forEach((el, id) => rects.set(id, el.getBoundingClientRect()));
+    prevRectsRef.current = rects;
+
+    uiStateActions.setItemControls({ ...controls, ids: newIds });
+    reorderConnectors(newIds);
+  }, [controls, draggedId, dropTargetId, reorderConnectors, uiStateActions]);
 
   if (controls.ids.length === 1) {
     return <ConnectorControls id={controls.ids[0]} />;
@@ -249,10 +356,12 @@ export const ConnectorGroupControls = memo(function ConnectorGroupControls({
             index={index}
             isFocused={controls.focusedId === id}
             isDragging={draggedId === id}
+            isDropTarget={dropTargetId === id}
             onToggleFocus={handleToggleFocus}
-            onDragStart={setDraggedId}
+            onDragStart={handleDragStart}
             onDragOver={handleDragOver}
             onDragEnd={handleDragEnd}
+            registerRowEl={registerRowEl}
           />
         ))}
       </List>
