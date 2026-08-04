@@ -211,8 +211,10 @@ describe('getGroupOffset', () => {
   it('should return symmetric offsets for two connectors', () => {
     const o0 = getGroupOffset(0, 2, TILE_SIZE);
     const o1 = getGroupOffset(1, 2, TILE_SIZE);
-    expect(o0).toBeLessThan(0);
-    expect(o1).toBeGreaterThan(0);
+    // index 0 (the picker list's top row) gets the positive extreme — see
+    // the comment on getGroupOffset for why.
+    expect(o0).toBeGreaterThan(0);
+    expect(o1).toBeLessThan(0);
     expect(o0).toBe(-o1);
   });
 
@@ -226,9 +228,9 @@ describe('getGroupOffset', () => {
       expect(offsets[i]).toBeCloseTo(-offsets[7 - i], 10);
     }
 
-    // Verify monotonically increasing
+    // Verify monotonically decreasing (index 0 gets the highest offset)
     for (let i = 1; i < 8; i++) {
-      expect(offsets[i]).toBeGreaterThan(offsets[i - 1]);
+      expect(offsets[i]).toBeLessThan(offsets[i - 1]);
     }
   });
 

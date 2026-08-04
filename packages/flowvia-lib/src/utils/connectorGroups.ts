@@ -120,5 +120,8 @@ export function getGroupOffset(
   const usableWidth = tileSize * Math.max(0.8, groupWidthRatio * 1.5);
   const spacing = usableWidth / (total - 1);
 
-  return (index - (total - 1) / 2) * spacing;
+  // Negated so index 0 (the picker list's top row) lands on the visually
+  // "first" side rather than the last — otherwise dragging a connector to
+  // the top of the list moved it to the back of the stack instead.
+  return ((total - 1) / 2 - index) * spacing;
 }
