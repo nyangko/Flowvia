@@ -25,6 +25,17 @@ interface ChangelogGroup {
 // rather than appending to an existing one's `items`.
 const CHANGELOG_KO: ChangelogGroup[] = [
   {
+    version: 'v1.4.0 (예정)',
+    date: '출시 예정',
+    items: [
+      ['연결선 목록', '의 접힌 줄에도 두께·레이블 개수가 칩으로 표시됨'],
+      ['겹침 방지가 섞인 연결선 그룹', '에서 중간 연결선이 제외된 연결선과 겹치던 문제 수정'],
+      ['연결선 두께 슬라이더', ' 최소값을 3으로 낮춰 기본 두께에서 슬라이더가 왼쪽 끝에 붙어 보이던 문제 수정, 노드 설정의 레이블 높이/아이콘 크기에도 현재 값 표시'],
+      ['노드 편집 패널', ' 재설계 — 기본 정보/외형 섹션으로 구분, 아이콘 변경을 카드로 정리, 슬라이더 옆에 숫자 입력(스테퍼)을 추가해 정확한 값 입력 가능, 삭제/복제 버튼은 하단 고정 바로 이동'],
+      ['연결선 흐름 애니메이션', '에 속도 조절 슬라이더 추가, 여러 연결선의 흐름 점이 서로 어긋나지 않고 맞춰서 움직이도록 수정']
+    ]
+  },
+  {
     version: 'v1.3.1',
     date: '2026-08-02',
     items: [
@@ -100,6 +111,17 @@ const CHANGELOG_KO: ChangelogGroup[] = [
 ];
 
 const CHANGELOG_EN: ChangelogGroup[] = [
+  {
+    version: 'v1.4.0 (upcoming)',
+    date: 'Not yet released',
+    items: [
+      ['Connector list', ' — collapsed rows now show thickness and label-count chips'],
+      ['Connector groups with mixed overlap settings', ' fixed a middle connector overlapping the one it was trying to avoid'],
+      ['Connector thickness slider', ' — lowered the minimum to 3 so it no longer looks clamped at the default width; label height/icon size in node settings now show their current value too'],
+      ['Node edit panel', ' redesigned — split into Basic Info / Appearance sections, icon picker moved into a card, sliders now pair with a numeric input for exact values, Delete/Duplicate moved to a sticky bottom bar'],
+      ['Connector flow animation', ' — added a speed slider, and synced the flow dots across connectors so they move in phase instead of drifting apart']
+    ]
+  },
   {
     version: 'v1.3.1',
     date: '2026-08-02',
