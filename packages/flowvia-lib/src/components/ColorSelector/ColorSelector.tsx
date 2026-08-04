@@ -6,9 +6,10 @@ import { ColorSwatch } from './ColorSwatch';
 interface Props {
   onChange: (color: string) => void;
   activeColor?: string;
+  disabled?: boolean;
 }
 
-export const ColorSelector = ({ onChange, activeColor }: Props) => {
+export const ColorSelector = ({ onChange, activeColor, disabled }: Props) => {
   const { colors } = useScene();
 
   return (
@@ -22,6 +23,7 @@ export const ColorSelector = ({ onChange, activeColor }: Props) => {
               return onChange(color.id);
             }}
             isActive={activeColor === color.id}
+            disabled={disabled}
           />
         );
       })}

@@ -49,6 +49,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
   const [useCustomColor, setUseCustomColor] = useState(
     !!connector?.customColor
   );
+  const isReadOnly = useUiStateStore((state) => state.editorMode !== 'EDITABLE');
   const { t } = useTranslation();
 
   // Get all labels (including migrated legacy labels)
@@ -134,6 +135,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
           onChange={(e) => {
             updateConnector(connector.id, { name: e.target.value });
           }}
+          disabled={isReadOnly}
         />
       </Section>
       <Section title={t('itemControls.connector.description')}>
@@ -147,6 +149,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
           onChange={(e) => {
             updateConnector(connector.id, { notes: e.target.value });
           }}
+          disabled={isReadOnly}
         />
       </Section>
       <Section title={t('itemControls.color')}>
@@ -160,6 +163,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                     updateConnector(connector.id, { customColor: '' });
                   }
                 }}
+                disabled={isReadOnly}
               />
             }
             label={t('itemControls.useCustomColor')}
@@ -171,6 +175,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
               onChange={(color) => {
                 updateConnector(connector.id, { customColor: color });
               }}
+              disabled={isReadOnly}
             />
           ) : (
             <ColorSelector
@@ -181,6 +186,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                 });
               }}
               activeColor={connector.color}
+              disabled={isReadOnly}
             />
           )}
         </Section>
@@ -197,6 +203,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
             onChange={(e, newWidth) => {
               updateConnector(connector.id, { width: newWidth as number });
             }}
+            disabled={isReadOnly}
           />
         </Section>
         <Section title={t('itemControls.connector.lineStyle')}>
@@ -209,6 +216,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
               if (!newStyle) return;
               updateConnector(connector.id, { style: newStyle });
             }}
+            disabled={isReadOnly}
             sx={{ mb: 2 }}
           >
             {Object.values(connectorStyleOptions).map((style) => {
@@ -237,6 +245,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                 anchors: [...connector.anchors].reverse()
               });
             }}
+            disabled={isReadOnly}
             sx={{ mb: 2 }}
           >
             {t('itemControls.connector.reverseDirection')}
@@ -250,6 +259,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                     showArrow: e.target.checked
                   });
                 }}
+                disabled={isReadOnly}
               />
             }
             label={t('itemControls.connector.showArrow')}
@@ -263,6 +273,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                     preventOverlap: e.target.checked
                   });
                 }}
+                disabled={isReadOnly}
               />
             }
             label={t('itemControls.connector.preventOverlap')}
@@ -286,7 +297,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
               <Button
                 startIcon={<AddIcon size={20} />}
                 onClick={handleAddLabel}
-                disabled={labels.length >= 256}
+                disabled={isReadOnly || labels.length >= 256}
                 size="small"
                 variant="outlined"
               >
@@ -328,6 +339,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                         return handleDeleteLabel(label.id);
                       }}
                       color="error"
+                      disabled={isReadOnly}
                     >
                       <DeleteIcon size={20} />
                     </MUIIconButton>
@@ -342,6 +354,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                       });
                     }}
                     fullWidth
+                    disabled={isReadOnly}
                     sx={{ mb: 2 }}
                   />
 
@@ -373,6 +386,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                         }
                       }}
                       inputProps={{ min: 0, max: 100 }}
+                      disabled={isReadOnly}
                       sx={{ flex: 1 }}
                     />
 
@@ -393,6 +407,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                           height: value as number
                         });
                       }}
+                      disabled={isReadOnly}
                     />
                   </Box>
 
@@ -406,6 +421,7 @@ export const ConnectorControls = ({ id, embedded }: Props) => {
                               showLine: e.target.checked
                             });
                           }}
+                          disabled={isReadOnly}
                         />
                       }
                       label={t('itemControls.connector.showDottedLine')}

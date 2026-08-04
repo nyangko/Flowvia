@@ -20,6 +20,7 @@ import { ModelItem, ViewItem } from 'src/types';
 import { RichTextEditor } from 'src/components/RichTextEditor/RichTextEditor';
 import { useModelItem } from 'src/hooks/useModelItem';
 import { useModelStore } from 'src/stores/modelStore';
+import { useUiStateStore } from 'src/stores/uiStateStore';
 import { useTranslation } from 'src/stores/localeStore';
 import { Section } from '../../components/Section';
 
@@ -39,6 +40,7 @@ interface SteppedSliderProps {
   step: number;
   unit: string;
   onChange: (value: number) => void;
+  disabled?: boolean;
 }
 
 // Slider + numeric stepper for the label height / icon size controls — lets
@@ -52,7 +54,8 @@ const SteppedSlider = ({
   max,
   step,
   unit,
-  onChange
+  onChange,
+  disabled
 }: SteppedSliderProps) => {
   const clamp = (n: number) => Math.min(max, Math.max(min, n));
 
@@ -74,6 +77,7 @@ const SteppedSlider = ({
           max={max}
           value={value}
           onChange={(e, newValue) => onChange(newValue as number)}
+          disabled={disabled}
         />
         <Stack direction="row" justifyContent="space-between">
           <Typography variant="caption" color="text.secondary">
@@ -85,7 +89,7 @@ const SteppedSlider = ({
         </Stack>
       </Box>
       <Stack direction="row" alignItems="center" spacing={0.5} sx={{ pt: 3.5 }}>
-        <MUIIconButton size="small" onClick={() => onChange(clamp(value - step))}>
+        <MUIIconButton size="small" onClick={() => onChange(clamp(value - step))} disabled={disabled}>
           <IconMinus size={14} />
         </MUIIconButton>
         <TextField
@@ -100,8 +104,9 @@ const SteppedSlider = ({
             endAdornment: <InputAdornment position="end">{unit}</InputAdornment>
           }}
           sx={{ width: 90 }}
+          disabled={disabled}
         />
-        <MUIIconButton size="small" onClick={() => onChange(clamp(value + step))}>
+        <MUIIconButton size="small" onClick={() => onChange(clamp(value + step))} disabled={disabled}>
           <IconPlus size={14} />
         </MUIIconButton>
       </Stack>
@@ -123,6 +128,7 @@ export const NodeSettings = ({
   const modelItem = useModelItem(node.id);
   const modelActions = useModelStore((state) => state.actions);
   const icons = useModelStore((state) => state.icons);
+  const isReadOnly = useUiStateStore((state) => state.editorMode !== 'EDITABLE');
   const { t } = useTranslation();
 
   // Local state for smooth slider interaction
@@ -192,6 +198,7 @@ export const NodeSettings = ({
                 const text = e.target.value.slice(0, NAME_MAX_LENGTH);
                 if (modelItem.name !== text) onModelItemUpdated({ name: text });
               }}
+              disabled={isReadOnly}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -221,6 +228,7 @@ export const NodeSettings = ({
                 if (modelItem.description !== text)
                   onModelItemUpdated({ description: text });
               }}
+              readOnly={isReadOnly}
             />
           </Box>
         </Stack>
@@ -248,6 +256,7 @@ export const NodeSettings = ({
               step={20}
               unit="px"
               onChange={(labelHeight) => onViewItemUpdated({ labelHeight })}
+              disabled={isReadOnly}
             />
           )}
           <SteppedSlider
@@ -263,6 +272,7 @@ export const NodeSettings = ({
               setLocalScale(scale);
               updateIconScale(scale);
             }}
+            disabled={isReadOnly}
           />
         </Stack>
       </Section>

@@ -5,14 +5,16 @@ export type Props = {
   hex: string;
   isActive?: boolean;
   onClick: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  disabled?: boolean;
 };
 
-export const ColorSwatch = ({ hex, onClick, isActive }: Props) => {
+export const ColorSwatch = ({ hex, onClick, isActive, disabled }: Props) => {
   return (
     <Button
       onClick={onClick}
       variant="text"
       size="small"
+      disabled={disabled}
       sx={{ width: 40, height: 40, minWidth: 'auto' }}
     >
       <Box>

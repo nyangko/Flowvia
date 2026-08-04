@@ -28,6 +28,7 @@ export const TextBoxControls = ({ id }: Props) => {
   });
   const textBox = useTextBox(id);
   const { updateTextBox, deleteTextBox } = useScene();
+  const isReadOnly = useUiStateStore((state) => state.editorMode !== 'EDITABLE');
   const { t } = useTranslation();
 
   // If textBox doesn't exist, return null
@@ -60,6 +61,7 @@ export const TextBoxControls = ({ id }: Props) => {
             onChange={(e) => {
               updateTextBox(textBox.id, { content: e.target.value as string });
             }}
+            disabled={isReadOnly}
           />
         </Section>
         <Section title={t('textBoxControls.textSize')}>
@@ -72,6 +74,7 @@ export const TextBoxControls = ({ id }: Props) => {
             onChange={(e, newSize) => {
               updateTextBox(textBox.id, { fontSize: newSize as number });
             }}
+            disabled={isReadOnly}
           />
         </Section>
         <Section title={t('textBoxControls.alignment')}>
@@ -84,6 +87,7 @@ export const TextBoxControls = ({ id }: Props) => {
 
               updateTextBox(textBox.id, { orientation });
             }}
+            disabled={isReadOnly}
           >
             <ToggleButton value={ProjectionOrientationEnum.X}>
               <TextRotationNoneIcon size={20} style={{ transform: getIsoProjectionCss() }} />

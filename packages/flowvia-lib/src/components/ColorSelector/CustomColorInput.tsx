@@ -18,9 +18,10 @@ declare global {
 interface Props {
   value: string;
   onChange: (color: string) => void;
+  disabled?: boolean;
 }
 
-export const CustomColorInput = ({ value, onChange }: Props) => {
+export const CustomColorInput = ({ value, onChange, disabled }: Props) => {
   const [localValue, setLocalValue] = useState(value);
 
   useEffect(() => {
@@ -58,16 +59,17 @@ export const CustomColorInput = ({ value, onChange }: Props) => {
 
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-      <ColorPicker value={value} onChange={onChange} />
+      <ColorPicker value={value} onChange={onChange} disabled={disabled} />
       <TextField
         value={localValue}
         onChange={handleTextChange}
         onBlur={handleBlur}
         variant="standard"
         size="small"
+        disabled={disabled}
         InputProps={{
           disableUnderline: true,
-          sx: { 
+          sx: {
             fontSize: '0.875rem',
             color: 'text.secondary',
             width: '80px'
@@ -76,7 +78,7 @@ export const CustomColorInput = ({ value, onChange }: Props) => {
       />
       {hasEyeDropper && (
         <Tooltip title="Pick color from screen">
-          <IconButton onClick={handleEyeDropper} size="small">
+          <IconButton onClick={handleEyeDropper} size="small" disabled={disabled}>
             <ColorizeIcon size={20} />
           </IconButton>
         </Tooltip>

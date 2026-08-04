@@ -9,10 +9,13 @@ type Props = ReturnType<typeof useScene>['rectangles'][0];
 
 export const Rectangle = memo(({ from, to, color: colorId, customColor }: Props) => {
   const predefinedColor = useColor(colorId);
-  // Only hint "draggable" while idle in the default select tool — in any
-  // other mode (drawing, connecting, panning...) the body isn't what
-  // responds to a click here, so showing "move" would be misleading.
-  const canDrag = useUiStateStore((state) => state.mode.type === 'CURSOR');
+  // Only hint "draggable" while idle in the default select tool AND actually
+  // editable — read-only diagrams also sit in CURSOR mode now (so clicking
+  // still opens the item's read-only panel), but nothing there responds to
+  // a drag, so showing "move" would be misleading.
+  const canDrag = useUiStateStore(
+    (state) => state.mode.type === 'CURSOR' && state.editorMode === 'EDITABLE'
+  );
 
   // Use custom color if provided, otherwise use predefined color
   const color = customColor 

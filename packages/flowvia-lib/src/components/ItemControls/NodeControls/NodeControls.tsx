@@ -38,6 +38,7 @@ export const NodeControls = ({ id }: Props) => {
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const isReadOnly = useUiStateStore((state) => state.editorMode !== 'EDITABLE');
   const viewItem = useViewItem(id);
   const modelItem = useModelItem(id);
   const { iconCategories } = useIconCategories();
@@ -82,6 +83,7 @@ export const NodeControls = ({ id }: Props) => {
             onClick={() => {
               duplicateItem({ type: 'ITEM', id: viewItem.id }, scene);
             }}
+            disabled={isReadOnly}
           >
             {t('common.duplicate')}
           </Button>
@@ -157,6 +159,7 @@ export const NodeControls = ({ id }: Props) => {
                   }}
                   variant="text"
                   size="small"
+                  disabled={isReadOnly}
                 >
                   {t('itemControls.node.updateIcon')}
                 </Button>

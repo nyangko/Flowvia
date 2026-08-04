@@ -8,6 +8,12 @@ export const TransformControlsManager = () => {
   const itemControls = useUiStateStore((state) => {
     return state.itemControls;
   });
+  const editorMode = useUiStateStore((state) => state.editorMode);
+
+  // Resize handles are a mutating control (dragging one calls
+  // scene.updateRectangle/etc.) — read-only diagrams can still select and
+  // view an item, but shouldn't see handles that don't actually work.
+  if (editorMode !== 'EDITABLE') return null;
 
   switch (itemControls?.type) {
     case 'ITEM':

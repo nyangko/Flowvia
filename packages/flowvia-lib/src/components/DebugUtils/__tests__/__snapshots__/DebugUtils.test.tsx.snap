@@ -208,7 +208,7 @@ exports[`DebugUtils matches snapshot 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body2 css-1788z1s-MuiTypography-root"
           >
-            PAN
+            CURSOR
           </p>
         </div>
       </div>
@@ -235,8 +235,9 @@ exports[`DebugUtils matches snapshot 1`] = `
             class="MuiTypography-root MuiTypography-body2 css-1788z1s-MuiTypography-root"
           >
             {
-  "type": "PAN",
-  "showCursor": false
+  "type": "CURSOR",
+  "showCursor": true,
+  "mousedownItem": null
 }
           </p>
         </div>

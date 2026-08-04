@@ -102,6 +102,11 @@ const mousedown: ModeActionsAction = ({
 
     uiState.actions.setItemControls(null);
 
+    // Read-only diagrams now stay in CURSOR mode too (so clicking an item
+    // still opens its read-only controls panel, see mouseup below) -- but
+    // the empty-space "add node/area" quick menu is still an edit action.
+    if (uiState.editorMode !== 'EDITABLE') return;
+
     // Show context menu for empty space on left click
     uiState.actions.setContextMenu({
       type: 'EMPTY',
@@ -124,6 +129,14 @@ export const Cursor: ModeActions = {
     if (uiState.mode.type !== 'CURSOR' || !hasMovedTile(uiState.mouse)) return;
 
     let item = uiState.mode.mousedownItem;
+
+    // Read-only: never enter a mutating drag (moving the item, or -- for a
+    // connector -- creating a new anchor at the drag point via getAnchor
+    // below). Fall through to the empty-space branch instead, which just
+    // pans, same as dragging from empty space always has.
+    if (item && uiState.editorMode !== 'EDITABLE') {
+      item = null;
+    }
 
     if (item?.type === 'CONNECTOR' && uiState.mouse.mousedown) {
       const anchor = getAnchor(item.id, uiState.mouse.mousedown.tile, scene);

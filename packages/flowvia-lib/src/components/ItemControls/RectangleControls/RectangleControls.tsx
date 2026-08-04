@@ -23,6 +23,7 @@ export const RectangleControls = ({ id }: Props) => {
   const rectangle = useRectangle(id);
   const { updateRectangle, deleteRectangle } = useScene();
   const [useCustomColor, setUseCustomColor] = useState(!!rectangle?.customColor);
+  const isReadOnly = useUiStateStore((state) => state.editorMode !== 'EDITABLE');
   const { t } = useTranslation();
 
   // If rectangle doesn't exist, return null
@@ -60,6 +61,7 @@ export const RectangleControls = ({ id }: Props) => {
                     updateRectangle(rectangle.id, { customColor: '' });
                   }
                 }}
+                disabled={isReadOnly}
               />
             }
             label={t('itemControls.useCustomColor')}
@@ -71,6 +73,7 @@ export const RectangleControls = ({ id }: Props) => {
               onChange={(color) => {
                 updateRectangle(rectangle.id, { customColor: color });
               }}
+              disabled={isReadOnly}
             />
           ) : (
             <ColorSelector
@@ -78,6 +81,7 @@ export const RectangleControls = ({ id }: Props) => {
                 updateRectangle(rectangle.id, { color, customColor: '' });
               }}
               activeColor={rectangle.color}
+              disabled={isReadOnly}
             />
           )}
         </Section>

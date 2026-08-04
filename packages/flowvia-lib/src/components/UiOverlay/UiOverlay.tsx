@@ -46,7 +46,10 @@ const EDITOR_MODE_MAPPING: EditorModeMapping = {
     'MAIN_MENU',
     'VIEW_TITLE'
   ],
-  [EditorModeEnum.EXPLORABLE_READONLY]: ['ZOOM_CONTROLS', 'VIEW_TITLE'],
+  // ITEM_CONTROLS included: clicking a node/connector should still open its
+  // (now read-only) panel to inspect -- see ConnectorControls/NodeSettings/
+  // etc., which each disable their own inputs when editorMode isn't EDITABLE.
+  [EditorModeEnum.EXPLORABLE_READONLY]: ['ITEM_CONTROLS', 'ZOOM_CONTROLS', 'VIEW_TITLE'],
   [EditorModeEnum.NON_INTERACTIVE]: []
 };
 

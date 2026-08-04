@@ -33,6 +33,7 @@ interface ConnectorPickerRowProps {
   isFocused: boolean;
   isDragging: boolean;
   isDropTarget: boolean;
+  isReadOnly: boolean;
   onToggleFocus: (id: string) => void;
   onDragStart: (id: string) => void;
   onDragOver: (id: string) => void;
@@ -46,6 +47,7 @@ const ConnectorPickerRow = memo(function ConnectorPickerRow({
   isFocused,
   isDragging,
   isDropTarget,
+  isReadOnly,
   onToggleFocus,
   onDragStart,
   onDragOver,
@@ -93,7 +95,7 @@ const ConnectorPickerRow = memo(function ConnectorPickerRow({
   return (
     <Box
       ref={setRowEl}
-      draggable
+      draggable={!isReadOnly}
       onDragStart={(e) => {
         e.dataTransfer.effectAllowed = 'move';
         onDragStart(connectorId);
@@ -198,6 +200,7 @@ const ConnectorPickerRow = memo(function ConnectorPickerRow({
               preventOverlap: e.target.checked
             });
           }}
+          disabled={isReadOnly}
         />
       </ListItemButton>
       <Collapse in={isFocused} timeout="auto" unmountOnExit>
@@ -219,6 +222,7 @@ export const ConnectorGroupControls = memo(function ConnectorGroupControls({
   const uiStateActions = useUiStateStore((state) => {
     return state.actions;
   });
+  const isReadOnly = useUiStateStore((state) => state.editorMode !== 'EDITABLE');
   const { reorderConnectors } = useScene();
   const { t } = useTranslation();
   const [draggedId, setDraggedId] = useState<string | null>(null);
@@ -357,6 +361,7 @@ export const ConnectorGroupControls = memo(function ConnectorGroupControls({
             isFocused={controls.focusedId === id}
             isDragging={draggedId === id}
             isDropTarget={dropTargetId === id}
+            isReadOnly={isReadOnly}
             onToggleFocus={handleToggleFocus}
             onDragStart={handleDragStart}
             onDragOver={handleDragOver}

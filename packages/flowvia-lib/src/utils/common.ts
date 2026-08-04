@@ -75,7 +75,11 @@ export const getStartingMode = (
     case 'EDITABLE':
       return { type: 'CURSOR', showCursor: true, mousedownItem: null };
     case 'EXPLORABLE_READONLY':
-      return { type: 'PAN', showCursor: false };
+      // CURSOR, not PAN: still lets clicking an item open its (now
+      // read-only) controls panel via Cursor.ts's mouseup -- Cursor.ts
+      // itself blocks every mutating path (dragging an item, creating a
+      // connector anchor, the empty-space add-item menu) when read-only.
+      return { type: 'CURSOR', showCursor: true, mousedownItem: null };
     case 'NON_INTERACTIVE':
       return { type: 'INTERACTIONS_DISABLED', showCursor: false };
     default:

@@ -11,7 +11,7 @@ interface Props extends Omit<MuiColorInputProps, 'ref'> {}
 const ColorButtonElement = ({ bgColor, onClick }: MuiColorButtonProps) => {
   return <ColorSwatch hex={bgColor} onClick={onClick} />;
 };
-export const ColorPicker = ({ value, onChange }: Props) => {
+export const ColorPicker = ({ value, onChange, disabled }: Props) => {
   return (
     <MuiColorInput
       size="small"
@@ -19,6 +19,7 @@ export const ColorPicker = ({ value, onChange }: Props) => {
       format="hex"
       value={value}
       onChange={onChange}
+      disabled={disabled}
       InputProps={{ disableUnderline: true, type: 'hidden' }}
       Adornment={ColorButtonElement}
     />
