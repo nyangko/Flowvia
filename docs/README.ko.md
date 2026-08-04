@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="../assets/banner.png" alt="Flowvia - 오픈소스 아이소메트릭 다이어그램 도구" width="100%" />
+<img src="../assets/banner.png" alt="Isenax - 오픈소스 아이소메트릭 다이어그램 도구" width="100%" />
 
 </div>
 
@@ -11,22 +11,22 @@
 </p>
 
 ## 참고:
-이 저장소(Flowvia)는 [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW)의 파생 프로젝트이며, 이는 다시 stan-smith/FossFLOW의 포크(이 역시 [markmanx/isoflow](https://github.com/markmanx/isoflow)의 포크)로, 원래는 PR을 통해 원본 저장소에 기여하기 위해 만들어졌습니다. 하지만 원작자의 GitHub 사용자명이 [mug-book-droid](https://github.com/mug-book-droid)로 변경되고 활동이 비공개로 전환되면서(계정 정지 가능성도 있음) 원본 저장소에 접근할 수 없게 되었습니다.
+이 저장소(Isenax)는 [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW)의 파생 프로젝트이며, 이는 다시 stan-smith/FossFLOW의 포크(이 역시 [markmanx/isoflow](https://github.com/markmanx/isoflow)의 포크)로, 원래는 PR을 통해 원본 저장소에 기여하기 위해 만들어졌습니다. 하지만 원작자의 GitHub 사용자명이 [mug-book-droid](https://github.com/mug-book-droid)로 변경되고 활동이 비공개로 전환되면서(계정 정지 가능성도 있음) 원본 저장소에 접근할 수 없게 되었습니다.
 
-현재는 이 저장소(Flowvia로 개명)를 FossFLOW의 개발 연속선상에서 이어가려 하고 있으며, PR을 통한 기여도 언제든 환영합니다.
+현재는 이 저장소(Isenax로 개명)를 FossFLOW의 개발 연속선상에서 이어가려 하고 있으며, PR을 통한 기여도 언제든 환영합니다.
 
 원본 저장소의 마지막 상태는 `backup/stan-smith-FossFLOW` 브랜치에서 확인할 수 있습니다.
 
 ---
 
-Flowvia는 아름다운 아이소메트릭 다이어그램을 만들 수 있는 강력한 오픈소스 프로그레시브 웹 앱(PWA)입니다. React와 <a href="https://github.com/markmanx/isoflow">Isoflow</a> 라이브러리(포크되어 npm에 fossflow로, 이 저장소에서는 flowvia로 배포됨) 기반으로 만들어졌으며, 브라우저에서 완전히 동작하고 오프라인도 지원합니다.
+Isenax는 아름다운 아이소메트릭 다이어그램을 만들 수 있는 강력한 오픈소스 프로그레시브 웹 앱(PWA)입니다. React와 <a href="https://github.com/markmanx/isoflow">Isoflow</a> 라이브러리(포크되어 npm에 fossflow로, 이 저장소에서는 isenax로 배포됨) 기반으로 만들어졌으며, 브라우저에서 완전히 동작하고 오프라인도 지원합니다.
 
 ---
 <p align="center">
-<b>온라인으로 사용해보기 --> https://nyangko.github.io/Flowvia/ <-- </b>
+<b>온라인으로 사용해보기 --> https://nyangko.github.io/Isenax/ <-- </b>
 </p>
  
-<img width="100%" alt="Flowvia-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
+<img width="100%" alt="Isenax-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
 
 ---------
 
@@ -37,19 +37,19 @@ Flowvia는 아름다운 아이소메트릭 다이어그램을 만들 수 있는 
 docker compose up
 
 # 또는 Docker Hub에서 직접 실행 (영구 저장소 포함)
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/isenax:latest
 ```
 
 Docker에서는 서버 저장소가 기본으로 활성화되어 있습니다. 다이어그램은 호스트의 `./diagrams` 경로에 (기본적으로 root 권한으로) 저장됩니다. 저장 시 사용할 사용자/그룹 ID를 바꾸려면 `PUID`, `PGID` 환경 변수를 설정하세요.
 
 서버 저장소를 비활성화하려면 `ENABLE_SERVER_STORAGE=false`를 설정하세요:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/isenax:latest
 ```
 
 ### HTTP 기본 인증 (선택)
 
-HTTP Basic Auth로 Flowvia 인스턴스를 보호할 수 있습니다:
+HTTP Basic Auth로 Isenax 인스턴스를 보호할 수 있습니다:
 
 ```bash
 # Docker Compose 사용 시
@@ -59,7 +59,7 @@ HTTP_AUTH_USER=admin HTTP_AUTH_PASSWORD=secret docker compose up
 docker run -p 80:80 \
   -e HTTP_AUTH_USER=admin \
   -e HTTP_AUTH_PASSWORD=secret \
-  nyangko/flowvia:latest
+  nyangko/isenax:latest
 ```
 
 > **참고**: 두 변수를 모두 설정해야 인증이 활성화됩니다. 둘 중 하나라도 비어있으면 로그인 없이 접근 가능합니다.
@@ -68,8 +68,8 @@ docker run -p 80:80 \
 
 ```bash
 # 저장소 클론
-git clone https://github.com/nyangko/Flowvia
-cd Flowvia
+git clone https://github.com/nyangko/Isenax
+cd Isenax
 
 # 의존성 설치
 npm install
@@ -87,9 +87,9 @@ npm run dev
 
 이 저장소는 세 개의 패키지로 구성된 모노레포입니다:
 
-- `packages/flowvia-lib` - 네트워크 다이어그램을 그리는 React 컴포넌트 라이브러리 (Rslib/Rspack으로 빌드)
-- `packages/flowvia-app` - 라이브러리를 감싸서 보여주는 프로그레시브 웹 앱 (RSBuild로 빌드)
-- `packages/flowvia-backend` - 다이어그램의 선택적 자체 호스팅 저장소를 제공하는 Express 서버 (Docker 배포에 사용)
+- `packages/isenax-lib` - 네트워크 다이어그램을 그리는 React 컴포넌트 라이브러리 (Rslib/Rspack으로 빌드)
+- `packages/isenax-app` - 라이브러리를 감싸서 보여주는 프로그레시브 웹 앱 (RSBuild로 빌드)
+- `packages/isenax-backend` - 다이어그램의 선택적 자체 호스팅 저장소를 제공하는 Express 서버 (Docker 배포에 사용)
 
 ### 개발 명령어
 
@@ -156,7 +156,7 @@ npm run publish:lib  # 라이브러리를 npm에 배포
 
 ## 문서
 
-- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - 코드베이스에 대한 종합 가이드
+- [ISENAX_ENCYCLOPEDIA.md](ISENAX_ENCYCLOPEDIA.md) - 코드베이스에 대한 종합 가이드
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - 기여 가이드라인
 
 ## 라이선스

@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="../assets/banner.png" alt="Flowvia - オープンソースのアイソメトリック図作成ツール" width="100%" />
+<img src="../assets/banner.png" alt="Isenax - オープンソースのアイソメトリック図作成ツール" width="100%" />
 
 </div>
 
@@ -11,22 +11,22 @@
 </p>
 
 ## 注記:
-このリポジトリ(Flowvia)は [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW) の派生プロジェクトであり、それ自体は stan-smith/FossFLOW のフォーク(さらにその元は [markmanx/isoflow](https://github.com/markmanx/isoflow) のフォーク)です。もともとは PR を通じて元のリポジトリに貢献する目的で作られましたが、作者の GitHub ユーザー名が [mug-book-droid](https://github.com/mug-book-droid) に変更され、アクティビティが非公開に設定されたため(アカウントが停止された可能性もあります)、元のリポジトリにはアクセスできなくなっています。
+このリポジトリ(Isenax)は [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW) の派生プロジェクトであり、それ自体は stan-smith/FossFLOW のフォーク(さらにその元は [markmanx/isoflow](https://github.com/markmanx/isoflow) のフォーク)です。もともとは PR を通じて元のリポジトリに貢献する目的で作られましたが、作者の GitHub ユーザー名が [mug-book-droid](https://github.com/mug-book-droid) に変更され、アクティビティが非公開に設定されたため(アカウントが停止された可能性もあります)、元のリポジトリにはアクセスできなくなっています。
 
-現在、このリポジトリ(Flowvia と改名)を FossFLOW の開発の延長として継続していく予定です。PR による貢献もいつでも歓迎します。
+現在、このリポジトリ(Isenax と改名)を FossFLOW の開発の延長として継続していく予定です。PR による貢献もいつでも歓迎します。
 
 取得した元リポジトリの最終状態は `backup/stan-smith-FossFLOW` ブランチで確認できます。
 
 ---
 
-Flowvia は、美しいアイソメトリック図を作成できる強力なオープンソースの Progressive Web App(PWA)です。React と <a href="https://github.com/markmanx/isoflow">Isoflow</a> ライブラリ(フォークされ npm には fossflow として、このリポジトリでは flowvia として公開)をベースに構築されており、ブラウザ内で完全に動作し、オフラインにも対応しています。
+Isenax は、美しいアイソメトリック図を作成できる強力なオープンソースの Progressive Web App(PWA)です。React と <a href="https://github.com/markmanx/isoflow">Isoflow</a> ライブラリ(フォークされ npm には fossflow として、このリポジトリでは isenax として公開)をベースに構築されており、ブラウザ内で完全に動作し、オフラインにも対応しています。
 
 ---
 <p align="center">
-<b>オンラインで試す --> https://nyangko.github.io/Flowvia/ <-- </b>
+<b>オンラインで試す --> https://nyangko.github.io/Isenax/ <-- </b>
 </p>
  
-<img width="100%" alt="Flowvia-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
+<img width="100%" alt="Isenax-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
 
 ---------
 
@@ -37,19 +37,19 @@ Flowvia は、美しいアイソメトリック図を作成できる強力なオ
 docker compose up
 
 # または Docker Hub から直接実行(永続ストレージ付き)
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/isenax:latest
 ```
 
 Docker ではサーバーストレージがデフォルトで有効になっています。ダイアグラムはホスト側の `./diagrams` に(デフォルトでは root 権限で)保存されます。保存に使うユーザー/グループ ID を変更するには `PUID`、`PGID` 環境変数を設定してください。
 
 サーバーストレージを無効化するには `ENABLE_SERVER_STORAGE=false` を設定してください:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/isenax:latest
 ```
 
 ### HTTP Basic 認証(任意)
 
-HTTP Basic Auth で Flowvia インスタンスを保護できます:
+HTTP Basic Auth で Isenax インスタンスを保護できます:
 
 ```bash
 # Docker Compose を使う場合
@@ -59,7 +59,7 @@ HTTP_AUTH_USER=admin HTTP_AUTH_PASSWORD=secret docker compose up
 docker run -p 80:80 \
   -e HTTP_AUTH_USER=admin \
   -e HTTP_AUTH_PASSWORD=secret \
-  nyangko/flowvia:latest
+  nyangko/isenax:latest
 ```
 
 > **注意**: 認証を有効にするには両方の変数を設定する必要があります。どちらか一方でも空の場合、ログインなしでアクセスできてしまいます。
@@ -68,8 +68,8 @@ docker run -p 80:80 \
 
 ```bash
 # リポジトリをクローン
-git clone https://github.com/nyangko/Flowvia
-cd Flowvia
+git clone https://github.com/nyangko/Isenax
+cd Isenax
 
 # 依存関係をインストール
 npm install
@@ -87,9 +87,9 @@ npm run dev
 
 このリポジトリは3つのパッケージからなるモノレポです:
 
-- `packages/flowvia-lib` - ネットワーク図を描画する React コンポーネントライブラリ(Rslib/Rspack でビルド)
-- `packages/flowvia-app` - ライブラリをラップして表示する Progressive Web App(RSBuild でビルド)
-- `packages/flowvia-backend` - 図のオプションのセルフホスト型ストレージを提供する Express サーバー(Docker デプロイで使用)
+- `packages/isenax-lib` - ネットワーク図を描画する React コンポーネントライブラリ(Rslib/Rspack でビルド)
+- `packages/isenax-app` - ライブラリをラップして表示する Progressive Web App(RSBuild でビルド)
+- `packages/isenax-backend` - 図のオプションのセルフホスト型ストレージを提供する Express サーバー(Docker デプロイで使用)
 
 ### 開発コマンド
 
@@ -156,7 +156,7 @@ npm run publish:lib  # ライブラリを npm に公開
 
 ## ドキュメント
 
-- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - コードベースの包括的なガイド
+- [ISENAX_ENCYCLOPEDIA.md](ISENAX_ENCYCLOPEDIA.md) - コードベースの包括的なガイド
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - コントリビューションガイドライン
 
 ## ライセンス

@@ -4,11 +4,11 @@
 
 set -e
 
-SELENIUM_CONTAINER="flowvia-selenium"
+SELENIUM_CONTAINER="isenax-selenium"
 APP_PORT=3000
 SELENIUM_PORT=4444
 
-echo "Flowvia E2E Test Runner"
+echo "Isenax E2E Test Runner"
 
 
 # Check if Docker is available
@@ -54,9 +54,9 @@ else
     echo "Selenium container is already running"
 fi
 
-# Check if Flowvia is running
+# Check if Isenax is running
 if ! curl -sf http://localhost:$APP_PORT > /dev/null; then
-    echo "⚠️  Flowvia app is not running on port $APP_PORT"
+    echo "⚠️  Isenax app is not running on port $APP_PORT"
     echo "Please start it with: npm run dev"
     echo ""
     read -p "Start the app now in another terminal and press Enter to continue..."
@@ -64,12 +64,12 @@ fi
 
 # Verify app is accessible
 if ! curl -sf http://localhost:$APP_PORT > /dev/null; then
-    echo "❌ Flowvia app is still not accessible on http://localhost:$APP_PORT"
+    echo "❌ Isenax app is still not accessible on http://localhost:$APP_PORT"
     docker stop $SELENIUM_CONTAINER 2>/dev/null || true
     exit 1
 fi
 
-echo "✅ Flowvia app is accessible"
+echo "✅ Isenax app is accessible"
 echo ""
 
 # Install Python dependencies if needed
@@ -86,7 +86,7 @@ fi
 echo "Running E2E tests..."
 echo ""
 
-FLOWVIA_TEST_URL="http://localhost:$APP_PORT" \
+ISENAX_TEST_URL="http://localhost:$APP_PORT" \
 WEBDRIVER_URL="http://localhost:$SELENIUM_PORT" \
 pytest -v --tb=short "$@"
 

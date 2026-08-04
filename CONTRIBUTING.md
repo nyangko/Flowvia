@@ -1,6 +1,6 @@
-# Contributing to Flowvia
+# Contributing to Isenax
 
-Thank you for your interest in contributing to Flowvia! This guide will help you get started with contributing to the project.
+Thank you for your interest in contributing to Isenax! This guide will help you get started with contributing to the project.
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ Thank you for your interest in contributing to Flowvia! This guide will help you
 
 ## Project Scope
 
-Flowvia is a **simple, privacy-first, browser-based isometric diagramming tool**. It deliberately avoids enterprise complexity.
+Isenax is a **simple, privacy-first, browser-based isometric diagramming tool**. It deliberately avoids enterprise complexity.
 
 The following are **out of scope** and PRs implementing them will be closed immediately:
 
@@ -29,9 +29,9 @@ The following are **out of scope** and PRs implementing them will be closed imme
 - User accounts, teams, or multi-tenancy
 - Cloud hosting, SaaS features, or paid tiers
 - Database integrations
-- Anything that fundamentally changes what Flowvia is
+- Anything that fundamentally changes what Isenax is
 
-If you're unsure whether your idea fits, open a [Discussion](https://github.com/nyangko/Flowvia/discussions) first.
+If you're unsure whether your idea fits, open a [Discussion](https://github.com/nyangko/Isenax/discussions) first.
 
 ## Code of Conduct
 
@@ -57,8 +57,8 @@ By participating in this project, you agree to abide by our Code of Conduct:
 1. Fork the repository on GitHub
 2. Clone your fork:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/Flowvia.git
-   cd Flowvia
+   git clone https://github.com/YOUR_USERNAME/Isenax.git
+   cd Isenax
    ```
 3. Install dependencies:
    ```bash
@@ -107,9 +107,9 @@ Recommended extensions:
 This is a monorepo containing three packages:
 
 ```
-Flowvia/
+Isenax/
 ├── packages/
-│   ├── flowvia-lib/     # React component library
+│   ├── isenax-lib/     # React component library
 │   │   ├── src/
 │   │   │   ├── components/    # React components
 │   │   │   ├── stores/        # State management (Zustand)
@@ -120,7 +120,7 @@ Flowvia/
 │   │   ├── rslib.config.ts # Library build config
 │   │   └── package.json
 │   │
-│   ├── flowvia-app/      # PWA application
+│   ├── isenax-app/      # PWA application
 │   │   ├── src/
 │   │   │   ├── App.tsx         # Main app component
 │   │   │   ├── diagramUtils.ts # Diagram utilities
@@ -129,7 +129,7 @@ Flowvia/
 │   │   ├── rsbuild.config.ts  # App build config
 │   │   └── package.json
 │   │
-│   └── flowvia-backend/  # Optional server storage backend
+│   └── isenax-backend/  # Optional server storage backend
 │       ├── server.js     # Express server
 │       └── package.json
 │
@@ -140,16 +140,16 @@ Flowvia/
 ```
 
 ### Key Differences:
-- **flowvia-lib**: The core library, built with Rslib/Rspack
-- **flowvia-app**: The PWA application, built with RSBuild
-- **flowvia-backend**: Express server providing optional self-hosted storage for diagrams
+- **isenax-lib**: The core library, built with Rslib/Rspack
+- **isenax-app**: The PWA application, built with RSBuild
+- **isenax-backend**: Express server providing optional self-hosted storage for diagrams
 - All three packages are managed as npm workspaces
 
 ## How to Contribute
 
 ### Finding Issues to Work On
 
-1. Check the [Issues](https://github.com/nyangko/Flowvia/issues) page
+1. Check the [Issues](https://github.com/nyangko/Isenax/issues) page
 2. Look for issues labeled:
    - `good first issue` - Great for newcomers
    - `help wanted` - Community help needed
@@ -164,14 +164,14 @@ We welcome all types of contributions:
 - **Features**: Implement new functionality
 - **Documentation**: Improve docs, add examples
 - **Tests**: Increase test coverage
-- **UI/UX improvements**: Make Flowvia better to use
+- **UI/UX improvements**: Make Isenax better to use
 - **Performance**: Optimize code for better performance
 
 ## Development Workflow
 
 ### Working with the Monorepo
 
-#### Library Development (flowvia-lib)
+#### Library Development (isenax-lib)
 
 ```bash
 # Start library in watch mode
@@ -181,10 +181,10 @@ npm run dev:lib
 npm run build:lib
 
 # Run library tests
-cd packages/flowvia-lib && npm test
+cd packages/isenax-lib && npm test
 ```
 
-#### App Development (flowvia-app)
+#### App Development (isenax-app)
 
 ```bash
 # Start app dev server
@@ -282,7 +282,7 @@ git commit -m "feat(connector)!: change default connector mode to click"
 
 #### Scopes (optional but recommended)
 
-Common scopes in Flowvia:
+Common scopes in Isenax:
 - `connector`: Connector-related changes
 - `ui`: UI components and interactions
 - `storage`: Storage and persistence
@@ -405,7 +405,7 @@ describe('useIsoProjection', () => {
 
 1. **Update your fork**:
    ```bash
-   git remote add upstream https://github.com/nyangko/Flowvia.git
+   git remote add upstream https://github.com/nyangko/Isenax.git
    git fetch upstream
    git checkout main
    git merge upstream/main
@@ -447,13 +447,13 @@ feat(connector)!: change default connector mode
 
 ```bash
 # Build multi-architecture image
-docker buildx build --platform linux/amd64,linux/arm64 -t flowvia:local .
+docker buildx build --platform linux/amd64,linux/arm64 -t isenax:local .
 
 # Run with Docker Compose
 docker compose up
 
 # Or pull from Docker Hub
-docker run -p 80:80 nyangko/flowvia:latest
+docker run -p 80:80 nyangko/isenax:latest
 ```
 
 ## Community
@@ -462,7 +462,7 @@ docker run -p 80:80 nyangko/flowvia:latest
 
 - **GitHub Issues**: For bugs and feature requests (use the templates)
 - **Discussions**: For questions and ideas
-- **Code Encyclopedia**: See [FLOWVIA_ENCYCLOPEDIA.md](./docs/FLOWVIA_ENCYCLOPEDIA.md)
+- **Code Encyclopedia**: See [ISENAX_ENCYCLOPEDIA.md](./docs/ISENAX_ENCYCLOPEDIA.md)
 
 ### Communication Guidelines
 
@@ -480,10 +480,10 @@ Contributors will be recognized in:
 
 ## License
 
-By contributing to Flowvia, you agree that your contributions will be licensed under the project's license.
+By contributing to Isenax, you agree that your contributions will be licensed under the project's license.
 
 ---
 
-Thank you for contributing to Flowvia! Your efforts help make this project better for everyone. If you have any questions, don't hesitate to ask in the issues or discussions.
+Thank you for contributing to Isenax! Your efforts help make this project better for everyone. If you have any questions, don't hesitate to ask in the issues or discussions.
 
 -S

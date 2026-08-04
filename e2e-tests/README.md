@@ -1,6 +1,6 @@
-# Flowvia E2E Tests
+# Isenax E2E Tests
 
-End-to-end tests for Flowvia using Selenium WebDriver with Python and pytest.
+End-to-end tests for Isenax using Selenium WebDriver with Python and pytest.
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ The script will:
 - Start Selenium container automatically
 - Create a Python virtual environment
 - Install test dependencies
-- Prompt you to start the Flowvia app if not running
+- Prompt you to start the Isenax app if not running
 - Run the tests
 - Clean up Selenium container
 
@@ -32,10 +32,10 @@ The script will:
 
 1. Start Selenium server with Chrome:
    ```bash
-   docker run -d --name flowvia-selenium -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome:latest
+   docker run -d --name isenax-selenium -p 4444:4444 -p 7900:7900 --shm-size="2g" selenium/standalone-chrome:latest
    ```
 
-2. Start the Flowvia dev server:
+2. Start the Isenax dev server:
    ```bash
    cd ..  # Go to project root
    npm run dev
@@ -56,12 +56,12 @@ The script will:
 
 ## Environment Variables
 
-- `FLOWVIA_TEST_URL` - Base URL of the app (default: `http://localhost:3000`)
+- `ISENAX_TEST_URL` - Base URL of the app (default: `http://localhost:3000`)
 - `WEBDRIVER_URL` - WebDriver endpoint (default: `http://localhost:4444`)
 
 Example:
 ```bash
-FLOWVIA_TEST_URL=http://localhost:8080 pytest -v
+ISENAX_TEST_URL=http://localhost:8080 pytest -v
 ```
 
 ## Available Tests
@@ -89,7 +89,7 @@ The E2E workflow (`.github/workflows/e2e-tests.yml`) runs on:
 It does **not** run on every push - only on PRs, after unit tests pass, or on demand.
 
 The CI workflow:
-1. Builds the Flowvia library and app
+1. Builds the Isenax library and app
 2. Starts the app server in background
 3. Starts Selenium standalone Chrome
 4. Installs Python dependencies
@@ -190,7 +190,7 @@ pytest -k "canvas" -v
 ### Connection refused errors
 - Ensure Selenium is running: `docker ps | grep selenium`
 - Check Selenium status: `curl http://localhost:4444/status`
-- Ensure Flowvia app is running: `curl http://localhost:3000`
+- Ensure Isenax app is running: `curl http://localhost:3000`
 
 ### Element not found errors
 - Increase wait times in tests
@@ -202,7 +202,7 @@ pytest -k "canvas" -v
 - Install dependencies: `pip install -r requirements.txt`
 
 ### Docker container conflicts
-- Remove existing container: `docker rm -f flowvia-selenium`
+- Remove existing container: `docker rm -f isenax-selenium`
 - Check for port conflicts: `lsof -i :4444`
 
 ## Dependencies

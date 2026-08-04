@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner.png" alt="Flowvia - Open-source isometric diagram tool" width="100%" />
+<img src="assets/banner.png" alt="Isenax - Open-source isometric diagram tool" width="100%" />
 
 </div>
 
@@ -11,22 +11,22 @@
 </p>
 
 ## Note:
-This repo (Flowvia) is a derivative of [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW), which is itself a fork of stan-smith/FossFLOW (which in turn was a fork of [markmanx/isoflow](https://github.com/markmanx/isoflow)) originally made for the purpose of contributing to the original repo through PRs, however the username of the author seems to have been changed to [mug-book-droid](https://github.com/mug-book-droid) and their activity set to private (account suspended maybe?), making the original repo inaccessible.
+This repo (Isenax) is a derivative of [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW), which is itself a fork of stan-smith/FossFLOW (which in turn was a fork of [markmanx/isoflow](https://github.com/markmanx/isoflow)) originally made for the purpose of contributing to the original repo through PRs, however the username of the author seems to have been changed to [mug-book-droid](https://github.com/mug-book-droid) and their activity set to private (account suspended maybe?), making the original repo inaccessible.
 
-For now, I intend to make this repo (now named Flowvia) a continuation of development from FossFLOW, and any contributions through PRs are welcome as well. 
+For now, I intend to make this repo (now named Isenax) a continuation of development from FossFLOW, and any contributions through PRs are welcome as well. 
 
 You can check out the last state of the original repo that I fetched on `backup/stan-smith-FossFLOW` branch.
 
 ---
 
-Flowvia is a powerful, open-source Progressive Web App (PWA) for creating beautiful isometric diagrams. Built with React and the <a href="https://github.com/markmanx/isoflow">Isoflow</a> (forked and published to NPM as fossflow, and as flowvia in this fork) library, it runs entirely in your browser with offline support.
+Isenax is a powerful, open-source Progressive Web App (PWA) for creating beautiful isometric diagrams. Built with React and the <a href="https://github.com/markmanx/isoflow">Isoflow</a> (forked and published to NPM as fossflow, then flowvia, and now as isenax in this fork) library, it runs entirely in your browser with offline support.
 
 ---
 <p align="center">
-<b>Try it online --> https://nyangko.github.io/Flowvia/ <-- </b>
+<b>Try it online --> https://nyangko.github.io/Isenax/ <-- </b>
 </p>
  
-<img width="100%" alt="Flowvia-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
+<img width="100%" alt="Isenax-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
 
 ---------
 
@@ -37,19 +37,19 @@ Flowvia is a powerful, open-source Progressive Web App (PWA) for creating beauti
 docker compose up
 
 # Or run directly from Docker Hub with persistent storage
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/isenax:latest
 ```
 
 Server storage is enabled by default in Docker. Your diagrams will be saved (as root by default) to `./diagrams` on the host. To change user or group id for saving as, set the `PUID` and `PGID` env variables.
 
 To disable server storage, set `ENABLE_SERVER_STORAGE=false`:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/isenax:latest
 ```
 
 ### HTTP Basic Authentication (Optional)
 
-Protect your Flowvia instance with HTTP Basic Auth:
+Protect your Isenax instance with HTTP Basic Auth:
 
 ```bash
 # With Docker Compose
@@ -59,7 +59,7 @@ HTTP_AUTH_USER=admin HTTP_AUTH_PASSWORD=secret docker compose up
 docker run -p 80:80 \
   -e HTTP_AUTH_USER=admin \
   -e HTTP_AUTH_PASSWORD=secret \
-  nyangko/flowvia:latest
+  nyangko/isenax:latest
 ```
 
 > **Note**: Both variables must be set to enable authentication. If either is empty, the app is accessible without login.
@@ -68,8 +68,8 @@ docker run -p 80:80 \
 
 ```bash
 # Clone the repository
-git clone https://github.com/nyangko/Flowvia
-cd Flowvia
+git clone https://github.com/nyangko/Isenax
+cd Isenax
 
 # Install dependencies
 npm install
@@ -87,9 +87,9 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 This is a monorepo containing three packages:
 
-- `packages/flowvia-lib` - React component library for drawing network diagrams (built with Rslib/Rspack)
-- `packages/flowvia-app` - Progressive Web App which wraps the lib and presents it (built with RSBuild)
-- `packages/flowvia-backend` - Express server providing optional self-hosted storage for diagrams (used in the Docker deployment)
+- `packages/isenax-lib` - React component library for drawing network diagrams (built with Rslib/Rspack)
+- `packages/isenax-app` - Progressive Web App which wraps the lib and presents it (built with RSBuild)
+- `packages/isenax-backend` - Express server providing optional self-hosted storage for diagrams (used in the Docker deployment)
 
 ### Development Commands
 
@@ -156,7 +156,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## Documentation
 
-- [FLOWVIA_ENCYCLOPEDIA.md](docs/FLOWVIA_ENCYCLOPEDIA.md) - Comprehensive guide to the codebase
+- [ISENAX_ENCYCLOPEDIA.md](docs/ISENAX_ENCYCLOPEDIA.md) - Comprehensive guide to the codebase
 - [CONTRIBUTING.md](CONTRIBUTING.md) - Contributing guidelines
 
 ## License

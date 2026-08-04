@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="../assets/banner.png" alt="Flowvia - আইসোমেট্রিক ডায়াগ্রাম টুল" width="100%" />
+<img src="../assets/banner.png" alt="Isenax - আইসোমেট্রিক ডায়াগ্রাম টুল" width="100%" />
 
 </div>
 
@@ -10,22 +10,22 @@
 
 ## নোট:
 
-এই রিপোজিটরি (Flowvia) হল [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW)-এর একটি ডেরিভেটিভ, যা নিজেই stan-smith/FossFLOW-এর একটি ফর্ক (যা আবার [markmanx/isoflow](https://github.com/markmanx/isoflow)-এর একটি ফর্ক ছিল), মূলত PR-এর মাধ্যমে মূল রিপোজিটরিতে অবদান রাখার উদ্দেশ্যে তৈরি করা হয়েছিল। তবে লেখকের GitHub ব্যবহারকারীর নাম পরিবর্তিত হয়ে [mug-book-droid](https://github.com/mug-book-droid) হয়েছে বলে মনে হচ্ছে এবং তার কার্যকলাপ ব্যক্তিগত করা হয়েছে (সম্ভবত অ্যাকাউন্ট স্থগিত?), যার ফলে মূল রিপোজিটরিতে প্রবেশ করা যাচ্ছে না।
+এই রিপোজিটরি (Isenax) হল [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW)-এর একটি ডেরিভেটিভ, যা নিজেই stan-smith/FossFLOW-এর একটি ফর্ক (যা আবার [markmanx/isoflow](https://github.com/markmanx/isoflow)-এর একটি ফর্ক ছিল), মূলত PR-এর মাধ্যমে মূল রিপোজিটরিতে অবদান রাখার উদ্দেশ্যে তৈরি করা হয়েছিল। তবে লেখকের GitHub ব্যবহারকারীর নাম পরিবর্তিত হয়ে [mug-book-droid](https://github.com/mug-book-droid) হয়েছে বলে মনে হচ্ছে এবং তার কার্যকলাপ ব্যক্তিগত করা হয়েছে (সম্ভবত অ্যাকাউন্ট স্থগিত?), যার ফলে মূল রিপোজিটরিতে প্রবেশ করা যাচ্ছে না।
 
-আপাতত, আমার উদ্দেশ্য এই রিপোজিটরিকে (এখন Flowvia নামে) FossFLOW-এর উন্নয়নের ধারাবাহিকতা করা, এবং PR-এর মাধ্যমে যেকোনো অবদানও স্বাগত।
+আপাতত, আমার উদ্দেশ্য এই রিপোজিটরিকে (এখন Isenax নামে) FossFLOW-এর উন্নয়নের ধারাবাহিকতা করা, এবং PR-এর মাধ্যমে যেকোনো অবদানও স্বাগত।
 
 মূল রিপোজিটরির শেষ অবস্থা যা আমি সংগ্রহ করেছি তা `backup/stan-smith-FossFLOW` ব্রাঞ্চে দেখা যাবে।
 
 ---
 
-Flowvia হল সুন্দর আইসোমেট্রিক ডায়াগ্রাম তৈরি করার জন্য একটি শক্তিশালী, ওপেন-সোর্স প্রগ্রেসিভ ওয়েব অ্যাপ (PWA)। React এবং <a href="https://github.com/markmanx/isoflow">Isoflow</a> লাইব্রেরি (ফর্ক করে npm-এ fossflow হিসেবে, এবং এই ফর্কে flowvia হিসেবে প্রকাশিত) দিয়ে তৈরি, এটি সম্পূর্ণরূপে আপনার ব্রাউজারে অফলাইন সাপোর্ট সহ চলে।
+Isenax হল সুন্দর আইসোমেট্রিক ডায়াগ্রাম তৈরি করার জন্য একটি শক্তিশালী, ওপেন-সোর্স প্রগ্রেসিভ ওয়েব অ্যাপ (PWA)। React এবং <a href="https://github.com/markmanx/isoflow">Isoflow</a> লাইব্রেরি (ফর্ক করে npm-এ fossflow হিসেবে, এবং এই ফর্কে isenax হিসেবে প্রকাশিত) দিয়ে তৈরি, এটি সম্পূর্ণরূপে আপনার ব্রাউজারে অফলাইন সাপোর্ট সহ চলে।
 
 ---
 <p align="center">
-<b>অনলাইনে চেষ্টা করুন --> https://nyangko.github.io/Flowvia/ <-- </b>
+<b>অনলাইনে চেষ্টা করুন --> https://nyangko.github.io/Isenax/ <-- </b>
 </p>
 
-<img width="100%" alt="Flowvia-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
+<img width="100%" alt="Isenax-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
 
 ---------
 
@@ -36,19 +36,19 @@ Flowvia হল সুন্দর আইসোমেট্রিক ডায়
 docker compose up
 
 # অথবা স্থায়ী স্টোরেজ সহ Docker Hub থেকে সরাসরি চালান
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/isenax:latest
 ```
 
 Docker-এ সার্ভার স্টোরেজ ডিফল্টভাবে সক্রিয়। আপনার ডায়াগ্রামগুলি হোস্টে `./diagrams`-এ (ডিফল্টভাবে root হিসেবে) সংরক্ষিত হবে। সংরক্ষণের জন্য ব্যবহারকারী বা গ্রুপ ID পরিবর্তন করতে, `PUID` এবং `PGID` এনভায়রনমেন্ট ভেরিয়েবল সেট করুন।
 
 সার্ভার স্টোরেজ নিষ্ক্রিয় করতে, `ENABLE_SERVER_STORAGE=false` সেট করুন:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/isenax:latest
 ```
 
 ### HTTP বেসিক অথেনটিকেশন (ঐচ্ছিক)
 
-HTTP Basic Auth দিয়ে আপনার Flowvia ইনস্ট্যান্স সুরক্ষিত করুন:
+HTTP Basic Auth দিয়ে আপনার Isenax ইনস্ট্যান্স সুরক্ষিত করুন:
 
 ```bash
 # Docker Compose সহ
@@ -58,7 +58,7 @@ HTTP_AUTH_USER=admin HTTP_AUTH_PASSWORD=secret docker compose up
 docker run -p 80:80 \
   -e HTTP_AUTH_USER=admin \
   -e HTTP_AUTH_PASSWORD=secret \
-  nyangko/flowvia:latest
+  nyangko/isenax:latest
 ```
 
 > **নোট**: প্রমাণীকরণ সক্রিয় করতে উভয় ভেরিয়েবল সেট করা আবশ্যক। এর মধ্যে যেকোনো একটি খালি থাকলে, অ্যাপটি লগইন ছাড়াই অ্যাক্সেসযোগ্য।
@@ -67,8 +67,8 @@ docker run -p 80:80 \
 
 ```bash
 # রিপোজিটরি ক্লোন করুন
-git clone https://github.com/nyangko/Flowvia
-cd Flowvia
+git clone https://github.com/nyangko/Isenax
+cd Isenax
 
 # নির্ভরতা ইনস্টল করুন
 npm install
@@ -86,9 +86,9 @@ npm run dev
 
 এটি তিনটি প্যাকেজ সম্বলিত একটি monorepo:
 
-- `packages/flowvia-lib` - নেটওয়ার্ক ডায়াগ্রাম আঁকার জন্য React কম্পোনেন্ট লাইব্রেরি (Rslib/Rspack দিয়ে তৈরি)
-- `packages/flowvia-app` - লাইব্রেরিকে র‍্যাপ করে উপস্থাপনকারী Progressive Web App (RSBuild দিয়ে তৈরি)
-- `packages/flowvia-backend` - ডায়াগ্রামের জন্য ঐচ্ছিক সেলফ-হোস্টেড স্টোরেজ প্রদানকারী Express সার্ভার (Docker ডিপ্লয়মেন্টে ব্যবহৃত)
+- `packages/isenax-lib` - নেটওয়ার্ক ডায়াগ্রাম আঁকার জন্য React কম্পোনেন্ট লাইব্রেরি (Rslib/Rspack দিয়ে তৈরি)
+- `packages/isenax-app` - লাইব্রেরিকে র‍্যাপ করে উপস্থাপনকারী Progressive Web App (RSBuild দিয়ে তৈরি)
+- `packages/isenax-backend` - ডায়াগ্রামের জন্য ঐচ্ছিক সেলফ-হোস্টেড স্টোরেজ প্রদানকারী Express সার্ভার (Docker ডিপ্লয়মেন্টে ব্যবহৃত)
 
 ### উন্নয়ন কমান্ড
 
@@ -154,7 +154,7 @@ npm run publish:lib  # npm-এ লাইব্রেরি প্রকাশ �
 
 ## ডকুমেন্টেশন
 
-- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - কোডবেসের জন্য ব্যাপক গাইড
+- [ISENAX_ENCYCLOPEDIA.md](ISENAX_ENCYCLOPEDIA.md) - কোডবেসের জন্য ব্যাপক গাইড
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - অবদানের নির্দেশিকা
 
 ## লাইসেন্স

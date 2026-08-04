@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="../assets/banner.png" alt="Flowvia - आइसोमेट्रिक डायग्राम टूल" width="100%" />
+<img src="../assets/banner.png" alt="Isenax - आइसोमेट्रिक डायग्राम टूल" width="100%" />
 
 </div>
 
@@ -10,22 +10,22 @@
 
 ## नोट:
 
-यह रिपॉजिटरी (Flowvia) [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW) से व्युत्पन्न है, जो स्वयं stan-smith/FossFLOW का फोर्क है (जो बदले में [markmanx/isoflow](https://github.com/markmanx/isoflow) का फोर्क था), मूल रूप से PR के माध्यम से मूल रिपॉजिटरी में योगदान देने के उद्देश्य से बनाया गया था। हालांकि लेखक का GitHub उपयोगकर्ता नाम बदलकर [mug-book-droid](https://github.com/mug-book-droid) हो गया प्रतीत होता है और उनकी गतिविधि निजी कर दी गई है (शायद खाता निलंबित है?), जिससे मूल रिपॉजिटरी अप्राप्य हो गई है।
+यह रिपॉजिटरी (Isenax) [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW) से व्युत्पन्न है, जो स्वयं stan-smith/FossFLOW का फोर्क है (जो बदले में [markmanx/isoflow](https://github.com/markmanx/isoflow) का फोर्क था), मूल रूप से PR के माध्यम से मूल रिपॉजिटरी में योगदान देने के उद्देश्य से बनाया गया था। हालांकि लेखक का GitHub उपयोगकर्ता नाम बदलकर [mug-book-droid](https://github.com/mug-book-droid) हो गया प्रतीत होता है और उनकी गतिविधि निजी कर दी गई है (शायद खाता निलंबित है?), जिससे मूल रिपॉजिटरी अप्राप्य हो गई है।
 
-फिलहाल, मेरा इरादा इस रिपॉजिटरी (अब Flowvia नाम से) को FossFLOW के विकास की निरंतरता बनाना है, और PR के माध्यम से किसी भी योगदान का स्वागत है।
+फिलहाल, मेरा इरादा इस रिपॉजिटरी (अब Isenax नाम से) को FossFLOW के विकास की निरंतरता बनाना है, और PR के माध्यम से किसी भी योगदान का स्वागत है।
 
 मूल रिपॉजिटरी की अंतिम स्थिति `backup/stan-smith-FossFLOW` ब्रांच पर देखी जा सकती है।
 
 ---
 
-Flowvia सुंदर आइसोमेट्रिक डायग्राम बनाने के लिए एक शक्तिशाली, ओपन-सोर्स प्रोग्रेसिव वेब ऐप (PWA) है। यह React और <a href="https://github.com/markmanx/isoflow">Isoflow</a> लाइब्रेरी (फोर्क करके npm पर fossflow के रूप में, और इस फोर्क में flowvia के रूप में प्रकाशित) के साथ बनाया गया है, और पूरी तरह से आपके ब्राउज़र में ऑफ़लाइन समर्थन के साथ चलता है।
+Isenax सुंदर आइसोमेट्रिक डायग्राम बनाने के लिए एक शक्तिशाली, ओपन-सोर्स प्रोग्रेसिव वेब ऐप (PWA) है। यह React और <a href="https://github.com/markmanx/isoflow">Isoflow</a> लाइब्रेरी (फोर्क करके npm पर fossflow के रूप में, और इस फोर्क में isenax के रूप में प्रकाशित) के साथ बनाया गया है, और पूरी तरह से आपके ब्राउज़र में ऑफ़लाइन समर्थन के साथ चलता है।
 
 ---
 <p align="center">
-<b>ऑनलाइन आज़माएं --> https://nyangko.github.io/Flowvia/ <-- </b>
+<b>ऑनलाइन आज़माएं --> https://nyangko.github.io/Isenax/ <-- </b>
 </p>
 
-<img width="100%" alt="Flowvia-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
+<img width="100%" alt="Isenax-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
 
 ---------
 
@@ -36,19 +36,19 @@ Flowvia सुंदर आइसोमेट्रिक डायग्रा�
 docker compose up
 
 # या स्थायी स्टोरेज के साथ Docker Hub से सीधे चलाएं
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/isenax:latest
 ```
 
 Docker में सर्वर स्टोरेज डिफ़ॉल्ट रूप से सक्षम है। आपके डायग्राम होस्ट पर (डिफ़ॉल्ट रूप से root के रूप में) `./diagrams` में सहेजे जाएंगे। सहेजते समय उपयोगकर्ता या ग्रुप ID बदलने के लिए `PUID` और `PGID` एनवायरनमेंट वेरिएबल सेट करें।
 
 सर्वर स्टोरेज अक्षम करने के लिए, `ENABLE_SERVER_STORAGE=false` सेट करें:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/isenax:latest
 ```
 
 ### HTTP बेसिक ऑथेंटिकेशन (वैकल्पिक)
 
-अपने Flowvia इंस्टेंस को HTTP Basic Auth से सुरक्षित करें:
+अपने Isenax इंस्टेंस को HTTP Basic Auth से सुरक्षित करें:
 
 ```bash
 # Docker Compose के साथ
@@ -58,7 +58,7 @@ HTTP_AUTH_USER=admin HTTP_AUTH_PASSWORD=secret docker compose up
 docker run -p 80:80 \
   -e HTTP_AUTH_USER=admin \
   -e HTTP_AUTH_PASSWORD=secret \
-  nyangko/flowvia:latest
+  nyangko/isenax:latest
 ```
 
 > **नोट**: प्रमाणीकरण सक्षम करने के लिए दोनों वेरिएबल सेट होने चाहिए। यदि इनमें से कोई भी खाली है, तो ऐप बिना लॉगिन के एक्सेस किया जा सकता है।
@@ -67,8 +67,8 @@ docker run -p 80:80 \
 
 ```bash
 # रिपॉजिटरी क्लोन करें
-git clone https://github.com/nyangko/Flowvia
-cd Flowvia
+git clone https://github.com/nyangko/Isenax
+cd Isenax
 
 # निर्भरताएं इंस्टॉल करें
 npm install
@@ -86,9 +86,9 @@ npm run dev
 
 यह तीन पैकेज वाला एक monorepo है:
 
-- `packages/flowvia-lib` - नेटवर्क डायग्राम बनाने के लिए React कंपोनेंट लाइब्रेरी (Rslib/Rspack के साथ निर्मित)
-- `packages/flowvia-app` - लाइब्रेरी को रैप करके प्रस्तुत करने वाला Progressive Web App (RSBuild के साथ निर्मित)
-- `packages/flowvia-backend` - डायग्राम के लिए वैकल्पिक सेल्फ-होस्टेड स्टोरेज प्रदान करने वाला Express सर्वर (Docker डिप्लॉयमेंट में उपयोग किया जाता है)
+- `packages/isenax-lib` - नेटवर्क डायग्राम बनाने के लिए React कंपोनेंट लाइब्रेरी (Rslib/Rspack के साथ निर्मित)
+- `packages/isenax-app` - लाइब्रेरी को रैप करके प्रस्तुत करने वाला Progressive Web App (RSBuild के साथ निर्मित)
+- `packages/isenax-backend` - डायग्राम के लिए वैकल्पिक सेल्फ-होस्टेड स्टोरेज प्रदान करने वाला Express सर्वर (Docker डिप्लॉयमेंट में उपयोग किया जाता है)
 
 ### विकास कमांड
 
@@ -154,7 +154,7 @@ npm run publish:lib  # लाइब्रेरी को npm पर प्र�
 
 ## प्रलेखन
 
-- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - कोडबेस के लिए व्यापक गाइड
+- [ISENAX_ENCYCLOPEDIA.md](ISENAX_ENCYCLOPEDIA.md) - कोडबेस के लिए व्यापक गाइड
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - योगदान दिशानिर्देश
 
 ## लाइसेंस

@@ -14,12 +14,12 @@ from selenium.webdriver.support import expected_conditions as EC
 
 def get_base_url():
     """Get the base URL from environment or use default."""
-    return os.getenv("FLOWVIA_TEST_URL", "http://localhost:3000")
+    return os.getenv("ISENAX_TEST_URL", "http://localhost:3000")
 
 
 def get_base_path():
     """Get the base path from environment."""
-    return os.getenv("FLOWVIA_BASE_PATH", "/")
+    return os.getenv("ISENAX_BASE_PATH", "/")
 
 
 def get_webdriver_url():
@@ -225,7 +225,7 @@ def test_router_basename_detection(driver):
 
         # Verify the app actually rendered despite the mismatch
         app_rendered = driver.execute_script("""
-            return document.querySelector('.flowvia-container') !== null ||
+            return document.querySelector('.isenax-container') !== null ||
                    document.querySelector('#root').children.length > 0;
         """)
 

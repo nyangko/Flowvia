@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="../assets/banner.png" alt="Flowvia - Alat Diagram Isometrik" width="100%" />
+<img src="../assets/banner.png" alt="Isenax - Alat Diagram Isometrik" width="100%" />
 
 </div>
 
@@ -10,22 +10,22 @@
 
 ## Catatan:
 
-Repositori ini (Flowvia) adalah turunan dari [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW), yang itu sendiri adalah fork dari stan-smith/FossFLOW (yang pada gilirannya merupakan fork dari [markmanx/isoflow](https://github.com/markmanx/isoflow)), awalnya dibuat untuk tujuan berkontribusi ke repositori asli melalui PR. Namun nama pengguna GitHub penulis tampaknya telah diubah menjadi [mug-book-droid](https://github.com/mug-book-droid) dan aktivitasnya diatur menjadi privat (mungkin akun ditangguhkan?), sehingga repositori asli tidak dapat diakses.
+Repositori ini (Isenax) adalah turunan dari [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW), yang itu sendiri adalah fork dari stan-smith/FossFLOW (yang pada gilirannya merupakan fork dari [markmanx/isoflow](https://github.com/markmanx/isoflow)), awalnya dibuat untuk tujuan berkontribusi ke repositori asli melalui PR. Namun nama pengguna GitHub penulis tampaknya telah diubah menjadi [mug-book-droid](https://github.com/mug-book-droid) dan aktivitasnya diatur menjadi privat (mungkin akun ditangguhkan?), sehingga repositori asli tidak dapat diakses.
 
-Untuk saat ini, saya bermaksud menjadikan repositori ini (sekarang bernama Flowvia) sebagai kelanjutan pengembangan dari FossFLOW, dan kontribusi apa pun melalui PR juga diterima dengan baik.
+Untuk saat ini, saya bermaksud menjadikan repositori ini (sekarang bernama Isenax) sebagai kelanjutan pengembangan dari FossFLOW, dan kontribusi apa pun melalui PR juga diterima dengan baik.
 
 Anda dapat melihat status terakhir repositori asli yang saya ambil di branch `backup/stan-smith-FossFLOW`.
 
 ---
 
-Flowvia adalah aplikasi web progresif (PWA) open-source yang powerful untuk membuat diagram isometrik yang indah. Dibangun dengan React dan library <a href="https://github.com/markmanx/isoflow">Isoflow</a> (di-fork dan dipublikasikan ke npm sebagai fossflow, dan sebagai flowvia di fork ini), berjalan sepenuhnya di browser Anda dengan dukungan offline.
+Isenax adalah aplikasi web progresif (PWA) open-source yang powerful untuk membuat diagram isometrik yang indah. Dibangun dengan React dan library <a href="https://github.com/markmanx/isoflow">Isoflow</a> (di-fork dan dipublikasikan ke npm sebagai fossflow, dan sebagai isenax di fork ini), berjalan sepenuhnya di browser Anda dengan dukungan offline.
 
 ---
 <p align="center">
-<b>Coba secara online --> https://nyangko.github.io/Flowvia/ <-- </b>
+<b>Coba secara online --> https://nyangko.github.io/Isenax/ <-- </b>
 </p>
 
-<img width="100%" alt="Flowvia-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
+<img width="100%" alt="Isenax-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
 
 ---------
 
@@ -36,19 +36,19 @@ Flowvia adalah aplikasi web progresif (PWA) open-source yang powerful untuk memb
 docker compose up
 
 # Atau jalankan langsung dari Docker Hub dengan penyimpanan persisten
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/isenax:latest
 ```
 
 Penyimpanan server diaktifkan secara default di Docker. Diagram Anda akan disimpan (secara default sebagai root) ke `./diagrams` di host. Untuk mengubah pengguna atau ID grup yang digunakan saat menyimpan, atur variabel lingkungan `PUID` dan `PGID`.
 
 Untuk menonaktifkan penyimpanan server, atur `ENABLE_SERVER_STORAGE=false`:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/isenax:latest
 ```
 
 ### Autentikasi Dasar HTTP (Opsional)
 
-Lindungi instance Flowvia Anda dengan HTTP Basic Auth:
+Lindungi instance Isenax Anda dengan HTTP Basic Auth:
 
 ```bash
 # Dengan Docker Compose
@@ -58,7 +58,7 @@ HTTP_AUTH_USER=admin HTTP_AUTH_PASSWORD=secret docker compose up
 docker run -p 80:80 \
   -e HTTP_AUTH_USER=admin \
   -e HTTP_AUTH_PASSWORD=secret \
-  nyangko/flowvia:latest
+  nyangko/isenax:latest
 ```
 
 > **Catatan**: Kedua variabel harus diatur untuk mengaktifkan autentikasi. Jika salah satu kosong, aplikasi dapat diakses tanpa login.
@@ -67,8 +67,8 @@ docker run -p 80:80 \
 
 ```bash
 # Clone repositori
-git clone https://github.com/nyangko/Flowvia
-cd Flowvia
+git clone https://github.com/nyangko/Isenax
+cd Isenax
 
 # Install dependensi
 npm install
@@ -86,9 +86,9 @@ Buka [http://localhost:3000](http://localhost:3000) di browser Anda.
 
 Ini adalah monorepo yang berisi tiga paket:
 
-- `packages/flowvia-lib` - Library komponen React untuk menggambar diagram jaringan (dibangun dengan Rslib/Rspack)
-- `packages/flowvia-app` - Progressive Web App yang membungkus dan menampilkan library (dibangun dengan RSBuild)
-- `packages/flowvia-backend` - Server Express yang menyediakan penyimpanan self-hosted opsional untuk diagram (digunakan dalam deployment Docker)
+- `packages/isenax-lib` - Library komponen React untuk menggambar diagram jaringan (dibangun dengan Rslib/Rspack)
+- `packages/isenax-app` - Progressive Web App yang membungkus dan menampilkan library (dibangun dengan RSBuild)
+- `packages/isenax-backend` - Server Express yang menyediakan penyimpanan self-hosted opsional untuk diagram (digunakan dalam deployment Docker)
 
 ### Perintah Pengembangan
 
@@ -154,7 +154,7 @@ Kami menyambut kontribusi! Silakan lihat [CONTRIBUTING.md](../CONTRIBUTING.md) u
 
 ## Dokumentasi
 
-- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - Panduan lengkap untuk codebase
+- [ISENAX_ENCYCLOPEDIA.md](ISENAX_ENCYCLOPEDIA.md) - Panduan lengkap untuk codebase
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - Panduan kontribusi
 
 ## Lisensi

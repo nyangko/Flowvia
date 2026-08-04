@@ -41,12 +41,12 @@ jobs:
         env:
           # do not report warnings as errors
           CI: false
-          PUBLIC_URL: /Flowvia/
+          PUBLIC_URL: /Isenax/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
           # Upload from the app's build directory in monorepo
-          path: './packages/flowvia-app/build/'
+          path: './packages/isenax-app/build/'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5

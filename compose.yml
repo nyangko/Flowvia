@@ -1,6 +1,6 @@
 services:
-  flowvia:
-    image: nyangko/flowvia:latest
+  isenax:
+    image: nyangko/isenax:latest
     pull_policy: always
     ports:
       - 80:80

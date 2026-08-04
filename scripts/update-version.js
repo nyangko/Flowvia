@@ -20,9 +20,9 @@ console.log(`Updating all packages to version ${version}...`);
 // List of package.json files to update
 const packageFiles = [
   'package.json',
-  'packages/flowvia-lib/package.json',
-  'packages/flowvia-app/package.json',
-  'packages/flowvia-backend/package.json'
+  'packages/isenax-lib/package.json',
+  'packages/isenax-app/package.json',
+  'packages/isenax-backend/package.json'
 ];
 
 packageFiles.forEach(file => {

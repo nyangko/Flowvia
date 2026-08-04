@@ -1,5 +1,5 @@
 services:
-  flowvia:
+  isenax:
     build: .
     ports:
       - "3000:80"

@@ -48,10 +48,10 @@ jobs:
           cd e2e-tests
           pip install -r requirements.txt
 
-      - name: Build Flowvia library
+      - name: Build Isenax library
         run: pnpm run build:lib
 
-      - name: Build Flowvia app
+      - name: Build Isenax app
         run: pnpm run build:app
 
       - name: Install serve globally
@@ -74,9 +74,9 @@ jobs:
           echo "Selenium is ready"
           curl -s http://localhost:4444/status | jq '.' || true
 
-      - name: Start Flowvia server in background
+      - name: Start Isenax server in background
         run: |
-          cd packages/flowvia-app/build
+          cd packages/isenax-app/build
           nohup serve -s . -l 3000 > /tmp/server.log 2>&1 &
           echo $! > /tmp/server.pid
           echo "Server PID: $(cat /tmp/server.pid)"
@@ -105,10 +105,10 @@ jobs:
           cd e2e-tests
           pytest -v --tb=short
         env:
-          FLOWVIA_TEST_URL: http://localhost:3000
+          ISENAX_TEST_URL: http://localhost:3000
           WEBDRIVER_URL: http://localhost:4444
 
-      - name: Stop Selenium and Flowvia server
+      - name: Stop Selenium and Isenax server
         if: always()
         run: |
           echo "Stopping Selenium container..."

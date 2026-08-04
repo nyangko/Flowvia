@@ -39,7 +39,7 @@ importers:
         specifier: ^5.9.3
         version: 5.9.3
 
-  packages/flowvia-app:
+  packages/isenax-app:
     dependencies:
       '@isoflow/isopacks':
         specifier: ^0.0.10
@@ -47,9 +47,6 @@ importers:
       '@tabler/icons-react':
         specifier: ^3.46.0
         version: 3.46.0(react@19.2.8)
-      flowvia:
-        specifier: workspace:*
-        version: link:../flowvia-lib
       i18next:
         specifier: ^26.0.6
         version: 26.3.6(typescript@5.9.3)
@@ -59,6 +56,9 @@ importers:
       i18next-http-backend:
         specifier: ^3.0.5
         version: 3.0.6
+      isenax:
+        specifier: workspace:*
+        version: link:../isenax-lib
       react:
         specifier: ^19.2.5
         version: 19.2.8
@@ -100,7 +100,7 @@ importers:
         specifier: ^14.6.1
         version: 14.6.1(@testing-library/dom@10.4.1)
 
-  packages/flowvia-backend:
+  packages/isenax-backend:
     dependencies:
       cors:
         specifier: ^2.8.6
@@ -119,7 +119,7 @@ importers:
         specifier: ^3.1.14
         version: 3.1.14
 
-  packages/flowvia-lib:
+  packages/isenax-lib:
     dependencies:
       '@emotion/react':
         specifier: ^11.14.0

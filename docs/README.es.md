@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="../assets/banner.png" alt="Flowvia - Herramienta de Diagramas Isométricos" width="100%" />
+<img src="../assets/banner.png" alt="Isenax - Herramienta de Diagramas Isométricos" width="100%" />
 
 </div>
 
@@ -10,22 +10,22 @@
 
 ## Nota:
 
-Este repositorio (Flowvia) es un derivado de [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW), que a su vez es un fork de stan-smith/FossFLOW (que a su vez era un fork de [markmanx/isoflow](https://github.com/markmanx/isoflow)), creado originalmente con el propósito de contribuir al repositorio original mediante PRs. Sin embargo, el nombre de usuario de GitHub del autor parece haber cambiado a [mug-book-droid](https://github.com/mug-book-droid) y su actividad se ha vuelto privada (¿quizás la cuenta fue suspendida?), lo que hace que el repositorio original sea inaccesible.
+Este repositorio (Isenax) es un derivado de [Abrar74774/FossFLOW](https://github.com/Abrar74774/FossFLOW), que a su vez es un fork de stan-smith/FossFLOW (que a su vez era un fork de [markmanx/isoflow](https://github.com/markmanx/isoflow)), creado originalmente con el propósito de contribuir al repositorio original mediante PRs. Sin embargo, el nombre de usuario de GitHub del autor parece haber cambiado a [mug-book-droid](https://github.com/mug-book-droid) y su actividad se ha vuelto privada (¿quizás la cuenta fue suspendida?), lo que hace que el repositorio original sea inaccesible.
 
-Por ahora, mi intención es hacer de este repositorio (ahora llamado Flowvia) una continuación del desarrollo de FossFLOW, y cualquier contribución mediante PRs también es bienvenida.
+Por ahora, mi intención es hacer de este repositorio (ahora llamado Isenax) una continuación del desarrollo de FossFLOW, y cualquier contribución mediante PRs también es bienvenida.
 
 Puedes consultar el último estado del repositorio original que obtuve en la rama `backup/stan-smith-FossFLOW`.
 
 ---
 
-Flowvia es una potente aplicación web progresiva (PWA) de código abierto para crear hermosos diagramas isométricos. Construido con React y la biblioteca <a href="https://github.com/markmanx/isoflow">Isoflow</a> (bifurcada y publicada en npm como fossflow, y como flowvia en este fork), se ejecuta completamente en tu navegador con soporte sin conexión.
+Isenax es una potente aplicación web progresiva (PWA) de código abierto para crear hermosos diagramas isométricos. Construido con React y la biblioteca <a href="https://github.com/markmanx/isoflow">Isoflow</a> (bifurcada y publicada en npm como fossflow, y como isenax en este fork), se ejecuta completamente en tu navegador con soporte sin conexión.
 
 ---
 <p align="center">
-<b>Pruébalo en línea --> https://nyangko.github.io/Flowvia/ <-- </b>
+<b>Pruébalo en línea --> https://nyangko.github.io/Isenax/ <-- </b>
 </p>
 
-<img width="100%" alt="Flowvia-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
+<img width="100%" alt="Isenax-Isometric-Diagramming-Tool" src="https://github.com/user-attachments/assets/15956888-991a-4b5e-9849-dbd82d6f9308" />
 
 ---------
 
@@ -36,19 +36,19 @@ Flowvia es una potente aplicación web progresiva (PWA) de código abierto para 
 docker compose up
 
 # O ejecutar directamente desde Docker Hub con almacenamiento persistente
-docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/flowvia:latest
+docker run -p 80:80 -v $(pwd)/diagrams:/data/diagrams nyangko/isenax:latest
 ```
 
 El almacenamiento en servidor está habilitado por defecto en Docker. Tus diagramas se guardarán (por defecto como root) en `./diagrams` en el host. Para cambiar el usuario o el ID de grupo utilizado al guardar, establece las variables de entorno `PUID` y `PGID`.
 
 Para deshabilitar el almacenamiento en servidor, establece `ENABLE_SERVER_STORAGE=false`:
 ```bash
-docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/flowvia:latest
+docker run -p 80:80 -e ENABLE_SERVER_STORAGE=false nyangko/isenax:latest
 ```
 
 ### Autenticación Básica HTTP (Opcional)
 
-Protege tu instancia de Flowvia con HTTP Basic Auth:
+Protege tu instancia de Isenax con HTTP Basic Auth:
 
 ```bash
 # Con Docker Compose
@@ -58,7 +58,7 @@ HTTP_AUTH_USER=admin HTTP_AUTH_PASSWORD=secret docker compose up
 docker run -p 80:80 \
   -e HTTP_AUTH_USER=admin \
   -e HTTP_AUTH_PASSWORD=secret \
-  nyangko/flowvia:latest
+  nyangko/isenax:latest
 ```
 
 > **Nota**: Ambas variables deben estar configuradas para habilitar la autenticación. Si alguna está vacía, la aplicación es accesible sin iniciar sesión.
@@ -67,8 +67,8 @@ docker run -p 80:80 \
 
 ```bash
 # Clonar el repositorio
-git clone https://github.com/nyangko/Flowvia
-cd Flowvia
+git clone https://github.com/nyangko/Isenax
+cd Isenax
 
 # Instalar dependencias
 npm install
@@ -86,9 +86,9 @@ Abre [http://localhost:3000](http://localhost:3000) en tu navegador.
 
 Este es un monorepo que contiene tres paquetes:
 
-- `packages/flowvia-lib` - Biblioteca de componentes React para dibujar diagramas de red (construida con Rslib/Rspack)
-- `packages/flowvia-app` - Progressive Web App que envuelve y presenta la biblioteca (construida con RSBuild)
-- `packages/flowvia-backend` - Servidor Express que proporciona almacenamiento autoalojado opcional para los diagramas (usado en el despliegue con Docker)
+- `packages/isenax-lib` - Biblioteca de componentes React para dibujar diagramas de red (construida con Rslib/Rspack)
+- `packages/isenax-app` - Progressive Web App que envuelve y presenta la biblioteca (construida con RSBuild)
+- `packages/isenax-backend` - Servidor Express que proporciona almacenamiento autoalojado opcional para los diagramas (usado en el despliegue con Docker)
 
 ### Comandos de Desarrollo
 
@@ -154,7 +154,7 @@ npm run publish:lib  # Publicar biblioteca en npm
 
 ## Documentación
 
-- [FLOWVIA_ENCYCLOPEDIA.md](FLOWVIA_ENCYCLOPEDIA.md) - Guía completa del código base
+- [ISENAX_ENCYCLOPEDIA.md](ISENAX_ENCYCLOPEDIA.md) - Guía completa del código base
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - Pautas de contribución
 
 ## Licencia
