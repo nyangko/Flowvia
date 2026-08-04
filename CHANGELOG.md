@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 > Looking for pre-fork history? See [UPSTREAM_HISTORY.md](docs/UPSTREAM_HISTORY.md).
 
+## [1.4.0](https://github.com/nyangko/Flowvia/compare/v1.3.1...v1.4.0) (2026-08-04)
+
+### Features
+
+* add cursor feedback for area drag and resize ([4388324](https://github.com/nyangko/Flowvia/commit/43883248178387aa4af0c538ded247d5f02a147e)), closes [#33](https://github.com/nyangko/Flowvia/issues/33)
+* allow viewing (but not editing) items in read-only diagrams ([f1ae12a](https://github.com/nyangko/Flowvia/commit/f1ae12a16a18f34ad0dc7016ba5f5457be6b1473))
+* connector flow animation speed control + phase sync ([#29](https://github.com/nyangko/Flowvia/issues/29)) ([92525c9](https://github.com/nyangko/Flowvia/commit/92525c917b6eeb15be9a10e9a4ce04a60ec16910))
+* redesign node label edit panel ([#28](https://github.com/nyangko/Flowvia/issues/28)) ([7919598](https://github.com/nyangko/Flowvia/commit/7919598144f6456782a4cb2737a11be32dd0b41c))
+* show thickness/label-count chips on collapsed connector rows ([1052430](https://github.com/nyangko/Flowvia/commit/1052430ff28a58eba47765850c1c96490492f150)), closes [#18](https://github.com/nyangko/Flowvia/issues/18)
+
+### Bug Fixes
+
+* add missing connectorAnimationSpeed to UiState/UiStateActions types ([cdd1745](https://github.com/nyangko/Flowvia/commit/cdd17454dd3e561cf1d471abc423aa2f3d9d3337))
+* align transform handles to actual corners in flat projection mode ([66e17f0](https://github.com/nyangko/Flowvia/commit/66e17f0258edc0768b5b40d01998440532358331)), closes [#34](https://github.com/nyangko/Flowvia/issues/34)
+* **connector:** avoid overlap when preventOverlap is mixed within a group ([7da664f](https://github.com/nyangko/Flowvia/commit/7da664fa0ef6953834045fcadf8b7ba0722ede01))
+* correct connector group offset direction to match picker list order ([c514495](https://github.com/nyangko/Flowvia/commit/c514495c830d348d3b2c3276aecc0aa61f15b7e6)), closes [#32](https://github.com/nyangko/Flowvia/issues/32)
+* even out inconsistent spacing in node label edit panel ([b49d26f](https://github.com/nyangko/Flowvia/commit/b49d26f84d7ef592dbb5c2dd312d7efc317e27ca))
+* lower connector thickness slider min to 3, show slider values in node settings ([82eb81b](https://github.com/nyangko/Flowvia/commit/82eb81b3e02a83b6ce335c0a62ae200c1e3d9c73))
+* repair connector drag-reorder and show endpoint direction in list ([a82d1c4](https://github.com/nyangko/Flowvia/commit/a82d1c48df7bb5b3391f4b128d39ac027ac65d74)), closes [#30](https://github.com/nyangko/Flowvia/issues/30) [#31](https://github.com/nyangko/Flowvia/issues/31)
+
+### Documentation
+
+* **history:** add remaining v1.4.0 entries — reorder fix, cursor feedback, read-only viewing ([ed985c0](https://github.com/nyangko/Flowvia/commit/ed985c02626c0b97a9b244070636036d7a046afd))
+* **history:** add v1.2.1/v1.3.0/v1.3.1 entries to in-app changelog ([61d5aa6](https://github.com/nyangko/Flowvia/commit/61d5aa68e7558d81b5da5715d5429a59743ac129))
+* **history:** label v1.4.0 entry as current, not upcoming ([eb2f24b](https://github.com/nyangko/Flowvia/commit/eb2f24bd7f5c5e0f703afb32df7e0a458c7b9210))
+* **history:** pre-record upcoming v1.4.0 changes in in-app changelog ([87245b0](https://github.com/nyangko/Flowvia/commit/87245b05dee35fe97f2aa6cde7b84ce4b1cee363))
+
 ## [1.3.1](https://github.com/nyangko/Flowvia/compare/v1.3.0...v1.3.1) (2026-08-02)
 
 ### Bug Fixes
