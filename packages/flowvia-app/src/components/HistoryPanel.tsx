@@ -25,8 +25,8 @@ interface ChangelogGroup {
 // rather than appending to an existing one's `items`.
 const CHANGELOG_KO: ChangelogGroup[] = [
   {
-    version: 'v1.4.0 (예정)',
-    date: '출시 예정',
+    version: 'v1.4.0 (현재)',
+    date: '업데이트 중',
     items: [
       ['연결선 목록', '의 접힌 줄에도 두께·레이블 개수가 칩으로 표시됨'],
       ['겹침 방지가 섞인 연결선 그룹', '에서 중간 연결선이 제외된 연결선과 겹치던 문제 수정'],
@@ -112,8 +112,8 @@ const CHANGELOG_KO: ChangelogGroup[] = [
 
 const CHANGELOG_EN: ChangelogGroup[] = [
   {
-    version: 'v1.4.0 (upcoming)',
-    date: 'Not yet released',
+    version: 'v1.4.0 (current)',
+    date: 'In progress',
     items: [
       ['Connector list', ' — collapsed rows now show thickness and label-count chips'],
       ['Connector groups with mixed overlap settings', ' fixed a middle connector overlapping the one it was trying to avoid'],
