@@ -32,7 +32,13 @@ const CHANGELOG_KO: ChangelogGroup[] = [
       ['겹침 방지가 섞인 연결선 그룹', '에서 중간 연결선이 제외된 연결선과 겹치던 문제 수정'],
       ['연결선 두께 슬라이더', ' 최소값을 3으로 낮춰 기본 두께에서 슬라이더가 왼쪽 끝에 붙어 보이던 문제 수정, 노드 설정의 레이블 높이/아이콘 크기에도 현재 값 표시'],
       ['노드 편집 패널', ' 재설계 — 기본 정보/외형 섹션으로 구분, 아이콘 변경을 카드로 정리, 슬라이더 옆에 숫자 입력(스테퍼)을 추가해 정확한 값 입력 가능, 삭제/복제 버튼은 하단 고정 바로 이동'],
-      ['연결선 흐름 애니메이션', '에 속도 조절 슬라이더 추가, 여러 연결선의 흐름 점이 서로 어긋나지 않고 맞춰서 움직이도록 수정']
+      ['연결선 흐름 애니메이션', '에 속도 조절 슬라이더 추가, 여러 연결선의 흐름 점이 서로 어긋나지 않고 맞춰서 움직이도록 수정'],
+      ['연결선 목록에서 순서 바꾸기(드래그)', ' 연결선이 2개일 때 한 번 옮기면 멈추던 버그 수정 — 드래그 중에는 삽입 위치만 표시하고, 놓을 때 실제로 순서 변경'],
+      ['연결선 목록', '에 시작 → 끝 노드 이름 표시 (이름 없는 연결선끼리도 구분 가능)'],
+      ['연결선 순서 변경', '이 캔버스에 반영되는 방향이 반대였던 문제 수정 — 목록 맨 위로 옮기면 캔버스에서도 맨 앞에 오도록 수정'],
+      ['영역(사각형) 몸체와 모서리', '에 마우스를 올리면 이동/크기조절 커서로 바뀌어 조작 가능함을 알 수 있도록 개선'],
+      ['평면(플랫) 보기 모드', '에서 영역의 크기조절 손잡이가 실제 모서리를 벗어나 있던 문제 수정'],
+      ['다이어그램 잠금(읽기 전용) 상태', '에서도 노드/연결선/영역을 클릭해 내용을 확인할 수 있도록 개선 (수정은 계속 차단됨)']
     ]
   },
   {
@@ -119,7 +125,13 @@ const CHANGELOG_EN: ChangelogGroup[] = [
       ['Connector groups with mixed overlap settings', ' fixed a middle connector overlapping the one it was trying to avoid'],
       ['Connector thickness slider', ' — lowered the minimum to 3 so it no longer looks clamped at the default width; label height/icon size in node settings now show their current value too'],
       ['Node edit panel', ' redesigned — split into Basic Info / Appearance sections, icon picker moved into a card, sliders now pair with a numeric input for exact values, Delete/Duplicate moved to a sticky bottom bar'],
-      ['Connector flow animation', ' — added a speed slider, and synced the flow dots across connectors so they move in phase instead of drifting apart']
+      ['Connector flow animation', ' — added a speed slider, and synced the flow dots across connectors so they move in phase instead of drifting apart'],
+      ['Connector drag-reorder', ' fixed getting stuck after one swap when only 2 connectors existed — dragging now shows an insertion cue and only reorders on drop'],
+      ['Connector list rows', " now show each connector's start -> end node names, so unnamed connectors between the same nodes are distinguishable"],
+      ['Connector reorder direction', ' fixed being reversed from the canvas — moving a connector to the top of the list now moves it to the front on canvas, not the back'],
+      ['Area (rectangle) body and corner handles', ' now show move/resize cursors on hover so it is clear they are interactive'],
+      ['Flat projection mode', " fixed resize handles landing off an area's actual corners"],
+      ['Locked (read-only) diagrams', ' — you can now click nodes/connectors/areas to view their details; editing stays blocked']
     ]
   },
   {
